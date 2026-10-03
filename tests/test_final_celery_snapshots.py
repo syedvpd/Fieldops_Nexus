@@ -9,7 +9,8 @@ from rest_framework.test import APIClient
 
 from apps.contracts import tasks as contract_tasks
 from apps.core.tenant import tenant_context
-from apps.dashboards import metrics, services, tasks as dash_tasks
+from apps.dashboards import metrics, services
+from apps.dashboards import tasks as dash_tasks
 from apps.dashboards.models import ReportSnapshot
 from apps.maintenance import tasks as pm_tasks
 from apps.sla import tasks as sla_tasks
