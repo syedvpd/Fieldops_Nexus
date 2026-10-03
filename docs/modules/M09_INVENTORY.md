@@ -9,7 +9,7 @@ Part of the ONE integrated FieldOps Nexus ERP. Read `docs/PROJECT_SOURCE_OF_TRUT
 - **Consumes:** M06 work orders, M01 sites, M03 part_number bridge.
 - **Provides:** Stock truth and parts consumption for M14.
 - **Boundary rules:** Every issue/return creates stock-movement records; transactional; concurrency and rollback tested; never plain `quantity -= N`.
-- **Status:** NOT STARTED
+- **Status:** IMPLEMENTED (Phase 4; app `inventory`, D-042; awaiting Team Lead approval). Evidence: `docs/PHASE_4_ACCEPTANCE_REPORT.md`; contract `docs/integrations/inventory-workorders.md`; manual guide `docs/manual-tests/PHASE_4_MANUAL_TEST.md`.
 
 
 Related: `docs/MODULE_STATUS.md`, `docs/TRACEABILITY.md`, `docs/DOMAIN_MODEL.md`, `docs/DECISIONS.md`, `docs/blueprint/04_MODULE_RESPONSIBILITIES.md`.

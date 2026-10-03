@@ -122,8 +122,9 @@ class WorkOrderLabor(TenantOwnedModel):
 
 
 class WorkOrderMaterial(TenantOwnedModel):
-    """Material used, as a free-text line. Stock truth (reservation / issue / return movements) belongs to M09
-    Inventory; until M09 exists these lines are a record of consumption only and move no stock."""
+    """Material used. Stock truth (reservation / issue / return movements) belongs to M09 Inventory: a line with
+    ``part_line`` set was written by ``inventory.services.consume`` for stock issued to this order; a free-text
+    line (``part_line`` NULL) records a non-stocked consumable and moves no stock."""
 
     work_order = models.ForeignKey(WorkOrder, on_delete=models.PROTECT, related_name="materials")
     description = models.CharField(max_length=200)
@@ -131,6 +132,10 @@ class WorkOrderMaterial(TenantOwnedModel):
     quantity = models.DecimalField(max_digits=10, decimal_places=3)
     unit = models.CharField(max_length=20, default="pcs")
     recorded_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+")
+    # M09: set when the line records consumption of stock issued through an inventory part line (D-042); NULL =
+    # a free-text line for non-stocked consumables (moves no stock).
+    part_line = models.ForeignKey("inventory.WorkOrderPart", null=True, blank=True, on_delete=models.PROTECT,
+                                  related_name="material_rows")
 
     class Meta:
         ordering = ["created_at"]

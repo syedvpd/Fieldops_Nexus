@@ -7,7 +7,8 @@ closure rules, append-only events, one audit record per change, all in one trans
 
 Boundary with M05: when a work order was created from a service request, the request-side effects (start
 service, resolve, rework, cancel) are applied through ``incidents.services.on_work_order_*``; M06 never edits
-request rows itself. M08 checklists are consulted through ``checklist_blockers``; M09 (stock) does not exist yet.
+request rows itself. M08 checklists are consulted through ``checklist_blockers``; M09 stock through
+``part_blockers`` (closure) and ``inventory.services.on_work_order_closed / _cancelled`` (D-042).
 """
 from __future__ import annotations
 
@@ -197,7 +198,8 @@ def closure_blockers(wo: WorkOrder) -> list[str]:
 
     Implemented: resolution notes, at least one labor entry (time capture, D-036), for corrective / installation
     work at least one evidence file, and M08 checklist completion (``checklists.services.checklist_blockers`` reads
-    the persisted inspections; no required checklist = no extra blocker). Stock (M09) is not part of closure."""
+    the persisted inspections; no required checklist = no extra blocker) and M09 (parts issued to the order must be
+    consumed or returned first; no part lines = no extra blocker)."""
     blockers = []
     if len((wo.resolution_notes or "").strip()) < 10:
         blockers.append("Resolution notes are missing.")
@@ -205,7 +207,14 @@ def closure_blockers(wo: WorkOrder) -> list[str]:
         blockers.append("No labor / time has been recorded.")
     if wo.work_type in EVIDENCE_REQUIRED_TYPES and not evidence_for(wo).exists():
         blockers.append("Evidence (photo / file) is required for this type of work.")
-    return blockers + checklist_blockers(wo)
+    return blockers + checklist_blockers(wo) + part_blockers(wo)
+
+
+def part_blockers(wo: WorkOrder) -> list[str]:
+    """M09 contract: parts issued to the order that were neither consumed nor returned (lazy import)."""
+    from apps.inventory import services as inventory
+
+    return inventory.part_blockers(wo)
 
 
 def checklist_blockers(wo: WorkOrder) -> list[str]:
@@ -319,7 +328,16 @@ def transition(wo: WorkOrder, *, action: str, actor, membership, reason: str = "
         _notify(wo, wo.assigned_to, f"{wo.number} returned for rework: {reason}")
     elif action == "cancel":
         _hook_request(wo, "on_work_order_cancelled", actor=actor, request=request)
+        _hook_inventory(wo, "on_work_order_cancelled", actor=actor, request=request)
+    elif action == "close":
+        _hook_inventory(wo, "on_work_order_closed", actor=actor, request=request)
     return wo
+
+
+def _hook_inventory(wo: WorkOrder, name: str, *, actor, request):
+    from apps.inventory import services as inventory
+
+    getattr(inventory, name)(wo, actor=actor, request=request)
 
 
 @transaction.atomic
@@ -379,7 +397,7 @@ def record_labor(wo: WorkOrder, *, technician, work_date, hours, notes: str = ""
 
 @transaction.atomic
 def record_material(wo: WorkOrder, *, description: str, quantity, unit: str = "pcs", part_number: str = "",
-                    actor, membership, request=None) -> WorkOrderMaterial:
+                    actor, membership, request=None, part_line=None) -> WorkOrderMaterial:
     wo = WorkOrder.objects.select_for_update().get(pk=wo.pk)
     assert_recordable(wo, membership)
     description = (description or "").strip()
@@ -387,7 +405,8 @@ def record_material(wo: WorkOrder, *, description: str, quantity, unit: str = "p
         raise ValidationFailed("Describe the material used.", code="description_required")
     row = WorkOrderMaterial(organization=wo.organization, work_order=wo, description=description[:200],
                             part_number=(part_number or "").strip()[:60], unit=(unit or "pcs").strip()[:20] or "pcs",
-                            quantity=_decimal(quantity, "Quantity", maximum=Decimal("9999999")), recorded_by=actor)
+                            quantity=_decimal(quantity, "Quantity", maximum=Decimal("9999999")), recorded_by=actor,
+                            part_line=part_line)
     row.save()
     audit.record("work_order.material_recorded", actor=actor, organization=wo.organization, target=wo,
                  after={"description": row.description, "quantity": str(row.quantity), "unit": row.unit},

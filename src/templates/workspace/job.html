@@ -74,6 +74,18 @@
       <div class="col-12"><label class="form-label small" for="id_notes">Notes</label>{{ labor_form.notes }}</div>
       <div class="col-12"><button class="btn btn-primary btn-sm">Record time</button></div></form></div>{% endif %}</div>
 
+  <div class="fx-card mb-3" id="parts"><div class="fx-card-header"><span>Spare parts</span><a class="small" href="{% url 'inventory:wo_parts' wo.pk %}">Full view</a></div>
+    <div class="table-responsive"><table class="table fx-table" id="part-lines"><thead><tr><th>Part</th><th>Status</th><th>Req.</th><th>Issued</th><th>Used</th><th></th></tr></thead><tbody>
+    {% for ln in part_lines %}<tr><td>{{ ln.part.part_number }}<div class="small text-body-secondary">{{ ln.part.name }}</div></td><td>{% status_badge ln.status %}</td><td>{{ ln.quantity_requested|floatformat:"-3" }}</td><td>{{ ln.quantity_issued|floatformat:"-3" }}</td><td>{{ ln.quantity_consumed|floatformat:"-3" }}</td>
+      <td>{% if can_consume and ln.outstanding > 0 %}<form method="post" action="{% url 'workspace:part_consume' wo.pk ln.pk %}" class="d-flex gap-1 m-0">{% csrf_token %}<input class="form-control form-control-sm" style="width:4.5rem" name="quantity" required inputmode="decimal" aria-label="Quantity used of {{ ln.part.part_number }}"><button class="btn btn-sm btn-success">Used</button></form>{% endif %}</td></tr>
+    {% empty %}<tr><td colspan="6" class="text-body-secondary">No parts requested.</td></tr>{% endfor %}</tbody></table></div>
+    {% if can_request_part %}<div class="fx-card-body border-top"><form method="post" action="{% url 'workspace:part_request' wo.pk %}" class="row g-2 align-items-end">{% csrf_token %}
+      <div class="col-12"><label class="form-label small" for="id_part">Part</label>{{ request_part_form.part }}</div>
+      <div class="col-6"><label class="form-label small" for="id_quantity">Quantity</label>{{ request_part_form.quantity }}</div>
+      <div class="col-6"><label class="form-label small" for="id_notes">Notes</label>{{ request_part_form.notes }}</div>
+      <div class="col-12"><button class="btn btn-primary btn-sm">Request part</button></div></form>
+      <div class="form-text">Stores reserve and issue the stock; you record how much was used.</div></div>{% endif %}</div>
+
   <div class="fx-card mb-3" id="materials"><div class="fx-card-header">Material used</div>
     <div class="table-responsive"><table class="table fx-table" id="material-table"><thead><tr><th>Item</th><th>Qty</th></tr></thead><tbody>
     {% for mt in materials %}<tr><td>{{ mt.description }}{% if mt.part_number %}<div class="small text-body-secondary">{{ mt.part_number }}</div>{% endif %}</td><td>{{ mt.quantity|floatformat:"-3" }} {{ mt.unit }}</td></tr>
@@ -84,7 +96,7 @@
       <div class="col-6"><label class="form-label small" for="id_unit">Unit</label>{{ material_form.unit }}</div>
       <div class="col-12"><label class="form-label small" for="id_part_number">Part number</label>{{ material_form.part_number }}</div>
       <div class="col-12"><button class="btn btn-primary btn-sm">Note material</button></div></form>
-      <div class="form-text">Records what was used. Stock is not issued or deducted (inventory module).</div></div>{% endif %}</div>
+      <div class="form-text">Free-text note for consumables that are not stocked parts; no stock is moved. Spare parts are requested above.</div></div>{% endif %}</div>
 
   <div class="fx-card mb-3" id="evidence"><div class="fx-card-header">Evidence</div>
     <ul class="list-group list-group-flush" id="evidence-list">{% for a in evidence %}<li class="list-group-item d-flex justify-content-between align-items-center gap-2"><span class="text-break">{{ a.original_name }}<span class="small text-body-secondary d-block">{{ a.created_at|date:"d M H:i" }}{% if a.description %} · {{ a.description }}{% endif %}</span></span>

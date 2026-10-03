@@ -105,7 +105,7 @@ Legend: IMPLEMENTED / PARTIAL / FUTURE.
 | M05 approved request creates / links a real work order | IMPLEMENTED | `create_work_order_for_request` (one live WO per request, DB partial unique index); `test_create_work_order_requires_approved_request_and_permission`, `test_one_live_work_order_per_request_db_constraint` |
 | M06 create / plan / prioritise / assign / dispatch | IMPLEMENTED | `workorders/workflow.py`, `services.transition`; technician overlap / inactive / cross-tenant refused; `test_assignment_validation`, `test_technician_overlap_is_refused_but_other_windows_and_people_are_fine` |
 | M06 execute, pause (hold/resume), complete | IMPLEMENTED | assignee-only rule, reasons, notes + evidence rule; `test_only_assignee_or_dispatcher_executes`, `test_completion_needs_notes_and_evidence_only_for_corrective` |
-| M06 labor / material / time capture | IMPLEMENTED (material = free-text lines; stock movements are M09) | `WorkOrderLabor`, `WorkOrderMaterial`; `test_close_blockers_and_labor_rules`, `test_material_validation` |
+| M06 labor / material / time capture | IMPLEMENTED (free-text lines for non-stocked consumables; stock-backed lines come from M09 consumption, D-042) | `WorkOrderLabor`, `WorkOrderMaterial`; `test_close_blockers_and_labor_rules`, `test_material_validation` |
 | M06 supervisor review and closure rules | IMPLEMENTED | review, rework, close guards; checklist completion is enforced since Phase 3 (D-040): `test_closure_matrix_*`, `test_malicious_completion_of_work_through_api_is_blocked` |
 | Never DRAFT -> CLOSED | IMPLEMENTED | `test_work_order_machine_has_no_shortcuts`; API 409 in the journey |
 | M05 <-> M06 integration (start / resolve / rework / cancel) | IMPLEMENTED | `on_work_order_*` hooks; `test_rework_loop_and_reopen`, `test_cancel_returns_request_to_approved_and_allows_new_work_order` |
@@ -130,3 +130,18 @@ Status: IMPLEMENTED = code + automated test on local PostgreSQL. Browser evidenc
 | Audit of template / inspection / finding / note actions | IMPLEMENTED | audit assertions in the M08 and M07 tests and in the journey |
 | HPE journey incident -> work order -> technician -> checklist -> finding -> evidence -> labor -> complete -> review -> close | IMPLEMENTED (API + HTML, no DB injection) | `test_full_journey_incident_to_closed_through_api_and_html` |
 | Browser, responsive 1920/1366/768/390, console/network, Supabase audit | **DEFERRED** by the Team Lead | `docs/manual-tests/PHASE_3_MANUAL_TEST.md` |
+
+## Phase 4 (M09 Spare Parts & Inventory) - HPE section 7.2 / 8.1
+| Requirement | Status | Evidence |
+|---|---|---|
+| Warehouse / site stock (HPE CONFIRMED) | IMPLEMENTED | `Warehouse` (site-bound), `StockBalance`; `test_m09_inventory`, `test_m09_api::test_warehouse_permissions_site_scope_and_tenancy` |
+| Parts, min / max / reorder information (HPE CONFIRMED) | IMPLEMENTED (information + low-stock flag only) | `Part` defaults, balance overrides; `test_levels_and_low_stock_flag` |
+| Issue / return with stock movements, transactional, never `quantity -= N` (HPE CONFIRMED) | IMPLEMENTED | `inventory.services._apply`; `test_stock_10_issue_2_return_1_then_issue_10_is_rejected`, `assert_ledger_consistent`, DB checks `test_database_refuses_negative_or_over_reserved_balances_and_movement_edits` |
+| Concurrency (HPE CONFIRMED) | IMPLEMENTED | `tests/test_m09_concurrency.py` (last unit, oversell, reserve, same-line, first receipt, opposite transfers = deadlock fix) |
+| Reservations: on-hand / reserved / available | IMPLEMENTED | `PartReservation`; `test_reservation_on_hand_reserved_available_and_cannot_overreserve`, `test_release_returns_availability_and_issue_uses_the_reservation` |
+| Transfer (HPE CONFIRMED) | IMPLEMENTED | paired TRANSFER_OUT / TRANSFER_IN with shared reference; `test_transfer_writes_paired_movements` |
+| Consumption against work orders (HPE CONFIRMED) | IMPLEMENTED | `consume` -> M06 material row (`part_line`); `test_consume_writes_the_m06_material_row_and_respects_ownership` |
+| Part Request REQUESTED -> RESERVED -> ISSUED -> CONSUMED / RETURNED -> RECONCILED (HPE CONFIRMED) | IMPLEMENTED (CANCELLED added, D-042) | `workflow.py`, `WorkOrderPart.status`; API/UI flow tests |
+| M06 closure / cancel integration | IMPLEMENTED (OUR DECISION) | `test_closure_is_blocked_by_outstanding_parts_then_reconciles_the_lines`, `test_cancelling_a_work_order_releases_reservations_but_not_with_issued_stock` |
+| M07 uses the M09 contract | IMPLEMENTED | `test_full_flow_through_ui_pages_and_workspace`, `test_workspace_part_endpoints_are_scoped_to_my_jobs` |
+| Journey 5: inventory issue / return -> stock movement -> WO linkage (HPE CONFIRMED) | IMPLEMENTED (browser verified locally) | `docs/PHASE_4_ACCEPTANCE_REPORT.md` |

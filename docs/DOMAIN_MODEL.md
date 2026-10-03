@@ -60,3 +60,14 @@ WorkOrder ---< WorkNote (M07, append-only technician note)
 ```
 - Constraints: one ACTIVE version per checklist key; unique (key, version); unique item position per template (deferred); min <= max; one inspection per (work order, template version); completed inspection has `completed_at`; one response per (inspection, item); note body not empty.
 
+## Phase 4 additions (M09)
+```
+Site ---< Warehouse (code unique/org, is_active)
+Part (part_number unique/org, unit, min/max/reorder defaults, is_active)
+Warehouse x Part ---< StockBalance (on_hand, reserved, optional min/max/reorder override)
+                         `---< StockMovement (append-only ledger: type, quantity, on_hand/reserved delta + after, work_order?, part_line?, transfer_ref?, actor)
+WorkOrder ---< WorkOrderPart (part requirement: requested / issued / consumed / returned, status, warehouse) -- 1:1 -- PartReservation (held quantity)
+WorkOrderPart ---< WorkOrderMaterial (M06 consumption rows written by M09 consume; NULL = free-text line)
+```
+- Constraints: on_hand >= 0, reserved >= 0, reserved <= on_hand; movement quantity > 0, a movement changes on-hand or reserved, after-values >= 0; one line per (work order, part); consumed <= issued - returned; reservation quantity >= 0, ACTIVE implies > 0.
+- Invariants (services): balance = sum of its movement deltas; reserved = sum of ACTIVE reservations; every balance change writes exactly one movement; warehouse site = work order site.

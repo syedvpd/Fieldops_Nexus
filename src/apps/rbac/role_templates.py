@@ -27,7 +27,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
     RoleTemplate(
         "operations_manager", "Operations Manager", "Oversees maintenance and field operations.",
         ("*.view", "incident.*", "work_order.*", "maintenance.*", "checklist.*", "inspection.*", "sla.view",
-         "report.*"),
+         "inventory.request", "inventory.reserve", "inventory.reconcile", "report.*"),
     ),
     RoleTemplate(
         "asset_manager", "Asset Manager", "Owns the asset registry and hierarchy.",
@@ -40,14 +40,14 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
          "work_order.view", "work_order.create", "work_order.plan", "work_order.assign",
          "work_order.dispatch", "work_order.update", "work_order.cancel", "work_order.attach", "checklist.view",
          "checklist.manage", "inspection.view",
-         "inventory.view", "sla.view"),
+         "inventory.view", "inventory.part.view", "inventory.request", "sla.view"),
     ),
     RoleTemplate(
         "supervisor", "Maintenance Supervisor", "Reviews and closes completed work.",
         ("asset.view", "asset.history.view", "site.view", "zone.view", "incident.view", "work_order.view",
          "work_order.review",
          "work_order.close", "work_order.hold", "work_order.record", "work_order.attach", "checklist.*", "inspection.*", "inventory.view",
-         "sla.view", "report.view"),
+         "inventory.part.view", "inventory.request", "sla.view", "report.view"),
     ),
     RoleTemplate(
         "technician", "Technician", "Executes assigned field jobs.",
@@ -55,7 +55,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
          "work_order.view_assigned",
          "work_order.start", "work_order.hold", "work_order.complete", "work_order.record", "work_order.attach",
          "incident.attach", "checklist.execute",
-         "inspection.execute", "inventory.request"),
+         "inspection.execute", "inventory.request", "inventory.consume", "inventory.part.view"),
     ),
     RoleTemplate(
         "stores_manager", "Stores Manager", "Manages warehouses, stock and part issues.",

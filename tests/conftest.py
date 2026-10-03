@@ -184,3 +184,22 @@ def p3(org_a, site_a1, site_a2, make_asset, make_member):
         "sup": make_member(org_a, "sup@alpha.test", "supervisor"),
         "reader": make_member(org_a, "reader@alpha.test", "auditor"),
     }
+
+
+# --- Phase 4 helpers (inventory) ----------------------------------------------------------------------------------
+
+
+@pytest.fixture
+def inv_(p3, make_member):
+    """Phase 3 organization plus stores staff, two warehouses at site 1, one at site 2 and two parts."""
+    from apps.inventory import services as inventory
+
+    org = p3["org"]
+    stores = make_member(org, "stores@alpha.test", "stores_manager")
+    wh = inventory.create_warehouse(org, site=p3["site"], code="MAIN", name="Main store", actor=stores.user)
+    wh2 = inventory.create_warehouse(org, site=p3["site"], code="VAN1", name="Service van", actor=stores.user)
+    whs2 = inventory.create_warehouse(org, site=p3["site2"], code="REMOTE", name="Remote store", actor=stores.user)
+    pump = inventory.create_part(org, part_number="SEAL-100", name="Mechanical seal", unit="pcs", min_stock="2",
+                                 max_stock="20", reorder_quantity="10", actor=stores.user)
+    belt = inventory.create_part(org, part_number="BELT-7", name="Drive belt", actor=stores.user)
+    return {**p3, "stores": stores, "wh": wh, "wh2": wh2, "whs2": whs2, "part": pump, "part2": belt}

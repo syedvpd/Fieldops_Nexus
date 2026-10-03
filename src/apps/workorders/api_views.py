@@ -107,10 +107,16 @@ class LaborWriteSerializer(serializers.Serializer):
 
 
 class MaterialSerializer(serializers.ModelSerializer):
+    stock_backed = serializers.SerializerMethodField(help_text="True when written by M09 consumption of issued stock")
+
     class Meta:
         model = WorkOrderMaterial
-        fields = ["id", "description", "part_number", "quantity", "unit", "created_at"]
+        fields = ["id", "description", "part_number", "quantity", "unit", "stock_backed", "created_at"]
         read_only_fields = fields
+
+
+    def get_stock_backed(self, obj) -> bool:
+        return obj.part_line_id is not None
 
 
 class MaterialWriteSerializer(serializers.Serializer):

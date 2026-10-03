@@ -46,6 +46,11 @@ _BADGES = {
     "ON_HOLD": "danger", "COMPLETED": "success", "SUPERVISOR_REVIEW": "warning", "CANCELLED": "secondary",
     "OPEN": "warning", "NOT_STARTED": "secondary",
     "LOW": "secondary", "MEDIUM": "info", "HIGH": "warning", "URGENT": "danger",
+    # M09 part lines / reservations / movements
+    "REQUESTED": "info", "RESERVED": "info", "ISSUED": "warning", "CONSUMED": "success", "RETURNED": "secondary",
+    "RECONCILED": "secondary", "RELEASED": "secondary", "FULFILLED": "success", "RECEIPT": "success",
+    "ISSUE": "warning", "RETURN": "info", "TRANSFER_OUT": "info", "TRANSFER_IN": "info", "ADJUSTMENT": "secondary",
+    "RESERVE": "info", "RELEASE": "secondary",
 }
 
 

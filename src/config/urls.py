@@ -17,6 +17,14 @@ from apps.checklists.api_views import (
 )
 from apps.core import health
 from apps.incidents.api_views import ServiceRequestViewSet
+from apps.inventory.api_views import (
+    PartReservationViewSet,
+    PartViewSet,
+    StockBalanceViewSet,
+    StockMovementViewSet,
+    WarehouseViewSet,
+    WorkOrderPartViewSet,
+)
 from apps.notifications.api_views import NotificationViewSet
 from apps.platform_admin.api_views import PlatformOrganizationViewSet
 from apps.rbac.api_views import PermissionViewSet, RoleViewSet
@@ -50,6 +58,12 @@ router.register("work-orders", WorkOrderViewSet, basename="work-order")
 router.register("checklist-templates", ChecklistTemplateViewSet, basename="checklist-template")
 router.register("inspections", InspectionViewSet, basename="inspection")
 router.register("findings", FindingViewSet, basename="finding")
+router.register("parts", PartViewSet, basename="part")
+router.register("warehouses", WarehouseViewSet, basename="warehouse")
+router.register("stock-balances", StockBalanceViewSet, basename="stock-balance")
+router.register("stock-movements", StockMovementViewSet, basename="stock-movement")
+router.register("part-reservations", PartReservationViewSet, basename="part-reservation")
+router.register("work-order-parts", WorkOrderPartViewSet, basename="work-order-part")
 router.register("platform/organizations", PlatformOrganizationViewSet, basename="platform-organization")
 
 api_v1 = [
@@ -76,6 +90,7 @@ urlpatterns = [
     path("app/", include("apps.assets.urls")),
     path("app/", include("apps.incidents.urls")),
     path("app/", include("apps.workorders.urls")),
+    path("app/", include("apps.inventory.urls")),
     path("app/", include("apps.checklists.urls")),
     path("app/", include("apps.workspace.urls")),
     path("", include("apps.ui.urls")),

@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "apps.assets",
     "apps.incidents",
     "apps.workorders",
+    "apps.inventory",
     "apps.checklists",
     "apps.workspace",
     "apps.ui",

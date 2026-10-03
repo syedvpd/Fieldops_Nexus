@@ -16,6 +16,9 @@ from apps.checklists import services as cl_services
 from apps.checklists.models import Finding
 from apps.core.exceptions import DomainError
 from apps.core.exceptions import PermissionDenied as DomainPermissionDenied
+from apps.inventory import selectors as inv_selectors
+from apps.inventory import services as inv_services
+from apps.inventory.forms import QuantityForm, RequestPartForm
 from apps.rbac import services as rbac
 from apps.sites.selectors import scoped_get
 from apps.sites.views import need, or404
@@ -88,7 +91,15 @@ class JobView(WorkspaceBase):
         evidence_missing = (wo.work_type in wos.EVIDENCE_REQUIRED_TYPES and wo.status in ("IN_PROGRESS", "ON_HOLD")
                             and not wos.evidence_for(wo).exists())
         labor = wo_selectors.labor_for(org, wo)
+        part_lines = list(inv_selectors.lines_for_work_order(org, wo))
+        can_consume = recordable and rbac.has_permission(m, "inventory.consume", wo.site_id)
+        can_request_part = (wo.status in ("PLANNED", "ASSIGNED", "DISPATCHED", "IN_PROGRESS", "ON_HOLD")
+                            and rbac.has_permission(m, "inventory.request", wo.site_id)
+                            and inv_services.can_request(wo, m))
         return render(request, "workspace/job.html", {
+            "part_lines": part_lines, "can_consume": can_consume, "can_request_part": can_request_part,
+            "request_part_form": RequestPartForm(parts=inv_selectors.parts_for(org).filter(is_active=True).order_by(
+                "part_number")) if can_request_part else None,
             "wo": wo, "actions": actions, "can": can, "executor": executor, "recordable": recordable,
             "requirements": requirements, "optional_templates": optional, "can_start": can_start,
             "blockers": blockers, "evidence_missing": evidence_missing,
@@ -186,7 +197,47 @@ class MaterialView(_Post):
             wos.record_material(wo, description=d["description"], quantity=d["quantity"], unit=d["unit"],
                                 part_number=d["part_number"], actor=request.user, membership=request.membership,
                                 request=request)
-            return self.done(request, wo, "Material noted (no stock is moved).")
+            return self.done(request, wo, "Free-text material noted (no stock is moved).")
+        except DomainError as exc:
+            return self.fail(request, wo, exc)
+
+
+class PartRequestView(_Post):
+    """M07 -> M09 contract: the technician asks for parts through the inventory service (no stock is touched)."""
+
+    anchor = "parts"
+
+    def post(self, request, pk):
+        wo = _wo(request, pk, "inventory.request")
+        form = RequestPartForm(request.POST, parts=inv_selectors.parts_for(request.organization))
+        if not form.is_valid():
+            messages.error(request, "Choose a part and enter a quantity above zero.")
+            return self.done(request, wo)
+        d = form.cleaned_data
+        try:
+            inv_services.request_part(wo, d["part"], d["quantity"], actor=request.user, membership=request.membership,
+                                      notes=d["notes"], request=request)
+            return self.done(request, wo, "Part requested; stores will reserve and issue it.")
+        except DomainError as exc:
+            return self.fail(request, wo, exc)
+
+
+class PartConsumeView(_Post):
+    """M07 -> M09 contract: records how much of the issued stock was used (the stock itself left at issue time)."""
+
+    anchor = "parts"
+
+    def post(self, request, pk, line):
+        wo = _wo(request, pk, "inventory.consume")
+        row = or404(scoped_get, inv_selectors.lines_for_work_order(request.organization, wo), line, "Part line")
+        form = QuantityForm(request.POST)
+        if not form.is_valid() or form.cleaned_data.get("quantity") is None:
+            messages.error(request, "Enter the quantity used.")
+            return self.done(request, wo)
+        try:
+            inv_services.consume(row, form.cleaned_data["quantity"], actor=request.user,
+                                 membership=request.membership, request=request)
+            return self.done(request, wo, "Consumption recorded.")
         except DomainError as exc:
             return self.fail(request, wo, exc)
 

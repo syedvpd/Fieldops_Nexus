@@ -10,6 +10,8 @@ urlpatterns = [
     path("workspace/<uuid:pk>/notes/", views.NoteView.as_view(), name="note"),
     path("workspace/<uuid:pk>/labor/", views.LaborView.as_view(), name="labor"),
     path("workspace/<uuid:pk>/materials/", views.MaterialView.as_view(), name="material"),
+    path("workspace/<uuid:pk>/parts/request/", views.PartRequestView.as_view(), name="part_request"),
+    path("workspace/<uuid:pk>/parts/<uuid:line>/consume/", views.PartConsumeView.as_view(), name="part_consume"),
     path("workspace/<uuid:pk>/evidence/", views.EvidenceView.as_view(), name="evidence"),
     path("workspace/<uuid:pk>/checklists/<uuid:template>/start/", views.StartInspectionView.as_view(),
          name="inspection_start"),
