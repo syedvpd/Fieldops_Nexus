@@ -1,0 +1,7 @@
+{# Expects `transitions`: list of {action,label,url,confirm,style}; each is a real POST to a server endpoint that
+   re-validates permission, tenant, object and state. Only transitions valid for the current state are passed. #}
+{% if transitions %}<div class="fx-workflow-bar" role="group" aria-label="Workflow actions">
+  <span class="small fw-semibold me-2">Next:</span>
+  {% for t in transitions %}<form method="post" action="{{ t.url }}" class="m-0">{% csrf_token %}
+    <button class="btn btn-sm btn-{{ t.style|default:'primary' }}" {% if t.confirm %}data-confirm="{{ t.confirm }}"{% endif %}>{{ t.label }}</button></form>{% endfor %}
+</div>{% endif %}

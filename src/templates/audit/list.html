@@ -1,0 +1,20 @@
+{% extends "shell.html" %}
+{% block title %}Audit trail · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div><h1>Audit trail</h1><div class="text-body-secondary">Append-only record of critical actions in this organization.</div></div></div>
+<div class="fx-card">
+  <form method="get" class="d-flex flex-wrap gap-2 p-3 border-bottom">
+    <input class="form-control form-control-sm" style="max-width:200px" name="action" value="{{ filters.action }}" placeholder="Action prefix (e.g. user.)">
+    <input class="form-control form-control-sm" style="max-width:220px" name="q" value="{{ filters.q }}" placeholder="Actor or target">
+    <input class="form-control form-control-sm" style="max-width:160px" type="date" name="from" value="{{ filters.from }}" aria-label="From date">
+    <input class="form-control form-control-sm" style="max-width:160px" type="date" name="to" value="{{ filters.to }}" aria-label="To date">
+    <button class="btn btn-sm btn-outline-secondary">Filter</button>
+  </form>
+  <div class="table-responsive"><table class="table fx-table">
+    <thead><tr><th>When</th><th>Action</th><th>Actor</th><th>Target</th><th></th></tr></thead>
+    <tbody>{% for e in page %}<tr><td class="text-nowrap">{{ e.occurred_at|date:"d M Y H:i:s" }}</td><td><code>{{ e.action }}</code></td>
+      <td>{{ e.actor_email|default:"system" }}</td><td>{{ e.target_repr }}</td><td><a href="{% url 'audit:detail' e.pk %}">Details</a></td></tr>
+    {% empty %}<tr><td colspan="5">{% include "components/_empty_state.html" with title="No audit entries" text="Nothing matches these filters." %}</td></tr>{% endfor %}</tbody></table></div>
+  {% include "components/_pagination.html" %}
+</div>
+{% endblock %}

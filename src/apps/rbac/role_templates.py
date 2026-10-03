@@ -1,0 +1,71 @@
+"""System role templates (FieldOps Nexus implementation decision D-005; HPE gives no role names).
+
+Patterns are ``fnmatch`` expressions evaluated against the *registered* permission catalog, so permissions
+added by later modules (asset.*, work_order.*, ...) are picked up automatically when roles are re-synced.
+Syncing is ADDITIVE: it never removes permissions an organization admin granted or revoked-then-regranted;
+it only adds template permissions that did not exist when the role was seeded.
+"""
+from dataclasses import dataclass, field
+
+
+@dataclass(frozen=True)
+class RoleTemplate:
+    key: str
+    name: str
+    description: str
+    patterns: tuple[str, ...] = field(default_factory=tuple)
+    is_owner: bool = False
+
+
+TEMPLATES: tuple[RoleTemplate, ...] = (
+    RoleTemplate("owner", "Organization Owner", "Full control of the organization.", ("*",), is_owner=True),
+    RoleTemplate(
+        "admin", "Organization Admin", "Administers users, roles, sites and configuration.",
+        ("organization.*", "user.*", "role.*", "site.*", "audit.view", "report.view", "*.view"),
+    ),
+    RoleTemplate(
+        "operations_manager", "Operations Manager", "Oversees maintenance and field operations.",
+        ("*.view", "incident.*", "work_order.*", "maintenance.*", "sla.view", "report.*"),
+    ),
+    RoleTemplate(
+        "asset_manager", "Asset Manager", "Owns the asset registry and hierarchy.",
+        ("asset.*", "site.view", "site.create", "site.update", "contract.*", "qr.*", "work_order.view", "report.view"),
+    ),
+    RoleTemplate(
+        "maintenance_planner", "Maintenance Planner", "Plans, schedules and assigns maintenance work.",
+        ("asset.view", "asset.history.view", "site.view", "maintenance.*", "incident.view",
+         "work_order.view", "work_order.create", "work_order.plan", "work_order.assign",
+         "work_order.dispatch", "checklist.view", "inventory.view", "sla.view"),
+    ),
+    RoleTemplate(
+        "supervisor", "Maintenance Supervisor", "Reviews and closes completed work.",
+        ("asset.view", "site.view", "incident.view", "work_order.view", "work_order.review",
+         "work_order.close", "work_order.hold", "checklist.*", "inspection.*", "inventory.view",
+         "sla.view", "report.view"),
+    ),
+    RoleTemplate(
+        "technician", "Technician", "Executes assigned field jobs.",
+        ("asset.view", "site.view", "incident.create", "incident.view", "work_order.view_assigned",
+         "work_order.start", "work_order.hold", "work_order.complete", "checklist.execute",
+         "inspection.execute", "inventory.request"),
+    ),
+    RoleTemplate(
+        "stores_manager", "Stores Manager", "Manages warehouses, stock and part issues.",
+        ("inventory.*", "asset.view", "work_order.view", "site.view"),
+    ),
+    RoleTemplate(
+        "service_manager", "Service Manager", "Owns service levels, requests and contracts.",
+        ("incident.*", "sla.*", "contract.*", "portal.manage", "work_order.view", "asset.view",
+         "site.view", "report.view"),
+    ),
+    RoleTemplate(
+        "client_requester", "Client / Requester", "External requester using the client portal.",
+        ("portal.request.create", "portal.request.view", "portal.request.confirm"),
+    ),
+    RoleTemplate(
+        "auditor", "Auditor / Report Consumer", "Read-only access to records, audit and reports.",
+        ("*.view", "audit.view", "audit.export", "report.*"),
+    ),
+)
+
+BY_KEY = {t.key: t for t in TEMPLATES}

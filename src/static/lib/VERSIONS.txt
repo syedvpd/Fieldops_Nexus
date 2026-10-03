@@ -1,0 +1,1 @@
+bootstrap 5.3.3 (MIT), htmx 2.0.4 (BSD-2). Re-create with scripts/fetch_static_libs.py
