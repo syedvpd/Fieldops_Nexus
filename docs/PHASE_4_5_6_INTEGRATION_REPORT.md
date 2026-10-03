@@ -46,4 +46,4 @@ High: 1 (transfer deadlock, M09). Medium: 4 (consume view 500 on a foreign id; s
 4. Phase 1-3 browser audit remains owed.
 
 ## Supabase
-See the section appended below when the migrations were applied.
+Applied at the Team Lead's request (2026-10-03), additive only: `inventory.0001`, `workorders.0002`, `workorders.0003` (nullable columns; the backfill touched 0 rows), `maintenance.0001`, `sla.0001`. `django_migrations` = 45; 15 new tables; 21 new permission rows; `workorders_workorder` has 0 rows, `sla_slatracking` 0. No DROP / TRUNCATE / DELETE. Code merged to `main` (fast-forward, no force).
