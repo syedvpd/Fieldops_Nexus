@@ -14,12 +14,12 @@ HPE module numbers are kept exactly as in the Blueprint. "HPE" = explicit in the
 | M07 | Technician Workspace | `workspace` | 3 |
 | M08 | Inspection & Checklist Engine | `checklists` | 3 |
 | M09 | Spare Parts & Inventory | `inventory` | 4 |
-| M10 | Warranty / AMC / Contract | `coverage` | 7 |
+| M10 | Warranty / AMC / Contract | `contracts` | 7 (IMPLEMENTED: D-049, `docs/FINAL_HPE_TRACEABILITY_REPORT.md`) |
 | M11 | SLA & Escalation | `sla` | 6 (IMPLEMENTED: D-044, `docs/integrations/sla-requests-workorders.md`; tests `tests/test_m11_*.py`, `tests/test_migrations_phase6.py`) |
-| M12 | QR / Barcode | `qr` | 8 |
-| M13 | Client / Requester Portal | `portal` | 8 |
-| M14 | Operational Dashboards | `dashboards` | 9 |
-| M15 | Audit & Compliance | `audit` (extends) | 9 |
+| M12 | QR / Barcode | `identification` | 8 (IMPLEMENTED: D-050) |
+| M13 | Client / Requester Portal | `portal` | 8 (IMPLEMENTED: D-051) |
+| M14 | Operational Dashboards | `dashboards` | 9 (IMPLEMENTED: D-052) |
+| M15 | Audit & Compliance | `audit` (extends) | 9 (IMPLEMENTED: D-053) |
 
 ## Review gates (mandatory acceptance milestones, in addition to our phases)
 | Gate | HPE deliverables | Our phases covering it | Status |
@@ -82,7 +82,7 @@ Legend: IMPLEMENTED / PARTIAL / FUTURE.
 | M02 asset ID, category, model, serial, purchase/commission dates | IMPLEMENTED | `assets.Asset`, `AssetCategory`; uniqueness + date constraints; `tests/test_assets.py` |
 | M02 location | IMPLEMENTED | site + zone, same-org/site checks, `AssetLocationHistory` |
 | M02 owner | IMPLEMENTED | `Asset.owner` (active membership of the org) |
-| M02 warranty | PARTIAL | free-text `warranty_ref` only; coverage logic = M10 (FUTURE) |
+| M02 warranty | IMPLEMENTED via M10 | `warranty_ref` stays a reference; real coverage = `contracts.CoverageAgreement` / `evaluate` (D-049) |
 | M02 status (controlled workflow) | IMPLEMENTED | `assets/workflow.py`, `change_status`, matrix test of every state x action; PATCH of status rejected |
 | M02 status/change history | IMPLEMENTED | `AssetStatusHistory` (append-only), `/assets/{id}/history/`, `/changes/` (audit before/after) |
 | M02 documents | IMPLEMENTED | `AssetDocument` via `files.services.attach`, site-scoped download |
@@ -159,3 +159,6 @@ Status: IMPLEMENTED = code + automated test on local PostgreSQL. Browser evidenc
 | Checklists on PM work (HPE CONFIRMED; M08 authoritative) | IMPLEMENTED | `test_plan_checklist_becomes_a_required_checklist_of_the_generated_work_order` |
 | Disabled PM does not generate; re-enable resumes | IMPLEMENTED | `test_disabled_plan_and_schedule_never_generate_and_reenabling_resumes_without_replay` |
 | PM lifecycle GENERATED -> ASSIGNED -> COMPLETED -> VERIFIED | IMPLEMENTED (derived from the M06 order) | `selectors.cycle_state`; API `state` |
+
+## Final run (Phases 7-9 + audit)
+Full matrices: `docs/FINAL_HPE_TRACEABILITY_REPORT.md`, `FINAL_DAY_90_ACCEPTANCE_REPORT.md`, `FINAL_BUSINESS_WORKFLOW_ACCEPTANCE_REPORT.md`, `FINAL_SECURITY_AUDIT.md`, `FINAL_DATABASE_INTEGRITY_REPORT.md`, `FINAL_BROWSER_ACCEPTANCE_REPORT.md`, `FINAL_RELEASE_READINESS_REPORT.md`. Manual guide: `docs/manual-tests/PHASE_7_9_MANUAL_TEST.md`.
