@@ -521,7 +521,7 @@ def test_beat_schedule_registers_the_task():
     from django.conf import settings
 
     assert settings.CELERY_BEAT_SCHEDULE["generate-due-maintenance"]["task"] == (
-        "apps.maintenance.tasks.generate_due_maintenance")
+        "apps.maintenance.tasks.fan_out_maintenance")  # beat -> per-organization fan-out (D-056)
 
 
 def test_disabled_work_is_not_picked_up_by_the_task(pm_, monkeypatch):

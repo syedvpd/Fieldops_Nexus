@@ -79,8 +79,9 @@ def test_fan_out_dispatches_one_task_per_active_org_and_skips_suspended(two_orgs
     for per_org in (sla_tasks.monitor_sla_for_org, pm_tasks.generate_due_maintenance_for_org,
                     contract_tasks.send_renewal_alerts_for_org):
         assert per_org(str(org_b.pk)).get("skipped") is True  # a suspended tenant is never processed
+    before = ReportSnapshot.objects.for_organization(org_b).count()  # written by the first fan-out, while active
     assert dash_tasks.snapshot_organization(str(org_b.pk)).get("skipped")
-    assert not ReportSnapshot.objects.for_organization(org_b).exists()
+    assert ReportSnapshot.objects.for_organization(org_b).count() == before  # nothing new for a suspended tenant
     assert ReportSnapshot.objects.for_organization(org_a).count() == len(metrics.SECTIONS)  # fan-out ran for Alpha
 
 
