@@ -1,6 +1,6 @@
 # Phase 3 acceptance report: M08 Inspection & Checklist Engine + M07 Technician Workspace
 
-Branch `claude/hopeful-dubinsky-3a9199` (from `main` aa03cc4). Not merged, **not applied to Supabase** (only on the Team Lead's request). This report does not claim Team Lead approval.
+Merged to `main` as 288de8d (fast-forward) and applied to Supabase on the Team Lead's request (2026-10-03): `checklists.0001`, `workspace.0001`, no drift afterwards, permissions and role templates present for both QA organizations. No QA data was created for M07/M08 yet. This report does not claim Team Lead approval.
 
 ## Status
 **IMPLEMENTED; automated verification PASS on local PostgreSQL 16; Browser: DEFERRED by the Team Lead; Responsive: DEFERRED; Supabase audit: DEFERRED.** Nothing below is marked PASS on browser evidence.
@@ -59,7 +59,7 @@ No open Critical/High defects known.
 
 ## Remaining risks / open points
 - **Browser, responsive (1920 / 1366 / 768 / 390), console/network, keyboard use and the HTMX flow in a real browser are NOT verified.** `docs/manual-tests/PHASE_3_MANUAL_TEST.md` is ready.
-- Supabase: Phase 3 migrations not applied; no persistent QA data created for M07/M08.
+- Supabase: schema applied, but no persistent QA data exists for M07/M08 and the screens have not been exercised against it.
 - Applicability is evaluated live (D-040): activating a new required checklist also blocks open, not-yet-completed work orders. Needs Team Lead confirmation vs. a snapshot-at-start model.
 - Materials stay free text (M09 not built); asset status on work start still undecided (D-035).
 - Standalone asset inspections have no UI entry point yet (QR / M12 or a later UI task).
