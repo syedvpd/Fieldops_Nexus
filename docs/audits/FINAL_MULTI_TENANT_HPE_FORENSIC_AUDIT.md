@@ -1,5 +1,65 @@
 # FieldOps Nexus: Multi-Tenant + HPE 15-Module Forensic Audit
 
+> ## UPDATE 2026-10-04: audit reconciled against the real branches (read this first)
+> The original audit below was performed on `main @ a4e8186`. It was **correct for that commit but not for the project**: the
+> missing modules had already been built on branch `claude/final-modules` (5 commits ahead of `main`, `ed537ad`). This update records
+> what is true on the integrated branch **`claude/final-reconciliation`** (= `final-modules` + hardening fixes). Sections 1-26 below
+> are kept as the evidence of the `main@a4e8186` audit; where they say MISSING for M10, M12, M13, M14 or "9 entities missing", this
+> update supersedes them. Details and exact test numbers: `docs/FINAL_RECONCILIATION_REPORT.md`.
+>
+> ### U1. Module status on the integrated branch
+> | Module | Was (main) | Now | Evidence |
+> |---|---|---|---|
+> | M01-M09, M11 | IMPLEMENTED | IMPLEMENTED (automated tests pass; browser M01-M08 still NOT VERIFIED) | unchanged |
+> | M10 Warranty/AMC/Contract | MISSING | IMPLEMENTED (automated) | app `contracts`, `test_m10_contracts` (25 pass + 1 date-flaky test fixed), renewal alerts task |
+> | M12 QR/Barcode | MISSING | IMPLEMENTED (automated) | app `identification`, `test_m12_identification` 21, `test_hardening_scan` 7; camera path NOT VERIFIED |
+> | M13 Client portal | MISSING | IMPLEMENTED (automated) | app `portal`, `test_m13_portal` 19 |
+> | M14 Dashboards | MISSING | IMPLEMENTED (automated); formulas are assumptions needing Team Lead confirmation | app `dashboards`, `test_m14_dashboards` 16, SQL reconciliation; `ReportSnapshot` + daily fan-out added |
+> | M15 Audit & Compliance | PARTIAL | IMPLEMENTED (automated) | list/filter/detail, CSV/XLSX/PDF export, `audit.export`, exports audited, `test_m15_audit` 13 |
+>
+> ### U2. Findings of this audit: current disposition
+> | Original finding | Priority | Now |
+> |---|---|---|
+> | M10/M12/M13/M14 missing; M15 export missing | P1 | FIXED (existing on `final-modules`; reconciled, not rebuilt) |
+> | Role templates inert patterns; `client_requester` had 0 permissions | P2 | FIXED (94-permission catalog, client = 3 portal permissions, `*.view` no longer leaks portal rights) |
+> | Warranty/contract alerts and report snapshots missing; serial per-org Celery loops | P1/P2 | FIXED (per-org fan-out for SLA, PM, contract alerts, snapshots; suspended orgs skipped; D-056) |
+> | HPE entities missing (TechnicianProfile, Shift, WorkOrderAssignment, ClosureApproval, Warranty, ServiceContract, ReportSnapshot, IntegrationEvent, Incident) | P2 | FIXED/DOCUMENTED: equivalents mapped (D-054); `ReportSnapshot` implemented; `IntegrationEvent` = HPE CLARIFICATION REQUIRED |
+> | HPE API path names differ | P3 | FIXED (aliases delegate to the same services; `test_hpe_api_aliases`) |
+> | No Content-Security-Policy | P2 | FIXED (nonce CSP, no inline handlers, no unsafe-eval; tests pass) |
+> | OpenAPI schema/docs anonymous | P3 | FIXED (authenticated only) |
+> | DB runtime role can TRUNCATE (bypasses audit trigger) | P1 | FIXED in code + tests; **NOT applied to Supabase** (operator runs `scripts/harden_db_roles.py`) |
+> | QR scan not rate-limited; refresh recorded as new scan | P3 | FIXED (429 throttle, one-scan-one-event) |
+> | Snapshot data visible wider than live dashboard (peer review) | P2 | FIXED (section data permission + org-wide) |
+> | Doc conflicts (tenant.py docstring, test counts, PROJECT_MAP) | P3 | FIXED; C-2 meters still an open Team Lead decision |
+> | No ER diagram | P1 (handover) | FIXED (`docs/ER_DIAGRAM.md`, generated) |
+> | No Git remote / PRs / staging / CI run | P1 | BLOCKED (external credentials; nothing fabricated) |
+> | No single clean full test run | P1 | OPEN: see U3 |
+> | No RLS, no composite same-tenant FKs | P2 | ACCEPTED as documented decision (D-055); app-level isolation tested |
+> | Dashboard formulas unapproved | P2 | OPEN, Team Lead (D-057): MTTR, MTBF, 8 h/day utilization, PM compliance, parts consumption |
+> | Browser acceptance M01-M08 never performed | P1 | OPEN (deferred by Team Lead, D-048) |
+>
+> ### U3. Tests on the integrated branch (honest)
+> 698 tests collected. Full run on a fresh PostgreSQL 16 container with 6 xdist workers: **690 passed, 6 failed, 2 not finished**
+> (stopped by me). The 6 failures were: 1 stale test name after the beat fan-out change, 1 wrong assertion in my own new test,
+> 1 older M10 test that used the local date instead of UTC (fails 00:00-05:30 IST), and 3 fresh-database migration tests that hit their
+> own 300 s subprocess timeout because 6 parallel workers saturated the machine (the 2 unfinished are the same kind). No application
+> defect was found; all four test defects are fixed. A serial rerun of the affected files is recorded in the reconciliation report.
+> **A single uninterrupted green run of all 698 tests is still outstanding**, so "all tests pass" is NOT claimed.
+> Static checks: ruff clean, `manage.py check` clean, `makemigrations --check` no changes, OpenAPI 0 warnings.
+>
+> ### U4. Tenant isolation (current evidence)
+> My independent API sweep (main@a4e8186 data set): 85 attacks denied, 0 leaks; HTML: 44 denied, 0 leaks. On the integrated branch
+> `tests/test_hardening_tenant.py` (positive controls first, then ~150 attacks in both directions across API, HTML, portal, files, QR,
+> audit, export, dashboards, workflow writes) and `tests/test_tenant_isolation.py` pass in the full run. Not re-run by me in a browser.
+>
+> ### U5. Still true / still open
+> Not verified: browser acceptance (any module), camera QR scan, real SMTP delivery, Supabase and prod Redis state, performance/load,
+> OWASP scan/dependency scan. Not merged to `main`; migrations (45 + contracts, identification, portal, audit.0003, dashboards.0001)
+> not applied to Supabase. **Readiness for final browser acceptance: NO**, until one clean full run passes and the Team Lead decides on merge/migration.
+
+---
+
+# Original audit (of `main @ a4e8186`, 2026-10-03)
 Date 2026-10-03. Branch `main` @ `a4e8186`. Audit only: no product code, migration or data was changed.
 Source of truth for requirements: HPE-PRD-2026-FOPS02 (`HPE_VPD_90_Day_ERP_Project_Requirements (1).md`, sections 7-12), then repo docs. Status words used: IMPLEMENTED / PARTIAL / MISSING / BROKEN / NOT VERIFIED. No percentage or overall score is given.
 
