@@ -47,3 +47,16 @@ Asset ---< WorkOrder (number WO-; work_type; priority; status; assigned_to = Mem
 core.DocumentSequence (organization, key, last_value): number allocation
 ```
 - Constraints: unique number per organization; `uniq_live_work_order_per_request` (partial, excludes CANCELLED/CLOSED); downtime end >= start; plan window ordered; labor hours in (0, 24]; material quantity > 0.
+
+## Phase 3 additions (M08 / M07)
+```
+ChecklistTemplate (key = family, version, status DRAFT/ACTIVE/INACTIVE, work_type blank=any, is_required)
+   `---< ChecklistItem (position, prompt, item_type TEXT/NUMERIC/BOOLEAN/SELECTION, required, options, exception_options, min/max/unit, evidence_required)
+   `---< Inspection (template version, work_order nullable, asset, site, status IN_PROGRESS/COMPLETED, started_by / completed_by = Membership)
+              |---< InspectionResponse (item, value_text | value_number | value_bool, is_exception) - one per item
+              |       `- Attachment (evidence)
+              `---< Finding (item?, work_order?, asset, site, severity, status OPEN/RESOLVED, resolution)  `- Attachment (evidence)
+WorkOrder ---< WorkNote (M07, append-only technician note)
+```
+- Constraints: one ACTIVE version per checklist key; unique (key, version); unique item position per template (deferred); min <= max; one inspection per (work order, template version); completed inspection has `completed_at`; one response per (inspection, item); note body not empty.
+

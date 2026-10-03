@@ -11,8 +11,8 @@ HPE module numbers are kept exactly as in the Blueprint. "HPE" = explicit in the
 | M04 | Preventive Maintenance | `maintenance` | 5 |
 | M05 | Incident / Breakdown | `incidents` | 2 |
 | M06 | Work Order Management | `workorders` | 2 |
-| M07 | Technician Workspace | `technician` | 3 |
-| M08 | Inspection & Checklist Engine | `inspections` | 3 |
+| M07 | Technician Workspace | `workspace` | 3 |
+| M08 | Inspection & Checklist Engine | `checklists` | 3 |
 | M09 | Spare Parts & Inventory | `inventory` | 4 |
 | M10 | Warranty / AMC / Contract | `coverage` | 7 |
 | M11 | SLA & Escalation | `sla` | 6 |
@@ -40,7 +40,7 @@ HPE module numbers are kept exactly as in the Blueprint. "HPE" = explicit in the
 | Asset hierarchy | M03 | 1 | IMPLEMENTED (tests; browser audit partial; approval pending) |
 | Service request | M05 | 2 | IMPLEMENTED (local PostgreSQL tests; browser pass pending; approval pending) |
 | Work-order core | M06 | 2 | IMPLEMENTED (local PostgreSQL tests; browser pass pending; approval pending) |
-| Checklist templates | M08 (templates part only) | 3, pulled forward right after Phase 2 | not started |
+| Checklist templates | M08 | 3 | IMPLEMENTED (local PostgreSQL tests; browser deferred; approval pending) |
 | DB schema (clean, migrations, constraints) | all | every phase | Phase 0 schema done and applied to fresh local DB and Supabase |
 | CI/CD | foundation | 0 | workflow written; not yet run on GitHub (no remote) |
 | GitHub tag | governance | 0/1 | blocked: no Git remote yet (local repo only) |
@@ -106,9 +106,27 @@ Legend: IMPLEMENTED / PARTIAL / FUTURE.
 | M06 create / plan / prioritise / assign / dispatch | IMPLEMENTED | `workorders/workflow.py`, `services.transition`; technician overlap / inactive / cross-tenant refused; `test_assignment_validation`, `test_technician_overlap_is_refused_but_other_windows_and_people_are_fine` |
 | M06 execute, pause (hold/resume), complete | IMPLEMENTED | assignee-only rule, reasons, notes + evidence rule; `test_only_assignee_or_dispatcher_executes`, `test_completion_needs_notes_and_evidence_only_for_corrective` |
 | M06 labor / material / time capture | IMPLEMENTED (material = free-text lines; stock movements are M09) | `WorkOrderLabor`, `WorkOrderMaterial`; `test_close_blockers_and_labor_rules`, `test_material_validation` |
-| M06 supervisor review and closure rules | PARTIAL | review, rework, close guards implemented; **checklist completion before closure needs M08 (OPEN)** |
+| M06 supervisor review and closure rules | IMPLEMENTED | review, rework, close guards; checklist completion is enforced since Phase 3 (D-040): `test_closure_matrix_*`, `test_malicious_completion_of_work_through_api_is_blocked` |
 | Never DRAFT -> CLOSED | IMPLEMENTED | `test_work_order_machine_has_no_shortcuts`; API 409 in the journey |
 | M05 <-> M06 integration (start / resolve / rework / cancel) | IMPLEMENTED | `on_work_order_*` hooks; `test_rework_loop_and_reopen`, `test_cancel_returns_request_to_approved_and_allows_new_work_order` |
 | RBAC, tenant isolation, site scope, IDOR | IMPLEMENTED | `test_unauthenticated_and_reader`, `test_role_boundaries`, `test_cross_tenant_isolation_both_directions`, `test_site_scoped_user_sees_only_their_site`, `test_technician_sees_only_assigned_work`, UI `test_forbidden_roles_and_foreign_objects` |
 | Audit (create, update, every transition, assignment, labor, material, evidence, downtime) | IMPLEMENTED | journey asserts audit counts and actor/before/after |
 | Browser + Supabase evidence | NOT DONE | stopped by the Team Lead (D-034); guide: `docs/manual-tests/PHASE_2_MANUAL_TEST.md` |
+
+## Phase 3 requirement matrix (M08 / M07)
+Status: IMPLEMENTED = code + automated test on local PostgreSQL. Browser evidence is DEFERRED for every row (Team Lead decision: browser / responsive / Supabase acceptance at the end of the project).
+| Requirement | Status | Evidence |
+|---|---|---|
+| M08 checklist templates (HPE 7.2): create, edit draft, items, reorder, required/optional, types, validation | IMPLEMENTED | `checklists.services`; `test_template_lifecycle_items_reorder_and_audit`, `test_item_configuration_is_validated`, UI `test_template_management_ui_end_to_end_and_permissions` |
+| M08 template versioning, frozen active templates, history stays understandable | IMPLEMENTED | D-039; `test_active_template_is_frozen_and_new_version_keeps_history`, `test_deactivated_template_cannot_start_new_inspections` |
+| M08 inspection execution, response persistence, invalid values rejected, refresh preserves state | IMPLEMENTED | `test_responses_persist_validate_and_flag_exceptions`, `test_invalid_responses_are_rejected_all_or_nothing`, UI `test_required_checklist_blocks_ui_completion_until_inspection_completed` |
+| M08 mandatory fields + exception findings + evidence requirements | IMPLEMENTED | `test_required_items_exceptions_and_evidence_gate_completion`, `test_exception_needs_finding_and_evidence_through_ui`, `test_evidence_api_validation_and_download_authorisation` |
+| M08 completed inspection is authoritative / immutable; duplicate completion and duplicate execution refused; concurrent completion serialised | IMPLEMENTED | `test_completed_inspection_is_immutable_and_cannot_be_completed_twice`, `test_duplicate_execution_on_same_work_order_is_refused`, `test_concurrent_completion_is_serialised` |
+| M08 -> M06 closure / completion blocker (real DB state, one mechanism) | IMPLEMENTED | `test_closure_matrix_*` (no required checklist / not started / incomplete / complete / re-block), `test_closure_blocker_reads_db_state_not_a_flag`, `test_malicious_completion_of_work_through_api_is_blocked`, UI + journey |
+| M07 technician job queue, job detail, start / hold / resume / complete through M06 services | IMPLEMENTED | `test_my_jobs_*`, `test_start_hold_resume_via_workspace_and_invalid_state_rejected`, `test_workspace_refuses_planner_and_supervisor_actions_and_other_roles` |
+| M07 notes, evidence, labor/time, material information (free text, no stock) | IMPLEMENTED | `test_notes_labor_material_evidence_persist_and_validate`; M09 boundary recorded in D-041 |
+| M07 checklist execution UI (HTMX) | IMPLEMENTED (render + POST tested; HTMX behaviour verified through the HX-Request fragment / redirect responses, not in a browser) | `test_required_checklist_blocks_ui_completion_*`, `test_stale_form_after_completion_*` |
+| Tenant isolation, site scope, IDOR (API + HTML + attachment download) | IMPLEMENTED | `test_cross_tenant_everything_is_invisible_and_unusable`, `test_site_scope_limits_inspection_visibility`, `test_evidence_download_follows_inspection_scope_and_tenancy`, `test_unauthenticated_inactive_and_cross_tenant_access` |
+| Audit of template / inspection / finding / note actions | IMPLEMENTED | audit assertions in the M08 and M07 tests and in the journey |
+| HPE journey incident -> work order -> technician -> checklist -> finding -> evidence -> labor -> complete -> review -> close | IMPLEMENTED (API + HTML, no DB injection) | `test_full_journey_incident_to_closed_through_api_and_html` |
+| Browser, responsive 1920/1366/768/390, console/network, Supabase audit | **DEFERRED** by the Team Lead | `docs/manual-tests/PHASE_3_MANUAL_TEST.md` |

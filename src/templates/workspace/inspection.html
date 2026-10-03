@@ -1,0 +1,37 @@
+{% extends "shell.html" %}
+{% load ui_tags %}
+{% block title %}{{ insp.template.name }} · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div>
+  <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1 small"><li class="breadcrumb-item"><a href="{% url 'workspace:jobs' %}">My Jobs</a></li>
+    {% if wo %}<li class="breadcrumb-item"><a href="{% url 'workspace:job' wo.pk %}">{{ wo.number }}</a></li>{% endif %}<li class="breadcrumb-item active">Checklist</li></ol></nav>
+  <h1>{{ insp.template.name }} <span class="text-body-secondary fs-6">v{{ insp.template.version }}</span> {% status_badge insp.status %}</h1>
+  <div class="text-body-secondary">{{ insp.asset.asset_tag }} · {{ insp.asset.name }} · {{ insp.site.code }}{% if insp.completed_at %} · completed {{ insp.completed_at|date:"d M Y H:i" }}{% endif %}</div></div></div>
+{% if not editable and insp.status == "IN_PROGRESS" %}<div class="alert alert-secondary">This checklist can only be edited by the assigned technician while the work order is in progress{% if wo and wo.status == "ON_HOLD" %} (resume the work first){% endif %}.</div>{% endif %}
+{% if insp.status == "COMPLETED" %}<div class="alert alert-success">Completed. The answers are locked.{% if insp.summary %} Summary: {{ insp.summary }}{% endif %}</div>{% endif %}
+
+{% include "workspace/_inspection_form.html" %}
+
+<div class="fx-card mb-3" id="findings"><div class="fx-card-header">Findings ({{ findings|length }})</div>
+  <ul class="list-group list-group-flush" id="finding-list">
+  {% for f in findings %}<li class="list-group-item"><div class="d-flex justify-content-between gap-2"><div>{{ f.description|linebreaksbr }}<div class="small text-body-secondary">{% if f.item %}Question {{ f.item.position }} · {% endif %}{{ f.created_at|date:"d M H:i" }}</div></div><div>{% status_badge f.severity %} {% status_badge f.status %}</div></div>
+    {% for a in f.files %}<div class="small"><a href="{% url 'files:download' a.pk %}">{{ a.original_name }}</a></div>{% endfor %}</li>
+  {% empty %}<li class="list-group-item text-body-secondary">No findings recorded.</li>{% endfor %}</ul>
+  {% if editable %}<div class="fx-card-body border-top"><form method="post" action="{% url 'workspace:finding' insp.pk %}" class="row g-2 align-items-end">{% csrf_token %}
+    <div class="col-12"><label class="form-label small" for="id_description">New finding</label>{{ finding_form.description }}</div>
+    <div class="col-sm-6"><label class="form-label small" for="id_finding_item">About question</label>
+      <select class="form-select" name="item" id="id_finding_item"><option value="">General</option>{% for r in rows %}<option value="{{ r.item.pk }}">{{ r.item.position }}. {{ r.item.prompt|truncatechars:50 }}</option>{% endfor %}</select></div>
+    <div class="col-sm-3"><label class="form-label small" for="id_severity">Severity</label>{{ finding_form.severity }}</div>
+    <div class="col-sm-3"><button class="btn btn-primary w-100">Record finding</button></div></form></div>
+  <div class="fx-card-body border-top"><form method="post" action="{% url 'workspace:inspection_evidence' insp.pk %}" enctype="multipart/form-data" class="row g-2 align-items-end">{% csrf_token %}
+    <div class="col-sm-4"><label class="form-label small" for="id_ev_item">Attach to</label>
+      <select class="form-select" name="item" id="id_ev_item" required>{% for r in rows %}{% if r.response %}<option value="{{ r.item.pk }}">Answer {{ r.item.position }}: {{ r.item.prompt|truncatechars:40 }}</option>{% endif %}{% endfor %}</select></div>
+    <div class="col-sm-4"><label class="form-label small" for="id_file">Photo / file</label>{{ evidence_form.file }}</div>
+    <div class="col-sm-2"><label class="form-label small" for="id_ev_desc">Note</label>{{ evidence_form.description }}</div>
+    <div class="col-sm-2"><button class="btn btn-outline-primary w-100">Upload</button></div></form>
+    <div class="form-text">Evidence attaches to an answer you have already saved. For a finding, choose it below.</div>
+    {% if findings %}<form method="post" action="{% url 'workspace:inspection_evidence' insp.pk %}" enctype="multipart/form-data" class="row g-2 align-items-end mt-1">{% csrf_token %}
+      <div class="col-sm-4"><label class="form-label small" for="id_ev_finding">Attach to finding</label><select class="form-select" name="finding" id="id_ev_finding">{% for f in findings %}<option value="{{ f.pk }}">{{ f.description|truncatechars:40 }}</option>{% endfor %}</select></div>
+      <div class="col-sm-6"><label class="form-label small" for="id_file2">Photo / file</label><input class="form-control" type="file" name="file" id="id_file2" required></div>
+      <div class="col-sm-2"><button class="btn btn-outline-primary w-100">Upload</button></div></form>{% endif %}</div>{% endif %}</div>
+{% endblock %}

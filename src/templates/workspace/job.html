@@ -1,0 +1,102 @@
+{% extends "shell.html" %}
+{% load ui_tags %}
+{% block title %}{{ wo.number }} · My Jobs · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div>
+  <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1 small"><li class="breadcrumb-item"><a href="{% url 'workspace:jobs' %}">My Jobs</a></li><li class="breadcrumb-item active">{{ wo.number }}</li></ol></nav>
+  <h1>{{ wo.title }} {% status_badge wo.status %}</h1>
+  <div class="text-body-secondary">{{ wo.number }} · {{ wo.get_work_type_display }} · {% status_badge wo.priority %} · {{ wo.asset.asset_tag }} {{ wo.asset.name }} · {{ wo.site.code }}</div></div>
+  <a class="btn btn-outline-secondary" href="{% url 'workorders:detail' wo.pk %}">Full work order</a></div>
+
+{% if wo.hold_reason and wo.status == "ON_HOLD" %}<div class="alert alert-warning">On hold: {{ wo.hold_reason }}</div>{% endif %}
+{% if actions %}
+<div class="fx-card mb-3"><div class="fx-card-header">Next step</div><div class="fx-card-body d-flex flex-wrap gap-3 align-items-start" id="job-actions">
+  {% for a in actions %}
+  {% if a.kind == "simple" %}
+    <form method="post" action="{{ a.url }}" class="m-0">{% csrf_token %}<button class="btn btn-lg btn-{{ a.style }}">{{ a.label }}</button></form>
+  {% elif a.kind == "reason" %}
+    <form method="post" action="{{ a.url }}" class="m-0 d-flex flex-wrap gap-2">{% csrf_token %}
+      <input class="form-control" style="width:15rem" name="reason" required minlength="3" maxlength="500" placeholder="Reason (required)" aria-label="Reason for {{ a.label }}">
+      <button class="btn btn-{{ a.style }}">{{ a.label }}</button></form>
+  {% elif a.kind == "complete" %}
+    <form method="post" action="{{ a.url }}" class="m-0 w-100" style="max-width:560px">{% csrf_token %}
+      <label class="form-label" for="id_resolution_notes">Resolution notes</label>{{ a.form.resolution_notes }}
+      {% if blockers or evidence_missing %}<div class="alert alert-warning mt-2 mb-2 py-2"><strong>Before you can complete:</strong><ul class="mb-0">
+        {% for b in blockers %}<li>{{ b }}</li>{% endfor %}{% if evidence_missing %}<li>Attach at least one photo / file as evidence.</li>{% endif %}</ul></div>{% endif %}
+      <button class="btn btn-lg btn-success mt-2">{{ a.label }}</button></form>
+  {% endif %}{% endfor %}
+</div></div>
+{% elif terminal %}<div class="alert alert-secondary">This work order is {{ wo.status|lower }} and read-only.</div>
+{% elif not executor %}<div class="alert alert-secondary">You can view this job; only the assigned technician (or a dispatcher) can work on it.</div>{% endif %}
+
+<div class="row g-3">
+ <div class="col-lg-7">
+  <div class="fx-card mb-3"><div class="fx-card-header">Job</div><div class="fx-card-body"><dl class="fx-kv mb-0">
+    <dt>What to do</dt><dd>{{ wo.description|default:"—"|linebreaksbr }}</dd>
+    <dt>Asset</dt><dd>{{ wo.asset.asset_tag }} · {{ wo.asset.name }}</dd>
+    <dt>Site</dt><dd>{{ wo.site.code }} · {{ wo.site.name }}</dd>
+    <dt>Planned</dt><dd>{% if wo.planned_start %}{{ wo.planned_start|date:"d M Y H:i" }} → {{ wo.planned_end|date:"d M Y H:i" }}{% else %}—{% endif %}</dd>
+    <dt>Started</dt><dd>{{ wo.started_at|date:"d M Y H:i"|default:"—" }}</dd>
+    {% if wo.resolution_notes %}<dt>Resolution</dt><dd>{{ wo.resolution_notes|linebreaksbr }}</dd>{% endif %}</dl></div></div>
+
+  <div class="fx-card mb-3" id="checklists"><div class="fx-card-header">Checklists</div>
+    <ul class="list-group list-group-flush" id="checklist-list">
+    {% for r in requirements %}<li class="list-group-item d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div><span class="fw-semibold">{{ r.template.name }}</span> <span class="small text-body-secondary">v{{ r.template.version }}</span>
+        {% if r.required %}<span class="badge fx-badge fx-badge-warning ms-1">Required</span>{% endif %} {% status_badge r.state %}</div>
+      <div>{% if r.inspection %}<a class="btn btn-sm btn-outline-primary" href="{% url 'workspace:inspection' r.inspection.pk %}">{% if r.state == "COMPLETED" %}View{% else %}Continue{% endif %}</a>
+        {% elif can_start %}<form method="post" action="{% url 'workspace:inspection_start' wo.pk r.template.pk %}" class="m-0">{% csrf_token %}<button class="btn btn-sm btn-primary">Start checklist</button></form>
+        {% else %}<span class="small text-body-secondary">{% if wo.status != "IN_PROGRESS" %}Start the work first{% else %}Not available{% endif %}</span>{% endif %}</div></li>
+    {% endfor %}
+    {% for t in optional_templates %}<li class="list-group-item d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div><span class="fw-semibold">{{ t.name }}</span> <span class="small text-body-secondary">v{{ t.version }} · optional</span></div>
+      <form method="post" action="{% url 'workspace:inspection_start' wo.pk t.pk %}" class="m-0">{% csrf_token %}<button class="btn btn-sm btn-outline-primary">Start checklist</button></form></li>
+    {% endfor %}
+    {% if not requirements and not optional_templates %}<li class="list-group-item text-body-secondary">No checklist applies to this job.</li>{% endif %}
+    </ul></div>
+
+  <div class="fx-card mb-3" id="notes"><div class="fx-card-header">Notes</div>
+    {% if recordable %}<div class="fx-card-body border-bottom"><form method="post" action="{% url 'workspace:note' wo.pk %}">{% csrf_token %}
+      <label class="form-label small" for="id_body">Add a note</label>{{ note_form.body }}<button class="btn btn-primary btn-sm mt-2">Save note</button></form></div>{% endif %}
+    <ul class="list-group list-group-flush" id="note-list">{% for n in notes %}<li class="list-group-item"><div>{{ n.body|linebreaksbr }}</div>
+      <div class="small text-body-secondary">{{ n.created_at|date:"d M Y H:i" }} · {{ n.author.display_name|default:"—" }}</div></li>
+    {% empty %}<li class="list-group-item text-body-secondary">No notes yet.</li>{% endfor %}</ul></div>
+ </div>
+
+ <div class="col-lg-5">
+  <div class="fx-card mb-3" id="labor"><div class="fx-card-header"><span>Time</span><span class="small text-body-secondary">Total {{ total_hours }} h</span></div>
+    <div class="table-responsive"><table class="table fx-table" id="labor-table"><thead><tr><th>Date</th><th>Who</th><th>Hours</th></tr></thead><tbody>
+    {% for l in labor %}<tr><td>{{ l.work_date|date:"d M" }}</td><td>{{ l.technician.user.display_name }}{% if l.notes %}<div class="small text-body-secondary">{{ l.notes }}</div>{% endif %}</td><td>{{ l.hours }}</td></tr>
+    {% empty %}<tr><td colspan="3" class="text-body-secondary">No time recorded.</td></tr>{% endfor %}</tbody></table></div>
+    {% if recordable and can.record %}<div class="fx-card-body border-top"><form method="post" action="{% url 'workspace:labor' wo.pk %}" class="row g-2 align-items-end">{% csrf_token %}
+      <div class="col-6"><label class="form-label small" for="id_work_date">Date</label>{{ labor_form.work_date }}</div>
+      <div class="col-6"><label class="form-label small" for="id_hours">Hours</label>{{ labor_form.hours }}</div>
+      <div class="col-12"><label class="form-label small" for="id_notes">Notes</label>{{ labor_form.notes }}</div>
+      <div class="col-12"><button class="btn btn-primary btn-sm">Record time</button></div></form></div>{% endif %}</div>
+
+  <div class="fx-card mb-3" id="materials"><div class="fx-card-header">Material used</div>
+    <div class="table-responsive"><table class="table fx-table" id="material-table"><thead><tr><th>Item</th><th>Qty</th></tr></thead><tbody>
+    {% for mt in materials %}<tr><td>{{ mt.description }}{% if mt.part_number %}<div class="small text-body-secondary">{{ mt.part_number }}</div>{% endif %}</td><td>{{ mt.quantity|floatformat:"-3" }} {{ mt.unit }}</td></tr>
+    {% empty %}<tr><td colspan="2" class="text-body-secondary">No material noted.</td></tr>{% endfor %}</tbody></table></div>
+    {% if recordable and can.record %}<div class="fx-card-body border-top"><form method="post" action="{% url 'workspace:material' wo.pk %}" class="row g-2 align-items-end">{% csrf_token %}
+      <div class="col-12"><label class="form-label small" for="id_description">Item</label>{{ material_form.description }}</div>
+      <div class="col-6"><label class="form-label small" for="id_quantity">Quantity</label>{{ material_form.quantity }}</div>
+      <div class="col-6"><label class="form-label small" for="id_unit">Unit</label>{{ material_form.unit }}</div>
+      <div class="col-12"><label class="form-label small" for="id_part_number">Part number</label>{{ material_form.part_number }}</div>
+      <div class="col-12"><button class="btn btn-primary btn-sm">Note material</button></div></form>
+      <div class="form-text">Records what was used. Stock is not issued or deducted (inventory module).</div></div>{% endif %}</div>
+
+  <div class="fx-card mb-3" id="evidence"><div class="fx-card-header">Evidence</div>
+    <ul class="list-group list-group-flush" id="evidence-list">{% for a in evidence %}<li class="list-group-item d-flex justify-content-between align-items-center gap-2"><span class="text-break">{{ a.original_name }}<span class="small text-body-secondary d-block">{{ a.created_at|date:"d M H:i" }}{% if a.description %} · {{ a.description }}{% endif %}</span></span>
+      <a class="btn btn-sm btn-outline-primary" href="{% url 'files:download' a.pk %}">Download</a></li>
+    {% empty %}<li class="list-group-item text-body-secondary">No evidence yet.</li>{% endfor %}</ul>
+    {% if can.attach and not terminal %}<div class="fx-card-body border-top"><form method="post" action="{% url 'workspace:evidence' wo.pk %}" enctype="multipart/form-data" class="row g-2">{% csrf_token %}
+      <div class="col-12"><label class="form-label small" for="id_file">Photo / file</label>{{ evidence_form.file }}</div>
+      <div class="col-12"><label class="form-label small" for="id_description">Description</label>{{ evidence_form.description }}</div>
+      <div class="col-12"><button class="btn btn-primary btn-sm">Upload</button></div></form></div>{% endif %}</div>
+
+  <div class="fx-card"><div class="fx-card-header">Recent activity</div><div class="fx-card-body"><ul class="fx-timeline mb-0">
+    {% for e in events %}<li><div class="fw-semibold">{{ e.action }} {% status_badge e.to_status %}</div><div class="small text-body-secondary">{{ e.created_at|date:"d M H:i" }} · {{ e.actor.email|default:"system" }}</div></li>{% endfor %}</ul></div></div>
+ </div>
+</div>
+{% endblock %}

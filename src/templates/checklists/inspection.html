@@ -1,0 +1,21 @@
+{% extends "shell.html" %}
+{% load ui_tags %}
+{% block title %}Inspection · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div>
+  <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1 small"><li class="breadcrumb-item"><a href="{% url 'checklists:inspections' %}">Inspections</a></li><li class="breadcrumb-item active">{{ insp.template.name }}</li></ol></nav>
+  <h1>{{ insp.template.name }} <span class="text-body-secondary fs-6">v{{ insp.template.version }}</span> {% status_badge insp.status %}</h1>
+  <div class="text-body-secondary">{{ insp.asset.asset_tag }} · {{ insp.site.code }}{% if wo %} · <a href="{% url 'workorders:detail' wo.pk %}">{{ wo.number }}</a>{% endif %} · started {{ insp.started_at|date:"d M Y H:i" }} by {{ insp.started_by.user.display_name }}{% if insp.completed_at %} · completed {{ insp.completed_at|date:"d M Y H:i" }} by {{ insp.completed_by.user.display_name }}{% endif %}</div></div></div>
+{% if insp.summary %}<div class="alert alert-light border"><strong>Summary:</strong> {{ insp.summary }}</div>{% endif %}
+<div class="fx-card mb-3"><div class="fx-card-header">Answers</div><div class="table-responsive"><table class="table fx-table" id="answer-table"><thead><tr><th>#</th><th>Question</th><th>Answer</th><th>Evidence</th></tr></thead><tbody>
+{% for r in rows %}<tr><td>{{ r.item.position }}</td><td>{{ r.item.prompt }}{% if r.item.required %} <span class="text-danger" title="Required">*</span>{% endif %}</td>
+  <td>{% if r.response %}{% if r.response.value_bool is not None %}{% if r.response.value_bool %}Pass{% else %}Fail{% endif %}{% elif r.response.value_number is not None %}{{ r.response.value_number|floatformat:"-4" }} {{ r.item.unit }}{% else %}{{ r.response.value_text }}{% endif %}
+    {% if r.response.is_exception %}<span class="badge fx-badge fx-badge-danger ms-1">Exception</span>{% endif %}{% else %}<span class="text-body-secondary">Not answered</span>{% endif %}</td>
+  <td>{% for a in r.evidence %}<a href="{% url 'files:download' a.pk %}">{{ a.original_name }}</a>{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td></tr>{% endfor %}</tbody></table></div></div>
+<div class="fx-card"><div class="fx-card-header">Findings ({{ findings|length }})</div><div class="table-responsive"><table class="table fx-table" id="finding-table"><thead><tr><th>Finding</th><th>Severity</th><th>Status</th><th></th></tr></thead><tbody>
+{% for f in findings %}<tr><td>{{ f.description|linebreaksbr }}<div class="small text-body-secondary">{% if f.item %}Q{{ f.item.position }} · {% endif %}{{ f.created_at|date:"d M Y H:i" }} · {{ f.created_by.email|default:"—" }}</div>
+  {% if f.resolution_notes %}<div class="small">Resolved: {{ f.resolution_notes }}</div>{% endif %}</td><td>{% status_badge f.severity %}</td><td>{% status_badge f.status %}</td>
+  <td>{% if can_review and f.status == "OPEN" %}<form method="post" action="{% url 'checklists:finding_resolve' f.pk %}" class="d-flex gap-1">{% csrf_token %}
+    <input class="form-control form-control-sm" name="reason" required minlength="3" maxlength="300" placeholder="Resolution notes" aria-label="Resolution notes"><button class="btn btn-sm btn-success">Resolve</button></form>{% endif %}</td></tr>
+{% empty %}<tr><td colspan="4">{% include "components/_empty_state.html" with title="No findings" text="No exceptions were recorded." %}</td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}

@@ -7,7 +7,7 @@ closure rules, append-only events, one audit record per change, all in one trans
 
 Boundary with M05: when a work order was created from a service request, the request-side effects (start
 service, resolve, rework, cancel) are applied through ``incidents.services.on_work_order_*``; M06 never edits
-request rows itself. M08 (checklists) and M09 (stock) do not exist yet: see ``closure_blockers``.
+request rows itself. M08 checklists are consulted through ``checklist_blockers``; M09 (stock) does not exist yet.
 """
 from __future__ import annotations
 
@@ -195,9 +195,9 @@ def evidence_for(wo: WorkOrder):
 def closure_blockers(wo: WorkOrder) -> list[str]:
     """Why this order cannot be closed yet. Empty = closable.
 
-    Implemented: resolution notes, at least one labor entry (time capture, D-036) and, for corrective /
-    installation work, at least one evidence file. NOT implemented: checklist completion (M08 arrives in Phase 3;
-    the HPE rule 'closure requires checklist completion' is therefore OPEN and must be wired then)."""
+    Implemented: resolution notes, at least one labor entry (time capture, D-036), for corrective / installation
+    work at least one evidence file, and M08 checklist completion (``checklists.services.checklist_blockers`` reads
+    the persisted inspections; no required checklist = no extra blocker). Stock (M09) is not part of closure."""
     blockers = []
     if len((wo.resolution_notes or "").strip()) < 10:
         blockers.append("Resolution notes are missing.")
@@ -205,7 +205,14 @@ def closure_blockers(wo: WorkOrder) -> list[str]:
         blockers.append("No labor / time has been recorded.")
     if wo.work_type in EVIDENCE_REQUIRED_TYPES and not evidence_for(wo).exists():
         blockers.append("Evidence (photo / file) is required for this type of work.")
-    return blockers
+    return blockers + checklist_blockers(wo)
+
+
+def checklist_blockers(wo: WorkOrder) -> list[str]:
+    """M08 contract: required checklists that are not completed (lazy import: M08 depends on M06 models)."""
+    from apps.checklists import services as checklists
+
+    return checklists.checklist_blockers(wo)
 
 
 # --- lifecycle -----------------------------------------------------------------------------------------------------
@@ -274,6 +281,10 @@ def transition(wo: WorkOrder, *, action: str, actor, membership, reason: str = "
         if wo.work_type in EVIDENCE_REQUIRED_TYPES and not evidence_for(wo).exists():
             raise ValidationFailed("Attach at least one photo / file as evidence before completing.",
                                    code="evidence_required")
+        pending = checklist_blockers(wo)
+        if pending:
+            raise Conflict("Complete the required checklist(s) before completing the work: " + " ".join(pending),
+                           code="checklist_incomplete", details={"blockers": pending})
         wo.resolution_notes = notes
         wo.completed_at = now
     elif action == "start_review":
@@ -336,7 +347,7 @@ def reassign(wo: WorkOrder, *, technician, reason: str, actor, request=None) -> 
 # --- labor / material / evidence ---------------------------------------------------------------------------------------
 
 
-def _assert_recordable(wo: WorkOrder, membership):
+def assert_recordable(wo: WorkOrder, membership):
     if wo.status not in _RECORD_STATES:
         raise Conflict("Labor, material and evidence are recorded while work is in progress or in review.",
                        code="work_order_not_recordable", details={"state": wo.status})
@@ -349,7 +360,7 @@ def _assert_recordable(wo: WorkOrder, membership):
 def record_labor(wo: WorkOrder, *, technician, work_date, hours, notes: str = "", actor, membership,
                  request=None) -> WorkOrderLabor:
     wo = WorkOrder.objects.select_for_update().get(pk=wo.pk)
-    _assert_recordable(wo, membership)
+    assert_recordable(wo, membership)
     if technician.organization_id != wo.organization_id:
         raise ValidationFailed("Technician not found in this organization.", code="cross_tenant_technician")
     if technician.pk != membership.pk and not rbac.has_permission(membership, "work_order.dispatch", wo.site_id):
@@ -370,7 +381,7 @@ def record_labor(wo: WorkOrder, *, technician, work_date, hours, notes: str = ""
 def record_material(wo: WorkOrder, *, description: str, quantity, unit: str = "pcs", part_number: str = "",
                     actor, membership, request=None) -> WorkOrderMaterial:
     wo = WorkOrder.objects.select_for_update().get(pk=wo.pk)
-    _assert_recordable(wo, membership)
+    assert_recordable(wo, membership)
     description = (description or "").strip()
     if not description:
         raise ValidationFailed("Describe the material used.", code="description_required")

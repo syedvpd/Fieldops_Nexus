@@ -18,6 +18,9 @@ _ICONS = {
     "globe": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
     "pin": '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
     "box": '<path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5v-9z"/><path d="M3 7.5L12 12l9-4.5M12 12v9"/>',
+    "list-check": '<path d="M9 6h11M9 12h11M9 18h11M3.5 6l1.5 1.5L7.5 5M3.5 12l1.5 1.5L7.5 11M3.5 18l1.5 1.5L7.5 17"/>',
+    "clipboard": '<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h4"/>',
+    "wrench": '<path d="M14.5 6.5a4 4 0 0 0 5 5L21 13l-8 8-4-4 8-8-2.5-2.5zM6 18l-3 3"/>',
     "menu": '<path d="M4 6h16M4 12h16M4 18h16"/>',
 }
 
@@ -41,6 +44,7 @@ _BADGES = {
     "IN_SERVICE": "warning", "RESOLVED": "success", "CONFIRMED": "success", "CLOSED": "secondary",
     "DRAFT": "secondary", "PLANNED": "info", "ASSIGNED": "info", "DISPATCHED": "info", "IN_PROGRESS": "warning",
     "ON_HOLD": "danger", "COMPLETED": "success", "SUPERVISOR_REVIEW": "warning", "CANCELLED": "secondary",
+    "OPEN": "warning", "NOT_STARTED": "secondary",
     "LOW": "secondary", "MEDIUM": "info", "HIGH": "warning", "URGENT": "danger",
 }
 

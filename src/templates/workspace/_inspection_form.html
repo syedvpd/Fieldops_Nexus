@@ -1,0 +1,40 @@
+{% load ui_tags %}
+<div id="inspection-body">
+{% if flash %}<div class="alert alert-{% if flash.0 == 'error' %}danger{% else %}success{% endif %} py-2" role="status">{{ flash.1 }}</div>{% endif %}
+{% if insp.status == "IN_PROGRESS" and issues %}<div class="alert alert-warning py-2" id="completion-issues"><strong>Still needed to complete:</strong><ul class="mb-0">{% for i in issues %}<li>{{ i }}</li>{% endfor %}</ul></div>{% endif %}
+<form method="post" action="{% url 'workspace:inspection_save' insp.pk %}" id="inspection-form" novalidate
+      hx-post="{% url 'workspace:inspection_save' insp.pk %}" hx-target="#inspection-body" hx-swap="outerHTML">{% csrf_token %}
+  <div class="fx-card mb-3"><ul class="list-group list-group-flush">
+  {% for r in rows %}{% with it=r.item %}
+    <li class="list-group-item" id="item-{{ it.pk }}">
+      <label class="form-label fw-semibold mb-1" for="item_{{ it.pk }}">{{ it.position }}. {{ it.prompt }}{% if it.required %} <span class="text-danger" title="Required">*</span>{% endif %}</label>
+      {% if it.guidance %}<div class="small text-body-secondary mb-2">{{ it.guidance }}</div>{% endif %}
+      {% if editable %}
+        {% if it.item_type == "BOOLEAN" %}
+          <div class="btn-group" role="group" aria-label="{{ it.prompt }}">
+            <input type="radio" class="btn-check" name="item_{{ it.pk }}" id="item_{{ it.pk }}_pass" value="pass" {% if r.value == "pass" %}checked{% endif %}><label class="btn btn-outline-success" for="item_{{ it.pk }}_pass">Pass</label>
+            <input type="radio" class="btn-check" name="item_{{ it.pk }}" id="item_{{ it.pk }}_fail" value="fail" {% if r.value == "fail" %}checked{% endif %}><label class="btn btn-outline-danger" for="item_{{ it.pk }}_fail">Fail</label></div>
+        {% elif it.item_type == "SELECTION" %}
+          <select class="form-select" name="item_{{ it.pk }}" id="item_{{ it.pk }}"><option value="">Choose…</option>{% for o in it.options %}<option value="{{ o }}" {% if r.value == o %}selected{% endif %}>{{ o }}</option>{% endfor %}</select>
+        {% elif it.item_type == "NUMERIC" %}
+          <div class="input-group" style="max-width:20rem"><input class="form-control" inputmode="decimal" name="item_{{ it.pk }}" id="item_{{ it.pk }}" value="{{ r.value }}">{% if it.unit %}<span class="input-group-text">{{ it.unit }}</span>{% endif %}</div>
+          {% if it.min_value is not None or it.max_value is not None %}<div class="form-text">Expected {% if it.min_value is not None %}from {{ it.min_value|floatformat:"-4" }}{% endif %} {% if it.max_value is not None %}to {{ it.max_value|floatformat:"-4" }}{% endif %}; outside the range needs a finding.</div>{% endif %}
+        {% else %}
+          <textarea class="form-control" rows="2" name="item_{{ it.pk }}" id="item_{{ it.pk }}">{{ r.value }}</textarea>
+        {% endif %}
+      {% else %}
+        <div>{% if r.response %}{% if r.response.value_bool is not None %}{% if r.response.value_bool %}Pass{% else %}Fail{% endif %}{% elif r.response.value_number is not None %}{{ r.response.value_number|floatformat:"-4" }} {{ it.unit }}{% else %}{{ r.response.value_text }}{% endif %}{% else %}<span class="text-body-secondary">Not answered</span>{% endif %}</div>
+      {% endif %}
+      {% if r.error %}<div class="text-danger small mt-1" role="alert">{{ r.error }}</div>{% endif %}
+      {% if r.response.is_exception %}<div class="small mt-1"><span class="badge fx-badge fx-badge-danger">Exception</span> record a finding below.</div>{% endif %}
+      {% if it.evidence_required %}<div class="small text-body-secondary mt-1">Evidence required{% if r.evidence %}: {% for a in r.evidence %}<a href="{% url 'files:download' a.pk %}">{{ a.original_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% else %}: none attached yet{% endif %}</div>{% endif %}
+    </li>{% endwith %}{% endfor %}
+  </ul></div>
+  {% if editable %}
+  <div class="fx-card mb-3"><div class="fx-card-body"><label class="form-label" for="id_summary">Summary (optional)</label><textarea class="form-control" rows="2" name="summary" id="id_summary" maxlength="2000">{{ insp.summary }}</textarea></div></div>
+  <div class="d-flex flex-wrap gap-2 mb-3"><button class="btn btn-lg btn-primary" name="action" value="save">Save answers</button>
+    <button class="btn btn-lg btn-success" name="action" value="complete" data-confirm="Complete this inspection? It cannot be changed afterwards.">Complete inspection</button>
+    <span class="htmx-indicator align-self-center small text-body-secondary">Saving…</span></div>
+  {% endif %}
+</form>
+</div>

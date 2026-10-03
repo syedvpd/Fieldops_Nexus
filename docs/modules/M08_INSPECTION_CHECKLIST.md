@@ -9,7 +9,7 @@ Part of the ONE integrated FieldOps Nexus ERP. Read `docs/PROJECT_SOURCE_OF_TRUT
 - **Consumes:** M02 assets, M06 work.
 - **Provides:** Completion status for M06 closure and M04 references.
 - **Boundary rules:** Required checklist completion can be a prerequisite for M06 closure.
-- **Status:** NOT STARTED
+- **Status:** IMPLEMENTED (Phase 3: app `checklists`, D-039 / D-040); automated tests on local PostgreSQL; browser acceptance DEFERRED; awaiting Team Lead approval. Evidence: `docs/PHASE_3_ACCEPTANCE_REPORT.md`; contract `docs/integrations/checklists-workorders.md`.
 
 
 Related: `docs/MODULE_STATUS.md`, `docs/TRACEABILITY.md`, `docs/DOMAIN_MODEL.md`, `docs/DECISIONS.md`, `docs/blueprint/04_MODULE_RESPONSIBILITIES.md`.

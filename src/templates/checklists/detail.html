@@ -1,0 +1,36 @@
+{% extends "shell.html" %}
+{% load ui_tags %}
+{% block title %}{{ t.name }} · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div>
+  <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1 small"><li class="breadcrumb-item"><a href="{% url 'checklists:list' %}">Checklists</a></li><li class="breadcrumb-item active">{{ t.name }}</li></ol></nav>
+  <h1>{{ t.name }} <span class="text-body-secondary fs-6">v{{ t.version }}</span> {% status_badge t.status %}</h1>
+  <div class="text-body-secondary">{{ t.description|default:"No description." }} · Applies to: {{ t.work_type|default:"any work"|title }} · {% if t.is_required %}<strong>Required</strong> before work can be completed / closed{% else %}Optional{% endif %}</div></div>
+  {% if can_manage %}<div class="d-flex flex-wrap gap-2" id="template-actions">
+    {% if t.status == "DRAFT" %}<a class="btn btn-outline-primary" href="{% url 'checklists:edit' t.pk %}">Edit</a>
+      <form method="post" action="{% url 'checklists:template_action' t.pk 'activate' %}" class="m-0">{% csrf_token %}<button class="btn btn-success" {% if not items %}disabled{% endif %}>Activate</button></form>{% endif %}
+    {% if t.status == "ACTIVE" %}<form method="post" action="{% url 'checklists:template_action' t.pk 'deactivate' %}" class="m-0">{% csrf_token %}<button class="btn btn-warning" data-confirm="Deactivate this checklist? New inspections cannot use it.">Deactivate</button></form>{% endif %}
+    {% if t.status != "DRAFT" %}<form method="post" action="{% url 'checklists:template_action' t.pk 'new-version' %}" class="m-0">{% csrf_token %}<button class="btn btn-outline-primary">New version</button></form>{% endif %}
+  </div>{% endif %}</div>
+{% if t.status != "DRAFT" %}<div class="alert alert-secondary">This version is frozen so that {{ usage }} past inspection{{ usage|pluralize }} stay understandable. Create a new version to change the questions.</div>{% endif %}
+<div class="fx-card mb-3"><div class="fx-card-header">Questions ({{ items|length }})</div>
+  <div class="table-responsive"><table class="table fx-table" id="item-table"><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Rules</th><th></th></tr></thead><tbody>
+  {% for it in items %}<tr><td>{{ it.position }}</td><td>{{ it.prompt }}{% if it.guidance %}<div class="small text-body-secondary">{{ it.guidance }}</div>{% endif %}</td>
+    <td>{{ it.get_item_type_display }}</td>
+    <td class="small">{% if it.required %}Required{% else %}Optional{% endif %}
+      {% if it.item_type == "NUMERIC" and it.min_value is not None %} · min {{ it.min_value|floatformat:"-4" }}{% endif %}{% if it.item_type == "NUMERIC" and it.max_value is not None %} · max {{ it.max_value|floatformat:"-4" }}{% endif %}{% if it.unit %} {{ it.unit }}{% endif %}
+      {% if it.item_type == "SELECTION" %} · {{ it.options|join:" / " }}{% if it.exception_options %} · exception: {{ it.exception_options|join:", " }}{% endif %}{% endif %}
+      {% if it.item_type == "BOOLEAN" %} · fail = exception{% endif %}{% if it.evidence_required %} · evidence required{% endif %}</td>
+    <td class="text-end text-nowrap">{% if editable %}
+      <form method="post" action="{% url 'checklists:item_move' t.pk it.pk 'up' %}" class="d-inline">{% csrf_token %}<button class="btn btn-sm btn-outline-secondary" aria-label="Move up" {% if forloop.first %}disabled{% endif %}>↑</button></form>
+      <form method="post" action="{% url 'checklists:item_move' t.pk it.pk 'down' %}" class="d-inline">{% csrf_token %}<button class="btn btn-sm btn-outline-secondary" aria-label="Move down" {% if forloop.last %}disabled{% endif %}>↓</button></form>
+      <a class="btn btn-sm btn-outline-primary" href="{% url 'checklists:item_edit' t.pk it.pk %}">Edit</a>
+      <form method="post" action="{% url 'checklists:item_remove' t.pk it.pk %}" class="d-inline">{% csrf_token %}<button class="btn btn-sm btn-outline-danger" data-confirm="Remove this question?">Remove</button></form>{% endif %}</td></tr>
+  {% empty %}<tr><td colspan="5">{% include "components/_empty_state.html" with title="No questions yet" text="Add at least one question before activating." %}</td></tr>{% endfor %}</tbody></table></div></div>
+{% if item_form %}
+<div class="fx-card"><div class="fx-card-header">Add a question</div><div class="fx-card-body">
+  <form method="post" action="{% url 'checklists:item_add' t.pk %}" id="item-add-form" novalidate>{% csrf_token %}
+    <div class="fx-form-grid">{% for field in item_form %}<div>{% include "components/_form_field.html" %}</div>{% endfor %}</div>
+    <button class="btn btn-primary">Add question</button></form></div></div>
+{% endif %}
+{% endblock %}

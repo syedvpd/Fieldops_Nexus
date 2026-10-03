@@ -1,0 +1,22 @@
+{% extends "shell.html" %}
+{% load ui_tags %}
+{% block title %}My Jobs · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div><h1>My Jobs</h1><div class="text-body-secondary">Work orders assigned to you.</div></div></div>
+<div class="fx-tabs" role="tablist">
+  <a role="tab" class="{% if view == 'active' %}active{% endif %}" href="?view=active">To do ({{ counts.active }})</a>
+  <a role="tab" class="{% if view == 'review' %}active{% endif %}" href="?view=review">Awaiting review ({{ counts.review }})</a>
+  <a role="tab" class="{% if view == 'all' %}active{% endif %}" href="?view=all">All</a></div>
+<div class="row g-3" id="job-list">
+{% for w in page %}
+  <div class="col-12 col-md-6 col-xl-4"><a class="text-decoration-none text-reset" href="{% url 'workspace:job' w.pk %}"><div class="fx-card h-100"><div class="fx-card-body">
+    <div class="d-flex justify-content-between align-items-start gap-2"><div class="fw-semibold">{{ w.number }}</div><div>{% status_badge w.status %}</div></div>
+    <div class="fs-6 my-1">{{ w.title }}</div>
+    <div class="small text-body-secondary">{{ w.asset.asset_tag }} · {{ w.asset.name }} · {{ w.site.code }}</div>
+    <div class="small mt-2">{% status_badge w.priority %} {% if w.planned_start %}<span class="ms-1">{{ w.planned_start|date:"d M H:i" }}</span>{% endif %}
+      {% with n=pending|get_item:w.pk %}{% if n and w.status != "COMPLETED" and w.status != "SUPERVISOR_REVIEW" %}<span class="badge fx-badge fx-badge-warning ms-1">{{ n }} checklist{{ n|pluralize }} pending</span>{% endif %}{% endwith %}</div>
+  </div></div></a></div>
+{% empty %}<div class="col-12"><div class="fx-card">{% include "components/_empty_state.html" with title="No jobs here" text="Work assigned to you shows up here once it is assigned." %}</div></div>
+{% endfor %}</div>
+<div class="fx-card mt-3">{% include "components/_pagination.html" %}</div>
+{% endblock %}

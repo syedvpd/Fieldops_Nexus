@@ -10,6 +10,11 @@ from apps.assets.api_views import (
     MeterViewSet,
 )
 from apps.audit.api_views import AuditLogViewSet
+from apps.checklists.api_views import (
+    ChecklistTemplateViewSet,
+    FindingViewSet,
+    InspectionViewSet,
+)
 from apps.core import health
 from apps.incidents.api_views import ServiceRequestViewSet
 from apps.notifications.api_views import NotificationViewSet
@@ -42,6 +47,9 @@ router.register("asset-components", ComponentViewSet, basename="asset-component"
 router.register("meters", MeterViewSet, basename="meter")
 router.register("service-requests", ServiceRequestViewSet, basename="service-request")
 router.register("work-orders", WorkOrderViewSet, basename="work-order")
+router.register("checklist-templates", ChecklistTemplateViewSet, basename="checklist-template")
+router.register("inspections", InspectionViewSet, basename="inspection")
+router.register("findings", FindingViewSet, basename="finding")
 router.register("platform/organizations", PlatformOrganizationViewSet, basename="platform-organization")
 
 api_v1 = [
@@ -68,6 +76,8 @@ urlpatterns = [
     path("app/", include("apps.assets.urls")),
     path("app/", include("apps.incidents.urls")),
     path("app/", include("apps.workorders.urls")),
+    path("app/", include("apps.checklists.urls")),
+    path("app/", include("apps.workspace.urls")),
     path("", include("apps.ui.urls")),
 ]
 

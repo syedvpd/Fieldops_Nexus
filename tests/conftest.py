@@ -166,3 +166,21 @@ def site_a2(org_a, make_site):
 @pytest.fixture
 def site_b1(org_b, make_site):
     return make_site(org_b, "B1")
+
+
+# --- Phase 3 helpers (checklists / workspace) ---------------------------------------------------------------
+
+
+@pytest.fixture
+def p3(org_a, site_a1, site_a2, make_asset, make_member):
+    """Alpha organization with two sites and one member per role used by the Phase 3 tests."""
+    return {
+        "org": org_a, "site": site_a1, "site2": site_a2,
+        "asset": make_asset(org_a, site_a1, "P3-PUMP"), "asset2": make_asset(org_a, site_a2, "P3-FAN"),
+        "tech": make_member(org_a, "tech@alpha.test", "technician"),
+        "tech2": make_member(org_a, "tech2@alpha.test", "technician"),
+        "ops": make_member(org_a, "ops@alpha.test", "operations_manager"),
+        "planner": make_member(org_a, "planner@alpha.test", "maintenance_planner"),
+        "sup": make_member(org_a, "sup@alpha.test", "supervisor"),
+        "reader": make_member(org_a, "reader@alpha.test", "auditor"),
+    }

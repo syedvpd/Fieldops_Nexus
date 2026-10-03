@@ -73,6 +73,8 @@ INSTALLED_APPS = [
     "apps.assets",
     "apps.incidents",
     "apps.workorders",
+    "apps.checklists",
+    "apps.workspace",
     "apps.ui",
 ]
 
@@ -253,6 +255,9 @@ SPECTACULAR_SETTINGS = {
         "OrganizationStatusEnum": "apps.tenancy.models.Organization.Status",
         "ServiceRequestStatusEnum": "apps.incidents.models.ServiceRequest.Status",
         "WorkOrderStatusEnum": "apps.workorders.models.WorkOrder.Status",
+        "ChecklistTemplateStatusEnum": "apps.checklists.models.TEMPLATE_STATUS_CHOICES",
+        "InspectionStatusEnum": "apps.checklists.models.INSPECTION_STATUS_CHOICES",
+        "FindingStatusEnum": "apps.checklists.models.Finding.Status",
         "WorkOrderPriorityEnum": "apps.workorders.models.WorkOrder.Priority",
     },
 }

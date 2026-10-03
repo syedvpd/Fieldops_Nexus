@@ -26,7 +26,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
     ),
     RoleTemplate(
         "operations_manager", "Operations Manager", "Oversees maintenance and field operations.",
-        ("*.view", "incident.*", "work_order.*", "maintenance.*", "sla.view", "report.*"),
+        ("*.view", "incident.*", "work_order.*", "maintenance.*", "checklist.*", "inspection.*", "sla.view",
+         "report.*"),
     ),
     RoleTemplate(
         "asset_manager", "Asset Manager", "Owns the asset registry and hierarchy.",
@@ -38,6 +39,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         ("asset.view", "asset.history.view", "site.view", "zone.view", "calendar.view", "maintenance.*", "incident.view",
          "work_order.view", "work_order.create", "work_order.plan", "work_order.assign",
          "work_order.dispatch", "work_order.update", "work_order.cancel", "work_order.attach", "checklist.view",
+         "checklist.manage", "inspection.view",
          "inventory.view", "sla.view"),
     ),
     RoleTemplate(

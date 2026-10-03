@@ -1,0 +1,18 @@
+{% extends "shell.html" %}
+{% load ui_tags %}
+{% block title %}Inspections · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div><h1>Inspections</h1><div class="text-body-secondary">Executed checklists and their results.</div></div></div>
+<div class="fx-card">
+  <form method="get" class="d-flex flex-wrap gap-2 p-3 border-bottom align-items-center">
+    <select class="form-select form-select-sm" style="max-width:150px" name="site" aria-label="Site"><option value="">All sites</option>
+      {% for s in sites %}<option value="{{ s.pk }}" {% if filters.site == s.pk|stringformat:"s" %}selected{% endif %}>{{ s.code }}</option>{% endfor %}</select>
+    <select class="form-select form-select-sm" style="max-width:170px" name="status" aria-label="Status"><option value="">All statuses</option>
+      <option value="IN_PROGRESS" {% if filters.status == "IN_PROGRESS" %}selected{% endif %}>In progress</option><option value="COMPLETED" {% if filters.status == "COMPLETED" %}selected{% endif %}>Completed</option></select>
+    <button class="btn btn-sm btn-outline-secondary">Filter</button></form>
+  <div class="table-responsive"><table class="table fx-table" id="inspection-table"><thead><tr><th>Checklist</th><th>Asset</th><th>Site</th><th>Work order</th><th>Status</th><th>Started</th></tr></thead><tbody>
+  {% for i in page %}<tr><td><a href="{% url 'checklists:inspection' i.pk %}">{{ i.template.name }} v{{ i.template.version }}</a></td><td>{{ i.asset.asset_tag }}</td><td>{{ i.site.code }}</td>
+    <td>{% if i.work_order %}{{ i.work_order.number }}{% else %}—{% endif %}</td><td>{% status_badge i.status %}</td><td class="small">{{ i.started_at|date:"d M Y H:i" }} · {{ i.started_by.user.display_name }}</td></tr>
+  {% empty %}<tr><td colspan="6">{% include "components/_empty_state.html" with title="No inspections" text="Inspections appear when technicians run a checklist." %}</td></tr>{% endfor %}</tbody></table></div>
+  {% include "components/_pagination.html" %}</div>
+{% endblock %}
