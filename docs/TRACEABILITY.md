@@ -18,7 +18,7 @@ HPE module numbers are kept exactly as in the Blueprint. "HPE" = explicit in the
 | M11 | SLA & Escalation | `sla` | 6 (IMPLEMENTED: D-044, `docs/integrations/sla-requests-workorders.md`; tests `tests/test_m11_*.py`, `tests/test_migrations_phase6.py`) |
 | M12 | QR / Barcode | `identification` | 8 (IMPLEMENTED: D-050) |
 | M13 | Client / Requester Portal | `portal` | 8 (IMPLEMENTED: D-051) |
-| M14 | Operational Dashboards | `dashboards` | 9 (IMPLEMENTED: D-052) |
+| M14 | Operational Dashboards | `dashboards` | 9 (IMPLEMENTED: D-052; formulas are implementation assumptions pending Team Lead confirmation, D-057; `ReportSnapshot`, D-054) |
 | M15 | Audit & Compliance | `audit` (extends) | 9 (IMPLEMENTED: D-053) |
 
 ## Review gates (mandatory acceptance milestones, in addition to our phases)
@@ -178,3 +178,9 @@ Full matrices: `docs/FINAL_HPE_TRACEABILITY_REPORT.md`, `FINAL_DAY_90_ACCEPTANCE
 | Celery: SLA escalation | `sla.tasks.fan_out_sla_monitor` (60 s) | IMPLEMENTED |
 | Celery: contract / warranty expiry alerts | `contracts.tasks.fan_out_renewal_alerts` (6 h) | IMPLEMENTED |
 | Celery: report snapshots | `dashboards.tasks.fan_out_report_snapshots` (daily) | IMPLEMENTED |
+
+## Dashboard formula status (D-052 / D-057)
+| KPI | Definition as implemented | Approval status |
+|---|---|---|
+| MTTR, MTBF, technician utilization (8 h/day), PM compliance, parts consumption, overdue | `dashboards.metrics.KPI_DEFINITIONS` | OUR IMPLEMENTATION ASSUMPTION; TEAM LEAD CONFIRMATION REQUIRED (no recorded approval) |
+| Open work orders, SLA breaches, downtime hours, open incidents, low stock | plain counts / sums over persisted rows, reconciled against SQL in `tests/test_m14_dashboards.py` | no business definition needed beyond the status sets in `KPI_DEFINITIONS` |
