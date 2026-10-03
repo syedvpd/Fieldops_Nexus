@@ -15,7 +15,7 @@ from apps.notifications.models import Notification
 from tests.phase3_support import new_wo
 
 pytestmark = pytest.mark.django_db
-TODAY = datetime.datetime.now(datetime.UTC).date()  # the app compares in UTC; local date.today() is off by a day around midnight
+TODAY = datetime.datetime.now(datetime.UTC).date()  # UTC: the app compares in UTC
 
 
 def d(days):
