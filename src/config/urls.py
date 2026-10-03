@@ -57,6 +57,7 @@ from apps.sla.api_views import (
 )
 from apps.tenancy.api_views import MemberViewSet, OrganizationViewSet
 from apps.workorders.api_views import WorkOrderViewSet
+from config import api_aliases
 
 router = SimpleRouter()
 router.register("members", MemberViewSet, basename="member")
@@ -97,6 +98,18 @@ router.register("portal/requests", PortalRequestViewSet, basename="portal-reques
 router.register("portal/assets", PortalAssetViewSet, basename="portal-asset")
 router.register("portal-accounts", PortalAccountViewSet, basename="portal-account")
 router.register("dashboards", DashboardViewSet, basename="dashboard")
+# HPE-named aliases of the canonical routes (same viewsets, hidden from the schema)
+router.register("schedules", api_aliases.ScheduleAlias, basename="alias-schedule")
+router.register("generate-work-orders", api_aliases.GenerateWorkOrdersAlias, basename="alias-generate")
+router.register("checklists", api_aliases.ChecklistAlias, basename="alias-checklist")
+router.register("stock", api_aliases.StockAlias, basename="alias-stock")
+router.register("reserve", api_aliases.ReserveAlias, basename="alias-reserve")
+router.register("issue", api_aliases.IssueAlias, basename="alias-issue")
+router.register("return", api_aliases.ReturnAlias, basename="alias-return")
+router.register("slas", api_aliases.SLAAlias, basename="alias-sla")
+router.register("breaches", api_aliases.BreachAlias, basename="alias-breach")
+router.register("escalations", api_aliases.EscalationAlias, basename="alias-escalation")
+router.register("client/requests", api_aliases.ClientRequestAlias, basename="alias-client-request")
 router.register("sla-profiles", SLAProfileViewSet, basename="sla-profile")
 router.register("sla-trackings", SLATrackingViewSet, basename="sla-tracking")
 router.register("sla-breaches", SLABreachViewSet, basename="sla-breach")

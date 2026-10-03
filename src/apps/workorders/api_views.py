@@ -180,6 +180,8 @@ class WorkOrderViewSet(TenantAPIMixin, viewsets.ViewSet):
     permission_map = {
         "list": "work_order.view_assigned", "retrieve": "work_order.view_assigned", "create": "work_order.create",
         "partial_update": "work_order.update", "transition": "work_order.view_assigned",
+        "assign": "work_order.view_assigned", "start": "work_order.view_assigned",
+        "hold": "work_order.view_assigned", "complete": "work_order.view_assigned",
         "reassign": "work_order.assign", "events": "work_order.view_assigned",
         "closure": "work_order.view_assigned", "labor:get": "work_order.view_assigned",
         "labor:post": "work_order.record", "materials:get": "work_order.view_assigned",
@@ -230,8 +232,37 @@ class WorkOrderViewSet(TenantAPIMixin, viewsets.ViewSet):
     @extend_schema(request=WorkOrderTransitionSerializer, responses=WorkOrderSerializer)
     @action(detail=True, methods=["post"])
     def transition(self, request, pk=None):
+        return self._transition(request, pk, dict(_validated(WorkOrderTransitionSerializer, request)))
+
+    # HPE API group "Work Orders: /assign/, /start/, /hold/, /complete/": the same guarded transition, one URL per action
+    def _shortcut(self, request, pk, act):
+        body = {k: v for k, v in (request.data.items() if hasattr(request.data, "items") else [])}
+        ser = WorkOrderTransitionSerializer(data={**body, "action": act})
+        ser.is_valid(raise_exception=True)
+        return self._transition(request, pk, dict(ser.validated_data))
+
+    @extend_schema(request=OpenApiTypes.OBJECT, responses=WorkOrderSerializer)
+    @action(detail=True, methods=["post"])
+    def assign(self, request, pk=None):
+        return self._shortcut(request, pk, "assign")
+
+    @extend_schema(request=OpenApiTypes.OBJECT, responses=WorkOrderSerializer)
+    @action(detail=True, methods=["post"])
+    def start(self, request, pk=None):
+        return self._shortcut(request, pk, "start")
+
+    @extend_schema(request=OpenApiTypes.OBJECT, responses=WorkOrderSerializer)
+    @action(detail=True, methods=["post"])
+    def hold(self, request, pk=None):
+        return self._shortcut(request, pk, "hold")
+
+    @extend_schema(request=OpenApiTypes.OBJECT, responses=WorkOrderSerializer)
+    @action(detail=True, methods=["post"])
+    def complete(self, request, pk=None):
+        return self._shortcut(request, pk, "complete")
+
+    def _transition(self, request, pk, d):
         wo = self._obj(request, pk)
-        d = dict(_validated(WorkOrderTransitionSerializer, request))
         act = d.pop("action")
         require_permission(request.membership, ACTION_PERMISSIONS[act], wo.site_id)
         reason = d.pop("reason", "")

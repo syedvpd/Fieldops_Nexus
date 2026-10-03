@@ -70,7 +70,8 @@ class PortalRequestViewSet(TenantAPIMixin, viewsets.ViewSet):
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     permission_map = {"list": "portal.request.view", "retrieve": "portal.request.view",
                       "create": "portal.request.create", "confirm": "portal.request.confirm",
-                      "reopen": "portal.request.confirm", "attachments": "portal.request.create"}
+                      "reopen": "portal.request.confirm", "attachments": "portal.request.create",
+                      "status": "portal.request.view"}
 
     def _mine(self, request, pk):
         return selectors.get_my_request(request.membership, pk)
@@ -85,6 +86,15 @@ class PortalRequestViewSet(TenantAPIMixin, viewsets.ViewSet):
     @extend_schema(responses=ClientRequestSerializer)
     def retrieve(self, request, pk=None):
         return Response(ClientRequestSerializer(self._mine(request, pk)).data)
+
+    @extend_schema(responses=OpenApiTypes.OBJECT)
+    @action(detail=True, methods=["get"])
+    def status(self, request, pk=None):
+        """HPE portal group ``/client/requests/{id}/status/``: client-safe status + visit, nothing internal."""
+        sr = self._mine(request, pk)
+        body = ClientRequestSerializer(sr).data
+        return Response({"number": body["number"], "status": body["status"], "client_status": body["client_status"],
+                         "visit": body["visit"]})
 
     @extend_schema(request=SubmitSerializer, responses={201: ClientRequestSerializer})
     def create(self, request):
