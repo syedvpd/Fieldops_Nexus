@@ -28,4 +28,4 @@
   </form>{% endif %}
 </div></div>
 {% endblock %}
-{% block scripts %}{% if not can_update %}<script>document.querySelectorAll("main form[method=post] :is(input,textarea,select)").forEach(e=>{if(e.type!=="hidden")e.disabled=true})</script>{% endif %}{% endblock %}
+{% block scripts %}{% if not can_update %}<script nonce="{{ csp_nonce }}">document.querySelectorAll("main form[method=post] :is(input,textarea,select)").forEach(e=>{if(e.type!=="hidden")e.disabled=true})</script>{% endif %}{% endblock %}

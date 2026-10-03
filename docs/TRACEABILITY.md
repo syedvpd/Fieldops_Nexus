@@ -162,3 +162,19 @@ Status: IMPLEMENTED = code + automated test on local PostgreSQL. Browser evidenc
 
 ## Final run (Phases 7-9 + audit)
 Full matrices: `docs/FINAL_HPE_TRACEABILITY_REPORT.md`, `FINAL_DAY_90_ACCEPTANCE_REPORT.md`, `FINAL_BUSINESS_WORKFLOW_ACCEPTANCE_REPORT.md`, `FINAL_SECURITY_AUDIT.md`, `FINAL_DATABASE_INTEGRITY_REPORT.md`, `FINAL_BROWSER_ACCEPTANCE_REPORT.md`, `FINAL_RELEASE_READINESS_REPORT.md`. Manual guide: `docs/manual-tests/PHASE_7_9_MANUAL_TEST.md`.
+
+
+## HPE 8.2 entity equivalents and HPE 8.4 Celery families (final reconciliation, D-054 / D-056)
+| HPE entity / rule | Where it lives | Status |
+|---|---|---|
+| Incident / ServiceRequest | `incidents.ServiceRequest` (`kind`), D-035 | IMPLEMENTED (equivalent) |
+| WorkOrderAssignment | `WorkOrder.assigned_to` + `WorkOrderEvent` | IMPLEMENTED (equivalent) |
+| ClosureApproval | review -> close transition + M13 confirmation + M15 "Closures" | IMPLEMENTED (equivalent) |
+| Warranty, ServiceContract | `contracts.CoverageAgreement` (WARRANTY / AMC / CONTRACT) | IMPLEMENTED |
+| TechnicianProfile, Shift | `Membership` + technician role + `MembershipRole.site`; site `OperatingCalendar` | IMPLEMENTED (equivalent); Team Lead confirmation requested |
+| ReportSnapshot | `dashboards.ReportSnapshot` + daily Celery fan-out | IMPLEMENTED |
+| IntegrationEvent | none (no external system defined) | HPE CLARIFICATION REQUIRED |
+| Celery: PM reminders / generation | `maintenance.tasks.fan_out_maintenance` (15 min) | IMPLEMENTED |
+| Celery: SLA escalation | `sla.tasks.fan_out_sla_monitor` (60 s) | IMPLEMENTED |
+| Celery: contract / warranty expiry alerts | `contracts.tasks.fan_out_renewal_alerts` (6 h) | IMPLEMENTED |
+| Celery: report snapshots | `dashboards.tasks.fan_out_report_snapshots` (daily) | IMPLEMENTED |

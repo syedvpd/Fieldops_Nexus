@@ -103,9 +103,14 @@ def test_health_endpoints(client):
 
 
 @pytest.mark.django_db
-def test_openapi_schema_generates(client):
+def test_openapi_schema_generates_for_signed_in_users_only(client, owner_a):
+    assert client.get("/api/v1/schema/").status_code in (401, 403)  # not anonymous (audit decision)
+    assert client.get("/api/v1/docs/").status_code in (401, 403)
+    client.force_login(owner_a)
     r = client.get("/api/v1/schema/")
     assert r.status_code == 200 and b"/api/v1/members/" in r.content
+    docs = client.get("/api/v1/docs/")
+    assert docs.status_code == 200 and "cdn.jsdelivr.net" in docs["Content-Security-Policy"]  # docs page only
 
 
 @pytest.mark.django_db
@@ -122,3 +127,19 @@ def test_celery_registered_tasks():
         assert name in app.tasks
     from django.conf import settings
     assert "clear-expired-sessions" in settings.CELERY_BEAT_SCHEDULE
+
+
+@pytest.mark.django_db
+def test_content_security_policy_header_and_nonce(client, owner_a):
+    r = client.get("/accounts/login/")
+    csp = r["Content-Security-Policy"]
+    assert "script-src 'self' 'nonce-" in csp and "frame-ancestors 'none'" in csp and "'unsafe-inline'" not in csp.split("style-src")[0]
+    nonce = csp.split("'nonce-")[1].split("'")[0]
+    other = client.get("/accounts/login/")["Content-Security-Policy"]
+    assert f"'nonce-{nonce}'" not in other  # a fresh nonce per response
+    client.force_login(owner_a)
+    page = client.get("/app/organization/")
+    body = page.content.decode()
+    assert "onclick=" not in body and "<script>" not in body  # inline handlers/scripts are gone or carry the nonce
+    pnonce = page["Content-Security-Policy"].split("'nonce-")[1].split("'")[0]
+    assert all(f'nonce="{pnonce}"' in tag for tag in __import__("re").findall(r"<script(?![^>]*\bsrc=)[^>]*>", body))

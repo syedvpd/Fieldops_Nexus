@@ -32,6 +32,8 @@ Routine: load `.env.prod` into the shell and run `python manage.py migrate --noi
 Security verified: `anon`, `authenticated`, `service_role` have no access to schema `fieldops`; audit trigger `audit_auditlog_immutable` is enabled.
 Connection: direct host `db.<ref>.supabase.co:5432` works from IPv6-capable hosts; Render services typically need the Supabase **pooler** string (session mode) with user `fieldops_app.<ref>`.
 
+**Required before real use (audit S-2, D-055): least-privilege runtime role.** The role that owns the tables can run `TRUNCATE`, which bypasses the audit row trigger. Run `scripts/harden_db_roles.py` once as the admin (env `SUPABASE_ADMIN_DATABASE_URL`, `FIELDOPS_MIGRATOR_PASSWORD`; idempotent, drops nothing, moves no data). It makes `fieldops_migrator` the owner (use its URL ONLY for `manage.py migrate`) and leaves `fieldops_app` (web, worker, beat) with SELECT / INSERT / UPDATE / DELETE and sequence usage only. Verify as `fieldops_app`: `TRUNCATE fieldops.audit_auditlog` must fail with "permission denied". Not yet applied to Supabase.
+
 **Recommended hardening (Team Lead):**
 - Rotate the `postgres` password to a long random value (the current admin password is weak and the database is internet-reachable) and update `SUPABASE_ADMIN_DATABASE_URL`.
 - Delete the paused wrong-region project `fieldops-nexus-prod` (ap-south-1) in the Supabase dashboard.

@@ -2,7 +2,7 @@
 {% block title %}Label {{ asset.asset_tag }} · FieldOps Nexus{% endblock %}
 {% block content %}
 <div class="fx-page-header"><div><h1>Label · {{ asset.asset_tag }}</h1><div class="text-body-secondary">Print this sheet and attach it to the asset.</div></div>
-  <div class="d-flex gap-2 d-print-none"><a class="btn btn-outline-secondary" href="{% url 'assets:detail' asset.pk %}?tab=labels">Back to asset</a><button class="btn btn-primary" type="button" onclick="window.print()">Print</button></div></div>
+  <div class="d-flex gap-2 d-print-none"><a class="btn btn-outline-secondary" href="{% url 'assets:detail' asset.pk %}?tab=labels">Back to asset</a><button class="btn btn-primary" type="button" data-fx-print>Print</button></div></div>
 {% if not qr and not barcode %}<div class="alert alert-info">This asset has no active label. Generate one from the asset's Labels tab.</div>{% endif %}
 <div class="fx-card" style="max-width:420px"><div class="fx-card-body text-center" id="label-sheet">
   <div class="fw-semibold fs-5">{{ asset.asset_tag }}</div><div>{{ asset.name }}</div><div class="small text-body-secondary mb-2">{{ asset.site.code }}{% if asset.zone %} · {{ asset.zone.name }}{% endif %}</div>

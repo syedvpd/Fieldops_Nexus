@@ -3,7 +3,7 @@ section needs ``report.view`` plus the view permission of its data (``my-work`` 
 Aggregates are restricted to the caller's site scope, so totals can never reveal other sites or tenants."""
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema
-from rest_framework import viewsets
+from rest_framework import serializers, viewsets
 from rest_framework.response import Response
 
 from apps.core.apiutils import ID_PARAM, query_param
@@ -11,6 +11,7 @@ from apps.core.exceptions import NotFound, PermissionDenied
 from apps.tenancy.api import TenantAPIMixin
 
 from . import metrics
+from .models import ReportSnapshot
 
 PARAMS = [query_param("site", "site id (must be within your scope)", OpenApiTypes.UUID),
           query_param("from", "first day, YYYY-MM-DD (default: 29 days before 'to')", OpenApiTypes.DATE),
@@ -54,3 +55,33 @@ def metrics_can_my_work(membership) -> bool:
 
 def _filters(f):
     return {"site": str(f.site.pk) if f.site else None, "from": f.from_date.isoformat(), "to": f.to_date.isoformat()}
+
+
+class ReportSnapshotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReportSnapshot
+        fields = ["id", "kind", "period_from", "period_to", "payload", "taken_at"]
+        read_only_fields = fields
+
+
+class ReportSnapshotViewSet(TenantAPIMixin, viewsets.ReadOnlyModelViewSet):
+    """Frozen organization-wide figures. They cover every site, so only members holding ``report.view`` for the whole
+    organization may read them (a site-scoped report user sees the live, scoped dashboards instead)."""
+
+    serializer_class = ReportSnapshotSerializer
+    permission_map = {"list": "__member__", "retrieve": "__member__"}
+    filterset_fields: list = []
+
+    def initial(self, request, *args, **kwargs):
+        super().initial(request, *args, **kwargs)
+        from apps.rbac import services as rbac
+
+        if not rbac.has_permission(request.membership, "report.view"):
+            raise PermissionDenied("Organization-wide report access is required for snapshots.")
+
+    def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return ReportSnapshot.objects.none()
+        qs = ReportSnapshot.objects.for_organization(self.request.organization)
+        kind = self.request.query_params.get("kind")
+        return qs.filter(kind=kind) if kind else qs

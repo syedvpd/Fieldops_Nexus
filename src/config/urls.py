@@ -22,7 +22,7 @@ from apps.contracts.api_views import (
     ProviderViewSet,
 )
 from apps.core import health
-from apps.dashboards.api_views import DashboardViewSet
+from apps.dashboards.api_views import DashboardViewSet, ReportSnapshotViewSet
 from apps.identification.api_views import IdentifierViewSet, ScanViewSet
 from apps.incidents.api_views import ServiceRequestViewSet
 from apps.inventory.api_views import (
@@ -98,6 +98,7 @@ router.register("portal/requests", PortalRequestViewSet, basename="portal-reques
 router.register("portal/assets", PortalAssetViewSet, basename="portal-asset")
 router.register("portal-accounts", PortalAccountViewSet, basename="portal-account")
 router.register("dashboards", DashboardViewSet, basename="dashboard")
+router.register("report-snapshots", ReportSnapshotViewSet, basename="report-snapshot")
 # HPE-named aliases of the canonical routes (same viewsets, hidden from the schema)
 router.register("schedules", api_aliases.ScheduleAlias, basename="alias-schedule")
 router.register("generate-work-orders", api_aliases.GenerateWorkOrdersAlias, basename="alias-generate")

@@ -35,3 +35,10 @@
     }
   });
 })();
+
+/* Delegated handlers (replace inline onclick attributes so the Content-Security-Policy can forbid them). */
+document.addEventListener("click", function (e) {
+  var nav = e.target.closest("[data-fx-toggle-nav]");
+  if (nav) { var l = document.getElementById("fx-layout"); if (l) l.classList.toggle("fx-nav-open"); return; }
+  if (e.target.closest("[data-fx-print]")) window.print();
+});

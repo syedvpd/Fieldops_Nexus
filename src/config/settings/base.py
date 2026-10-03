@@ -90,6 +90,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "apps.core.middleware.RequestIdMiddleware",
+    "apps.core.csp.ContentSecurityPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -115,6 +116,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.ui.context_processors.shell",
+                "apps.core.csp.csp_nonce",
             ],
         },
     }
@@ -192,16 +194,20 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 60 * 60 * 24,
     },
     "monitor-sla": {
-        "task": "apps.sla.tasks.monitor_sla",
+        "task": "apps.sla.tasks.fan_out_sla_monitor",
         "schedule": 60,
     },
     "contract-renewal-alerts": {
-        "task": "apps.contracts.tasks.send_renewal_alerts",
+        "task": "apps.contracts.tasks.fan_out_renewal_alerts",
         "schedule": 60 * 60 * 6,
     },
     "generate-due-maintenance": {
-        "task": "apps.maintenance.tasks.generate_due_maintenance",
+        "task": "apps.maintenance.tasks.fan_out_maintenance",
         "schedule": 60 * 15,
+    },
+    "report-snapshots": {
+        "task": "apps.dashboards.tasks.fan_out_report_snapshots",
+        "schedule": 60 * 60 * 24,
     },
 }
 
@@ -266,6 +272,7 @@ SPECTACULAR_SETTINGS = {
     "All tenant data is scoped to the caller's active organization.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAuthenticated"],  # audit: schema/docs are not anonymous
     "COMPONENT_SPLIT_REQUEST": True,
     "ENUM_NAME_OVERRIDES": {
         "AssetStatusEnum": "apps.assets.models.Asset.Status",
