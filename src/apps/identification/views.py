@@ -159,6 +159,8 @@ class ResolveView(LoginRequiredMixin, View):
 
     def get(self, request, token):
         res = self._res(request, token)
+        if res.outcome == "THROTTLED":
+            return render(request, "identification/not_found.html", {"throttled": True}, status=429)
         if res.outcome in ("UNKNOWN", "FORBIDDEN"):
             return render(request, "identification/not_found.html", status=404)
         if res.other_org:  # the label belongs to another of the user's own organizations: select it
@@ -175,6 +177,8 @@ class ResolveView(LoginRequiredMixin, View):
 
     def post(self, request, token):
         res = self._res(request, token)
+        if res.outcome == "THROTTLED":
+            return render(request, "identification/not_found.html", {"throttled": True}, status=429)
         if res.outcome in ("UNKNOWN", "FORBIDDEN"):
             return render(request, "identification/not_found.html", status=404)
         form = ReportForm(request.POST)

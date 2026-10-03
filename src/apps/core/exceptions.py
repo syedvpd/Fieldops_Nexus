@@ -36,3 +36,8 @@ class InvalidTransition(DomainError):
 class Conflict(DomainError):
     code = "conflict"
     status_code = 409
+
+
+class RateLimited(DomainError):
+    code = "rate_limited"
+    status_code = 429

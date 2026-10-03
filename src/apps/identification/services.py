@@ -12,6 +12,8 @@ import io
 import re
 from dataclasses import dataclass
 
+from django.conf import settings
+from django.core.cache import cache
 from django.db import IntegrityError, transaction
 from django.utils import timezone
 
@@ -26,6 +28,33 @@ from .models import AssetIdentifier, ScanEvent, new_token
 Kind = AssetIdentifier.Kind
 TERMINAL = ("RETIRED", "DISPOSED")
 TOKEN_RE = re.compile(r"^[A-Za-z0-9_-]{8,64}$")
+
+
+def _limit(name: str, default: int) -> int:
+    return int(getattr(settings, name, default))
+
+
+# --- abuse protection -----------------------------------------------------------------------------------------------
+# Failed resolutions (unknown / foreign / revoked / forbidden tokens) are counted per user in the shared cache; past the
+# limit every further attempt is refused until the window passes. A valid scan never resets the counter, so valid
+# scans cannot be interleaved with guessing to stay below it. The first refusal is audited once per window.
+
+
+def _fail_key(user) -> str:
+    return f"identification:scanfail:{user.pk}"
+
+
+def throttled(user) -> bool:
+    return int(cache.get(_fail_key(user), 0)) >= _limit("SCAN_FAIL_LIMIT", 15)
+
+
+def _register_failure(user) -> None:
+    key, window = _fail_key(user), _limit("SCAN_FAIL_WINDOW_SECONDS", 600)
+    cache.add(key, 0, window)
+    try:
+        cache.incr(key)
+    except ValueError:  # expired between add and incr
+        cache.set(key, 1, window)
 URL_PREFIX = "/app/s/"
 
 
@@ -166,7 +195,7 @@ class Resolution:
     identifier: AssetIdentifier | None
     asset: object | None
     membership: object | None
-    outcome: str  # RESOLVED | UNKNOWN | REVOKED | FORBIDDEN
+    outcome: str  # RESOLVED | UNKNOWN | REVOKED | FORBIDDEN | THROTTLED
     asset_inactive: bool = False
     other_org: bool = False
 
@@ -198,9 +227,15 @@ def resolve(user, token, current_membership, *, request=None) -> Resolution:
     """Token -> asset, authorizing the caller AFTER the lookup. Records a ScanEvent on success and an audit
     security event on every failure."""
     token = extract_token(token)
-    m, ident = locate(user, token, current_membership)
     org = getattr(current_membership, "organization", None)
+    if throttled(user):
+        if cache.add(f"{_fail_key(user)}:audited", 1, _limit("SCAN_FAIL_WINDOW_SECONDS", 600)):
+            audit.record("qr.scan_throttled", actor=user, organization=org, request=request,
+                         metadata={"fingerprint": fingerprint(token)})
+        return Resolution(None, None, None, "THROTTLED")
+    m, ident = locate(user, token, current_membership)
     if ident is None:
+        _register_failure(user)
         audit.record("qr.scan_unknown", actor=user, organization=org, request=request,
                      metadata={"fingerprint": fingerprint(token)})
         return Resolution(None, None, None, "UNKNOWN")
@@ -208,18 +243,24 @@ def resolve(user, token, current_membership, *, request=None) -> Resolution:
         try:
             asset = asset_selectors.get_asset(m, m.organization, ident.asset_id)
         except NotFound:
+            _register_failure(user)
             audit.record("qr.scan_denied", actor=user, organization=m.organization, request=request,
                          metadata={"fingerprint": fingerprint(token), "reason": "no access to the asset"})
             return Resolution(ident, None, m, "FORBIDDEN")
         inactive = asset.status in TERMINAL
         if not ident.is_active:
+            _register_failure(user)
             audit.record("qr.scan_revoked", actor=user, organization=m.organization, target=asset, request=request,
                          metadata={"fingerprint": fingerprint(token)})
             return Resolution(ident, asset, m, "REVOKED", inactive, m.organization_id != getattr(org, "pk", None))
-        with transaction.atomic():
-            ScanEvent(organization=m.organization, identifier=ident, asset=asset, scanned_by=user).save()
-            audit.record("qr.scanned", actor=user, organization=m.organization, target=asset, request=request,
-                         metadata={"kind": ident.kind, "fingerprint": fingerprint(token)})
+        # one scan = one event: a refresh / the follow-up POST of the same user within the dedupe window reuses it
+        since = timezone.now() - timezone.timedelta(seconds=_limit("SCAN_DEDUPE_SECONDS", 600))
+        if not ScanEvent.objects.for_organization(m.organization).filter(
+                identifier=ident, scanned_by=user, created_at__gte=since).exists():
+            with transaction.atomic():
+                ScanEvent(organization=m.organization, identifier=ident, asset=asset, scanned_by=user).save()
+                audit.record("qr.scanned", actor=user, organization=m.organization, target=asset, request=request,
+                             metadata={"kind": ident.kind, "fingerprint": fingerprint(token)})
         return Resolution(ident, asset, m, "RESOLVED", inactive, m.organization_id != getattr(org, "pk", None))
 
 
@@ -241,8 +282,10 @@ def report_from_scan(res: Resolution, *, title, description="", kind="INCIDENT",
         sr = incidents.create_request(m.organization, asset=res.asset, reporter=m, title=title,
                                       description=description, kind=kind, severity=severity, actor=actor,
                                       request=request)
+        since = timezone.now() - timezone.timedelta(seconds=_limit("SCAN_DEDUPE_SECONDS", 600))
         event = ScanEvent.objects.for_organization(m.organization).filter(
-            identifier=res.identifier, scanned_by=actor, service_request__isnull=True).order_by("-created_at").first()
+            identifier=res.identifier, scanned_by=actor, service_request__isnull=True,
+            created_at__gte=since).order_by("-created_at").first()
         if event is None:  # defensive: the scan was recorded by resolve(); never lose the link
             event = ScanEvent(organization=m.organization, identifier=res.identifier, asset=res.asset,
                               scanned_by=actor)

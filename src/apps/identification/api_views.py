@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 from apps.assets import selectors as asset_selectors
 from apps.core.apiutils import ID_PARAM, paginate, query_param, require_permission
-from apps.core.exceptions import NotFound
+from apps.core.exceptions import NotFound, RateLimited
 from apps.incidents.models import ServiceRequest
 from apps.tenancy.api import TenantAPIMixin
 
@@ -136,6 +136,8 @@ class ScanViewSet(TenantAPIMixin, viewsets.ViewSet):
         asset; an unknown / foreign token is a plain 404."""
         d = _validated(ScanResolveSerializer, request)
         res = services.resolve(request.user, d["token"], request.membership, request=request)
+        if res.outcome == "THROTTLED":
+            raise RateLimited("Too many failed scans. Try again in a few minutes.")
         if res.outcome in ("UNKNOWN", "FORBIDDEN"):
             raise NotFound("Label not found.")
         body = ScanAssetSerializer(res).data
@@ -148,6 +150,8 @@ class ScanViewSet(TenantAPIMixin, viewsets.ViewSet):
         d = _validated(ReportSerializer, request)
         token = d.pop("token")
         res = services.resolve(request.user, token, request.membership, request=request)
+        if res.outcome == "THROTTLED":
+            raise RateLimited("Too many failed scans. Try again in a few minutes.")
         if res.outcome in ("UNKNOWN", "FORBIDDEN"):
             raise NotFound("Label not found.")
         sr = services.report_from_scan(res, actor=request.user, request=request, **d)
