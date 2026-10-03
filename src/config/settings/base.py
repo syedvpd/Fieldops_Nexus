@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     "apps.inventory",
     "apps.maintenance",
     "apps.contracts",
+    "apps.identification",
     "apps.sla",
     "apps.checklists",
     "apps.workspace",
@@ -267,6 +268,8 @@ SPECTACULAR_SETTINGS = {
     "ENUM_NAME_OVERRIDES": {
         "AssetStatusEnum": "apps.assets.models.Asset.Status",
         "CoverageKindEnum": "apps.contracts.models.CoverageAgreement.Kind",
+        "IdentifierKindEnum": "apps.identification.models.AssetIdentifier.Kind",
+        "ServiceRequestSeverityEnum": "apps.incidents.models.ServiceRequest.Severity",
         "ServiceRequestKindEnum": "apps.incidents.models.ServiceRequest.Kind",
         "SLATargetStateEnum": "apps.sla.models.SLATracking.TargetState",
         "SiteStatusEnum": "apps.sites.models.Status",

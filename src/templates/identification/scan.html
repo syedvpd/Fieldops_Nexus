@@ -1,0 +1,18 @@
+{% extends "shell.html" %}
+{% load static %}
+{% block title %}Scan asset label · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div><h1>Scan an asset label</h1><div class="text-body-secondary">Use the camera, or type / paste the code printed under the label.</div></div></div>
+<div class="row g-3"><div class="col-lg-6"><div class="fx-card"><div class="fx-card-header">Camera</div><div class="fx-card-body">
+  <div id="scan-camera" data-scan-camera hidden><video id="scan-video" playsinline muted style="width:100%;max-height:320px;background:#000"></video>
+    <div class="d-flex gap-2 mt-2"><button type="button" class="btn btn-outline-secondary btn-sm" id="scan-stop">Stop camera</button></div></div>
+  <button type="button" class="btn btn-primary" id="scan-start" hidden>Start camera</button>
+  <p class="text-body-secondary mb-0" id="scan-unsupported">Camera scanning is not available in this browser. Use the code field instead.</p>
+  <div class="small text-danger mt-2" id="scan-error" role="alert"></div></div></div></div>
+<div class="col-lg-6"><div class="fx-card"><div class="fx-card-header">Enter code</div><div class="fx-card-body">
+  <form method="post" id="scan-form" novalidate>{% csrf_token %}
+    <label class="form-label" for="scan-token">Label code or scanned link</label>
+    <input class="form-control mb-3" id="scan-token" name="token" autocomplete="off" autocapitalize="off" spellcheck="false" required placeholder="e.g. K3V9Q2…  or the full link">
+    <button class="btn btn-primary">Open asset</button></form></div></div></div></div>
+{% endblock %}
+{% block scripts %}<script src="{% static 'js/qr_scan.js' %}" defer></script>{% endblock %}

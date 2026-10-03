@@ -22,6 +22,7 @@ from apps.contracts.api_views import (
     ProviderViewSet,
 )
 from apps.core import health
+from apps.identification.api_views import IdentifierViewSet, ScanViewSet
 from apps.incidents.api_views import ServiceRequestViewSet
 from apps.inventory.api_views import (
     PartReservationViewSet,
@@ -88,6 +89,8 @@ router.register("contract-providers", ProviderViewSet, basename="contract-provid
 router.register("coverage-agreements", AgreementViewSet, basename="coverage-agreement")
 router.register("coverage-checks", CoverageCheckViewSet, basename="coverage-check")
 router.register("coverage", CoverageViewSet, basename="coverage")
+router.register("asset-identifiers", IdentifierViewSet, basename="asset-identifier")
+router.register("scan", ScanViewSet, basename="scan")
 router.register("sla-profiles", SLAProfileViewSet, basename="sla-profile")
 router.register("sla-trackings", SLATrackingViewSet, basename="sla-tracking")
 router.register("sla-breaches", SLABreachViewSet, basename="sla-breach")
@@ -122,6 +125,7 @@ urlpatterns = [
     path("app/", include("apps.maintenance.urls")),
     path("app/", include("apps.sla.urls")),
     path("app/", include("apps.contracts.urls")),
+    path("app/", include("apps.identification.urls")),
     path("app/", include("apps.checklists.urls")),
     path("app/", include("apps.workspace.urls")),
     path("", include("apps.ui.urls")),

@@ -68,6 +68,9 @@
 {% elif tab == "coverage" %}
 <div id="coverage-host" hx-get="{% url 'contracts:asset_panel' asset.pk %}" hx-trigger="load" hx-swap="innerHTML"><span class="text-body-secondary">Loading coverage… (requires the contract.view permission)</span></div>
 
+{% elif tab == "labels" %}
+<div id="labels-host" hx-get="{% url 'identification:panel' asset.pk %}" hx-trigger="load" hx-swap="innerHTML"><span class="text-body-secondary">Loading labels… (requires the qr.view permission)</span></div>
+
 {% elif tab == "hierarchy" %}
 <div class="row g-3"><div class="col-lg-7"><div class="fx-card"><div class="fx-card-header">Asset tree</div><div class="fx-card-body">
   <div id="tree-host" hx-get="{% url 'assets:tree' asset.pk %}" hx-trigger="load" hx-swap="innerHTML"><span class="text-body-secondary">Loading hierarchy…</span></div></div></div></div>
