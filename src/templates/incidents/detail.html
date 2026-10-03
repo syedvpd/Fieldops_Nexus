@@ -20,6 +20,7 @@
 <div class="fx-tabs" role="tablist">{% for key, label in tabs %}<a role="tab" class="{% if tab == key %}active{% endif %}" href="?tab={{ key }}">{{ label }}</a>{% endfor %}</div>
 
 {% if tab == "overview" %}
+{% include "sla/_panel.html" %}
 <div class="row g-3"><div class="col-lg-7">
   <div class="fx-card mb-3"><div class="fx-card-header">What happened</div><div class="fx-card-body"><dl class="fx-kv">
     <dt>Description</dt><dd>{{ sr.description|default:"—"|linebreaksbr }}</dd><dt>Occurred</dt><dd>{{ sr.occurred_at|date:"d M Y H:i" }}</dd>

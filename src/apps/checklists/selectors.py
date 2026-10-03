@@ -152,17 +152,29 @@ def requirements_for(org, wo, services_module):
 def pending_required_counts(org, work_orders) -> dict:
     """{work order id: number of required checklists not completed}, for a page of work orders in two queries
     (the workspace list uses this to avoid per-row lookups). Mirrors ``services.checklist_blockers``."""
+    from apps.maintenance.models import MaintenanceCycle
+
     from .models import ChecklistTemplate
     from .workflow import ACTIVE, COMPLETED
 
     wos = list(work_orders)
     required = list(ChecklistTemplate.objects.for_organization(org).filter(status=ACTIVE, is_required=True))
-    if not wos or not required:
+    pm_keys = dict(MaintenanceCycle.objects.for_organization(org).filter(
+        work_order__in=[w for w in wos if w.source_type == "PREVENTIVE_MAINTENANCE"]).exclude(
+        schedule__plan__checklist_key="").values_list("work_order_id", "schedule__plan__checklist_key"))
+    if not wos or (not required and not pm_keys):
         return {wo.pk: 0 for wo in wos}
-    done = set(Inspection.objects.for_organization(org).filter(work_order__in=wos, status=COMPLETED).values_list(
-        "work_order_id", "template__key"))
-    return {wo.pk: sum(1 for t in required if t.work_type in ("", wo.work_type) and (wo.pk, t.key) not in done)
-            for wo in wos}
+    active_by_key = {str(t.key): t for t in ChecklistTemplate.objects.for_organization(org).filter(
+        status=ACTIVE, key__in=set(pm_keys.values()))}
+    done = {(wo_id, str(key)) for wo_id, key in Inspection.objects.for_organization(org).filter(
+        work_order__in=wos, status=COMPLETED).values_list("work_order_id", "template__key")}
+    out = {}
+    for wo in wos:
+        keys = {str(t.key) for t in required if t.work_type in ("", wo.work_type)}
+        if pm_keys.get(wo.pk) in active_by_key:
+            keys.add(pm_keys[wo.pk])
+        out[wo.pk] = sum(1 for k in keys if (wo.pk, k) not in done)
+    return out
 
 
 def available_templates(org, wo):

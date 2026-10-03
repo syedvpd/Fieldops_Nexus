@@ -568,3 +568,21 @@ def test_unknown_ids_and_bad_input_are_clean_errors(w, as_user):
     assert api.post(f"/api/v1/work-orders/{wo.pk}/transition/", {}, format="json").status_code == 400
     assert api.get("/api/v1/work-orders/?status=BOGUS").json()["count"] == 0
     assert api.get("/api/v1/work-orders/?site=not-a-uuid").json()["count"] == 0
+
+
+def test_work_order_from_a_request_records_its_source_and_the_backfill_migration_is_idempotent(w):
+    import importlib
+
+    from django.apps import apps
+
+    from apps.workorders.models import WorkOrder as WO
+
+    sr = approved_request(w)
+    wo = incidents.create_work_order_for_request(sr, actor=None, membership=w["planner"])
+    assert (wo.source_type, wo.source_id) == ("SERVICE_REQUEST", sr.pk)
+    WO.objects.filter(pk=wo.pk).update(source_type="", source_id=None)  # the state before migration 0003
+    migration = importlib.import_module("apps.workorders.migrations.0003_workorder_source")
+    migration.backfill_request_source(apps, None)
+    migration.backfill_request_source(apps, None)
+    wo.refresh_from_db()
+    assert (wo.source_type, wo.source_id) == ("SERVICE_REQUEST", sr.pk)

@@ -46,6 +46,13 @@ EVIDENCE_REQUIRED_TYPES = ("CORRECTIVE", "INSTALLATION")  # D-036: completion ne
 _RECORD_STATES = EXECUTION_STATES + (COMPLETED, SUPERVISOR_REVIEW)
 
 
+def _sla():
+    """M11 contract (lazy import: M11 depends on the M06 models)."""
+    from apps.sla import services as sla
+
+    return sla
+
+
 def _title(title: str) -> str:
     title = (title or "").strip()
     if len(title) < 3:
@@ -81,7 +88,7 @@ def _event(wo, action, from_status, to_status, *, reason="", actor, assigned_to=
 @transaction.atomic
 def create_work_order(org, *, asset, actor, title: str, description: str = "", work_type: str = "CORRECTIVE",
                       priority: str = "MEDIUM", source_request=None, planned_start=None, planned_end=None,
-                      estimated_hours=None, request=None) -> WorkOrder:
+                      estimated_hours=None, request=None, source_type: str = "", source_id=None) -> WorkOrder:
     if asset.organization_id != org.pk:
         raise ValidationFailed("Asset belongs to a different organization.", code="cross_tenant_asset")
     if asset.status in ("RETIRED", "DISPOSED"):
@@ -94,8 +101,12 @@ def create_work_order(org, *, asset, actor, title: str, description: str = "", w
         if source_request.organization_id != org.pk or source_request.asset_id != asset.pk:
             raise ValidationFailed("The request does not belong to this asset / organization.",
                                    code="request_mismatch")
+    if source_request is not None:
+        source_type, source_id = "SERVICE_REQUEST", source_request.pk
+    if bool(source_type) != (source_id is not None) or source_type not in ("", *WorkOrder.SourceType.values):
+        raise ValidationFailed("A work-order source needs both a type and an id.", code="invalid_source")
     _check_window(planned_start, planned_end)
-    wo = WorkOrder(
+    wo = WorkOrder(source_type=source_type, source_id=source_id,
         organization=org, number=next_number(org, "work_order", "WO"), title=_title(title),
         description=(description or "").strip(), work_type=work_type, priority=priority, asset=asset,
         site=asset.site, source_request=source_request, created_by=actor, planned_start=planned_start,
@@ -104,9 +115,11 @@ def create_work_order(org, *, asset, actor, title: str, description: str = "", w
         if estimated_hours not in (None, "") else None)
     wo.save()
     _event(wo, "create", "", wo.status, actor=actor)
+    _sla().on_work_order_created(wo)  # M11: work orders without a request get their own SLA
     audit.record("work_order.created", actor=actor, organization=org, target=wo,
                  after={**audit.snapshot(wo, SNAPSHOT), "number": wo.number, "asset": asset.asset_tag,
-                        "site": asset.site.code, "source_request": source_request.number if source_request else None},
+                        "site": asset.site.code, "source_request": source_request.number if source_request else None,
+                        "source_type": source_type, "source_id": source_id},
                  request=request)
     return wo
 
@@ -310,6 +323,7 @@ def transition(wo: WorkOrder, *, action: str, actor, membership, reason: str = "
     previous, new = WORK_ORDER_STATUS.apply(wo, action)
     wo.save()
     _event(wo, action, previous, new, reason=reason, actor=actor, assigned_to=wo.assigned_to)
+    _sla().on_work_order_changed(wo, previous, new)  # M11 hook (pause states, response / resolution timers)
     audit.record(
         "work_order.status_changed", actor=actor, organization=wo.organization, target=wo, before=before,
         after={"status": new, "assigned_to": str(wo.assigned_to_id) if wo.assigned_to_id else None},

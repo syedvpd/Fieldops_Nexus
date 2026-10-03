@@ -128,6 +128,10 @@ class RequestDetailView(IncidentBase):
         ctx = {"sr": sr, "tab": tab, "tabs": TABS, "can": can, "transitions": transitions,
                "work_orders": sr.work_orders.select_related("assigned_to__user").order_by("created_at"),
                "downtime": selectors.downtime_for(org, sr), "editable": sr.status in ("NEW", "TRIAGED")}
+        if tab == "overview":
+            from apps.sla import selectors as sla_selectors
+
+            ctx["sla"] = sla_selectors.tracking_for_request(m, org, sr)
         if can["create_wo"] and sr.status == "APPROVED":
             ctx["wo_form"] = CreateWorkOrderForm()
         if tab == "evidence":

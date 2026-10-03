@@ -25,6 +25,11 @@ from apps.inventory.api_views import (
     WarehouseViewSet,
     WorkOrderPartViewSet,
 )
+from apps.maintenance.api_views import (
+    MaintenanceCycleViewSet,
+    MaintenancePlanViewSet,
+    MaintenanceScheduleViewSet,
+)
 from apps.notifications.api_views import NotificationViewSet
 from apps.platform_admin.api_views import PlatformOrganizationViewSet
 from apps.rbac.api_views import PermissionViewSet, RoleViewSet
@@ -34,6 +39,12 @@ from apps.sites.api_views import (
     HolidayViewSet,
     SiteViewSet,
     ZoneViewSet,
+)
+from apps.sla.api_views import (
+    SLABreachViewSet,
+    SLAMetricsView,
+    SLAProfileViewSet,
+    SLATrackingViewSet,
 )
 from apps.tenancy.api_views import MemberViewSet, OrganizationViewSet
 from apps.workorders.api_views import WorkOrderViewSet
@@ -64,6 +75,12 @@ router.register("stock-balances", StockBalanceViewSet, basename="stock-balance")
 router.register("stock-movements", StockMovementViewSet, basename="stock-movement")
 router.register("part-reservations", PartReservationViewSet, basename="part-reservation")
 router.register("work-order-parts", WorkOrderPartViewSet, basename="work-order-part")
+router.register("maintenance-plans", MaintenancePlanViewSet, basename="maintenance-plan")
+router.register("maintenance-schedules", MaintenanceScheduleViewSet, basename="maintenance-schedule")
+router.register("maintenance-cycles", MaintenanceCycleViewSet, basename="maintenance-cycle")
+router.register("sla-profiles", SLAProfileViewSet, basename="sla-profile")
+router.register("sla-trackings", SLATrackingViewSet, basename="sla-tracking")
+router.register("sla-breaches", SLABreachViewSet, basename="sla-breach")
 router.register("platform/organizations", PlatformOrganizationViewSet, basename="platform-organization")
 
 api_v1 = [
@@ -71,6 +88,7 @@ api_v1 = [
     path("organization/", OrganizationViewSet.as_view({"get": "retrieve", "patch": "partial_update"}),
          name="organization"),
     path("", include(router.urls)),
+    path("sla-metrics/", SLAMetricsView.as_view(), name="sla-metrics"),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path("docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="docs"),
 ]
@@ -91,6 +109,8 @@ urlpatterns = [
     path("app/", include("apps.incidents.urls")),
     path("app/", include("apps.workorders.urls")),
     path("app/", include("apps.inventory.urls")),
+    path("app/", include("apps.maintenance.urls")),
+    path("app/", include("apps.sla.urls")),
     path("app/", include("apps.checklists.urls")),
     path("app/", include("apps.workspace.urls")),
     path("", include("apps.ui.urls")),

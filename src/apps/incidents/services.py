@@ -41,6 +41,13 @@ _SEVERITY_TO_PRIORITY = {"LOW": "LOW", "MEDIUM": "MEDIUM", "HIGH": "HIGH", "CRIT
 _FUTURE_SLACK = timedelta(minutes=5)
 
 
+def _sla():
+    """M11 contract (lazy import: M11 depends on the M05 models)."""
+    from apps.sla import services as sla
+
+    return sla
+
+
 def _clean_title(title: str) -> str:
     title = (title or "").strip()
     if len(title) < 3:
@@ -94,6 +101,7 @@ def create_request(org, *, asset, reporter, title: str, description: str = "", k
                         "number": sr.number}, request=request)
     if downtime_started_at is not None:
         _write_downtime(sr, started_at=downtime_started_at, ended_at=None, actor=actor, request=request)
+    _sla().on_request_created(sr)  # M11: the SLA starts from the persisted created_at
     return sr
 
 
@@ -125,6 +133,8 @@ def update_request(sr: ServiceRequest, *, actor, request=None, **changes) -> Ser
         sr.occurred_at = changes["occurred_at"]
     sr.save()
     after = audit.snapshot(sr, SNAPSHOT)
+    if after != before and before.get("severity") != after.get("severity"):
+        _sla().on_request_updated(sr)  # M11: a new severity re-targets the open SLA
     if after != before:
         audit.record("incident.updated", actor=actor, organization=sr.organization, target=sr, before=before,
                      after=after, request=request)
@@ -156,6 +166,7 @@ def _apply(sr: ServiceRequest, action: str, *, reason: str, actor, source: str, 
     audit.record("incident.status_changed", actor=actor, organization=sr.organization, target=sr,
                  before={"status": previous}, after={"status": new},
                  metadata={"action": action, "reason": reason or "", "source": source}, request=request)
+    _sla().on_request_status_changed(sr, previous, new)  # M11 hook (never edits the request)
     return sr
 
 

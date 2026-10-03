@@ -203,3 +203,41 @@ def inv_(p3, make_member):
                                  max_stock="20", reorder_quantity="10", actor=stores.user)
     belt = inventory.create_part(org, part_number="BELT-7", name="Drive belt", actor=stores.user)
     return {**p3, "stores": stores, "wh": wh, "wh2": wh2, "whs2": whs2, "part": pump, "part2": belt}
+
+
+# --- Phase 5 helpers (preventive maintenance) ---------------------------------------------------------------------
+
+
+@pytest.fixture
+def pm_(p3):
+    """Phase 3 organization plus a run-hours meter on the main asset (planner = maintenance planner role)."""
+    from apps.assets import services as asset_services
+
+    meter = asset_services.create_meter(p3["asset"], name="Run hours", unit="h", actor=None)
+    return {**p3, "meter": meter}
+
+
+# --- Phase 6 helpers (SLA) ----------------------------------------------------------------------------------------
+
+
+@pytest.fixture
+def sla_(p3, make_member):
+    """Phase 3 organization plus a service manager and an organization-wide request SLA profile: HIGH = respond in
+    30 min / resolve in 120 min, warning at 80 %. Operations managers are told about warnings and breaches, the
+    service managers about a resolution still unmet 60 minutes after its breach."""
+    from apps.rbac import services as rbac_services
+    from apps.sla import services as sla
+
+    org = p3["org"]
+    svc = make_member(org, "svc@alpha.test", "service_manager")
+    profile = sla.create_profile(org, name="Incident SLA", applies_to="REQUEST", actor=svc.user,
+                                 pause_states=["WORK_ORDER:ON_HOLD"])
+    sla.set_target(profile, priority="HIGH", response_minutes=30, resolution_minutes=120, warning_percent=80,
+                   actor=svc.user)
+    ops_role = rbac_services.system_role_by_key(org, "operations_manager")
+    svc_role = rbac_services.system_role_by_key(org, "service_manager")
+    for kind, trig, role, after in (("RESPONSE", "WARNING", ops_role, 0), ("RESPONSE", "BREACH", ops_role, 0),
+                                    ("RESOLUTION", "BREACH", ops_role, 0), ("RESOLUTION", "ESCALATION", svc_role, 60)):
+        sla.create_rule(profile, target_kind=kind, trigger=trig, notify_role=role, after_minutes=after, level=2,
+                        actor=svc.user)
+    return {**p3, "svc": svc, "profile": profile, "ops_role": ops_role, "svc_role": svc_role}

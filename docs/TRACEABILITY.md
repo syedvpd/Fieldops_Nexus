@@ -15,7 +15,7 @@ HPE module numbers are kept exactly as in the Blueprint. "HPE" = explicit in the
 | M08 | Inspection & Checklist Engine | `checklists` | 3 |
 | M09 | Spare Parts & Inventory | `inventory` | 4 |
 | M10 | Warranty / AMC / Contract | `coverage` | 7 |
-| M11 | SLA & Escalation | `sla` | 6 |
+| M11 | SLA & Escalation | `sla` | 6 (IMPLEMENTED: D-044, `docs/integrations/sla-requests-workorders.md`; tests `tests/test_m11_*.py`, `tests/test_migrations_phase6.py`) |
 | M12 | QR / Barcode | `qr` | 8 |
 | M13 | Client / Requester Portal | `portal` | 8 |
 | M14 | Operational Dashboards | `dashboards` | 9 |
@@ -145,3 +145,17 @@ Status: IMPLEMENTED = code + automated test on local PostgreSQL. Browser evidenc
 | M06 closure / cancel integration | IMPLEMENTED (OUR DECISION) | `test_closure_is_blocked_by_outstanding_parts_then_reconciles_the_lines`, `test_cancelling_a_work_order_releases_reservations_but_not_with_issued_stock` |
 | M07 uses the M09 contract | IMPLEMENTED | `test_full_flow_through_ui_pages_and_workspace`, `test_workspace_part_endpoints_are_scoped_to_my_jobs` |
 | Journey 5: inventory issue / return -> stock movement -> WO linkage (HPE CONFIRMED) | IMPLEMENTED (browser verified locally) | `docs/PHASE_4_ACCEPTANCE_REPORT.md` |
+
+## Phase 5 (M04 Preventive Maintenance) - HPE section 7.2 / 8.1
+| Requirement | Status | Evidence |
+|---|---|---|
+| Time-based schedules (HPE CONFIRMED) | IMPLEMENTED (daily / weekly / monthly / quarterly / yearly x interval, site timezone) | `recurrence.py`; `test_m04_recurrence`, `test_every_frequency_generates_on_the_right_day`, `test_due_date_uses_the_site_timezone` |
+| Meter-based schedules (HPE CONFIRMED) | IMPLEMENTED on the existing M02 meters (no second meter system) | `test_meter_based_due_follows_the_hpe_example` (1200 h, every 500 -> 1500) |
+| Recurring job generation = real work orders (HPE CONFIRMED; Journey 2) | IMPLEMENTED through `workorders.services.create_work_order` | `test_time_based_generation_creates_a_real_planned_work_order`, API / UI journeys |
+| PM source recorded on the work order | IMPLEMENTED (`source_type` / `source_id`, D-043) | `test_database_enforces_one_work_order_per_cycle`, WO detail / API |
+| Scheduler idempotent, concurrency-safe, no duplicates (HPE CONFIRMED) | IMPLEMENTED | `test_running_generation_twice...`, `tests/test_m04_concurrency.py`, `test_failed_generation_rolls_back_completely_and_the_retry_creates_exactly_one`, Celery tests |
+| Missed / overdue cycles (HPE CONFIRMED requirement, policy OUR DECISION) | IMPLEMENTED as collapse; CLARIFICATION REQUIRED | `test_missed_cycles_are_collapsed_into_the_latest_one` |
+| Maintenance windows, reminders (HPE CONFIRMED) | IMPLEMENTED (window in site time, working-day shift, reminder once per occurrence) | `test_planned_window_moves_to_the_next_working_day_of_the_site_calendar`, `test_reminder_is_sent_once_per_occurrence` |
+| Checklists on PM work (HPE CONFIRMED; M08 authoritative) | IMPLEMENTED | `test_plan_checklist_becomes_a_required_checklist_of_the_generated_work_order` |
+| Disabled PM does not generate; re-enable resumes | IMPLEMENTED | `test_disabled_plan_and_schedule_never_generate_and_reenabling_resumes_without_replay` |
+| PM lifecycle GENERATED -> ASSIGNED -> COMPLETED -> VERIFIED | IMPLEMENTED (derived from the M06 order) | `selectors.cycle_state`; API `state` |

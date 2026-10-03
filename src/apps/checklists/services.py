@@ -319,9 +319,24 @@ def new_version(template: ChecklistTemplate, *, actor, request=None) -> Checklis
 
 
 def required_templates(wo):
-    """ACTIVE required templates that apply to this work order's type."""
-    return ChecklistTemplate.objects.for_organization(wo.organization).filter(
-        status=ACTIVE, is_required=True).filter(work_type__in=("", wo.work_type))
+    """ACTIVE templates this work order must complete: the required ones that apply to its type, plus (M04) the
+    checklist its preventive-maintenance plan names. M08 stays the only authority on blocking / execution."""
+    from django.db.models import Q
+
+    cond = Q(is_required=True, work_type__in=("", wo.work_type))
+    plan_key = maintenance_checklist_key(wo)
+    if plan_key:
+        cond |= Q(key=plan_key)
+    return ChecklistTemplate.objects.for_organization(wo.organization).filter(status=ACTIVE).filter(cond)
+
+
+def maintenance_checklist_key(wo) -> str:
+    """M04 contract (lazy import): the checklist key of the PM plan that generated this work order, or ''."""
+    if getattr(wo, "source_type", "") != "PREVENTIVE_MAINTENANCE":
+        return ""
+    from apps.maintenance import services as maintenance
+
+    return maintenance.required_checklist_key(wo)
 
 
 def checklist_blockers(wo) -> list[str]:

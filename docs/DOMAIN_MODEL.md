@@ -71,3 +71,20 @@ WorkOrderPart ---< WorkOrderMaterial (M06 consumption rows written by M09 consum
 ```
 - Constraints: on_hand >= 0, reserved >= 0, reserved <= on_hand; movement quantity > 0, a movement changes on-hand or reserved, after-values >= 0; one line per (work order, part); consumed <= issued - returned; reservation quantity >= 0, ACTIVE implies > 0.
 - Invariants (services): balance = sum of its movement deltas; reserved = sum of ACTIVE reservations; every balance change writes exactly one movement; warehouse site = work order site.
+
+## Phase 5 additions (M04)
+```
+Asset ---< MaintenancePlan (site = asset site, priority, checklist_key -> M08 template family, is_active)
+              `---< MaintenanceSchedule (TIME: frequency x interval from start_date | METER: meter + interval_value + start_value;
+                       lead_days, window start/hours, reminder_days, is_active, next_sequence, next_due_date|value, last_run_at, last_error)
+                      `---< MaintenanceCycle (sequence UNIQUE per schedule; due date|value; skipped; trigger) -- 1:1 --> WorkOrder (source_type PREVENTIVE_MAINTENANCE, source_id = cycle)
+WorkOrder.source_type / source_id: SERVICE_REQUEST (id = request) | PREVENTIVE_MAINTENANCE (id = cycle) | blank (created in M06)
+```
+- Constraints: plan name unique per asset; schedule fields consistent with its trigger; window ranges; one time schedule per (plan, frequency, interval) and one meter schedule per (plan, meter, interval); `(schedule, sequence)` unique; work order source type + id together, one work order per PM source.
+- Invariants (services): every cycle has exactly one work order (created in the same transaction); the PM state of a cycle is derived from the work order; disabled / terminal-asset / suspended-tenant schedules never generate.
+
+## Phase 6 (M11 SLA & Escalation) - HPE section 7.2
+- `SLAProfile` (organization / site scope, `applies_to` REQUEST or WORK_ORDER, optional work type, `pause_states`) -> `SLATarget` (one per priority: response / resolution minutes, warning %) and `EscalationRule` (target, trigger WARNING / BREACH / ESCALATION, `after_minutes`, level 1-3, role and / or assignee; max 6).
+- `SLATracking`: exactly one of request / work order (unique each); persisted absolute `response_due_at` / `resolution_due_at`, per-target state, status ACTIVE / PAUSED / COMPLETED / CANCELLED, paused time.
+- `SLAEvent`: append-only, unique `(tracking, dedupe_key)`. `SLABreach`: unique `(tracking, target_kind)`, status OPEN / ACKNOWLEDGED / CLOSED, escalation level.
+- Invariants (services): due times never rewritten by profile edits; one active profile per scope; a work order raised from a request has no tracking of its own; notifications only after the event row is persisted; M11 never changes M05 / M06 state.

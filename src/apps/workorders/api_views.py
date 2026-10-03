@@ -29,7 +29,8 @@ class WorkOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkOrder
         fields = ["id", "number", "title", "description", "work_type", "priority", "status", "asset", "asset_tag",
-                  "asset_name", "site", "site_code", "source_request", "source_request_number", "planned_start",
+                  "asset_name", "site", "site_code", "source_request", "source_request_number", "source_type",
+                  "source_id", "planned_start",
                   "planned_end", "estimated_hours", "assigned_to", "assigned_to_name", "dispatched_at", "started_at",
                   "completed_at", "review_started_at", "closed_at", "hold_reason", "resolution_notes",
                   "available_actions", "total_hours", "created_at", "updated_at"]

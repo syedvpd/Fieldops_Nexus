@@ -51,6 +51,10 @@ _BADGES = {
     "RECONCILED": "secondary", "RELEASED": "secondary", "FULFILLED": "success", "RECEIPT": "success",
     "ISSUE": "warning", "RETURN": "info", "TRANSFER_OUT": "info", "TRANSFER_IN": "info", "ADJUSTMENT": "secondary",
     "RESERVE": "info", "RELEASE": "secondary",
+    # M04 schedules / cycles
+    "BREACHED": "danger", "MET": "success", "MET_LATE": "warning", "PENDING": "info", "PAUSED": "warning",
+    "ACKNOWLEDGED": "info", "NOT_APPLICABLE": "secondary", "MAJOR": "warning", "MINOR": "info",
+    "DUE": "warning", "SCHEDULED": "info", "DISABLED": "secondary", "GENERATED": "info", "VERIFIED": "success",
 }
 
 

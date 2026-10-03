@@ -154,7 +154,7 @@ class WorkOrderDetailView(WorkOrderBase):
         can = {k: rbac.has_permission(m, code, wo.site_id) for k, code in (
             ("update", "work_order.update"), ("assign", "work_order.assign"), ("record", "work_order.record"),
             ("attach", "work_order.attach"), ("dispatch", "work_order.dispatch"),
-            ("view_request", "incident.view"))}
+            ("view_request", "incident.view"), ("view_pm", "maintenance.view"))}
         actions = build_actions(request, wo)
         ctx = {"wo": wo, "tab": tab, "tabs": TABS, "can": can, "actions": actions,
                "editable": wo.status in ("DRAFT", "PLANNED"), "terminal": wo.status in TERMINAL_STATES}
@@ -171,6 +171,14 @@ class WorkOrderDetailView(WorkOrderBase):
         if can["assign"] and wo.status in ("ASSIGNED", "DISPATCHED"):
             ctx["reassign_form"] = TechnicianForm(technicians=techs)
         if tab == "overview":
+            from apps.sla import selectors as sla_selectors
+
+            ctx["sla"] = sla_selectors.tracking_for_work_order(m, org, wo)
+            if wo.source_type == "PREVENTIVE_MAINTENANCE":
+                from apps.maintenance.models import MaintenanceCycle
+
+                ctx["pm_cycle"] = MaintenanceCycle.objects.for_organization(org).filter(work_order=wo).select_related(
+                    "schedule__plan").first()
             if wo.status in ("COMPLETED", "SUPERVISOR_REVIEW"):
                 ctx["blockers"] = services.closure_blockers(wo)
             ctx["total_hours"] = selectors.total_hours(org, wo)

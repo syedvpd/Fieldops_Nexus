@@ -46,9 +46,11 @@
 <div class="fx-tabs" role="tablist">{% for key, label in tabs %}<a role="tab" class="{% if tab == key %}active{% endif %}" href="?tab={{ key }}">{{ label }}</a>{% endfor %}</div>
 
 {% if tab == "overview" %}
+{% include "sla/_panel.html" %}
 {% if blockers %}<div class="alert alert-warning"><strong>Cannot be closed yet:</strong><ul class="mb-0">{% for b in blockers %}<li>{{ b }}</li>{% endfor %}</ul></div>{% endif %}
 <div class="row g-3"><div class="col-lg-7"><div class="fx-card"><div class="fx-card-header">Job</div><div class="fx-card-body"><dl class="fx-kv">
   <dt>Description</dt><dd>{{ wo.description|default:"—"|linebreaksbr }}</dd><dt>Asset</dt><dd><a href="{% url 'assets:detail' wo.asset_id %}">{{ wo.asset.asset_tag }} · {{ wo.asset.name }}</a></dd>
+  {% if wo.source_type == "PREVENTIVE_MAINTENANCE" %}<dt>Source</dt><dd id="wo-source">{% if pm_cycle and can.view_pm %}<a href="{% url 'maintenance:plan' pm_cycle.schedule.plan_id %}">Preventive maintenance: {{ pm_cycle.schedule.plan.name }}</a>{% elif pm_cycle %}Preventive maintenance: {{ pm_cycle.schedule.plan.name }}{% else %}Preventive maintenance{% endif %}{% if pm_cycle %} · cycle #{{ pm_cycle.sequence }}{% endif %}</dd>{% endif %}
   <dt>Source request</dt><dd>{% if wo.source_request %}{% if can.view_request %}<a href="{% url 'incidents:detail' wo.source_request_id %}">{{ wo.source_request.number }}</a>{% else %}{{ wo.source_request.number }}{% endif %} ({{ wo.source_request.get_status_display }}){% else %}—{% endif %}</dd>
   {% if wo.hold_reason %}<dt>On hold because</dt><dd>{{ wo.hold_reason }}</dd>{% endif %}
   <dt>Resolution notes</dt><dd>{{ wo.resolution_notes|default:"—"|linebreaksbr }}</dd></dl></div></div></div>

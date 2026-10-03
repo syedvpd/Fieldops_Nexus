@@ -22,6 +22,10 @@ class WorkOrder(TenantOwnedModel):
         HIGH = "HIGH", "High"
         URGENT = "URGENT", "Urgent"
 
+    class SourceType(models.TextChoices):
+        SERVICE_REQUEST = "SERVICE_REQUEST", "Service request"
+        PREVENTIVE_MAINTENANCE = "PREVENTIVE_MAINTENANCE", "Preventive maintenance"
+
     Status = models.TextChoices("Status", {s: (s, s.replace("_", " ").title()) for s in STATES})
 
     number = models.CharField(max_length=20, editable=False)
@@ -34,6 +38,10 @@ class WorkOrder(TenantOwnedModel):
     site = models.ForeignKey("sites.Site", on_delete=models.PROTECT, related_name="work_orders")
     source_request = models.ForeignKey(
         "incidents.ServiceRequest", null=True, blank=True, on_delete=models.PROTECT, related_name="work_orders")
+    # Origin of the order when it was created by another module (D-043): SERVICE_REQUEST (M05, id = request) or
+    # PREVENTIVE_MAINTENANCE (M04, id = the maintenance cycle). Blank / NULL = created directly in M06.
+    source_type = models.CharField(max_length=30, blank=True, choices=SourceType.choices)
+    source_id = models.UUIDField(null=True, blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+")
     planned_start = models.DateTimeField(null=True, blank=True)
     planned_end = models.DateTimeField(null=True, blank=True)
@@ -58,6 +66,13 @@ class WorkOrder(TenantOwnedModel):
             models.UniqueConstraint(
                 fields=["source_request"], condition=models.Q(source_request__isnull=False)
                 & ~models.Q(status__in=[CANCELLED, CLOSED]), name="uniq_live_work_order_per_request"),
+            models.CheckConstraint(
+                condition=(models.Q(source_type="") & models.Q(source_id__isnull=True))
+                | (~models.Q(source_type="") & models.Q(source_id__isnull=False)), name="work_order_source_pair"),
+            # one cycle = one work order, enforced by the database whatever the scheduler does
+            models.UniqueConstraint(
+                fields=["source_id"], condition=models.Q(source_type="PREVENTIVE_MAINTENANCE"),
+                name="uniq_work_order_per_pm_source"),
             models.CheckConstraint(
                 condition=models.Q(planned_start__isnull=True) | models.Q(planned_end__isnull=True)
                 | models.Q(planned_end__gte=models.F("planned_start")), name="work_order_plan_window_ordered"),

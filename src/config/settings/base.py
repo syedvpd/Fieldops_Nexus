@@ -74,6 +74,8 @@ INSTALLED_APPS = [
     "apps.incidents",
     "apps.workorders",
     "apps.inventory",
+    "apps.maintenance",
+    "apps.sla",
     "apps.checklists",
     "apps.workspace",
     "apps.ui",
@@ -185,6 +187,14 @@ CELERY_BEAT_SCHEDULE = {
         "task": "apps.core.tasks.clear_expired_sessions",
         "schedule": 60 * 60 * 24,
     },
+    "monitor-sla": {
+        "task": "apps.sla.tasks.monitor_sla",
+        "schedule": 60,
+    },
+    "generate-due-maintenance": {
+        "task": "apps.maintenance.tasks.generate_due_maintenance",
+        "schedule": 60 * 15,
+    },
 }
 
 # --- Email ------------------------------------------------------------------------------------
@@ -251,6 +261,7 @@ SPECTACULAR_SETTINGS = {
     "COMPONENT_SPLIT_REQUEST": True,
     "ENUM_NAME_OVERRIDES": {
         "AssetStatusEnum": "apps.assets.models.Asset.Status",
+        "SLATargetStateEnum": "apps.sla.models.SLATracking.TargetState",
         "SiteStatusEnum": "apps.sites.models.Status",
         "MembershipStatusEnum": "apps.tenancy.models.Membership.Status",
         "OrganizationStatusEnum": "apps.tenancy.models.Organization.Status",
