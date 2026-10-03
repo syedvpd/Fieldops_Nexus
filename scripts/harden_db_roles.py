@@ -34,6 +34,11 @@ def grant_statements(schema: str = "fieldops", owner: str = "fieldops_migrator",
     ]
 
 
+def role_attribute_statements(app: str = "fieldops_app") -> list[str]:
+    """The runtime role must never be a superuser, bypass row security, or create roles / databases."""
+    return [f'ALTER ROLE "{app}" NOSUPERUSER NOBYPASSRLS NOCREATEROLE NOCREATEDB NOREPLICATION']
+
+
 def main() -> None:
     import psycopg
     from psycopg import sql
@@ -57,11 +62,11 @@ def main() -> None:
             what = "SEQUENCE" if kind == "S" else "TABLE"
             conn.execute(sql.SQL("ALTER {} fieldops.{} OWNER TO fieldops_migrator").format(
                 sql.SQL(what), sql.Identifier(name)))
-        for stmt in grant_statements():
+        for stmt in grant_statements() + role_attribute_statements():
             conn.execute(stmt)
         conn.execute("ALTER ROLE fieldops_migrator SET search_path = fieldops")
         conn.execute("REVOKE ALL ON SCHEMA public FROM fieldops_app")
-        print("roles split: fieldops_migrator owns the schema, fieldops_app has DML only (no TRUNCATE)")
+        print("roles split: fieldops_migrator owns the schema, fieldops_app has DML only (no TRUNCATE / DDL / SUPERUSER / BYPASSRLS)")
 
 
 if __name__ == "__main__":

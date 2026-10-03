@@ -36,7 +36,8 @@ Connection: direct host `db.<ref>.supabase.co:5432` works from IPv6-capable host
 ```sql
 SELECT has_table_privilege('fieldops_app','fieldops.audit_auditlog','TRUNCATE');   -- false
 SELECT has_schema_privilege('fieldops_app','fieldops','CREATE');                    -- false
-SELECT rolsuper, rolbypassrls FROM pg_roles WHERE rolname='fieldops_app';           -- false, false
+SELECT rolsuper, rolbypassrls, rolcreaterole, rolcreatedb FROM pg_roles WHERE rolname='fieldops_app';  -- all false
+-- as fieldops_app: ALTER TABLE / DROP TABLE / CREATE TABLE in schema fieldops must fail ("must be owner" / "permission denied")
 ```
 `manage.py migrate` (DDL) must run as `fieldops_migrator` only; web / worker / beat `DATABASE_URL` = `fieldops_app`. Report snapshots skip an organization that has no ACTIVE owner membership (task result `skipped: "no active owner"`).
 

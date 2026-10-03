@@ -31,6 +31,29 @@ def test_runtime_role_has_dml_but_no_truncate_ddl_or_trigger_rights():
         cur.execute("SET ROLE rt_migrator")
         cur.execute("CREATE TABLE rt_priv.ledger (id int primary key, note text)")
         cur.execute("RESET ROLE")
+        # no DDL either: not the owner, so ALTER / DROP / CREATE are refused
+        for ddl in ("ALTER TABLE rt_priv.ledger ADD COLUMN extra int", "DROP TABLE rt_priv.ledger",
+                    "CREATE TABLE rt_priv.sneaky (id int)"):
+            cur.execute("SET ROLE rt_app")
+            cur.execute("SAVEPOINT d")
+            with pytest.raises(Exception) as ddl_exc:
+                cur.execute(ddl)
+            assert "permission denied" in str(ddl_exc.value).lower() or "must be owner" in str(ddl_exc.value).lower(), ddl
+            cur.execute("ROLLBACK TO SAVEPOINT d")
+            cur.execute("RESET ROLE")
+
+
+def test_runtime_role_attributes_are_forced_to_least_privilege():
+    mod = _load()
+    with connection.cursor() as cur:
+        cur.execute("SELECT rolsuper FROM pg_roles WHERE rolname = current_user")
+        if not cur.fetchone()[0]:
+            pytest.skip("needs a superuser test database to create throw-away roles")
+        cur.execute("CREATE ROLE rt_risky NOLOGIN SUPERUSER BYPASSRLS CREATEROLE CREATEDB")
+        for stmt in mod.role_attribute_statements("rt_risky"):
+            cur.execute(stmt)
+        cur.execute("SELECT rolsuper, rolbypassrls, rolcreaterole, rolcreatedb FROM pg_roles WHERE rolname = 'rt_risky'")
+        assert cur.fetchone() == (False, False, False, False)
         for stmt in mod.grant_statements("rt_priv", "rt_migrator", "rt_app"):
             cur.execute(stmt)
         # a table created LATER by the migrator inherits the same limited grants

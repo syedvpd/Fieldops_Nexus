@@ -133,6 +133,7 @@ def test_celery_registered_tasks():
 def test_content_security_policy_header_and_nonce(client, owner_a):
     r = client.get("/accounts/login/")
     csp = r["Content-Security-Policy"]
+    assert "unsafe-eval" not in csp and "connect-src 'self'" in csp  # HTMX XHR stays same-origin
     assert "script-src 'self' 'nonce-" in csp and "frame-ancestors 'none'" in csp and "'unsafe-inline'" not in csp.split("style-src")[0]
     nonce = csp.split("'nonce-")[1].split("'")[0]
     other = client.get("/accounts/login/")["Content-Security-Policy"]
@@ -165,3 +166,16 @@ def test_every_inline_script_page_is_csp_clean(client, owner_a, p3):
         for tag in re.findall(r"<script(?![^>]*\bsrc=)[^>]*>", body):
             assert f'nonce="{nonce}"' in tag, (url, tag)
         assert not re.search(r"\son(click|load|change|submit|error|mouseover)\s*=", body, re.I), url
+
+
+@pytest.mark.django_db
+def test_htmx_and_static_assets_still_load_under_the_policy(client, owner_a):
+    from django.contrib.staticfiles import finders
+    client.force_login(owner_a)
+    body = client.get("/app/").content.decode()
+    for asset in ("lib/htmx.min.js", "lib/bootstrap.bundle.min.js", "js/app.js"):
+        assert f"{asset}" in body and finders.find(asset), asset  # same-origin scripts (allowed by script-src 'self')
+    # an HTMX fragment request is answered normally and carries the same policy (no inline script in fragments)
+    r = client.get("/app/search/?q=ow", HTTP_HX_REQUEST="true")
+    assert r.status_code == 200 and "Content-Security-Policy" in r
+    assert "<script" not in r.content.decode()
