@@ -3,9 +3,12 @@
 Multi-tenant SaaS ERP (Enterprise Asset, Maintenance & Field Service), HPE-PRD-2026-FOPS02. ONE integrated app, not 15.
 Start every session by reading `docs/PROJECT_MAP.md` (where everything is) and `docs/MODULE_STATUS.md` (what is done).
 
-## Source of truth
-1. HPE requirements (mandatory where explicit) -> 2. `docs/blueprint/` (decisions where HPE is silent) -> 3. repo -> 4. agent ideas (proposals only).
-Never present an implementation decision as an HPE requirement. Module numbers M01-M15 are traceability IDs only (`docs/TRACEABILITY.md`); Django apps use meaningful names.
+## Permanent knowledge (read first, every session; the repository is the project's memory)
+`docs/PROJECT_SOURCE_OF_TRUTH.md` (priority rules, golden/critical rules, definition of done, verification rules, open conflicts), `docs/FIELDOPS_NEXUS_MASTER_BUSINESS_WORKFLOW.md` (business workflow, modules, state machines, boundaries, dependencies), and `docs/modules/Mxx_*.md` for the module you touch. Then `docs/DECISIONS.md`, `docs/MODULE_STATUS.md`, `docs/TRACEABILITY.md`, `docs/DOMAIN_MODEL.md`, `docs/DEVELOPMENT_RULES.md`.
+
+## Source of truth (priority, D-032)
+1. Explicit HPE PRD requirement -> 2. master business/workflow docs (`docs/FIELDOPS_NEXUS_MASTER_BUSINESS_WORKFLOW.md`, `docs/modules/`) -> 3. recorded Team Lead decision -> 4. documented decision/assumption (`docs/DECISIONS.md`) -> 5. existing implementation if it contradicts none of 1-4 -> 6. general engineering assumptions. `docs/blueprint/` is working material below level 2.
+Label anything HPE is silent on: HPE CONFIRMED / OUR IMPLEMENTATION DECISION / CLARIFICATION REQUIRED / EXAMPLE; never present an implementation decision as an HPE requirement. If documents conflict: stop, identify the conflict, prefer the higher source, record it in DECISIONS.md; conflicts needing the Team Lead are listed in PROJECT_SOURCE_OF_TRUTH section 8 (do not resolve them silently). Ambiguity that affects architecture, security, data model, workflow, tenant isolation or irreversible behaviour: STOP AND ASK. Module numbers M01-M15 are HPE's and are never renumbered; Django apps use meaningful names. A module is done only with browser + PostgreSQL + audit + integration + negative tests evidence (never "tests pass" alone). Do not start the next phase with unresolved Critical/High defects.
 
 ## Working rules (token efficiency)
 1. Read only files relevant to the task; use `docs/PROJECT_MAP.md` instead of searching. Read only the relevant `docs/blueprint/*` files.

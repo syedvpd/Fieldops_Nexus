@@ -28,7 +28,7 @@ Root: `fieldops-nexus/`. Python path root is `src/`. Settings: `config.settings.
 `bootstrap_env.py` (.env for local compose), `bootstrap_prod_env.py` (.env.prod for Supabase), `provision_supabase.py` (role+schema), `fetch_static_libs.py`, `smoke_stack.py` (HTTP smoke test).
 
 ## Docs
-`docs/integrations/sites-assets-contracts.md` (Phase 1 plan + contracts for later modules). `docs/` ARCHITECTURE, DOMAIN_MODEL, DECISIONS, TRACEABILITY (gates, Day-30 table, journeys), MODULE_STATUS, DEVELOPMENT_RULES, DEPLOYMENT, CHECKPOINT_PHASE_0, `manual-tests/` (one guide per phase), `blueprint/` (source). Skills: `.claude/skills/*` (on-demand, short, link to docs).
+Permanent knowledge: `docs/PROJECT_SOURCE_OF_TRUTH.md`, `docs/FIELDOPS_NEXUS_MASTER_BUSINESS_WORKFLOW.md`, `docs/modules/M01..M15_*.md` (one file per module). `docs/integrations/sites-assets-contracts.md` (Phase 1 plan + contracts for later modules). `docs/` ARCHITECTURE, DOMAIN_MODEL, DECISIONS, TRACEABILITY (gates, Day-30 table, journeys), MODULE_STATUS, DEVELOPMENT_RULES, DEPLOYMENT, CHECKPOINT_PHASE_0, `manual-tests/` (one guide per phase), `blueprint/` (source). Skills: `.claude/skills/*` (on-demand, short, link to docs).
 
 ## Tests (`tests/`)
 `conftest.py` (fixtures: platform_admin, org_a/org_b, owner_a/b, tech_a/b, make_org, make_member, as_user), `test_login_integration.py` (browser-faithful login/Axes/proxy regression suite), `test_tenant_isolation.py`, `test_rbac.py`, `test_audit.py`, `test_onboarding_auth.py`, `test_ui.py`, `test_ui_actions.py`, `test_core.py`, Phase 1: `test_sites.py`, `test_assets.py`, `test_hierarchy.py`, `test_site_scope.py`, `test_ui_phase1.py`, `test_migrations_phase1.py`.
