@@ -48,6 +48,7 @@
 {% if tab == "overview" %}
 {% include "sla/_panel.html" %}
 {% if blockers %}<div class="alert alert-warning"><strong>Cannot be closed yet:</strong><ul class="mb-0">{% for b in blockers %}<li>{{ b }}</li>{% endfor %}</ul></div>{% endif %}
+<div id="wo-coverage-host" hx-get="{% url 'contracts:wo_panel' wo.pk %}" hx-trigger="load" hx-swap="innerHTML"></div>
 <div class="row g-3"><div class="col-lg-7"><div class="fx-card"><div class="fx-card-header">Job</div><div class="fx-card-body"><dl class="fx-kv">
   <dt>Description</dt><dd>{{ wo.description|default:"—"|linebreaksbr }}</dd><dt>Asset</dt><dd><a href="{% url 'assets:detail' wo.asset_id %}">{{ wo.asset.asset_tag }} · {{ wo.asset.name }}</a></dd>
   {% if wo.source_type == "PREVENTIVE_MAINTENANCE" %}<dt>Source</dt><dd id="wo-source">{% if pm_cycle and can.view_pm %}<a href="{% url 'maintenance:plan' pm_cycle.schedule.plan_id %}">Preventive maintenance: {{ pm_cycle.schedule.plan.name }}</a>{% elif pm_cycle %}Preventive maintenance: {{ pm_cycle.schedule.plan.name }}{% else %}Preventive maintenance{% endif %}{% if pm_cycle %} · cycle #{{ pm_cycle.sequence }}{% endif %}</dd>{% endif %}

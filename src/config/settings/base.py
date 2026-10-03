@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "apps.workorders",
     "apps.inventory",
     "apps.maintenance",
+    "apps.contracts",
     "apps.sla",
     "apps.checklists",
     "apps.workspace",
@@ -191,6 +192,10 @@ CELERY_BEAT_SCHEDULE = {
         "task": "apps.sla.tasks.monitor_sla",
         "schedule": 60,
     },
+    "contract-renewal-alerts": {
+        "task": "apps.contracts.tasks.send_renewal_alerts",
+        "schedule": 60 * 60 * 6,
+    },
     "generate-due-maintenance": {
         "task": "apps.maintenance.tasks.generate_due_maintenance",
         "schedule": 60 * 15,
@@ -261,6 +266,8 @@ SPECTACULAR_SETTINGS = {
     "COMPONENT_SPLIT_REQUEST": True,
     "ENUM_NAME_OVERRIDES": {
         "AssetStatusEnum": "apps.assets.models.Asset.Status",
+        "CoverageKindEnum": "apps.contracts.models.CoverageAgreement.Kind",
+        "ServiceRequestKindEnum": "apps.incidents.models.ServiceRequest.Kind",
         "SLATargetStateEnum": "apps.sla.models.SLATracking.TargetState",
         "SiteStatusEnum": "apps.sites.models.Status",
         "MembershipStatusEnum": "apps.tenancy.models.Membership.Status",
