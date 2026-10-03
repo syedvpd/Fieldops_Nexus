@@ -39,11 +39,11 @@ No duplicate breaches or events; no cross-tenant pairs; one cycle per PM work or
 ## Defects found during Phases 4-6 (all fixed with regression tests)
 High: 1 (transfer deadlock, M09). Medium: 4 (consume view 500 on a foreign id; stale-instance inactive checks; `.unscoped()` in a PM task; SLA pause synced after the target check). Low: 3. Open Critical / High: none known.
 
-## Open decisions for the Team Lead
-1. M04 missed-cycle policy (collapse into one work order) - OUR decision (D-043).
-2. M09 negative adjustments (no second approver), no costing (D-042).
-3. M11 pause states and business hours: wall-clock only (D-044).
-4. Phase 1-3 browser audit remains owed.
+## Team Lead decisions (recorded 2026-10-03)
+1. D-045: one catch-up work order for missed PM cycles (implemented).
+2. D-046: manual stock adjustments without second approval, no costing (implemented).
+3. D-047: SLA timers use 24/7 elapsed minutes (implemented); pause states per profile remain our decision.
+4. D-048: Phase 1-3 browser acceptance stays OUTSTANDING; M01-M08 browser acceptance is not verified until the visible audit is performed.
 
 ## Supabase
 Applied at the Team Lead's request (2026-10-03), additive only: `inventory.0001`, `workorders.0002`, `workorders.0003` (nullable columns; the backfill touched 0 rows), `maintenance.0001`, `sla.0001`. `django_migrations` = 45; 15 new tables; 21 new permission rows; `workorders_workorder` has 0 rows, `sla_slatracking` 0. No DROP / TRUNCATE / DELETE. Code merged to `main` (fast-forward, no force).

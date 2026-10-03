@@ -9,7 +9,7 @@ Part of the ONE integrated FieldOps Nexus ERP. Read `docs/PROJECT_SOURCE_OF_TRUT
 - **Consumes:** M02 assets/meters, M03, M08 checklists, M01 calendars.
 - **Provides:** Maintenance demand: generated Work Orders (owned by M06).
 - **Boundary rules:** Creates demand only; M06 owns the WO. Scheduler idempotent, no duplicates, handles missed/overdue cycles, concurrency-safe.
-- **Status:** IMPLEMENTED (Phase 5; app `maintenance`, D-043; awaiting Team Lead approval). Evidence: `docs/PHASE_5_ACCEPTANCE_REPORT.md`; contract `docs/integrations/maintenance-workorders.md`; manual guide `docs/manual-tests/PHASE_5_MANUAL_TEST.md`. Open: the missed-cycle policy is our decision (collapse) and needs Team Lead confirmation.
+- **Status:** IMPLEMENTED (Phase 5; app `maintenance`, D-043; awaiting Team Lead approval). Evidence: `docs/PHASE_5_ACCEPTANCE_REPORT.md`; contract `docs/integrations/maintenance-workorders.md`; manual guide `docs/manual-tests/PHASE_5_MANUAL_TEST.md`. Missed-cycle policy (one catch-up order) confirmed by the Team Lead: D-045.
 
 
 Related: `docs/MODULE_STATUS.md`, `docs/TRACEABILITY.md`, `docs/DOMAIN_MODEL.md`, `docs/DECISIONS.md`, `docs/blueprint/04_MODULE_RESPONSIBILITIES.md`.

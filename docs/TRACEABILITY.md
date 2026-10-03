@@ -154,7 +154,7 @@ Status: IMPLEMENTED = code + automated test on local PostgreSQL. Browser evidenc
 | Recurring job generation = real work orders (HPE CONFIRMED; Journey 2) | IMPLEMENTED through `workorders.services.create_work_order` | `test_time_based_generation_creates_a_real_planned_work_order`, API / UI journeys |
 | PM source recorded on the work order | IMPLEMENTED (`source_type` / `source_id`, D-043) | `test_database_enforces_one_work_order_per_cycle`, WO detail / API |
 | Scheduler idempotent, concurrency-safe, no duplicates (HPE CONFIRMED) | IMPLEMENTED | `test_running_generation_twice...`, `tests/test_m04_concurrency.py`, `test_failed_generation_rolls_back_completely_and_the_retry_creates_exactly_one`, Celery tests |
-| Missed / overdue cycles (HPE CONFIRMED requirement, policy OUR DECISION) | IMPLEMENTED as collapse; CLARIFICATION REQUIRED | `test_missed_cycles_are_collapsed_into_the_latest_one` |
+| Missed / overdue cycles (HPE CONFIRMED requirement, policy OUR DECISION) | IMPLEMENTED as collapse; TEAM LEAD DECISION D-045 (2026-10-03) | `test_missed_cycles_are_collapsed_into_the_latest_one` |
 | Maintenance windows, reminders (HPE CONFIRMED) | IMPLEMENTED (window in site time, working-day shift, reminder once per occurrence) | `test_planned_window_moves_to_the_next_working_day_of_the_site_calendar`, `test_reminder_is_sent_once_per_occurrence` |
 | Checklists on PM work (HPE CONFIRMED; M08 authoritative) | IMPLEMENTED | `test_plan_checklist_becomes_a_required_checklist_of_the_generated_work_order` |
 | Disabled PM does not generate; re-enable resumes | IMPLEMENTED | `test_disabled_plan_and_schedule_never_generate_and_reenabling_resumes_without_replay` |

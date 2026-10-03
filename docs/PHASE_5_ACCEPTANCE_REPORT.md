@@ -43,5 +43,5 @@ Alpha vs Beta plan / schedule / cycle (404 on every verb); site-scoped users see
 Plan -> meter schedule -> scheduler run -> work order shows its PM source -> second run generates nothing -> four viewport sizes checked. Database: one cycle per work order, no duplicates, no orphans.
 
 ## Remaining decisions / limits
-- CLARIFICATION REQUIRED: the missed-cycle COLLAPSE policy (one order for the latest occurrence) is our decision.
+- Missed cycles: ONE catch-up work order (collapse) - TEAM LEAD DECISION D-045, 2026-10-03.
 - Not implemented: floating cadence from the completion date, per-schedule assignee defaults, spare-part templates on plans.

@@ -41,6 +41,6 @@ Alpha vs Beta tracking / profile / breach (404 on every verb); foreign role id i
 | 1 | Medium | A target met right after a resume was judged against the unshifted due time (the pause was synced after the target check) | pause / resume is synced first in both hooks; `test_pause_only_for_configured_states_and_due_times_shift` |
 
 ## Remaining decisions / limits
-- CLARIFICATION REQUIRED: pause states and business hours (not HPE-defined; wall-clock only, D-044).
+- TEAM LEAD DECISION D-047 (2026-10-03): 24/7 elapsed clock minutes, no business hours. Pause states per profile remain OUR IMPLEMENTATION DECISION (D-044).
 - Not implemented: contract / customer SLAs (M10), customer SLA view (M13), dashboards (M14), e-mail / SMS channels.
 - Pause / resume and the work-order SLA were verified by automated tests, not in the pane.

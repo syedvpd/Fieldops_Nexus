@@ -47,6 +47,6 @@ Alpha vs Beta part / warehouse / balance / movement / line (404 on every verb); 
 Created part and warehouse and received 10 through the forms; technician requested 4 in My Jobs and was refused (403) on /app/inventory/stock/; stores reserved 3 (on hand 10, reserved 3), issued 4 (on hand 6, reserved 0), a return of 99 was refused with a message, a return of 1 gave on hand 7. Console: one 403 (EXPECTED, the technician's forbidden page); network: all other requests 200. No horizontal page scroll at 1920x1080, 1366x768, 768x1024, 390x844 on parts, stock, movements, receive and the work-order parts page. Database: movements RECEIPT +10, RESERVE (reserved +3), ISSUE (-4 on hand, -3 reserved), RETURN +1 = balance 7 / 0; line ISSUED 4 / 0 / 1; no cross-tenant movement; audit rows with the actor for every operation.
 
 ## Remaining decisions / limits
-- CLARIFICATION REQUIRED: negative adjustments need no second approver; no costing / valuation; reorder is information only (D-042).
+- TEAM LEAD DECISION D-046 (2026-10-03): manual adjustments need no second approver; no costing / valuation. Reorder is information only (D-042).
 - Technician consumption through the browser and the M06 closure of a work order with parts were verified by automated tests, not in the pane.
 - Phase 1-3 browser audit and Supabase application remain owed (see MODULE_STATUS).

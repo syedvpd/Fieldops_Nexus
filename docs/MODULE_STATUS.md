@@ -17,6 +17,9 @@ Nothing is APPROVED until the Team Lead completes the manual test for that phase
 | 9 | M14 Dashboards + M15 Audit/Compliance | NOT STARTED | |
 | Final | HPE seven-journey acceptance, security/perf hardening, KT docs | NOT STARTED | |
 
+## Team Lead decisions recorded 2026-10-03 (D-045..D-048)
+Missed PM cycles -> one catch-up work order; manual stock adjustments without second approval and no costing; SLA timers 24/7 elapsed minutes; **Phase 1-3 browser acceptance remains OUTSTANDING (M01-M08 browser acceptance NOT verified until the visible audit is performed).**
+
 ## Phase 0 known gaps (carried forward)
 - Site-scoped roles: DONE in Phase 1 (`MembershipRole.site`, D-025).
 - M15 reports/exports (audit export CSV/XLSX/PDF) and org-level login-history views: Phase 9.
