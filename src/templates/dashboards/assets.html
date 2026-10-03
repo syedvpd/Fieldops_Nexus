@@ -1,0 +1,18 @@
+{% extends "dashboards/_layout.html" %}
+{% block dash %}
+{% with k=data.kpis %}
+<div class="row g-3 mb-3">
+  {% include "dashboards/_kpi.html" with key="assets" label="Assets" value=data.assets_total note="now" %}
+  {% include "dashboards/_kpi.html" with key="failures" label="Failures" value=k.failures note="downtimes started in the period" %}
+  {% include "dashboards/_kpi.html" with key="downtime" label="Downtime" value=k.downtime_hours unit=" h" note="clipped to the period" %}
+  {% include "dashboards/_kpi.html" with key="mttr" label="MTTR" value=k.mttr_hours unit=" h" note="mean time to repair" %}
+  {% include "dashboards/_kpi.html" with key="mtbf" label="MTBF" value=k.mtbf_hours unit=" h" note="needs at least one failure" %}
+  {% if k.agreements_expiring_30d is not None %}{% include "dashboards/_kpi.html" with key="expiring" label="Coverage expiring" value=k.agreements_expiring_30d note="within 30 days" %}{% endif %}
+</div>{% endwith %}
+<div class="row g-3">
+  <div class="col-md-5">{% include "dashboards/_bars.html" with title="Assets by status" bars=bars_status %}</div>
+  <div class="col-md-7"><div class="fx-card h-100"><div class="fx-card-header">Most downtime in the period</div><div class="table-responsive"><table class="table fx-table mb-0" id="top-downtime"><thead><tr><th>Asset</th><th class="text-end">Hours</th></tr></thead><tbody>
+    {% for r in data.top_downtime %}<tr><td>{{ r.asset }}</td><td class="text-end">{{ r.hours }}</td></tr>{% empty %}<tr><td colspan="2" class="text-body-secondary">No downtime recorded in this view.</td></tr>{% endfor %}</tbody></table></div>
+    <div class="small text-body-secondary p-2">{{ definitions.mtbf }}</div></div></div>
+</div>
+{% endblock %}

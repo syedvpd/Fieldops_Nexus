@@ -77,6 +77,8 @@ INSTALLED_APPS = [
     "apps.maintenance",
     "apps.contracts",
     "apps.identification",
+    "apps.portal",
+    "apps.dashboards",
     "apps.sla",
     "apps.checklists",
     "apps.workspace",

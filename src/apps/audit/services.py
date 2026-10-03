@@ -32,6 +32,29 @@ def snapshot(instance, fields: list[str]) -> dict:
     return _jsonable({f: getattr(instance, f) for f in fields})
 
 
+def site_of(target):
+    """Site of an audited record, when it has one: its own ``site_id`` (assets, work orders, requests, sites ...),
+    else through its asset / work order / plan / warehouse / schedule link. Never raises."""
+    try:
+        from apps.sites.models import Site
+
+        if isinstance(target, Site):
+            return target.pk
+        for path in (("site_id",), ("asset", "site_id"), ("work_order", "site_id"), ("warehouse", "site_id"),
+                     ("plan", "site_id"), ("balance", "warehouse", "site_id"), ("tracking", "site_id"),
+                     ("request", "site_id")):
+            obj = target
+            for part in path:
+                obj = getattr(obj, part, None)
+                if obj is None:
+                    break
+            else:
+                return obj
+    except Exception:  # an unexpected shape must never break the audited operation
+        return None
+    return None
+
+
 def client_ip(request) -> str | None:
     if request is None:
         return None
@@ -55,10 +78,12 @@ def record(
     request=None,
 ) -> AuditLog:
     target_type = target_id = ""
+    site_id = None
     if target is not None:
         target_type = target._meta.label_lower
         target_id = str(target.pk)
         target_repr = target_repr or str(target)[:300]
+        site_id = site_of(target)
     if actor is not None and not getattr(actor, "is_authenticated", True):
         actor = None
     return AuditLog.objects.create(
@@ -72,6 +97,7 @@ def record(
         before=_jsonable(before) if before is not None else None,
         after=_jsonable(after) if after is not None else None,
         metadata=_jsonable(metadata or {}),
+        site_id=site_id,
         ip_address=client_ip(request),
         request_id=flogging.request_id_var.get() if flogging.request_id_var.get() != "-" else "",
     )

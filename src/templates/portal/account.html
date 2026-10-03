@@ -1,0 +1,15 @@
+{% extends "shell.html" %}
+{% load ui_tags %}
+{% block title %}{{ acct.membership.user.display_name }} · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div>
+  <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1 small"><li class="breadcrumb-item"><a href="{% url 'portal:accounts' %}">Portal clients</a></li><li class="breadcrumb-item active">{{ acct.membership.user.display_name }}</li></ol></nav>
+  <h1>{{ acct.membership.user.display_name }} {% if acct.is_active %}{% status_badge "ACTIVE" %}{% else %}{% status_badge "DISABLED" %}{% endif %}</h1>
+  <div class="text-body-secondary">{{ acct.membership.user.email }}{% if acct.company %} · {{ acct.company }}{% endif %}</div></div>
+  <form method="post" class="m-0">{% csrf_token %}<input type="hidden" name="action" value="{% if acct.is_active %}disable{% else %}enable{% endif %}"><button class="btn btn-outline-secondary" {% if acct.is_active %}data-confirm="Disable portal access? The client can no longer sign in to the portal features."{% endif %}>{% if acct.is_active %}Disable access{% else %}Enable access{% endif %}</button></form></div>
+<div class="fx-card"><div class="fx-card-header">Assets this client may report on</div><div class="table-responsive"><table class="table fx-table mb-0" id="grants-table"><tbody>
+{% for g in grants %}<tr><td>{{ g.asset.asset_tag }} · {{ g.asset.name }} <span class="small text-body-secondary">({{ g.asset.site.code }})</span></td>
+  <td class="text-end"><form method="post" class="m-0">{% csrf_token %}<input type="hidden" name="action" value="revoke"><input type="hidden" name="asset" value="{{ g.asset_id }}"><button class="btn btn-sm btn-outline-danger" data-confirm="Remove {{ g.asset.asset_tag }} from this client?">Remove</button></form></td></tr>
+{% empty %}<tr><td class="text-body-secondary">No assets granted: the client cannot submit requests yet.</td></tr>{% endfor %}</tbody></table></div>
+  <div class="fx-card-body border-top"><form method="post" class="d-flex flex-wrap gap-2">{% csrf_token %}<input type="hidden" name="action" value="grant"><div class="flex-grow-1" style="min-width:240px">{{ form.asset }}</div><button class="btn btn-primary">Grant asset</button></form></div></div>
+{% endblock %}

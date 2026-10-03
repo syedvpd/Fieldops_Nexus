@@ -22,6 +22,7 @@ from apps.contracts.api_views import (
     ProviderViewSet,
 )
 from apps.core import health
+from apps.dashboards.api_views import DashboardViewSet
 from apps.identification.api_views import IdentifierViewSet, ScanViewSet
 from apps.incidents.api_views import ServiceRequestViewSet
 from apps.inventory.api_views import (
@@ -39,6 +40,7 @@ from apps.maintenance.api_views import (
 )
 from apps.notifications.api_views import NotificationViewSet
 from apps.platform_admin.api_views import PlatformOrganizationViewSet
+from apps.portal.api_views import PortalAccountViewSet, PortalAssetViewSet, PortalRequestViewSet
 from apps.rbac.api_views import PermissionViewSet, RoleViewSet
 from apps.sites.api_views import (
     CalendarViewSet,
@@ -91,6 +93,10 @@ router.register("coverage-checks", CoverageCheckViewSet, basename="coverage-chec
 router.register("coverage", CoverageViewSet, basename="coverage")
 router.register("asset-identifiers", IdentifierViewSet, basename="asset-identifier")
 router.register("scan", ScanViewSet, basename="scan")
+router.register("portal/requests", PortalRequestViewSet, basename="portal-request")
+router.register("portal/assets", PortalAssetViewSet, basename="portal-asset")
+router.register("portal-accounts", PortalAccountViewSet, basename="portal-account")
+router.register("dashboards", DashboardViewSet, basename="dashboard")
 router.register("sla-profiles", SLAProfileViewSet, basename="sla-profile")
 router.register("sla-trackings", SLATrackingViewSet, basename="sla-tracking")
 router.register("sla-breaches", SLABreachViewSet, basename="sla-breach")
@@ -126,6 +132,8 @@ urlpatterns = [
     path("app/", include("apps.sla.urls")),
     path("app/", include("apps.contracts.urls")),
     path("app/", include("apps.identification.urls")),
+    path("app/", include("apps.portal.urls")),
+    path("app/", include("apps.dashboards.urls")),
     path("app/", include("apps.checklists.urls")),
     path("app/", include("apps.workspace.urls")),
     path("", include("apps.ui.urls")),

@@ -1,0 +1,15 @@
+{% extends "dashboards/_layout.html" %}
+{% block dash %}
+{% with k=data.kpis %}
+<div class="row g-3 mb-3">
+  {% include "dashboards/_kpi.html" with key="low_stock" label="Low-stock balances" value=k.low_stock_balances note="at or below minimum, now" %}
+  {% include "dashboards/_kpi.html" with key="movements" label="Stock movements" value=k.movements note="in the period" %}
+  {% include "dashboards/_kpi.html" with key="parts_moved" label="Parts issued" value=k.net_consumption_lines note="distinct parts in the period" %}
+</div>{% endwith %}
+<div class="row g-3">
+  <div class="col-md-4">{% include "dashboards/_bars.html" with title="Movements by type" bars=bars_moves %}</div>
+  <div class="col-md-8"><div class="fx-card"><div class="fx-card-header">Parts consumption (net issued to work orders)</div><div class="table-responsive"><table class="table fx-table mb-0" id="parts-table"><thead><tr><th>Part</th><th class="text-end">Issued</th><th class="text-end">Returned</th><th class="text-end">Net</th></tr></thead><tbody>
+    {% for p in data.top_parts %}<tr><td>{{ p.part }}</td><td class="text-end">{{ p.issued|floatformat:"-3" }} {{ p.unit }}</td><td class="text-end">{{ p.returned|floatformat:"-3" }}</td><td class="text-end fw-semibold">{{ p.net|floatformat:"-3" }}</td></tr>{% empty %}<tr><td colspan="4" class="text-body-secondary">No parts were issued in this view.</td></tr>{% endfor %}</tbody></table></div>
+    <div class="small text-body-secondary p-2">{{ definitions.parts_consumption }}</div></div></div>
+</div>
+{% endblock %}

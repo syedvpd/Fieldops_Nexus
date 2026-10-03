@@ -12,3 +12,13 @@ def register(model_label: str, checker: Callable) -> None:
 
 def checker_for(model_label: str) -> Callable | None:
     return _CHECKERS.get(model_label.lower())
+
+
+def allowed(checker: Callable, membership, target, attachment) -> bool:
+    """Runs a checker; checkers that declare an ``attachment`` parameter also receive the attachment (needed for
+    rules such as "a portal client may read only the files they uploaded themselves")."""
+    import inspect
+
+    if "attachment" in inspect.signature(checker).parameters:
+        return bool(checker(membership, target, attachment=attachment))
+    return bool(checker(membership, target))

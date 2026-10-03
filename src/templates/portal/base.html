@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load ui_tags %}
+{% block body_class %}fx-portal bg-body-tertiary{% endblock %}
+{% block body %}
+<header class="border-bottom bg-body">
+  <nav class="container py-2 d-flex flex-wrap align-items-center gap-2" aria-label="Portal">
+    <a class="fw-semibold text-decoration-none me-2" href="{% url 'portal:dashboard' %}"><span class="fx-brand-mark">FX</span> {{ shell_org.name|default:"Client portal" }}</a>
+    <a class="btn btn-sm {% if nav == 'home' %}btn-primary{% else %}btn-outline-secondary{% endif %}" href="{% url 'portal:dashboard' %}">Home</a>
+    <a class="btn btn-sm {% if nav == 'requests' %}btn-primary{% else %}btn-outline-secondary{% endif %}" href="{% url 'portal:requests' %}">My requests</a>
+    {% if can_create %}<a class="btn btn-sm {% if nav == 'new' %}btn-primary{% else %}btn-outline-primary{% endif %}" href="{% url 'portal:new' %}">New request</a>{% endif %}
+    <div class="ms-auto d-flex align-items-center gap-2">
+      {% if shell_org %}<div hx-get="{% url 'notifications:bell' %}" hx-trigger="load, every 60s" hx-swap="innerHTML" class="fx-bell-slot"></div>{% endif %}
+      <div class="dropdown"><button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ request.user.display_name }}</button>
+        <ul class="dropdown-menu dropdown-menu-end"><li><span class="dropdown-item-text small text-body-secondary">{{ request.user.email }}</span></li>
+          <li><a class="dropdown-item" href="{% url 'accounts:password_change' %}">Change password</a></li><li><hr class="dropdown-divider"></li>
+          <li><form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button class="dropdown-item">Sign out</button></form></li></ul></div>
+    </div>
+  </nav>
+</header>
+<main class="container py-3 py-md-4" id="main" style="max-width:960px">
+  {% include "components/_messages.html" %}
+  {% block content %}{% endblock %}
+</main>
+{% endblock %}
