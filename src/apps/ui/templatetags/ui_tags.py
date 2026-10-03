@@ -36,6 +36,12 @@ _BADGES = {
     "ACTIVE": "success", "INVITED": "info", "SUSPENDED": "danger",
     "INACTIVE": "secondary", "UNDER_MAINTENANCE": "warning", "OUT_OF_SERVICE": "danger",
     "RETIRED": "secondary", "DISPOSED": "secondary", "INFO": "info", "SUCCESS": "success", "WARNING": "warning", "CRITICAL": "danger",
+    # M05 requests / M06 work orders
+    "NEW": "info", "TRIAGED": "info", "APPROVED": "success", "REJECTED": "danger", "WORK_ORDER_CREATED": "info",
+    "IN_SERVICE": "warning", "RESOLVED": "success", "CONFIRMED": "success", "CLOSED": "secondary",
+    "DRAFT": "secondary", "PLANNED": "info", "ASSIGNED": "info", "DISPATCHED": "info", "IN_PROGRESS": "warning",
+    "ON_HOLD": "danger", "COMPLETED": "success", "SUPERVISOR_REVIEW": "warning", "CANCELLED": "secondary",
+    "LOW": "secondary", "MEDIUM": "info", "HIGH": "warning", "URGENT": "danger",
 }
 
 

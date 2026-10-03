@@ -202,7 +202,9 @@ def test_ui_pages_are_site_scoped(client, org_a, world, site_a1, site_a2):
     assert client.get("/app/assets/").status_code == 200
     body = client.get("/app/assets/").content.decode()
     assert "S1-1" in body and "S2-1" not in body
-    assert "A2" not in client.get("/app/sites/").content.decode().replace("A2 ", "")
+    sites_page = client.get("/app/sites/").content.decode()  # (not a bare "A2" check: CSRF tokens are random text)
+    assert f"/app/sites/{site_a2.pk}/" not in sites_page and "Site A2" not in sites_page
+    assert f"/app/sites/{site_a1.pk}/" in sites_page
     assert client.get(f"/app/sites/{site_a2.pk}/").status_code == 404
     assert client.get(f"/app/assets/{world['a2'].pk}/").status_code == 404
     assert client.get(f"/app/assets/{world['a2'].pk}/tree/").status_code == 404

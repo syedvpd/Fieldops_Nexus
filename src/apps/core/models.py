@@ -37,3 +37,18 @@ class TenantOwnedModel(BaseModel):
         if ctx is not None and self.organization_id != ctx.pk:
             raise ValueError("Cross-tenant write blocked: object organization differs from active tenant.")
         super().save(*args, **kwargs)
+
+
+class DocumentSequence(TenantOwnedModel):
+    """Per-organization, per-document-type counter (service request / work order numbers). Allocation is a
+    single UPDATE ... SET last_value = last_value + 1, so concurrent allocations serialise on the row lock and
+    never repeat a number (see ``core.sequences.next_number``)."""
+
+    key = models.CharField(max_length=40)
+    last_value = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["organization", "key"], name="uniq_sequence_per_org_key")]
+
+    def __str__(self):
+        return f"{self.key}: {self.last_value}"

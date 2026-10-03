@@ -32,3 +32,18 @@ rbac.MembershipRole.site (nullable): organization-wide when NULL, else limited t
 - All new tables extend `TenantOwnedModel` (organization FK, fail-closed manager). Referenced objects are checked for the same organization in services (zone must belong to the asset's site; hierarchy edges must share organization and site).
 - Constraints: lower(site code) per org; zone name per parent and code per site; one default calendar per site; holiday per (calendar, date); contact order per site; lower(asset_tag) per org; commission_date >= purchase_date; meter reading >= 0; component parent != child and quantity >= 1.
 - Status values: ACTIVE, UNDER_MAINTENANCE, OUT_OF_SERVICE, RETIRED, DISPOSED (see D-027).
+
+## Phase 2 additions (M05 / M06)
+```
+Asset ---< ServiceRequest (number INC-/SR-; kind; severity; service_impact; status; reported_by = Membership; site = asset.site)
+              |- Downtime (one per request; started_at, ended_at)
+              |- ServiceRequestHistory (append-only)
+              |- Attachment (evidence)
+              `---< WorkOrder (source_request nullable; at most one LIVE per request)
+Asset ---< WorkOrder (number WO-; work_type; priority; status; assigned_to = Membership; planned window)
+              |- WorkOrderEvent (append-only: transitions, re-assignments)
+              |- WorkOrderLabor (technician, date, hours 0<h<=24)   |- WorkOrderMaterial (free text; stock is M09)
+              `- Attachment (evidence)
+core.DocumentSequence (organization, key, last_value): number allocation
+```
+- Constraints: unique number per organization; `uniq_live_work_order_per_request` (partial, excludes CANCELLED/CLOSED); downtime end >= start; plan window ordered; labor hours in (0, 24]; material quantity > 0.

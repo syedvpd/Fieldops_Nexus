@@ -9,7 +9,7 @@ Part of the ONE integrated FieldOps Nexus ERP. Read `docs/PROJECT_SOURCE_OF_TRUT
 - **Consumes:** M02/M03 assets, M01 sites, M13 requests.
 - **Provides:** Approved requests that create/link a Work Order; downtime for M14.
 - **Boundary rules:** May create/link a WO after approval; M06 owns the WO lifecycle. M05 must not become M06.
-- **Status:** NOT STARTED
+- **Status:** IMPLEMENTED on local PostgreSQL (Phase 2, D-034..D-038); browser acceptance and Supabase apply pending; awaiting Team Lead approval. See `docs/integrations/incidents-workorders.md`.
 
 
 Related: `docs/MODULE_STATUS.md`, `docs/TRACEABILITY.md`, `docs/DOMAIN_MODEL.md`, `docs/DECISIONS.md`, `docs/blueprint/04_MODULE_RESPONSIBILITIES.md`.

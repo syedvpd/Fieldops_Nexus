@@ -71,6 +71,8 @@ INSTALLED_APPS = [
     "apps.platform_admin",
     "apps.sites",
     "apps.assets",
+    "apps.incidents",
+    "apps.workorders",
     "apps.ui",
 ]
 
@@ -249,6 +251,9 @@ SPECTACULAR_SETTINGS = {
         "SiteStatusEnum": "apps.sites.models.Status",
         "MembershipStatusEnum": "apps.tenancy.models.Membership.Status",
         "OrganizationStatusEnum": "apps.tenancy.models.Organization.Status",
+        "ServiceRequestStatusEnum": "apps.incidents.models.ServiceRequest.Status",
+        "WorkOrderStatusEnum": "apps.workorders.models.WorkOrder.Status",
+        "WorkOrderPriorityEnum": "apps.workorders.models.WorkOrder.Priority",
     },
 }
 ORGANIZATION_HEADER = "X-Organization"  # API clients select the active organization by slug

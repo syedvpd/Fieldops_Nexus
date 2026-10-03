@@ -98,6 +98,7 @@ def membership_permissions(membership) -> frozenset[str]:
             perms = frozenset(
                 RolePermission.objects.filter(role__in=roles).values_list("permission__code", flat=True)
             )
+            perms = catalog.expand(perms)
     membership._perm_cache = perms
     return perms
 
@@ -119,7 +120,7 @@ def site_permissions(membership) -> dict:
         for site_id, code in rows:
             if code and code in scopable:
                 acc.setdefault(site_id, set()).add(code)
-        result = {k: frozenset(v) for k, v in acc.items()}
+        result = {k: catalog.expand(v) for k, v in acc.items()}
     membership._site_perm_cache = result
     return result
 

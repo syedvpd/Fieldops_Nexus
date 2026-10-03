@@ -38,8 +38,8 @@ HPE module numbers are kept exactly as in the Blueprint. "HPE" = explicit in the
 | Site hierarchy | M01 | 1 | IMPLEMENTED (tests + partial browser audit; approval pending) |
 | Asset registry | M02 | 1 | IMPLEMENTED (tests; browser audit partial; approval pending) |
 | Asset hierarchy | M03 | 1 | IMPLEMENTED (tests; browser audit partial; approval pending) |
-| Service request | M05 | 2 | not started |
-| Work-order core | M06 | 2 | not started |
+| Service request | M05 | 2 | IMPLEMENTED (local PostgreSQL tests; browser pass pending; approval pending) |
+| Work-order core | M06 | 2 | IMPLEMENTED (local PostgreSQL tests; browser pass pending; approval pending) |
 | Checklist templates | M08 (templates part only) | 3, pulled forward right after Phase 2 | not started |
 | DB schema (clean, migrations, constraints) | all | every phase | Phase 0 schema done and applied to fresh local DB and Supabase |
 | CI/CD | foundation | 0 | workflow written; not yet run on GitHub (no remote) |
@@ -94,3 +94,21 @@ Legend: IMPLEMENTED / PARTIAL / FUTURE.
 | Schema quality (Day-30 focus) | IMPLEMENTED | constraints, indexes, fresh-DB migration test, no drift |
 | Journey 1: site + asset hierarchy + status/change history | IMPLEMENTED (browser run PARTIAL) | manual guide sections 2-5, 8 |
 | UI desktop/tablet/mobile | PARTIAL | 375px overflow check on 4 pages; full 4-size sweep pending |
+
+## Phase 2 requirements -> evidence (HPE section 7.2 / 8)
+| Requirement | Status | Evidence |
+|---|---|---|
+| M05 failure reporting, severity, asset linkage, service impact | IMPLEMENTED | `incidents.ServiceRequest`, `POST /service-requests/`, UI `/app/incidents/new/`; `tests/test_phase2_journey.py`, `tests/test_phase2_rules.py` |
+| M05 photos / files | IMPLEMENTED | evidence upload through `files.Attachment` (type/size validated), site-scoped download (`files.access`); `test_evidence_validation_and_download_scope` |
+| M05 downtime start / end | IMPLEMENTED | `incidents.Downtime` (+ DB check end >= start), ends on work-order completion or manually; `test_downtime_rules`, journey |
+| M05 triage / approval, state chain | IMPLEMENTED | `incidents/workflow.py` (D-035), invalid/system transitions rejected; `test_request_machine_terminal_and_system_steps`, `test_system_actions_are_not_callable_by_hand` |
+| M05 approved request creates / links a real work order | IMPLEMENTED | `create_work_order_for_request` (one live WO per request, DB partial unique index); `test_create_work_order_requires_approved_request_and_permission`, `test_one_live_work_order_per_request_db_constraint` |
+| M06 create / plan / prioritise / assign / dispatch | IMPLEMENTED | `workorders/workflow.py`, `services.transition`; technician overlap / inactive / cross-tenant refused; `test_assignment_validation`, `test_technician_overlap_is_refused_but_other_windows_and_people_are_fine` |
+| M06 execute, pause (hold/resume), complete | IMPLEMENTED | assignee-only rule, reasons, notes + evidence rule; `test_only_assignee_or_dispatcher_executes`, `test_completion_needs_notes_and_evidence_only_for_corrective` |
+| M06 labor / material / time capture | IMPLEMENTED (material = free-text lines; stock movements are M09) | `WorkOrderLabor`, `WorkOrderMaterial`; `test_close_blockers_and_labor_rules`, `test_material_validation` |
+| M06 supervisor review and closure rules | PARTIAL | review, rework, close guards implemented; **checklist completion before closure needs M08 (OPEN)** |
+| Never DRAFT -> CLOSED | IMPLEMENTED | `test_work_order_machine_has_no_shortcuts`; API 409 in the journey |
+| M05 <-> M06 integration (start / resolve / rework / cancel) | IMPLEMENTED | `on_work_order_*` hooks; `test_rework_loop_and_reopen`, `test_cancel_returns_request_to_approved_and_allows_new_work_order` |
+| RBAC, tenant isolation, site scope, IDOR | IMPLEMENTED | `test_unauthenticated_and_reader`, `test_role_boundaries`, `test_cross_tenant_isolation_both_directions`, `test_site_scoped_user_sees_only_their_site`, `test_technician_sees_only_assigned_work`, UI `test_forbidden_roles_and_foreign_objects` |
+| Audit (create, update, every transition, assignment, labor, material, evidence, downtime) | IMPLEMENTED | journey asserts audit counts and actor/before/after |
+| Browser + Supabase evidence | NOT DONE | stopped by the Team Lead (D-034); guide: `docs/manual-tests/PHASE_2_MANUAL_TEST.md` |

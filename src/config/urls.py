@@ -11,6 +11,7 @@ from apps.assets.api_views import (
 )
 from apps.audit.api_views import AuditLogViewSet
 from apps.core import health
+from apps.incidents.api_views import ServiceRequestViewSet
 from apps.notifications.api_views import NotificationViewSet
 from apps.platform_admin.api_views import PlatformOrganizationViewSet
 from apps.rbac.api_views import PermissionViewSet, RoleViewSet
@@ -22,6 +23,7 @@ from apps.sites.api_views import (
     ZoneViewSet,
 )
 from apps.tenancy.api_views import MemberViewSet, OrganizationViewSet
+from apps.workorders.api_views import WorkOrderViewSet
 
 router = SimpleRouter()
 router.register("members", MemberViewSet, basename="member")
@@ -38,6 +40,8 @@ router.register("assets", AssetViewSet, basename="asset")
 router.register("asset-categories", AssetCategoryViewSet, basename="asset-category")
 router.register("asset-components", ComponentViewSet, basename="asset-component")
 router.register("meters", MeterViewSet, basename="meter")
+router.register("service-requests", ServiceRequestViewSet, basename="service-request")
+router.register("work-orders", WorkOrderViewSet, basename="work-order")
 router.register("platform/organizations", PlatformOrganizationViewSet, basename="platform-organization")
 
 api_v1 = [
@@ -62,6 +66,8 @@ urlpatterns = [
     path("app/", include("apps.files.urls")),
     path("app/", include("apps.sites.urls")),
     path("app/", include("apps.assets.urls")),
+    path("app/", include("apps.incidents.urls")),
+    path("app/", include("apps.workorders.urls")),
     path("", include("apps.ui.urls")),
 ]
 

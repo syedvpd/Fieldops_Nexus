@@ -9,7 +9,7 @@ Part of the ONE integrated FieldOps Nexus ERP. Read `docs/PROJECT_SOURCE_OF_TRUT
 - **Consumes:** M05, M04, manual creation; M08 checklists; M09 parts.
 - **Provides:** Authoritative execution contract for M07, M09, M11, M15.
 - **Boundary rules:** Closure requires checklist completion, resolution notes, evidence per work type. Never DRAFT -> CLOSED. Invalid technician allocation prevented (inactive/conflicting).
-- **Status:** NOT STARTED
+- **Status:** IMPLEMENTED on local PostgreSQL (Phase 2, D-034..D-038); browser acceptance and Supabase apply pending; awaiting Team Lead approval. See `docs/integrations/incidents-workorders.md`.
 
 
 Related: `docs/MODULE_STATUS.md`, `docs/TRACEABILITY.md`, `docs/DOMAIN_MODEL.md`, `docs/DECISIONS.md`, `docs/blueprint/04_MODULE_RESPONSIBILITIES.md`.
