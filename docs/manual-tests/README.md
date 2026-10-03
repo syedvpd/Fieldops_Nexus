@@ -5,7 +5,7 @@ Every phase ends with a step-by-step guide here: exact credentials/test data, UR
 | Phase | Guide | Status |
 |---|---|---|
 | 0 Foundation | [PHASE_0_MANUAL_TEST.md](PHASE_0_MANUAL_TEST.md) | ready |
-| 1 M01-M03 Sites, Assets, Hierarchy | PHASE_1_MANUAL_TEST.md | written at end of Phase 1 |
+| 1 M01-M03 Sites, Assets, Hierarchy | [PHASE_1_MANUAL_TEST.md](PHASE_1_MANUAL_TEST.md) | ready |
 | 2 M05+M06 | PHASE_2_MANUAL_TEST.md | |
 | 3 M08+M07 | PHASE_3_MANUAL_TEST.md | |
 | 4 M09 | PHASE_4_MANUAL_TEST.md | |

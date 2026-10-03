@@ -35,9 +35,9 @@ HPE module numbers are kept exactly as in the Blueprint. "HPE" = explicit in the
 | HPE Day-30 deliverable | Module | Phase | Status |
 |---|---|---|---|
 | Auth / RBAC | foundation | 0 | DONE (110 tests; manual approval pending) |
-| Site hierarchy | M01 | 1 | not started |
-| Asset registry | M02 | 1 | not started |
-| Asset hierarchy | M03 | 1 | not started |
+| Site hierarchy | M01 | 1 | IMPLEMENTED (tests + partial browser audit; approval pending) |
+| Asset registry | M02 | 1 | IMPLEMENTED (tests; browser audit partial; approval pending) |
+| Asset hierarchy | M03 | 1 | IMPLEMENTED (tests; browser audit partial; approval pending) |
 | Service request | M05 | 2 | not started |
 | Work-order core | M06 | 2 | not started |
 | Checklist templates | M08 (templates part only) | 3, pulled forward right after Phase 2 | not started |
@@ -67,4 +67,30 @@ Day-30 target is 30-35% of scope; schedule risk: Phases 1-2 plus M08 templates m
 | Health endpoints, structured logging | HPE 2 | `/health/live|ready`, JSON logs with request id |
 | Docker, CI/CD | HPE 2 | `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml` |
 | Multi-tenant SaaS, Super Admin, org onboarding | Impl (Blueprint 02) | `tests/test_onboarding_auth.py`, `test_tenant_isolation.py` |
-| Role templates, site-scoped roles | Impl (Blueprint 06) | `rbac/role_templates.py`; site scope in Phase 1 |
+| Role templates, site-scoped roles | Impl (Blueprint 06) | `rbac/role_templates.py`; site scope DONE in Phase 1 (`tests/test_site_scope.py`, D-025) |
+
+
+## Phase 1 requirements -> evidence (HPE section 7.2 / 8)
+Legend: IMPLEMENTED / PARTIAL / FUTURE.
+| HPE requirement | Status | Where / evidence |
+|---|---|---|
+| M01 organizations | IMPLEMENTED (Phase 0) | `tenancy` |
+| M01 sites | IMPLEMENTED | `sites.Site`, `/api/v1/sites/`, `/app/sites/`; `tests/test_sites.py`, `test_ui_phase1.py` |
+| M01 buildings/zones, service areas | IMPLEMENTED | `sites.Zone` (BUILDING/ZONE/SERVICE_AREA tree, cycle-free); `/api/v1/zones/`, site tree |
+| M01 operating calendars | IMPLEMENTED | `OperatingCalendar` + `CalendarHoliday`; `/api/v1/calendars/`, `/calendar-holidays/` |
+| M01 contact hierarchy | IMPLEMENTED | `SiteContact` escalation order; `/api/v1/site-contacts/` |
+| M02 asset ID, category, model, serial, purchase/commission dates | IMPLEMENTED | `assets.Asset`, `AssetCategory`; uniqueness + date constraints; `tests/test_assets.py` |
+| M02 location | IMPLEMENTED | site + zone, same-org/site checks, `AssetLocationHistory` |
+| M02 owner | IMPLEMENTED | `Asset.owner` (active membership of the org) |
+| M02 warranty | PARTIAL | free-text `warranty_ref` only; coverage logic = M10 (FUTURE) |
+| M02 status (controlled workflow) | IMPLEMENTED | `assets/workflow.py`, `change_status`, matrix test of every state x action; PATCH of status rejected |
+| M02 status/change history | IMPLEMENTED | `AssetStatusHistory` (append-only), `/assets/{id}/history/`, `/changes/` (audit before/after) |
+| M02 documents | IMPLEMENTED | `AssetDocument` via `files.services.attach`, site-scoped download |
+| AssetMeter | IMPLEMENTED | `/api/v1/meters/`, monotonic readings (M04 consumes later) |
+| M03 parent-child, components, replaceable parts, tree | IMPLEMENTED | `AssetComponent`, `assets/hierarchy.py`, `/assets/{id}/tree/`, HTMX tree; `tests/test_hierarchy.py` |
+| API group Assets (`/assets/`, `/assets/{id}/history/`, `/meters/`) | IMPLEMENTED | OpenAPI clean |
+| Backend RBAC + role boundaries (Day-30 focus) | IMPLEMENTED | RBAC matrix + site scope + IDOR tests |
+| Lifecycle state control (Day-30 focus) | IMPLEMENTED | D-027 |
+| Schema quality (Day-30 focus) | IMPLEMENTED | constraints, indexes, fresh-DB migration test, no drift |
+| Journey 1: site + asset hierarchy + status/change history | IMPLEMENTED (browser run PARTIAL) | manual guide sections 2-5, 8 |
+| UI desktop/tablet/mobile | PARTIAL | 375px overflow check on 4 pages; full 4-size sweep pending |
