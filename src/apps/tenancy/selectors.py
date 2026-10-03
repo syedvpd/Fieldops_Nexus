@@ -45,5 +45,5 @@ def organization_members(org):
         Membership.objects.unscoped()
         .filter(organization=org)
         .select_related("user")
-        .prefetch_related("membership_roles__role")
+        .prefetch_related("membership_roles__role", "membership_roles__site")
     )

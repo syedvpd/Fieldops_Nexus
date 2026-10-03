@@ -14,7 +14,7 @@ def shell(request):
     nav = []
     if membership is not None:
         for item in navigation.items():
-            if item.permission and not rbac.has_permission(membership, item.permission):
+            if item.permission and not rbac.has_permission_anywhere(membership, item.permission):
                 continue
             try:
                 url = reverse(item.url_name)

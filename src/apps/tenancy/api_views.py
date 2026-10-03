@@ -1,4 +1,5 @@
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -52,21 +53,50 @@ class MemberSerializer(serializers.ModelSerializer):
         fields = ["id", "email", "full_name", "job_title", "status", "roles", "invited_at", "activated_at"]
 
     def get_roles(self, obj) -> list[dict]:
-        return [{"id": str(mr.role_id), "name": mr.role.name} for mr in obj.membership_roles.all()]
+        return [{"id": str(mr.role_id), "name": mr.role.name, "assignment_id": str(mr.pk),
+                 "site_id": str(mr.site_id) if mr.site_id else None,
+                 "site_code": mr.site.code if mr.site_id else None}
+                for mr in obj.membership_roles.all()]
 
 
-class InviteSerializer(serializers.Serializer):
+class RoleAssignmentSerializer(serializers.Serializer):
+    role_id = serializers.UUIDField()
+    site_id = serializers.UUIDField(required=False, allow_null=True, default=None)
+
+
+class _AssignmentInput(serializers.Serializer):
+    """Either ``role_ids`` (+ optional ``site_ids`` limiting every listed role to those sites) or explicit
+    ``role_assignments`` [{role_id, site_id|null}]. No site = organization-wide."""
+
+    role_ids = serializers.ListField(child=serializers.UUIDField(), required=False, allow_empty=False)
+    site_ids = serializers.ListField(child=serializers.UUIDField(), required=False, allow_empty=False)
+    role_assignments = RoleAssignmentSerializer(many=True, required=False, allow_empty=False)
+
+    def validate(self, attrs):
+        if "role_assignments" in attrs and ("role_ids" in attrs or "site_ids" in attrs):
+            raise serializers.ValidationError("Use either role_assignments or role_ids/site_ids, not both.")
+        if "site_ids" in attrs and "role_ids" not in attrs:
+            raise serializers.ValidationError("site_ids requires role_ids.")
+        return attrs
+
+
+class InviteSerializer(_AssignmentInput):
     email = serializers.EmailField()
     full_name = serializers.CharField(max_length=150, required=False, allow_blank=True)
-    role_ids = serializers.ListField(child=serializers.UUIDField(), allow_empty=False)
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        if "role_ids" not in attrs and "role_assignments" not in attrs:
+            raise serializers.ValidationError("role_ids or role_assignments is required.")
+        return attrs
 
 
-class MemberUpdateSerializer(serializers.Serializer):
+class MemberUpdateSerializer(_AssignmentInput):
     full_name = serializers.CharField(max_length=150, required=False)
     job_title = serializers.CharField(max_length=100, required=False, allow_blank=True)
-    role_ids = serializers.ListField(child=serializers.UUIDField(), required=False, allow_empty=False)
 
 
+@extend_schema(parameters=[OpenApiParameter("id", OpenApiTypes.UUID, OpenApiParameter.PATH)])
 class MemberViewSet(TenantAPIMixin, viewsets.ViewSet):
     permission_map = {
         "list": "user.view", "retrieve": "user.view", "create": "user.invite",
@@ -99,7 +129,8 @@ class MemberViewSet(TenantAPIMixin, viewsets.ViewSet):
         ser.is_valid(raise_exception=True)
         d = ser.validated_data
         m = services.invite_member(request.organization, email=d["email"], full_name=d.get("full_name", ""),
-                                   role_ids=d["role_ids"], actor=request.user, request=request)
+                                   role_ids=d.get("role_ids"), site_ids=d.get("site_ids"),
+                                   assignments=d.get("role_assignments"), actor=request.user, request=request)
         return Response(MemberSerializer(m).data, status=status.HTTP_201_CREATED)
 
     @extend_schema(request=MemberUpdateSerializer, responses=MemberSerializer)
@@ -109,7 +140,8 @@ class MemberViewSet(TenantAPIMixin, viewsets.ViewSet):
         ser.is_valid(raise_exception=True)
         d = ser.validated_data
         services.update_member(m, actor=request.user, request=request, full_name=d.get("full_name"),
-                               job_title=d.get("job_title"), role_ids=d.get("role_ids"))
+                               job_title=d.get("job_title"), role_ids=d.get("role_ids"),
+                               site_ids=d.get("site_ids"), assignments=d.get("role_assignments"))
         return Response(MemberSerializer(services.get_membership(request.organization, pk)).data)
 
     @extend_schema(request=None, responses=MemberSerializer)

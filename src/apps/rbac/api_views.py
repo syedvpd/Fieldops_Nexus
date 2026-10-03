@@ -1,6 +1,7 @@
 import uuid
 
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import serializers, status, viewsets
 from rest_framework.response import Response
 
@@ -45,6 +46,7 @@ class PermissionViewSet(TenantAPIMixin, viewsets.ViewSet):
         return Response(PermissionSerializer(Permission.objects.all(), many=True).data)
 
 
+@extend_schema(parameters=[OpenApiParameter("id", OpenApiTypes.UUID, OpenApiParameter.PATH)])
 class RoleViewSet(TenantAPIMixin, viewsets.ViewSet):
     permission_map = {"list": "role.view", "retrieve": "role.view", "create": "role.manage",
                       "update": "role.manage", "destroy": "role.manage"}

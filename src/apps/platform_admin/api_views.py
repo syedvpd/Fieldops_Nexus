@@ -1,4 +1,5 @@
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -28,6 +29,7 @@ class SuspendSerializer(serializers.Serializer):
     reason = serializers.CharField(max_length=300)
 
 
+@extend_schema(parameters=[OpenApiParameter("id", OpenApiTypes.UUID, OpenApiParameter.PATH)])
 class PlatformOrganizationViewSet(PlatformAPIMixin, viewsets.ViewSet):
     def _get(self, pk):
         try:

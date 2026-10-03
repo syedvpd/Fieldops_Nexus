@@ -1,0 +1,30 @@
+{% extends "shell.html" %}
+{% load ui_tags %}
+{% block title %}Assets · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div><h1>Assets</h1><div class="text-body-secondary">The asset registry: identity, location, lifecycle status, documents and meters.</div></div>
+  <div class="d-flex gap-2"><a class="btn btn-outline-secondary" href="{% url 'assets:categories' %}">Categories</a>
+  {% if can_create %}<a class="btn btn-primary" href="{% url 'assets:create' %}">{% icon 'plus' 16 %} Register asset</a>{% endif %}</div></div>
+<div class="fx-card">
+  <form method="get" class="d-flex flex-wrap gap-2 p-3 border-bottom">
+    <input class="form-control form-control-sm" style="max-width:260px" type="search" name="q" value="{{ filters.q }}" placeholder="Tag, name, serial, model" aria-label="Search assets">
+    <select class="form-select form-select-sm" style="max-width:170px" name="site" aria-label="Site"><option value="">All sites</option>
+      {% for s in sites %}<option value="{{ s.pk }}" {% if filters.site == s.pk|stringformat:"s" %}selected{% endif %}>{{ s.code }}</option>{% endfor %}</select>
+    <select class="form-select form-select-sm" style="max-width:170px" name="category" aria-label="Category"><option value="">All categories</option>
+      {% for c in categories %}<option value="{{ c.pk }}" {% if filters.category == c.pk|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select>
+    <select class="form-select form-select-sm" style="max-width:190px" name="status" aria-label="Status"><option value="">All statuses</option>
+      {% for v, l in statuses %}<option value="{{ v }}" {% if filters.status == v %}selected{% endif %}>{{ l }}</option>{% endfor %}</select>
+    <button class="btn btn-sm btn-outline-secondary">Filter</button>
+  </form>
+  <div class="table-responsive"><table class="table fx-table">
+    <thead><tr><th>Tag</th><th>Name</th><th>Category</th><th>Site / location</th><th>Parent</th><th>Status</th></tr></thead>
+    <tbody>{% for a in page %}
+      <tr><td><a href="{% url 'assets:detail' a.pk %}">{{ a.asset_tag }}</a></td><td>{{ a.name }}</td><td>{{ a.category.name }}</td>
+        <td>{{ a.site.code }}{% if a.zone %} · {{ a.zone.name }}{% endif %}</td>
+        <td>{% if a.parent_link %}<a href="{% url 'assets:detail' a.parent_link.parent_id %}">{{ a.parent_link.parent.asset_tag }}</a>{% else %}—{% endif %}</td>
+        <td>{% status_badge a.status %}</td></tr>
+    {% empty %}<tr><td colspan="6">{% include "components/_empty_state.html" with title="No assets match" text="Adjust the filters or register an asset." %}</td></tr>{% endfor %}
+    </tbody></table></div>
+  {% include "components/_pagination.html" %}
+</div>
+{% endblock %}

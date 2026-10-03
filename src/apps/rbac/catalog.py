@@ -9,16 +9,17 @@ class PermissionDef:
     code: str
     module: str
     description: str
+    site_scoped: bool = False  # may be granted per site (MembershipRole.site); False = organization-wide only
 
 
 _REGISTRY: dict[str, PermissionDef] = {}
 
 
-def register(module: str, code: str, description: str) -> None:
+def register(module: str, code: str, description: str, *, site_scoped: bool = False) -> None:
     existing = _REGISTRY.get(code)
     if existing and existing.module != module:
         raise ValueError(f"Permission {code} already registered by module {existing.module}.")
-    _REGISTRY[code] = PermissionDef(code, module, description)
+    _REGISTRY[code] = PermissionDef(code, module, description, site_scoped)
 
 
 def all_defs() -> list[PermissionDef]:
@@ -27,6 +28,10 @@ def all_defs() -> list[PermissionDef]:
 
 def all_codes() -> set[str]:
     return set(_REGISTRY)
+
+
+def site_scoped_codes() -> set[str]:
+    return {c for c, d in _REGISTRY.items() if d.site_scoped}
 
 
 def is_registered(code: str) -> bool:

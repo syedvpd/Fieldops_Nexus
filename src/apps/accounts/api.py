@@ -1,4 +1,5 @@
 from drf_spectacular.utils import extend_schema
+from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
@@ -22,10 +23,24 @@ class TokenRefresh(LoginThrottleMixin, TokenRefreshView):
     permission_classes: list = []
 
 
+class MeOrganizationSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    slug = serializers.CharField()
+    name = serializers.CharField()
+
+
+class MeSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    email = serializers.EmailField()
+    full_name = serializers.CharField()
+    is_platform_admin = serializers.BooleanField()
+    organizations = MeOrganizationSerializer(many=True)
+
+
 class MeView(APIView):
     """The authenticated identity and the organizations they can act in. Not tenant-scoped."""
 
-    @extend_schema(summary="Current user and organization memberships")
+    @extend_schema(summary="Current user and organization memberships", responses=MeSerializer)
     def get(self, request):
         u = request.user
         return Response({

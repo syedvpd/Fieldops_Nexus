@@ -16,6 +16,8 @@ _ICONS = {
     "search": '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
     "plus": '<path d="M12 5v14M5 12h14"/>',
     "globe": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
+    "pin": '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+    "box": '<path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5v-9z"/><path d="M3 7.5L12 12l9-4.5M12 12v9"/>',
     "menu": '<path d="M4 6h16M4 12h16M4 18h16"/>',
 }
 
@@ -32,7 +34,8 @@ def icon(name, size=18):
 
 _BADGES = {
     "ACTIVE": "success", "INVITED": "info", "SUSPENDED": "danger",
-    "INFO": "info", "SUCCESS": "success", "WARNING": "warning", "CRITICAL": "danger",
+    "INACTIVE": "secondary", "UNDER_MAINTENANCE": "warning", "OUT_OF_SERVICE": "danger",
+    "RETIRED": "secondary", "DISPOSED": "secondary", "INFO": "info", "SUCCESS": "success", "WARNING": "warning", "CRITICAL": "danger",
 }
 
 

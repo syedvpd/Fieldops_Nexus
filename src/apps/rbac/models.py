@@ -56,11 +56,23 @@ class RolePermission(BaseModel):
 
 
 class MembershipRole(BaseModel):
-    # Tenant link is indirect (via membership.organization). Site scoping is added in Phase 1 (M01).
+    """A role held by a membership. ``site`` NULL = organization-wide; otherwise the role (its site-scopable
+    permissions) applies to that site only. Tenant link is indirect (via membership.organization)."""
+
     membership = models.ForeignKey(
         "tenancy.Membership", on_delete=models.CASCADE, related_name="membership_roles"
     )
     role = models.ForeignKey(Role, on_delete=models.PROTECT, related_name="membership_roles")
+    site = models.ForeignKey(
+        "sites.Site", null=True, blank=True, on_delete=models.PROTECT, related_name="+"
+    )
 
     class Meta:
-        constraints = [models.UniqueConstraint(fields=["membership", "role"], name="uniq_membership_role")]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["membership", "role"], condition=models.Q(site__isnull=True),
+                name="uniq_membership_role_orgwide"),
+            models.UniqueConstraint(
+                fields=["membership", "role", "site"], condition=models.Q(site__isnull=False),
+                name="uniq_membership_role_site"),
+        ]

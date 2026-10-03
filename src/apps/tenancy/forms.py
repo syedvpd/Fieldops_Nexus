@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.rbac.models import Role
+from apps.ui.forms import BootstrapFormMixin
 
 
 class OrganizationForm(forms.Form):
@@ -20,6 +21,16 @@ def _role_field(org):
     )
 
 
+def _site_field(org, *, required=False):
+    from apps.sites.models import Site
+
+    return forms.ModelMultipleChoiceField(
+        queryset=Site.objects.for_organization(org).order_by("code"), required=required,
+        widget=forms.CheckboxSelectMultiple, label="Limit to sites",
+        help_text="Leave empty for organization-wide access. Selected sites limit the chosen roles to those sites.",
+    )
+
+
 class InviteForm(forms.Form):
     email = forms.EmailField()
     full_name = forms.CharField(max_length=150, required=False, help_text="Required for new accounts.")
@@ -27,15 +38,24 @@ class InviteForm(forms.Form):
     def __init__(self, *args, org, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["roles"] = _role_field(org)
+        self.fields["sites"] = _site_field(org)
 
 
 class MemberEditForm(forms.Form):
     full_name = forms.CharField(max_length=150)
     job_title = forms.CharField(max_length=100, required=False)
 
+
+class RoleAssignmentForm(BootstrapFormMixin, forms.Form):
+    role = forms.ModelChoiceField(queryset=Role.objects.none())
+    site = forms.ModelChoiceField(queryset=None, required=False, empty_label="All sites (organization-wide)")
+
     def __init__(self, *args, org, **kwargs):
+        from apps.sites.models import Site
+
         super().__init__(*args, **kwargs)
-        self.fields["roles"] = _role_field(org)
+        self.fields["role"].queryset = Role.objects.for_organization(org).order_by("name")
+        self.fields["site"].queryset = Site.objects.for_organization(org).order_by("code")
 
 
 class RoleForm(forms.Form):

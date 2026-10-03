@@ -94,3 +94,75 @@ def api_as(user, org=None):
 @pytest.fixture
 def as_user():
     return api_as
+
+
+# --- Phase 1 helpers (sites / assets) -----------------------------------------------------------------------
+
+
+@pytest.fixture
+def make_site(db):
+    from apps.sites import services as site_services
+
+    def _make(org, code, name=None, **kw):
+        return site_services.create_site(org, actor=None, code=code, name=name or f"Site {code}", **kw)
+    return _make
+
+
+@pytest.fixture
+def make_zone(db):
+    from apps.sites import services as site_services
+
+    def _make(site, name, parent=None, **kw):
+        return site_services.create_zone(site, actor=None, parent=parent, name=name, **kw)
+    return _make
+
+
+@pytest.fixture
+def make_category(db):
+    from apps.assets import services as asset_services
+
+    def _make(org, name="Pump"):
+        from apps.assets.models import AssetCategory
+        existing = AssetCategory.objects.for_organization(org).filter(name__iexact=name).first()
+        return existing or asset_services.create_category(org, name=name, actor=None)
+    return _make
+
+
+@pytest.fixture
+def make_asset(db, make_category):
+    from apps.assets import services as asset_services
+
+    def _make(org, site, tag, *, zone=None, category=None, **kw):
+        return asset_services.create_asset(
+            org, site=site, zone=zone, category=category or make_category(org), actor=None,
+            asset_tag=tag, name=kw.pop("name", f"Asset {tag}"), **kw)
+    return _make
+
+
+@pytest.fixture
+def make_scoped_member(db):
+    """Member whose role(s) apply only to the given sites."""
+    def _make(org, email, role_key, sites):
+        user = User.objects.filter(email=email).first() or User.objects.create_user(
+            email=email, password=PASSWORD, full_name=email.split("@")[0])
+        m = Membership(organization=org, user=user, status=Membership.Status.ACTIVE)
+        m.save()
+        role = rbac.system_role_by_key(org, role_key)
+        rbac.set_membership_assignments(m, [(role, s) for s in sites], actor=None, system=True)
+        return m
+    return _make
+
+
+@pytest.fixture
+def site_a1(org_a, make_site):
+    return make_site(org_a, "A1")
+
+
+@pytest.fixture
+def site_a2(org_a, make_site):
+    return make_site(org_a, "A2")
+
+
+@pytest.fixture
+def site_b1(org_b, make_site):
+    return make_site(org_b, "B1")

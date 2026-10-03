@@ -3,11 +3,24 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.routers import SimpleRouter
 
+from apps.assets.api_views import (
+    AssetCategoryViewSet,
+    AssetViewSet,
+    ComponentViewSet,
+    MeterViewSet,
+)
 from apps.audit.api_views import AuditLogViewSet
 from apps.core import health
 from apps.notifications.api_views import NotificationViewSet
 from apps.platform_admin.api_views import PlatformOrganizationViewSet
 from apps.rbac.api_views import PermissionViewSet, RoleViewSet
+from apps.sites.api_views import (
+    CalendarViewSet,
+    ContactViewSet,
+    HolidayViewSet,
+    SiteViewSet,
+    ZoneViewSet,
+)
 from apps.tenancy.api_views import MemberViewSet, OrganizationViewSet
 
 router = SimpleRouter()
@@ -16,6 +29,15 @@ router.register("roles", RoleViewSet, basename="role")
 router.register("permissions", PermissionViewSet, basename="permission")
 router.register("audit-logs", AuditLogViewSet, basename="auditlog")
 router.register("notifications", NotificationViewSet, basename="notification")
+router.register("sites", SiteViewSet, basename="site")
+router.register("zones", ZoneViewSet, basename="zone")
+router.register("calendars", CalendarViewSet, basename="calendar")
+router.register("calendar-holidays", HolidayViewSet, basename="calendar-holiday")
+router.register("site-contacts", ContactViewSet, basename="site-contact")
+router.register("assets", AssetViewSet, basename="asset")
+router.register("asset-categories", AssetCategoryViewSet, basename="asset-category")
+router.register("asset-components", ComponentViewSet, basename="asset-component")
+router.register("meters", MeterViewSet, basename="meter")
 router.register("platform/organizations", PlatformOrganizationViewSet, basename="platform-organization")
 
 api_v1 = [
@@ -38,6 +60,8 @@ urlpatterns = [
     path("app/", include("apps.audit.urls")),
     path("app/", include("apps.notifications.urls")),
     path("app/", include("apps.files.urls")),
+    path("app/", include("apps.sites.urls")),
+    path("app/", include("apps.assets.urls")),
     path("", include("apps.ui.urls")),
 ]
 

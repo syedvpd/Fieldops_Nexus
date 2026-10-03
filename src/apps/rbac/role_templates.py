@@ -21,7 +21,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
     RoleTemplate("owner", "Organization Owner", "Full control of the organization.", ("*",), is_owner=True),
     RoleTemplate(
         "admin", "Organization Admin", "Administers users, roles, sites and configuration.",
-        ("organization.*", "user.*", "role.*", "site.*", "audit.view", "report.view", "*.view"),
+        ("organization.*", "user.*", "role.*", "site.*", "zone.*", "calendar.*", "audit.view", "report.view",
+         "*.view"),
     ),
     RoleTemplate(
         "operations_manager", "Operations Manager", "Oversees maintenance and field operations.",
@@ -29,23 +30,26 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
     ),
     RoleTemplate(
         "asset_manager", "Asset Manager", "Owns the asset registry and hierarchy.",
-        ("asset.*", "site.view", "site.create", "site.update", "contract.*", "qr.*", "work_order.view", "report.view"),
+        ("asset.*", "site.view", "site.create", "site.update", "zone.view", "zone.create", "zone.update",
+         "calendar.view", "contract.*", "qr.*", "work_order.view", "report.view"),
     ),
     RoleTemplate(
         "maintenance_planner", "Maintenance Planner", "Plans, schedules and assigns maintenance work.",
-        ("asset.view", "asset.history.view", "site.view", "maintenance.*", "incident.view",
+        ("asset.view", "asset.history.view", "site.view", "zone.view", "calendar.view", "maintenance.*", "incident.view",
          "work_order.view", "work_order.create", "work_order.plan", "work_order.assign",
          "work_order.dispatch", "checklist.view", "inventory.view", "sla.view"),
     ),
     RoleTemplate(
         "supervisor", "Maintenance Supervisor", "Reviews and closes completed work.",
-        ("asset.view", "site.view", "incident.view", "work_order.view", "work_order.review",
+        ("asset.view", "asset.history.view", "site.view", "zone.view", "incident.view", "work_order.view",
+         "work_order.review",
          "work_order.close", "work_order.hold", "checklist.*", "inspection.*", "inventory.view",
          "sla.view", "report.view"),
     ),
     RoleTemplate(
         "technician", "Technician", "Executes assigned field jobs.",
-        ("asset.view", "site.view", "incident.create", "incident.view", "work_order.view_assigned",
+        ("asset.view", "asset.meter.record", "site.view", "zone.view", "incident.create", "incident.view",
+         "work_order.view_assigned",
          "work_order.start", "work_order.hold", "work_order.complete", "checklist.execute",
          "inspection.execute", "inventory.request"),
     ),

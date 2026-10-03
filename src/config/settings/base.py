@@ -69,6 +69,8 @@ INSTALLED_APPS = [
     "apps.notifications",
     "apps.files",
     "apps.platform_admin",
+    "apps.sites",
+    "apps.assets",
     "apps.ui",
 ]
 
@@ -242,6 +244,12 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "COMPONENT_SPLIT_REQUEST": True,
+    "ENUM_NAME_OVERRIDES": {
+        "AssetStatusEnum": "apps.assets.models.Asset.Status",
+        "SiteStatusEnum": "apps.sites.models.Status",
+        "MembershipStatusEnum": "apps.tenancy.models.Membership.Status",
+        "OrganizationStatusEnum": "apps.tenancy.models.Organization.Status",
+    },
 }
 ORGANIZATION_HEADER = "X-Organization"  # API clients select the active organization by slug
 

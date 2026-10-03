@@ -15,7 +15,7 @@
     <thead><tr><th>Name</th><th>Email</th><th>Roles</th><th>Status</th></tr></thead>
     <tbody>{% for m in page %}
       <tr><td><a href="{% url 'tenancy:member_detail' m.pk %}">{{ m.user.display_name }}</a></td><td>{{ m.user.email }}</td>
-        <td>{% for mr in m.membership_roles.all %}<span class="badge text-bg-light">{{ mr.role.name }}</span> {% endfor %}</td>
+        <td>{% for mr in m.membership_roles.all %}<span class="badge text-bg-light">{{ mr.role.name }}{% if mr.site %} @ {{ mr.site.code }}{% endif %}</span> {% endfor %}</td>
         <td>{% status_badge m.status %}</td></tr>
     {% empty %}<tr><td colspan="4">{% include "components/_empty_state.html" with title="No users match" text="Adjust the filters or invite someone." %}</td></tr>{% endfor %}
     </tbody></table></div>

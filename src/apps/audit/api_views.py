@@ -21,5 +21,7 @@ class AuditLogViewSet(TenantAPIMixin, viewsets.ReadOnlyModelViewSet):
     filterset_fields: list = []
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return AuditLog.objects.none()
         return selectors.filter_logs(selectors.organization_logs(self.request.organization),
                                      self.request.query_params)

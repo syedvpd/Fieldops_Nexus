@@ -24,7 +24,7 @@ class TenantPermissionMixin(LoginRequiredMixin):
         if request.membership is None:
             return redirect("ui:choose_org")
         code = self.required_permission
-        if code is None or not rbac.has_permission(request.membership, code):
+        if code is None or not rbac.has_permission_anywhere(request.membership, code):
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 

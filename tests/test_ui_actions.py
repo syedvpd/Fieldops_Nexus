@@ -51,8 +51,12 @@ def test_role_ui_requires_manage_permission(client, org_a, make_member):
 def test_member_update_roles_via_ui(client, owner_a, org_a, tech_a):
     m = Membership.objects.unscoped().get(organization=org_a, user=tech_a)
     client.force_login(owner_a)
-    r = client.post(f"/app/users/{m.pk}/", {"action": "update", "full_name": "Tess Tech", "job_title": "Lead",
-                                            "roles": [_role(org_a, "supervisor").pk]})
+    r = client.post(f"/app/users/{m.pk}/", {"action": "update", "full_name": "Tess Tech", "job_title": "Lead"})
+    assert r.status_code == 302
+    r = client.post(f"/app/users/{m.pk}/", {"action": "assign_role", "role": _role(org_a, "supervisor").pk})
+    assert r.status_code == 302
+    tech_assignment = MembershipRole.objects.get(membership=m, role__system_key="technician")
+    r = client.post(f"/app/users/{m.pk}/", {"action": "remove_role", "assignment_id": tech_assignment.pk})
     assert r.status_code == 302
     m.refresh_from_db()
     tech_a.refresh_from_db()

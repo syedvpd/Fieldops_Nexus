@@ -51,6 +51,10 @@ class TenantAPIMixin:
 
     def get_required_permission(self) -> str | None:
         action = getattr(self, "action", None) or self.request.method.lower()
+        # an action may map per HTTP method ("documents:post") when GET and POST need different permissions
+        method_key = f"{action}:{self.request.method.lower()}"
+        if method_key in self.permission_map:
+            return self.permission_map[method_key]
         return self.permission_map.get(action, self.required_permission if not self.permission_map else None)
 
 
@@ -67,7 +71,7 @@ class HasOrgPermission(permissions.BasePermission):
             return False  # unmapped action -> deny
         if code == MEMBER_ONLY:
             return membership.is_active  # self-scoped resources (own notifications)
-        return rbac.has_permission(membership, code)
+        return rbac.has_permission_anywhere(membership, code)
 
 
 class PlatformAPIMixin:

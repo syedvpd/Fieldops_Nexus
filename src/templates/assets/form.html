@@ -1,0 +1,32 @@
+{% extends "shell.html" %}
+{% block title %}{{ title }} · FieldOps Nexus{% endblock %}
+{% block content %}
+{% include "components/_page_header.html" %}
+<div class="fx-card" style="max-width:900px"><div class="fx-card-body">
+<form method="post" novalidate>{% csrf_token %}
+  {% if parent %}<input type="hidden" name="parent" value="{{ parent.pk }}"><div class="alert alert-info py-2">This asset will be registered and attached as a child of <strong>{{ parent.asset_tag }}</strong> in one step.</div>{% endif %}
+  {% if form.non_field_errors %}<div class="alert alert-danger py-2" role="alert">{{ form.non_field_errors.0 }}</div>{% endif %}
+  <div class="fx-form-grid">{% for field in form %}<div>{% include "components/_form_field.html" %}</div>{% endfor %}</div>
+  {% if rel_form %}<h2 class="h6 mt-2">Relationship to {{ parent.asset_tag }}</h2><div class="fx-form-grid">{% for field in rel_form %}<div>{% include "components/_form_field.html" %}</div>{% endfor %}</div>{% endif %}
+  <button class="btn btn-primary">{{ submit|default:"Save" }}</button> <a class="btn btn-link" href="{{ cancel_url }}">Cancel</a>
+</form></div></div>
+{% endblock %}
+{% block scripts %}<script>
+/* Convenience only: narrow the location list to the chosen site (the server validates the pairing). */
+(function () {
+  var site = document.querySelector("[data-site-select]"), zone = document.querySelector("[data-site-filter]");
+  if (!site || !zone) return;
+  var siteCodes = {};
+  Array.prototype.forEach.call(site.options, function (o) { siteCodes[o.value] = o.text.split(" ·")[0].trim(); });
+  function apply() {
+    var code = siteCodes[site.value];
+    Array.prototype.forEach.call(zone.options, function (o) {
+      if (!o.value) return;
+      var show = !code || o.text.indexOf(code + " ·") === 0;
+      o.hidden = !show; o.disabled = !show;
+    });
+    if (zone.selectedOptions[0] && zone.selectedOptions[0].disabled) zone.value = "";
+  }
+  site.addEventListener("change", apply); apply();
+})();
+</script>{% endblock %}

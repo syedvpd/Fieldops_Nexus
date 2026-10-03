@@ -7,6 +7,7 @@ object term is enforced by ``TenantManager``; the state term by ``core.workflow`
 """
 from __future__ import annotations
 
+import dataclasses
 from fnmatch import fnmatchcase
 
 from django.db import transaction
@@ -73,8 +74,14 @@ def sync_all_organizations() -> int:
 # --- checks ----------------------------------------------------------------------------------
 
 
+def clear_cache(membership):
+    membership._perm_cache = None
+    membership._site_perm_cache = None
+
+
 def membership_permissions(membership) -> frozenset[str]:
-    """All permission codes held by an ACTIVE membership (cached on the instance per request)."""
+    """Organization-WIDE permission codes of an ACTIVE membership (cached on the instance per request).
+    Roles assigned for a single site contribute nothing here; see ``site_permissions``."""
     cached = getattr(membership, "_perm_cache", None)
     if cached is not None:
         return cached
@@ -82,7 +89,8 @@ def membership_permissions(membership) -> frozenset[str]:
         perms: frozenset[str] = frozenset()
     else:
         roles = Role.objects.unscoped().filter(
-            organization_id=membership.organization_id, membership_roles__membership=membership
+            organization_id=membership.organization_id, membership_roles__membership=membership,
+            membership_roles__site__isnull=True,
         )
         if roles.filter(is_owner=True).exists():
             perms = frozenset(catalog.all_codes())
@@ -94,18 +102,82 @@ def membership_permissions(membership) -> frozenset[str]:
     return perms
 
 
-def has_permission(membership, code: str) -> bool:
+def site_permissions(membership) -> dict:
+    """{site_id: permission codes} from roles assigned for specific sites. Only permissions registered as
+    ``site_scoped`` are honoured, so a site assignment can never widen organization-level rights."""
+    cached = getattr(membership, "_site_perm_cache", None)
+    if cached is not None:
+        return cached
+    result: dict = {}
+    if membership.is_active:
+        scopable = catalog.site_scoped_codes()
+        rows = MembershipRole.objects.filter(
+            membership=membership, site__isnull=False, role__is_owner=False,
+            site__organization_id=membership.organization_id,
+        ).values_list("site_id", "role__role_permissions__permission__code")
+        acc: dict = {}
+        for site_id, code in rows:
+            if code and code in scopable:
+                acc.setdefault(site_id, set()).add(code)
+        result = {k: frozenset(v) for k, v in acc.items()}
+    membership._site_perm_cache = result
+    return result
+
+
+def _site_id(site):
+    return getattr(site, "pk", site)
+
+
+def has_permission(membership, code: str, site=None) -> bool:
+    """Is ``code`` granted organization-wide, or (when ``site`` is given) for that site by a site-scoped role?
+    Without ``site`` only organization-wide grants count (strict)."""
     if membership is None:
         return False
     if not catalog.is_registered(code):
         raise ValueError(f"Unknown permission code '{code}' (not in catalog).")
-    return code in membership_permissions(membership)
+    if code in membership_permissions(membership):
+        return True
+    if site is not None:
+        return code in site_permissions(membership).get(_site_id(site), frozenset())
+    return False
+
+
+def has_permission_anywhere(membership, code: str) -> bool:
+    """Granted organization-wide OR for at least one site: the gate for list/detail endpoints, which must then
+    restrict data with ``site_scope``."""
+    if has_permission(membership, code):
+        return True
+    return any(code in perms for perms in site_permissions(membership).values())
+
+
+@dataclasses.dataclass(frozen=True)
+class SiteScope:
+    """The sites a membership may reach for one permission: every site, or an explicit id set."""
+
+    all_sites: bool
+    site_ids: frozenset = frozenset()
+
+    def allows(self, site) -> bool:
+        return self.all_sites or _site_id(site) in self.site_ids
+
+    def filter(self, qs, field: str = "site_id"):
+        """Restricts a queryset to the permitted sites (server-side; never rely on templates)."""
+        return qs if self.all_sites else qs.filter(**{f"{field}__in": self.site_ids})
+
+
+def site_scope(membership, code: str) -> SiteScope:
+    if membership is None:
+        return SiteScope(False)
+    if has_permission(membership, code):
+        return SiteScope(True)
+    return SiteScope(False, frozenset(
+        sid for sid, perms in site_permissions(membership).items() if code in perms))
 
 
 def is_owner(membership) -> bool:
     if membership is None or not membership.is_active:
         return False
-    return MembershipRole.objects.filter(membership=membership, role__is_owner=True).exists()
+    return MembershipRole.objects.filter(membership=membership, role__is_owner=True, site__isnull=True).exists()
 
 
 # --- owner protection ----------------------------------------------------------------------
@@ -135,35 +207,54 @@ def assert_not_last_owner(membership):
 # --- membership role assignment ----------------------------------------------------------------
 
 
+def _describe(role, site) -> str:
+    return f"{role.name} @ {site.code}" if site is not None else role.name
+
+
 @transaction.atomic
 def set_membership_roles(membership, roles: list[Role], *, actor, request=None, system: bool = False):
-    """Replaces the roles of a membership. Only Owners may grant or revoke the Owner role."""
+    """Replaces ALL role assignments of a membership with organization-wide ``roles``."""
+    set_membership_assignments(membership, [(r, None) for r in roles], actor=actor, request=request,
+                               system=system)
+
+
+@transaction.atomic
+def set_membership_assignments(membership, assignments: list, *, actor, request=None, system: bool = False):
+    """Replaces the role assignments of a membership. ``assignments`` = [(Role, Site | None)]; a ``None`` site
+    means organization-wide. Only Owners may grant or revoke the Owner role, which is always org-wide."""
     org = membership.organization
-    for r in roles:
-        if r.organization_id != org.pk:
+    wanted: dict = {}
+    for role, site in assignments:
+        if role.organization_id != org.pk:
             raise ValidationFailed("Role belongs to a different organization.", code="cross_tenant_role")
-    current = {mr.role_id: mr for mr in MembershipRole.objects.filter(membership=membership).select_related("role")}
-    new_ids = {r.pk for r in roles}
-    touches_owner = any(r.is_owner for r in roles if r.pk not in current) or any(
-        mr.role.is_owner for rid, mr in current.items() if rid not in new_ids
+        if site is not None and site.organization_id != org.pk:
+            raise ValidationFailed("Site belongs to a different organization.", code="cross_tenant_site")
+        if site is not None and role.is_owner:
+            raise ValidationFailed("The Owner role is organization-wide and cannot be limited to a site.",
+                                   code="owner_not_site_scoped")
+        wanted[(role.pk, _site_id(site))] = (role, site)
+    current = {(mr.role_id, mr.site_id): mr
+               for mr in MembershipRole.objects.filter(membership=membership).select_related("role", "site")}
+    touches_owner = any(r.is_owner for key, (r, _) in wanted.items() if key not in current) or any(
+        mr.role.is_owner for key, mr in current.items() if key not in wanted
     )
     if touches_owner and not system:
         actor_membership = _membership_of(actor, org)
         if not is_owner(actor_membership):
             raise PermissionDenied("Only an Owner can grant or revoke the Owner role.", code="owner_only")
-    removed_owner = any(mr.role.is_owner for rid, mr in current.items() if rid not in new_ids)
-    if removed_owner and not any(r.is_owner for r in roles):
+    removed_owner = any(mr.role.is_owner for key, mr in current.items() if key not in wanted)
+    if removed_owner and not any(r.is_owner for r, _ in wanted.values()):
         assert_not_last_owner(membership)
 
-    before = sorted(mr.role.name for mr in current.values())
-    for rid, mr in current.items():
-        if rid not in new_ids:
+    before = sorted(_describe(mr.role, mr.site) for mr in current.values())
+    for key, mr in current.items():
+        if key not in wanted:
             mr.delete()
-    for r in roles:
-        if r.pk not in current:
-            MembershipRole.objects.create(membership=membership, role=r)
-    membership._perm_cache = None
-    after = sorted(r.name for r in roles)
+    for key, (r, site) in wanted.items():
+        if key not in current:
+            MembershipRole.objects.create(membership=membership, role=r, site=site)
+    clear_cache(membership)
+    after = sorted(_describe(r, s) for r, s in wanted.values())
     if before != after:
         audit.record("membership.roles_changed", actor=actor, organization=org, target=membership,
                      before={"roles": before}, after={"roles": after}, request=request)
