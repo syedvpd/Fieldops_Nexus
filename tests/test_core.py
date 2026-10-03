@@ -143,3 +143,25 @@ def test_content_security_policy_header_and_nonce(client, owner_a):
     assert "onclick=" not in body and "<script>" not in body  # inline handlers/scripts are gone or carry the nonce
     pnonce = page["Content-Security-Policy"].split("'nonce-")[1].split("'")[0]
     assert all(f'nonce="{pnonce}"' in tag for tag in __import__("re").findall(r"<script(?![^>]*\bsrc=)[^>]*>", body))
+
+
+@pytest.mark.django_db
+def test_every_inline_script_page_is_csp_clean(client, owner_a, p3):
+    """Pages that carry an inline <script> render it with the request nonce; no page has an on*= attribute."""
+    import re
+    client.force_login(owner_a)
+    member = __import__("apps.tenancy.models", fromlist=["Membership"]).Membership.objects.get(user=p3["tech"].user,
+                                                                                           organization=p3["org"])
+    from apps.rbac.models import Role
+    owner_role = Role.objects.get(organization=p3["org"], system_key="owner")
+    urls = ["/app/", "/app/organization/", f"/app/users/{member.pk}/", "/app/roles/", f"/app/roles/{owner_role.pk}/",
+            "/app/assets/new/",
+            "/app/sites/", "/app/audit/"]
+    for url in urls:
+        r = client.get(url)
+        assert r.status_code == 200, url
+        body = r.content.decode()
+        nonce = r["Content-Security-Policy"].split("'nonce-")[1].split("'")[0]
+        for tag in re.findall(r"<script(?![^>]*\bsrc=)[^>]*>", body):
+            assert f'nonce="{nonce}"' in tag, (url, tag)
+        assert not re.search(r"\son(click|load|change|submit|error|mouseover)\s*=", body, re.I), url

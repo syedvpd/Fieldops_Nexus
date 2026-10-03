@@ -22,6 +22,7 @@ def grant_statements(schema: str = "fieldops", owner: str = "fieldops_migrator",
     q = lambda ident: '"' + ident.replace('"', '""') + '"'  # noqa: E731
     s, o, a = q(schema), q(owner), q(app)
     return [
+        f"REVOKE CREATE ON SCHEMA {s} FROM {a}",  # no DDL, ever
         f"GRANT USAGE ON SCHEMA {s} TO {a}",
         # existing objects
         f"GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA {s} TO {a}",
@@ -59,6 +60,7 @@ def main() -> None:
         for stmt in grant_statements():
             conn.execute(stmt)
         conn.execute("ALTER ROLE fieldops_migrator SET search_path = fieldops")
+        conn.execute("REVOKE ALL ON SCHEMA public FROM fieldops_app")
         print("roles split: fieldops_migrator owns the schema, fieldops_app has DML only (no TRUNCATE)")
 
 

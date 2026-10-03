@@ -88,3 +88,18 @@ def test_per_org_task_only_touches_its_own_tenant(two_orgs, org_a, org_b):
     assert res["organization"] == str(org_a.pk) and res["created"] == len(metrics.SECTIONS)
     assert not ReportSnapshot.objects.for_organization(org_b).exists()
     assert pm_tasks.generate_due_maintenance_for_org(str(org_b.pk))["organization"] == str(org_b.pk)
+
+
+def test_snapshot_kinds_follow_the_sections_data_permissions(two_orgs, org_a, make_member):
+    """An asset manager holds report.view but not inventory.view / work_order.view organization-wide: those frozen
+    sections must stay hidden (the live endpoint refuses them too)."""
+    services.snapshot_organization(org_a, date(2026, 10, 3))
+    am = make_member(org_a, "am2@alpha.test", "asset_manager")
+    resp = api(am.user, org_a).get("/api/v1/report-snapshots/").json()
+    kinds = {r["kind"] for r in resp["results"]}
+    from apps.rbac import services as rbac
+    expected = {k for k, (_l, _f, codes) in metrics.SECTIONS.items()
+                if all(rbac.has_permission(am, c) for c in codes)}
+    assert kinds == expected and "inventory" not in kinds
+    hidden = ReportSnapshot.objects.for_organization(org_a).get(kind="inventory")
+    assert api(am.user, org_a).get(f"/api/v1/report-snapshots/{hidden.pk}/").status_code == 404

@@ -32,7 +32,13 @@ Routine: load `.env.prod` into the shell and run `python manage.py migrate --noi
 Security verified: `anon`, `authenticated`, `service_role` have no access to schema `fieldops`; audit trigger `audit_auditlog_immutable` is enabled.
 Connection: direct host `db.<ref>.supabase.co:5432` works from IPv6-capable hosts; Render services typically need the Supabase **pooler** string (session mode) with user `fieldops_app.<ref>`.
 
-**Required before real use (audit S-2, D-055): least-privilege runtime role.** The role that owns the tables can run `TRUNCATE`, which bypasses the audit row trigger. Run `scripts/harden_db_roles.py` once as the admin (env `SUPABASE_ADMIN_DATABASE_URL`, `FIELDOPS_MIGRATOR_PASSWORD`; idempotent, drops nothing, moves no data). It makes `fieldops_migrator` the owner (use its URL ONLY for `manage.py migrate`) and leaves `fieldops_app` (web, worker, beat) with SELECT / INSERT / UPDATE / DELETE and sequence usage only. Verify as `fieldops_app`: `TRUNCATE fieldops.audit_auditlog` must fail with "permission denied". Not yet applied to Supabase.
+**Required before real use (audit S-2, D-055): least-privilege runtime role.** The role that owns the tables can run `TRUNCATE`, which bypasses the audit row trigger. Run `scripts/harden_db_roles.py` once as the admin (env `SUPABASE_ADMIN_DATABASE_URL`, `FIELDOPS_MIGRATOR_PASSWORD`; idempotent, drops nothing, moves no data). It makes `fieldops_migrator` the owner (use its URL ONLY for `manage.py migrate`) and leaves `fieldops_app` (web, worker, beat) with SELECT / INSERT / UPDATE / DELETE and sequence usage only. Verify as `fieldops_app`: `TRUNCATE fieldops.audit_auditlog` must fail with "permission denied". Not yet applied to Supabase. Verification (all must hold):
+```sql
+SELECT has_table_privilege('fieldops_app','fieldops.audit_auditlog','TRUNCATE');   -- false
+SELECT has_schema_privilege('fieldops_app','fieldops','CREATE');                    -- false
+SELECT rolsuper, rolbypassrls FROM pg_roles WHERE rolname='fieldops_app';           -- false, false
+```
+`manage.py migrate` (DDL) must run as `fieldops_migrator` only; web / worker / beat `DATABASE_URL` = `fieldops_app`. Report snapshots skip an organization that has no ACTIVE owner membership (task result `skipped: "no active owner"`).
 
 **Recommended hardening (Team Lead):**
 - Rotate the `postgres` password to a long random value (the current admin password is weak and the database is internet-reachable) and update `SUPABASE_ADMIN_DATABASE_URL`.

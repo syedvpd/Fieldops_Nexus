@@ -66,7 +66,8 @@ class ReportSnapshotSerializer(serializers.ModelSerializer):
 
 class ReportSnapshotViewSet(TenantAPIMixin, viewsets.ReadOnlyModelViewSet):
     """Frozen organization-wide figures. They cover every site, so only members holding ``report.view`` for the whole
-    organization may read them (a site-scoped report user sees the live, scoped dashboards instead)."""
+    organization may read them, and only the sections whose data permission they also hold organization-wide (a
+    site-scoped report user sees the live, scoped dashboards instead)."""
 
     serializer_class = ReportSnapshotSerializer
     permission_map = {"list": "__member__", "retrieve": "__member__"}
@@ -82,6 +83,12 @@ class ReportSnapshotViewSet(TenantAPIMixin, viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         if getattr(self, "swagger_fake_view", False):
             return ReportSnapshot.objects.none()
-        qs = ReportSnapshot.objects.for_organization(self.request.organization)
+        from apps.rbac import services as rbac
+
+        # a snapshot is only as visible as the live section: report.view AND the section's data permission, both
+        # organization-wide (frozen figures cover every site)
+        kinds = [k for k, (_label, _fn, codes) in metrics.SECTIONS.items()
+                 if all(rbac.has_permission(self.request.membership, c) for c in codes)]
+        qs = ReportSnapshot.objects.for_organization(self.request.organization).filter(kind__in=kinds)
         kind = self.request.query_params.get("kind")
         return qs.filter(kind=kind) if kind else qs
