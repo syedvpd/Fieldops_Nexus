@@ -554,6 +554,7 @@ def _subject_link(t: SLATracking) -> tuple[str, str]:
 
 def _notify(t: SLATracking, rules, *, title: str, body: str, level: str) -> int:
     from apps.notifications import services as notifications
+    from apps.notifications.models import Notification
 
     number, link = _subject_link(t)
     users = {}
@@ -562,8 +563,10 @@ def _notify(t: SLATracking, rules, *, title: str, body: str, level: str) -> int:
             users[u.pk] = u
     if not users:
         return 0
+    # breaches and escalations are also emailed (Celery); early warnings stay in-app to avoid mailbox noise
     return len(notifications.notify(t.organization, list(users.values()), title=f"{number}: {title}"[:160],
-                                    body=body, link=link, level=level, source="sla"))
+                                    body=body, link=link, level=level, source="sla",
+                                    email=level == Notification.Level.CRITICAL))
 
 
 def _rules(t: SLATracking, kind: str, trigger: str):

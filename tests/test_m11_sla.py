@@ -124,6 +124,26 @@ def test_high_priority_request_journey_warning_breach_escalation_resolution(sla_
     assert AuditLog.objects.filter(action="sla.escalated").count() == 1
 
 
+def test_breach_and_escalation_are_emailed_but_warning_is_in_app_only(sla_, monkeypatch,
+                                                                       django_capture_on_commit_callbacks):
+    from django.core import mail
+
+    s = sla_
+    report(s, monkeypatch)
+    with django_capture_on_commit_callbacks(execute=True):
+        monitor(s, monkeypatch, 25)  # warning
+    assert len(mail.outbox) == 0 and notes().filter(level="WARNING").exists()
+
+    with django_capture_on_commit_callbacks(execute=True):
+        monitor(s, monkeypatch, 31)  # response breach
+    assert [m.to for m in mail.outbox] == [[s["ops"].user.email]]
+    assert "SLA breached" in mail.outbox[0].subject
+
+    with django_capture_on_commit_callbacks(execute=True):
+        monitor(s, monkeypatch, 31)  # idempotent re-run: no second email
+    assert len(mail.outbox) == 1
+
+
 def test_met_on_time_never_breaches(sla_, monkeypatch):
     s = sla_
     sr = report(s, monkeypatch)

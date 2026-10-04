@@ -101,5 +101,6 @@ URL: https://fieldops-nexus-web.onrender.com (single free web service: Gunicorn 
 | Clickjacking protection | PASS | Loading app pages in an iframe is refused (X-Frame-Options). |
 | QR scan page | PARTIAL | Page loads; camera scanning unavailable in the automation browser, code-entry fallback present. Camera path not exercised. |
 
+Fix applied after this run: SLA breaches and escalations (CRITICAL) are now also emailed via Celery; warnings stay in-app (test `test_breach_and_escalation_are_emailed_but_warning_is_in_app_only`).
 Open items: phone-width pass not done on the live site (the automation browser could not emulate a narrow viewport; use Chrome DevTools device mode); SLA breach has no email (in-app only); remaining role invitations (supervisor, stores, service manager) and exports on the live URL; rotate the DB password, Django secret key and Brevo key that were shared in chat; set the Render health check path to `/health/live/` (the connector shows it empty).
 Reminder: this addendum does not make M01-M15 "complete"; the full regression and the audit findings #1-#18 reconciliation remain separate gates.
