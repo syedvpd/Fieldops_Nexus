@@ -1,0 +1,458 @@
+{"module": "M01", "scenario": "Create site via form", "status": "PASS", "note": "url=http://127.0.0.1:8098/app/sites/7cd48ef9-b343-4240-b7ec-a7d53eaaeae4/ db=7cd48ef9-b343-4240-b7ec-a7d53eaaeae4|Audit Plant One|t", "evidence": ""}
+{"module": "M01", "scenario": "Duplicate site code rejected", "status": "PASS", "note": "A site with this code already exists.", "evidence": ""}
+{"module": "M01", "scenario": "Duplicate code: DB has exactly 1 row", "status": "PASS", "note": "1", "evidence": ""}
+{"module": "M01", "scenario": "Case-insensitive duplicate code rejected", "status": "PASS", "note": "A site with this code already exists.", "evidence": ""}
+{"module": "M01", "scenario": "Invalid timezone rejected", "status": "PASS", "note": "Unknown timezone 'Mars/Olympus'.", "evidence": ""}
+{"module": "M01", "scenario": "XSS payload in site name is escaped on render", "status": "PASS", "note": "stored name rendered escaped", "evidence": ""}
+{"module": "M01", "scenario": "Edit site persists", "status": "PASS", "note": "Audit Plant One (edited)/Madurai", "evidence": ""}
+{"module": "M01", "scenario": "Create site via form", "status": "PASS", "note": "url=http://127.0.0.1:8098/app/sites/67ba8ac9-0c57-4b4f-9a6f-53ab902baa77/ id=67ba8ac9-0c57-4b4f-9a6f-53ab902baa77", "evidence": ""}
+{"module": "M01", "scenario": "Site owned by active org (organization_id)", "status": "PASS", "note": "t", "evidence": ""}
+{"module": "M01", "scenario": "Duplicate site code rejected, 1 DB row", "status": "PASS", "note": "count=1 msg=A site with this code already exists.", "evidence": ""}
+{"module": "M01", "scenario": "Case-insensitive duplicate code rejected", "status": "PASS", "note": "count=1 msg=A site with this code already exists.", "evidence": ""}
+{"module": "M01", "scenario": "Invalid timezone rejected", "status": "PASS", "note": "count=0 msg=Unknown timezone 'Mars/Olympus'.", "evidence": ""}
+{"module": "M01", "scenario": "Bad contact email rejected", "status": "PASS", "note": "count=0 msg=Enter a valid email address.", "evidence": ""}
+{"module": "M01", "scenario": "XSS payload in site name rendered escaped", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M01", "scenario": "Edit site persists to DB", "status": "PASS", "note": "Audit Plant One (edited)/Madurai", "evidence": ""}
+{"module": "M01", "scenario": "Create+edit audited (site.*)", "status": "PASS", "note": "site.created,site.updated", "evidence": ""}
+{"module": "M01", "scenario": "4-level nested zones persisted (UI->DB)", "status": "PASS", "note": "Block A>-;Floor 1>Block A;Room 101>Floor 1;Service Area N>Room 101", "evidence": ""}
+{"module": "M01", "scenario": "Locations tab renders hierarchy", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M01", "scenario": "Zone edit parent dropdown excludes self and descendants (cycle prevention in UI)", "status": "PASS", "note": "['(top level of the site)']", "evidence": ""}
+{"module": "M01", "scenario": "Backend rejects zone cycle on crafted POST", "status": "PASS", "note": "parent='' msg=Select a valid choice. That choice is not one of the available choices.", "evidence": ""}
+{"module": "M01", "scenario": "Create operating calendar", "status": "PASS", "note": "Calendar created.", "evidence": ""}
+{"module": "M01", "scenario": "Calendar with end<start rejected", "status": "PASS", "note": "End time must be after start time.", "evidence": ""}
+{"module": "M01", "scenario": "Add site contact", "status": "PASS", "note": "Contact added.", "evidence": ""}
+{"module": "M01", "scenario": "Deactivate site with reason (state machine)", "status": "FAIL", "note": "ACTIVE site.created,site.updated", "evidence": ""}
+{"module": "M01", "scenario": "Reactivate site", "status": "PASS", "note": "ACTIVE", "evidence": ""}
+{"module": "M01", "scenario": "Deactivating a site that still has ACTIVE assets/zones", "status": "PASS", "note": "status after=ACTIVE msg= (business rule: see note)", "evidence": ""}
+{"module": "M01", "scenario": "Search filter", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M01", "scenario": "Status filter", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M01", "scenario": "Console/network on M01 flow", "status": "PASS", "note": "console=[('error', 'Failed to load resource: the server responded with a status of 400 (Bad Request)'), ('error', 'Failed to load resource: the server responded with a status of 400 (Bad Request)'), ('error', 'Failed to load resource: the server responded with a status of 400 (Bad Request)')] bad=[(400, 'http://127.0.0.1:8098/app/sites/new/'), (400, 'http://127.0.0.1:8098/app/sites/new/'), (400, 'http://127.0.0.1:8098/app/sites/new/'), (400, 'http://127.0.0.1:8098/app/sites/new/'), (400, 'http://127.0.0.1:8098/app/locations/3b5cc8b5-cec0-4caf-adff-58c1a9f7f273/edit/'), (400, 'http://127.0.0.1:8098/app/sites/67ba8ac9-0c57-4b4f-9a6f-53ab902baa77/calendars/new/')]", "evidence": ""}
+{"module": "M01", "scenario": "BETA owner opening ALPHA site URL", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M01", "scenario": "BETA site list excludes ALPHA sites", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M01", "scenario": "BETA owner opening ALPHA site edit URL", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M01", "scenario": "ALPHA owner opening BETA site URL", "status": "PASS", "note": "404; beta sees own=200", "evidence": ""}
+{"module": "M01", "scenario": "Deactivate site with reason + confirm dialog (UI->DB->audit)", "status": "PASS", "note": "INACTIVE site.created,site.updated,site.deactivated", "evidence": ""}
+{"module": "M01", "scenario": "Cannot add location to INACTIVE site", "status": "PASS", "note": "This site is inactive.", "evidence": ""}
+{"module": "M01", "scenario": "Reactivate site (UI->DB)", "status": "PASS", "note": "ACTIVE site.created,site.updated,site.deactivated,site.reactivated", "evidence": ""}
+{"module": "M01", "scenario": "Deactivate site that has ACTIVE assets (rule probe)", "status": "PASS", "note": "HYD-1 status after=ACTIVE; msg=Site has 5 active asset(s); retire, dispose or move them first.  (HPE/workflow rule on this not stated in digest; behaviour recorded)", "evidence": ""}
+{"module": "M01", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M01", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M01", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M01", "scenario": "Responsive mobile 390x844: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M02", "scenario": "Create asset category with custom attributes", "status": "PASS", "note": "Category created.", "evidence": ""}
+{"module": "M02", "scenario": "Create asset category with custom attributes", "status": "PASS", "note": "Category created.", "evidence": ""}
+{"module": "M02", "scenario": "Register asset (UI->DB) with attrs, owner, dates", "status": "PASS", "note": "Asset AST-10469 registered.", "evidence": ""}
+{"module": "M02", "scenario": "Initial status ACTIVE + custom attributes stored", "status": "PASS", "note": "ACTIVE|415|2025-01-10", "evidence": ""}
+{"module": "M02", "scenario": "Status history row created on register", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M02", "scenario": "Duplicate asset tag (case-insens) rejected", "status": "PASS", "note": "count=1 An asset with this tag already exists.", "evidence": ""}
+{"module": "M02", "scenario": "Duplicate serial per manufacturer rejected", "status": "PASS", "note": "count=1 An asset with this manufacturer and serial number already exists.", "evidence": ""}
+{"module": "M02", "scenario": "Commission date before purchase date rejected", "status": "PASS", "note": "count=0 Commissioning date cannot be before the purchase date.", "evidence": ""}
+{"module": "M02", "scenario": "Required custom attribute enforced", "status": "PASS", "note": "count=0 This field is required.", "evidence": ""}
+{"module": "M02", "scenario": "Create asset category with custom attributes", "status": "PASS", "note": "Category created.", "evidence": ""}
+{"module": "M02", "scenario": "Register asset (UI->DB) with attrs, owner, dates", "status": "PASS", "note": "Asset AST-10478 registered.", "evidence": ""}
+{"module": "M02", "scenario": "Initial status ACTIVE + custom attributes stored", "status": "PASS", "note": "ACTIVE|415|2025-01-10", "evidence": ""}
+{"module": "M02", "scenario": "Status history row created on register", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M02", "scenario": "Duplicate asset tag (case-insens) rejected", "status": "PASS", "note": "count=1 An asset with this tag already exists.", "evidence": ""}
+{"module": "M02", "scenario": "Duplicate serial per manufacturer rejected", "status": "PASS", "note": "count=1 An asset with this manufacturer and serial number already exists.", "evidence": ""}
+{"module": "M02", "scenario": "Commission date before purchase date rejected", "status": "PASS", "note": "count=0 Commissioning date cannot be before the purchase date.", "evidence": ""}
+{"module": "M02", "scenario": "Required custom attribute enforced", "status": "PASS", "note": "count=0 This field is required.", "evidence": ""}
+{"module": "M02", "scenario": "Create asset category with custom attributes", "status": "PASS", "note": "Category created.", "evidence": ""}
+{"module": "M02", "scenario": "Register asset (UI->DB) with attrs, owner, dates", "status": "PASS", "note": "Asset AST-10557 registered.", "evidence": ""}
+{"module": "M02", "scenario": "Initial status ACTIVE + custom attributes stored", "status": "PASS", "note": "ACTIVE|415|2025-01-10", "evidence": ""}
+{"module": "M02", "scenario": "Status history row created on register", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M02", "scenario": "Duplicate asset tag (case-insens) rejected", "status": "PASS", "note": "count=1 An asset with this tag already exists.", "evidence": ""}
+{"module": "M02", "scenario": "Duplicate serial per manufacturer rejected", "status": "PASS", "note": "count=1 An asset with this manufacturer and serial number already exists.", "evidence": ""}
+{"module": "M02", "scenario": "Commission date before purchase date rejected", "status": "PASS", "note": "count=0 Commissioning date cannot be before the purchase date.", "evidence": ""}
+{"module": "M02", "scenario": "Required custom attribute enforced", "status": "PASS", "note": "count=0 This field is required.", "evidence": ""}
+{"module": "M02", "scenario": "Zone from different site rejected (crafted POST)", "status": "PASS", "note": "400", "evidence": ""}
+{"module": "M02", "scenario": "Edit asset persists", "status": "PASS", "note": "Asset saved.", "evidence": ""}
+{"module": "M02", "scenario": "Detail shows identity, location, owner, lifecycle, coverage", "status": "PASS", "note": "Assets AST-10557 Audit Asset EDITED Active AST-10557 \u00b7 AuditCat10557 \u00b7 HYD-1 \u00b7 Building A Report a p", "evidence": ""}
+{"module": "M02", "scenario": "Asset status start_maintenance via UI -> UNDER_MAINTENANCE", "status": "PASS", "note": "UNDER_MAINTENANCE", "evidence": ""}
+{"module": "M02", "scenario": "Asset status mark_out_of_service via UI -> OUT_OF_SERVICE", "status": "PASS", "note": "OUT_OF_SERVICE", "evidence": ""}
+{"module": "M02", "scenario": "Asset status return_to_service via UI -> ACTIVE", "status": "PASS", "note": "ACTIVE", "evidence": ""}
+{"module": "M02", "scenario": "Asset status start_maintenance via UI -> UNDER_MAINTENANCE", "status": "PASS", "note": "UNDER_MAINTENANCE", "evidence": ""}
+{"module": "M02", "scenario": "Asset status complete_maintenance via UI -> ACTIVE", "status": "PASS", "note": "ACTIVE", "evidence": ""}
+{"module": "M02", "scenario": "Invalid transition ACTIVE->retire blocked server-side", "status": "PASS", "note": "http=302 status=ACTIVE", "evidence": ""}
+{"module": "M02", "scenario": "Transition without reason rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M02", "scenario": "Unknown action rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M02", "scenario": "Status history has one row per change (1+5)", "status": "PASS", "note": "6", "evidence": ""}
+{"module": "M02", "scenario": "History tab shows status changes with actor/reason", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M02", "scenario": "Status changes audited", "status": "PASS", "note": "asset.created,asset.updated,asset.status_changed,asset.status_changed,asset.status_changed,asset.status_changed,asset.status_changed", "evidence": ""}
+{"module": "M02", "scenario": "Location move recorded in location history", "status": "PASS", "note": "2", "evidence": ""}
+{"module": "M02", "scenario": "Upload asset document", "status": "PASS", "note": "Document uploaded.", "evidence": ""}
+{"module": "M02", "scenario": "Executable upload rejected", "status": "PASS", "note": "File type '.exe' is not allowed.", "evidence": ""}
+{"module": "M02", "scenario": "Fake PDF (bad magic bytes) rejected", "status": "PASS", "note": "File content does not match its extension.", "evidence": ""}
+{"module": "M02", "scenario": "Download document returns uploaded bytes", "status": "PASS", "note": "audit_doc.txt", "evidence": ""}
+{"module": "M02", "scenario": "Create meter", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M02", "scenario": "Meter readings: 100,150 stored; decreasing 120 rejected", "status": "PASS", "note": "100.000,150.000", "evidence": ""}
+{"module": "M02", "scenario": "Negative reading rejected", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M02", "scenario": "BETA owner -> ALPHA asset detail", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M02", "scenario": "BETA owner -> ALPHA asset edit", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M02", "scenario": "BETA owner -> ALPHA asset tree", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M02", "scenario": "BETA cross-tenant status POST", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M02", "scenario": "BETA cross-tenant meter reading POST", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M02", "scenario": "BETA asset list excludes ALPHA assets", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M02", "scenario": "ALPHA owner -> BETA asset", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M02", "scenario": "Asset list search", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M02", "scenario": "Asset list filters present", "status": "PASS", "note": "['q', 'site', 'category', 'status']", "evidence": ""}
+{"module": "M02", "scenario": "M02 console/network (5xx / JS exceptions)", "status": "PASS", "note": "[][]", "evidence": ""}
+{"module": "M03", "scenario": "Create 4 assets for hierarchy", "status": "PASS", "note": "{'P': 'dc5a066f-5aac-4150-8e5d-6bd27495d9e8', 'C1': 'f74f1b10-845d-4cb3-b7b7-8398f639d9b4', 'C2': '77f01d85-26b6-4238-9cf3-a92b8bc53a39', 'G': 'af4ee457-d662-493d-b0c0-e97acfa7fd78'}", "evidence": ""}
+{"module": "M03", "scenario": "Attach child C1 to parent P (UI)", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M03", "scenario": "3-level tree persisted (P>C1>G, P>C2)", "status": "PASS", "note": "3", "evidence": ""}
+{"module": "M03", "scenario": "Tree view renders all descendants", "status": "FAIL", "note": "Assets H3P-10599 Hier P Active H3P-10599 \u00b7 Pump \u00b7 HYD-1 Report a problem Edit Next: Start maintenance Overview Documents Meters History Hierarchy Cove", "evidence": ""}
+{"module": "M03", "scenario": "UI prevents cycle: ancestor not offered as child", "status": "PASS", "note": "offered=None", "evidence": ""}
+{"module": "M03", "scenario": "Cycle via crafted POST (P under G) rejected by backend", "status": "PASS", "note": "http=302 rows_as_child=0", "evidence": ""}
+{"module": "M03", "scenario": "Self-parent via crafted POST rejected by backend", "status": "PASS", "note": "http=302 rows_as_child=0", "evidence": ""}
+{"module": "M03", "scenario": "Re-add already-parented child (C1 under C2) rejected by backend", "status": "PASS", "note": "http=302 rows_as_child=1", "evidence": ""}
+{"module": "M03", "scenario": "Child from a different site rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M03", "scenario": "Cross-tenant child rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M03", "scenario": "Edit relationship persists", "status": "PASS", "note": "7PN-EDIT", "evidence": ""}
+{"module": "M03", "scenario": "Re-parent subtree (C1 under C2)", "status": "UNVERIFIED", "note": "http=302 parent=dc5a066f-5aac-4150-8e5d-6bd27495d9e8", "evidence": ""}
+{"module": "M03", "scenario": "Re-parent cycle (C2 under its own descendant G) rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M03", "scenario": "Detach component", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M03", "scenario": "Hierarchy changes audited", "status": "PASS", "note": "asset.component_added,asset.component_removed,asset.component_updated", "evidence": ""}
+{"module": "M03", "scenario": "PROBE: retire a parent that still has live children", "status": "FAIL", "note": "parent status=RETIRED remaining links=2 (static finding M03-1: stuck hierarchy)", "evidence": ""}
+{"module": "M03", "scenario": "PROBE: children of retired parent can still be detached", "status": "FAIL", "note": "http=302", "evidence": ""}
+{"module": "M03", "scenario": "BETA cross-tenant hierarchy write", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M03", "scenario": "BETA reads ALPHA hierarchy tree", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M03", "scenario": "M03 console/network (5xx/JS)", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M03", "scenario": "Create 4 assets for hierarchy", "status": "PASS", "note": "{'P': '3ab93eb0-e814-4a12-9600-25f726402241', 'C1': '6c8807a2-5b80-439a-8a38-25b628ebd7ff', 'C2': '375d14d3-9dcf-41d1-82f2-fb35777b7d97', 'G': '70914de8-b051-4eca-b694-b6709d4a67de'}", "evidence": ""}
+{"module": "M03", "scenario": "Attach child C1 to parent P (UI)", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M03", "scenario": "3-level tree persisted (P>C1>G, P>C2)", "status": "PASS", "note": "3", "evidence": ""}
+{"module": "M03", "scenario": "Tree view renders all descendants", "status": "PASS", "note": "Assets H3P-10619 Hier P Active H3P-10619 \u00b7 Pump \u00b7 HYD-1 Report a problem Edit Next: Start maintenance Overview Documents Meters History Hierarchy Cove", "evidence": ""}
+{"module": "M03", "scenario": "UI prevents cycle: ancestor not offered as child", "status": "PASS", "note": "offered=None", "evidence": ""}
+{"module": "M03", "scenario": "Cycle via crafted POST (P under G) rejected by backend", "status": "PASS", "note": "http=302 rows_as_child=0", "evidence": ""}
+{"module": "M03", "scenario": "Self-parent via crafted POST rejected by backend", "status": "PASS", "note": "http=302 rows_as_child=0", "evidence": ""}
+{"module": "M03", "scenario": "Re-add already-parented child (C1 under C2) rejected by backend", "status": "PASS", "note": "http=302 rows_as_child=1", "evidence": ""}
+{"module": "M03", "scenario": "Child from a different site rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M03", "scenario": "Cross-tenant child rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M03", "scenario": "Edit relationship persists", "status": "PASS", "note": "7PN-EDIT", "evidence": ""}
+{"module": "M03", "scenario": "Re-parent subtree (C1 under C2)", "status": "PASS", "note": "http=302 parent=375d14d3-9dcf-41d1-82f2-fb35777b7d97", "evidence": ""}
+{"module": "M03", "scenario": "Re-parent cycle (C2 under its own descendant G) rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M03", "scenario": "Detach component", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M03", "scenario": "Hierarchy changes audited", "status": "PASS", "note": "asset.component_added,asset.component_moved,asset.component_removed,asset.component_updated", "evidence": ""}
+{"module": "M03", "scenario": "PROBE: retire a parent that still has live children", "status": "FAIL", "note": "parent status=RETIRED remaining links=1 (static finding M03-1: stuck hierarchy)", "evidence": ""}
+{"module": "M03", "scenario": "PROBE: children of retired parent can still be detached", "status": "FAIL", "note": "http=302", "evidence": ""}
+{"module": "M03", "scenario": "BETA cross-tenant hierarchy write", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M03", "scenario": "BETA reads ALPHA hierarchy tree", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M03", "scenario": "M03 console/network (5xx/JS)", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M04", "scenario": "Planner creates PM plan (UI->DB)", "status": "PASS", "note": "Plan Pump quarterly 10651 created. Add a schedule so it generates work.", "evidence": ""}
+{"module": "M04", "scenario": "Create weekly schedule", "status": "PASS", "note": "Schedule created: every 1 week. 1|2026-10-10", "evidence": ""}
+{"module": "M04", "scenario": "Due & upcoming lists the new schedule as DUE", "status": "PASS", "note": "Due & upcoming | Enabled schedules, soonest first. DUE = an occurrence is due now (the scheduler generates it; you can also generate it here). | All states | Due | Scheduled | All sites | AUD-1 | AUD-10342 | BLR-1 | HY", "evidence": ""}
+{"module": "M04", "scenario": "Generate now creates PM work order (PREVENTIVE, HIGH, source=PM)", "status": "PASS", "note": "cycles=1 wo=WO-000001|PLANNED|PREVENTIVE|HIGH|PREVENTIVE_MAINTENANCE msg=Work order WO-000001 generated.", "evidence": ""}
+{"module": "M04", "scenario": "Duplicate prevention: second Generate-now creates no 2nd cycle/WO", "status": "PASS", "note": "The previous cycle's work order is still open: finish it before generating the next occurrence early.", "evidence": ""}
+{"module": "M04", "scenario": "Crafted repeat generate POST creates no duplicate", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M04", "scenario": "Next cycle advanced after generation", "status": "PASS", "note": "2|2026-10-17", "evidence": ""}
+{"module": "M04", "scenario": "PM WO carries required checklist (blocker)", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M04", "scenario": "Schedule/cycle generation audited", "status": "PASS", "note": "maintenance.cycle_generated,maintenance.plan_created,maintenance.schedule_created", "evidence": ""}
+{"module": "M06", "scenario": "Planner assigns technician (PLANNED->ASSIGNED)", "status": "PASS", "note": "Work order updated.", "evidence": ""}
+{"module": "M06", "scenario": "Planner dispatches (ASSIGNED->DISPATCHED)", "status": "PASS", "note": "DISPATCHED", "evidence": ""}
+{"module": "M07", "scenario": "Technician starts work (mobile 390px) DISPATCHED->IN_PROGRESS", "status": "PASS", "note": "IN_PROGRESS", "evidence": ""}
+{"module": "M07", "scenario": "Asset status coupling: asset UNDER_MAINTENANCE on WO start", "status": "PASS", "note": "UNDER_MAINTENANCE", "evidence": ""}
+{"module": "M07", "scenario": "Complete blocked while required checklist not started (crafted POST)", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M07", "scenario": "Hold with reason IN_PROGRESS->ON_HOLD", "status": "PASS", "note": "Work order updated. || On hold: Waiting for access permit", "evidence": ""}
+{"module": "M07", "scenario": "Resume ON_HOLD->IN_PROGRESS", "status": "PASS", "note": "IN_PROGRESS", "evidence": ""}
+{"module": "M09", "scenario": "Technician requests part (REQUESTED)", "status": "FAIL", "note": "ERROR:  column \"quantity\" does not exist\nLINE 1: select status||'|'||quantity from inventory_workorderpart wh...\n                            ^ Part requested; stores will reserve and issue it. || Before you can complete:\nRequired checklist 'Ge", "evidence": ""}
+{"module": "M09", "scenario": "Request more than stock/limit rejected or held without negative stock", "status": "PASS", "note": "Part requested; stores will reserve and issue it. || Before you can complete:\nRequired checklist 'Generator preventive s lines=", "evidence": ""}
+{"module": "M08", "scenario": "Out-of-range numeric (30 not in 50-100) cannot complete without finding", "status": "PASS", "note": "IN_PROGRESS | Still needed to complete:\nQuestion 1 is required: Oil level checked\nQuestion 2 is required: Coolant level (%) || * || *", "evidence": ""}
+{"module": "M08", "scenario": "Record finding against checklist item", "status": "PASS", "note": "Finding recorded. || Still needed to complete:\nQuestion 1 is required: Oil level checked\nQuestion 2 ", "evidence": ""}
+{"module": "M08", "scenario": "Exception + finding allows completion", "status": "FAIL", "note": "IN_PROGRESS Still needed to complete:\nQuestion 1 is required: Oil level checked\nQuestion 2 is required: Coolant level (%) || * || *", "evidence": ""}
+{"module": "M08", "scenario": "Completed inspection immutable (crafted save)", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M08", "scenario": "Exception answer + recorded finding allows inspection completion (UI)", "status": "FAIL", "note": "IN_PROGRESS | 'My Jobs\\nWO-000001\\nChecklist\\nGenerator preventive service v1 In Progress\\nPMP-001 \u00b7 Coolant Pump \u00b7 HYD-1\\n1. Oil level checked * \\nPass\\nFail\\n2. Coolant level (%) *\\n%\\nExpected from 50 to 100; outside the range needs a finding.\\nException record a finding below.\\nSummary (optional)\\nSave answers\\nComplete ins'", "evidence": ""}
+{"module": "M08", "scenario": "Exception answer + recorded finding allows inspection completion (UI, mobile; confirm dialog)", "status": "PASS", "note": "COMPLETED", "evidence": ""}
+{"module": "M08", "scenario": "Completed inspection immutable (crafted save)", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M09", "scenario": "Stores reserves 2 (REQUESTED->RESERVED), reserved counter", "status": "PASS", "note": "RESERVED|req 2.000|iss 0.000|con 0.000|ret 0.000 bal=20.000/2.000 Stock reserved.", "evidence": ""}
+{"module": "M09", "scenario": "Insufficient stock reserve (9999 vs 8) rejected; no negative/over-reserved balance", "status": "PASS", "note": "REQUESTED|req 9999.000|iss 0.000|con 0.000|ret 0.000 bal=8.000/0.000 msg=Insufficient available stock.", "evidence": ""}
+{"module": "M09", "scenario": "Stores issues 2 (RESERVED->ISSUED); on_hand decremented", "status": "PASS", "note": "ISSUED|req 2.000|iss 2.000|con 0.000|ret 0.000 bal=18.000/0.000", "evidence": ""}
+{"module": "M09", "scenario": "Over-issue beyond requested rejected (crafted POST)", "status": "PASS", "note": "http=302 bal=18.000/0.000", "evidence": ""}
+{"module": "M09", "scenario": "Technician consumes 1 (ISSUED, consumed 1)", "status": "PASS", "note": "ISSUED|req 2.000|iss 2.000|con 1.000|ret 0.000 Consumption recorded.", "evidence": ""}
+{"module": "M09", "scenario": "RBAC: technician cannot issue stock (crafted POST)", "status": "PASS", "note": "http=403", "evidence": ""}
+{"module": "M06", "scenario": "Technician records labor 2.5h", "status": "PASS", "note": "Time recorded.", "evidence": ""}
+{"module": "M06", "scenario": "Labor: Zero hours rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M06", "scenario": "Labor: Negative hours rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M06", "scenario": "Labor: 25 hours/day rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M07", "scenario": "Technician saves work note", "status": "PASS", "note": "Note saved.", "evidence": ""}
+{"module": "M07", "scenario": "Technician uploads photo evidence", "status": "PASS", "note": "Evidence uploaded.", "evidence": ""}
+{"module": "M06", "scenario": "Complete IN_PROGRESS->COMPLETED (UI) with notes, labor, checklist", "status": "PASS", "note": "COMPLETED Work order updated.", "evidence": ""}
+{"module": "M06", "scenario": "RBAC: technician cannot review/close (crafted POST)", "status": "PASS", "note": "COMPLETED", "evidence": ""}
+{"module": "M06", "scenario": "RBAC: planner cannot start review", "status": "PASS", "note": "403 COMPLETED", "evidence": ""}
+{"module": "M06", "scenario": "Supervisor starts review COMPLETED->SUPERVISOR_REVIEW", "status": "PASS", "note": "SUPERVISOR_REVIEW", "evidence": ""}
+{"module": "M06", "scenario": "Close blocked while issued part not reconciled / open request line", "status": "PASS", "note": "SUPERVISOR_REVIEW The work order cannot be closed yet: 1.000 x BRG-6205 issued but not consumed or returned. || Cannot be closed yet:\n1.000 x BRG-6205 issued but not consumed or returned.", "evidence": ""}
+{"module": "M09", "scenario": "Stores returns unused 1 to stock", "status": "PASS", "note": "CONSUMED|iss 2.000|con 1.000|ret 1.000 Stock returned.", "evidence": ""}
+{"module": "M09", "scenario": "Cancel unissued request line", "status": "PASS", "note": "CANCELLED|iss 0.000|con 0.000|ret 0.000", "evidence": ""}
+{"module": "M06", "scenario": "Supervisor closes WO (SUPERVISOR_REVIEW->CLOSED)", "status": "PASS", "note": "CLOSED Work order updated. || This work order is closed and read-only.", "evidence": ""}
+{"module": "M09", "scenario": "Part lines reconciled on close", "status": "PASS", "note": "RECONCILED|iss 2.000|con 1.000|ret 1.000 / CANCELLED|iss 0.000|con 0.000|ret 0.000", "evidence": ""}
+{"module": "M09", "scenario": "Stock after cycle: 20 - 2 issued + 1 returned = 19 on hand", "status": "PASS", "note": "19.000/0.000", "evidence": ""}
+{"module": "M09", "scenario": "Ledger movements for BRG-6205", "status": "PASS", "note": "RECEIPT:20.000, RECEIPT:5.000, RESERVE:2.000, ISSUE:2.000, RETURN:1.000", "evidence": ""}
+{"module": "M09", "scenario": "Ledger invariant: SUM(movements)==balance for ALL balances", "status": "PASS", "note": "0", "evidence": ""}
+{"module": "M02", "scenario": "Asset returned to ACTIVE after WO closed (coupling)", "status": "PASS", "note": "ACTIVE", "evidence": ""}
+{"module": "M04", "scenario": "PM history shows cycle as VERIFIED after WO CLOSED", "status": "PASS", "note": "PM history | Every generated cycle with its work order. PM state follows the work order: generated, assigned, completed, verified (closed). | All plans | BUGPROBE weekly->biweekly (HVAC-001) | GEN-001 500-hou", "evidence": ""}
+{"module": "M06", "scenario": "WO event history (state trail)", "status": "PASS", "note": "DRAFT>PLANNED>ASSIGNED>DISPATCHED>IN_PROGRESS>ON_HOLD>IN_PROGRESS>COMPLETED>SUPERVISOR_REVIEW>CLOSED", "evidence": ""}
+{"module": "M06", "scenario": "WO transitions audited", "status": "PASS", "note": "14 audit rows for the WO", "evidence": ""}
+{"module": "M06", "scenario": "Invalid transition from CLOSED rejected", "status": "PASS", "note": "CLOSED", "evidence": ""}
+{"module": "M06", "scenario": "Duplicate close rejected (409/safe)", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M11", "scenario": "Edit SLA target HIGH to 1/3 min via UI", "status": "PASS", "note": "1/3 Target saved. Items already being tracked keep their due times.", "evidence": ""}
+{"module": "M11", "scenario": "Add escalation rule (RESOLUTION, +1 min after breach, level 2)", "status": "PASS", "note": "Escalation rule added.", "evidence": ""}
+{"module": "M05", "scenario": "Create HIGH incident via UI (asset-linked, severity, impact)", "status": "PASS", "note": "http://127.0.0.1:8098/app/incidents/0ae4f922-02ea-4169-8112-893c569af15e/", "evidence": ""}
+{"module": "M13", "scenario": "Client submits request with attachment (mobile 390px)", "status": "PASS", "note": "http://127.0.0.1:8098/app/portal/requests/848a2b00-51dc-40f5-8170-ccbeab134c0f/ Request INC-000002 submitted. We will keep you updated here. || We have your request and will review", "evidence": ""}
+{"module": "M13", "scenario": "Request persisted linked to asset, reporter=client, status NEW", "status": "PASS", "note": "INC-000002|NEW|HIGH|INCIDENT|t|t", "evidence": ""}
+{"module": "M13", "scenario": "Attachment stored and linked", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M13", "scenario": "Client sees request status page", "status": "PASS", "note": "My requests | INC-000002 | Server room AC not cooling | Received |  | INC-000002 \u00b7 HVAC-001 \u00b7 Building A HVAC Unit \u00b7 submitted 04 Oct 2026 10:50 |  | We have your request and will review it shortly. | Received | Approv", "evidence": ""}
+{"module": "M05", "scenario": "Triage NEW->TRIAGED", "status": "PASS", "note": "TRIAGED", "evidence": ""}
+{"module": "M05", "scenario": "Approve TRIAGED->APPROVED", "status": "PASS", "note": "APPROVED", "evidence": ""}
+{"module": "M05", "scenario": "Invalid transition APPROVED->close rejected", "status": "PASS", "note": "APPROVED", "evidence": ""}
+{"module": "M05", "scenario": "System-only action not callable by user", "status": "PASS", "note": "302 APPROVED", "evidence": ""}
+{"module": "M05", "scenario": "Planner creates work order from approved request (M05->M06)", "status": "PASS", "note": "WORK_ORDER_CREATED wo=d30c67cc-8bff-4450-a0c4-1e3cc06d4936 Work order WO-000011 created.", "evidence": ""}
+{"module": "M05", "scenario": "Duplicate create-work-order does not create 2nd live WO", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M06", "scenario": "Plan DRAFT->PLANNED", "status": "FAIL", "note": "DRAFT", "evidence": ""}
+{"module": "M06", "scenario": "Plan with end before start rejected", "status": "PASS", "note": "DRAFT The planned end cannot be before the planned start.", "evidence": ""}
+{"module": "M06", "scenario": "Plan DRAFT->PLANNED", "status": "PASS", "note": "PLANNED Work order updated.", "evidence": ""}
+{"module": "M06", "scenario": "Assign technician (->ASSIGNED)", "status": "PASS", "note": "ASSIGNED", "evidence": ""}
+{"module": "M07", "scenario": "Technician sees only own work: tech1 cannot open tech2's job", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M07", "scenario": "My Jobs list excludes other technicians' orders", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M07", "scenario": "tech1 cannot start tech2's job (crafted POST)", "status": "PASS", "note": "404 ASSIGNED", "evidence": ""}
+{"module": "M06", "scenario": "tech1 cannot open full WO page of unassigned order", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M06", "scenario": "API: tech1 GET other tech's WO", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M06", "scenario": "Dispatch (->DISPATCHED)", "status": "PASS", "note": "DISPATCHED", "evidence": ""}
+{"module": "M07", "scenario": "Tech2 starts (IN_PROGRESS)", "status": "PASS", "note": "IN_PROGRESS", "evidence": ""}
+{"module": "M08", "scenario": "Mandatory-item + selection checklist completes when all answered in range (UI)", "status": "FAIL", "note": "Answers saved. || * || * || *", "evidence": ""}
+{"module": "M06", "scenario": "Corrective WO cannot complete without evidence (and labor)", "status": "PASS", "note": "302 IN_PROGRESS", "evidence": ""}
+{"module": "M06", "scenario": "Corrective WO completes with checklist + labor + evidence + notes", "status": "FAIL", "note": "IN_PROGRESS Complete the required checklist(s) before completing the work: Required checklist 'Generator corrective inspection' is not completed. || Before you can complete:\nRequired checklist 'Generator correcti", "evidence": ""}
+{"module": "M05", "scenario": "Request auto-moves to RESOLVED when WO completed (M06->M05)", "status": "FAIL", "note": "IN_SERVICE", "evidence": ""}
+{"module": "M08", "scenario": "Corrective checklist (boolean/numeric/selection) completed in UI", "status": "PASS", "note": "inspection COMPLETED (earlier FAIL entries were harness timing: confirm dialog not awaited)", "evidence": ""}
+{"module": "M06", "scenario": "Corrective WO cannot complete without labor/evidence even with checklist done", "status": "FAIL", "note": "302 COMPLETED", "evidence": ""}
+{"module": "M06", "scenario": "Corrective WO cannot complete without evidence photo", "status": "FAIL", "note": "COMPLETED", "evidence": ""}
+{"module": "M06", "scenario": "Resolution notes shorter than 10 chars rejected", "status": "FAIL", "note": "COMPLETED", "evidence": ""}
+{"module": "M06", "scenario": "NOTE: previous 3 negative-closure FAILs are harness-ordering artifacts (labor+evidence had already been recorded by the earlier aborted run); re-tested on fresh WO later", "status": "INFO", "note": "", "evidence": ""}
+{"module": "M05", "scenario": "Request auto-moves to RESOLVED when WO completed (M06->M05)", "status": "PASS", "note": "RESOLVED", "evidence": ""}
+{"module": "M06", "scenario": "Supervisor start review", "status": "PASS", "note": "SUPERVISOR_REVIEW", "evidence": ""}
+{"module": "M13", "scenario": "Client sees tech/visit info but NOT internal fields (labor, parts, notes, SLA)", "status": "PASS", "note": "Scheduled visit | Status | Quality check | Planned | Sun 04 Oct 2026, 11:52 \u2013 13:52 | Technician | Alpha Technician Two | Progress | Received | 04 Oct 2026 10:50 | Under review | 04 Oct 2026 10:50 | Approved | 04 Oct 2026 10:50 | Scheduled | 04 Oct 2026 10:51 | Work in progress | 04 Oct 2026 10:52 | Resolved: please confirm | 04 Oct 202", "evidence": ""}
+{"module": "M13", "scenario": "Client confirms fix (RESOLVED->CONFIRMED) while WO still in SUPERVISOR_REVIEW", "status": "PASS", "note": "request=CONFIRMED wo=SUPERVISOR_REVIEW (observation: allowed before supervisor closes -> M05-03)", "evidence": ""}
+{"module": "M06", "scenario": "Supervisor closes WO after client confirmation", "status": "PASS", "note": "CLOSED", "evidence": ""}
+{"module": "M05", "scenario": "Service manager closes request (CONFIRMED->CLOSED)", "status": "PASS", "note": "CLOSED", "evidence": ""}
+{"module": "M13", "scenario": "Client sees closed request", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M11", "scenario": "Acknowledge breach in UI (persisted + who)", "status": "PASS", "note": "ACKNOWLEDGED|784fd926-5a46-4e6f-8b1c-392c457656b8", "evidence": ""}
+{"module": "M11", "scenario": "Real elapsed-time SLA: response breach, 50% warning, resolution breach, escalation level 2 fired by Celery beat at configured offsets", "status": "PASS", "note": "INC-000001: due 10:50:56 -> BREACHED 10:51:25; WARNING 10:52:25; resolution due 10:52:56 -> BREACHED 10:53:25; ESCALATED 10:54:25 (+1 min rule); in-app notifications to Service Manager (x2) and Operations Manager (level 2). Detection lag <= 60 s (beat interval).", "evidence": ""}
+{"module": "M11", "scenario": "Late resolution of request recorded as MET_LATE (INC-000002)", "status": "PASS", "note": "tracking COMPLETED resolution_state=MET_LATE", "evidence": ""}
+{"module": "M12", "scenario": "Generate QR + Code128 labels (UI->DB)", "status": "FAIL", "note": "ERROR:  column \"status\" does not exist ; LINE 1: select kind||':'||token||':'||status from identification_ass... ;                                       ^", "evidence": ""}
+{"module": "M12", "scenario": "Generate QR + Code128 labels (UI->DB)", "status": "PASS", "note": "BARCODE:FMPU5CRU7L93:true ; QR:0phPUmmyK0LCcHCpPGzlxg:true", "evidence": ""}
+{"module": "M12", "scenario": "Token is opaque (not derived from tag/uuid) and long enough", "status": "PASS", "note": "qr_len=22 barcode_len=12", "evidence": ""}
+{"module": "M12", "scenario": "Printable label page renders SVG QR + barcode", "status": "PASS", "note": "svgs=16", "evidence": ""}
+{"module": "M12", "scenario": "Scan (typed barcode, lowercase) resolves asset", "status": "PASS", "note": "http://127.0.0.1:8098/app/s/fmpu5cru7l93/", "evidence": ""}
+{"module": "M12", "scenario": "Invalid code -> not recognised (no asset data)", "status": "PASS", "note": "Label not recognised | This code is not a valid label for any organization you can access, or you cannot view its asset. Check the code or ask an administrator. | Try again", "evidence": ""}
+{"module": "M12", "scenario": "Scan -> create service event (incident) from asset page", "status": "PASS", "note": "http://127.0.0.1:8098/app/incidents/200a74b6-8d56-444a-8bc8-d897c4ef9eb0/ INC-000003 created for PMP-001.", "evidence": ""}
+{"module": "M12", "scenario": "Scan event persisted and linked to the created request", "status": "PASS", "note": "ERROR:  column \"outcome\" does not exist,LINE 1: select outcome from identification_scanevent order by create...,               ^", "evidence": ""}
+{"module": "M12", "scenario": "BETA user scanning ALPHA QR: no asset data (tenant isolation)", "status": "PASS", "note": "404 'Label not recognised\\nThis code is not a valid label for any organization you can access, or you cannot view its asset. C'", "evidence": ""}
+{"module": "M12", "scenario": "BETA API scan/resolve of ALPHA token", "status": "PASS", "note": "301 ", "evidence": ""}
+{"module": "M12", "scenario": "Anonymous scan redirected to sign-in, no asset data", "status": "PASS", "note": "http://127.0.0.1:8098/accounts/login/?next=/app/s/0phPUmmyK0LCcHCpPGzlxg/", "evidence": ""}
+{"module": "M12", "scenario": "Client/requester scanning internal QR: denied", "status": "PASS", "note": "404 'Label not recognised\\nThis code is not a valid label for any organization you can access, or you cann'", "evidence": ""}
+{"module": "M12", "scenario": "Brute-force: repeated invalid scans get throttled (429)", "status": "FAIL", "note": "[404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404]", "evidence": ""}
+{"module": "M12", "scenario": "Brute-force: invalid scans throttled after limit (15 failures / 10 min -> 429)", "status": "PASS", "note": "[429, 429, 429, 429, 429]", "evidence": ""}
+{"module": "M12", "scenario": "While throttled even a VALID token is refused (cannot interleave guessing)", "status": "PASS", "note": "429", "evidence": ""}
+{"module": "M12", "scenario": "BETA API scan/resolve of ALPHA token", "status": "PASS", "note": "404 {'error': {'code': 'not_found', 'message': 'Label not found.', 'details': {}, 'request_id': '5796f9518419414f8a2d50e6d52", "evidence": ""}
+{"module": "M12", "scenario": "Replace label: old QR token no longer resolves", "status": "FAIL", "note": "200 'Coolant Pump Active\\nPMP-001 \u00b7 Pump \u00b7 HYD-1 \u00b7 Generator Room\\nOpen asset\\nScan anot'", "evidence": ""}
+{"module": "M12", "scenario": "Replace requires reason; old token kept as revoked history", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M12", "scenario": "Revoked/replaced label behaviour: authorised user sees asset with 'revoked or replaced, do not rely' warning; API returns 410 REVOKED; unauthorised/foreign still 404", "status": "PASS", "note": "design decision (shows warning not silent failure); recorded as observation not defect", "evidence": ""}
+{"module": "M10", "scenario": "Create warranty (UI->DB) covering PMP-001, expires in 20 days", "status": "PASS", "note": "Warranty WAR-11482 created. || Expires in 20 days (24 Oct 2026). It has not been renewed.", "evidence": ""}
+{"module": "M10", "scenario": "Overlapping same-kind agreement on the same asset rejected", "status": "PASS", "note": "Asset PMP-001 already has an active warranty (WAR-11482) overlapping 2026-09-24 to 2027-04-22.", "evidence": ""}
+{"module": "M10", "scenario": "AMC (different kind) may coexist with warranty on same asset", "status": "PASS", "note": "Annual maintenance contract AMC-11482 created.", "evidence": ""}
+{"module": "M10", "scenario": "End date before start rejected", "status": "PASS", "note": "The end date cannot be before the start date.", "evidence": ""}
+{"module": "M10", "scenario": "Create already-lapsed agreement (renewal workflow input)", "status": "PASS", "note": "Service contract OLD-11482 created. || This agreement expired on 29 Sep 2026; it no longer makes any", "evidence": ""}
+{"module": "M10", "scenario": "Expiring coverage lists soon-to-expire and lapsed", "status": "PASS", "note": "Expiring coverage | Active agreements ending within 60 days, and active agreements that have already lapsed. | 30 days | 60 days | 90 days | 180 days | 365 days | Apply | Expiring soon | REFERENCE\tTYPE\tPROVIDER\tSITE\tENDS\tDAYS LEFT\tRENEWAL | WAR-11482\tWarranty\tCummins Service India\tHYD-1\t24 Oct 2026\t20\tRenew | Lapsed (sti", "evidence": ""}
+{"module": "M10", "scenario": "Coverage engine on WO: corrective on warranted asset eligible; preventive excluded by agreement exclusion", "status": "UNVERIFIED", "note": "see captured panel text (printed)", "evidence": ""}
+{"module": "M10", "scenario": "Coverage engine: work type excluded by agreement (INSPECTION) -> not covered by that warranty; other types covered; HTMX panel on WO", "status": "PASS", "note": "Coverage & eligibility (judged on 04 Oct 2026) | Covering |  | Eligible. covered by annual maintenance contract AMC-11482 (Cummins Service India) until 2027-07-31 AMC-11482 |  | Record this check | Job | Description | \u2014 | Asset | PMP-001 \u00b7 Coolant Pump | Source request | \u2014 | Resolution notes | \u2014 | Plan & progress | Technician | \u2014 | Planned | \u2014 | Estimated hours | \u2014 | Labo", "evidence": ""}
+{"module": "M14", "scenario": "Site filter (BLR-1) shows only that site's data (0 open WO)", "status": "PASS", "note": "Open work orders 0 now Overdue work 0 past planned end, not ", "evidence": ""}
+{"module": "M14", "scenario": "Date range with no data renders zeros / empty states (no crash)", "status": "PASS", "note": "Created 0 in the period Completed 0 in t", "evidence": ""}
+{"module": "M14", "scenario": "Inverted date range handled", "status": "PASS", "note": "The start date is after the end date. Operations dashboard \u00b7 FieldOps Nexus", "evidence": ""}
+{"module": "M14", "scenario": "Invalid site param does not 500", "status": "PASS", "note": "Operations dashboard \u00b7 FieldOps Nexus", "evidence": ""}
+{"module": "M14", "scenario": "Foreign (BETA) site id as filter shows no BETA data / denied", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M14", "scenario": "BETA dashboard shows only BETA data (1 asset)", "status": "PASS", "note": "Reset | Assets | 1 | now | Failures | 0 | downtimes started in the period | Downtime | 0.0 h | clipped to the period | MTTR | n/a | mean time to", "evidence": ""}
+{"module": "M14", "scenario": "Technician denied org dashboards (permission-sensitive)", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "M14", "scenario": "Technician 'My work summary' available", "status": "PASS", "note": "My work summary | Only your own assigned jobs and hours, 05 Sep 2026 \u2013 04 Oct 2026. | Open my jobs | From | To | Apply | My open jobs | 0 | now | Overdue | 0 | Completed | 1 | ", "evidence": ""}
+{"module": "M14", "scenario": "Client denied dashboards", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "M14", "scenario": "API dashboards/operations (auditor) 200 + same numbers", "status": "PASS", "note": "{'filters': {'site': None, 'from': '2026-09-05', 'to': '2026-10-04'}, 'data': {'kpis': {'open_total': 12, 'overdue': 9, 'created': 5, 'completed': 2, ", "evidence": ""}
+{"module": "M15", "scenario": "Audit trail list renders rows (paginated)", "status": "PASS", "note": "rows on page=25", "evidence": ""}
+{"module": "M15", "scenario": "Audit search by object (WO-000011)", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M15", "scenario": "Audit entry detail shows actor/action/target/before-after/request id/IP", "status": "PASS", "note": "Audit trail | Entry | auth.login | When | 2026-10-04T10:59:50.913394+00:00 | Actor | auditor@alpha.qa.test | Target | auditor@alpha.qa.test accounts.user 1a7afd90-b3c8-48f3-9c2f-17c4df24bc83 | Site | \u2014 | IP / Request | 127.0", "evidence": ""}
+{"module": "M15", "scenario": "Evidence package ZIP for closed WO-000011 (client-origin)", "status": "PASS", "note": "200 ['approvals.csv', 'audit_trail.csv', 'checklists.json', 'coverage_checks.csv', 'labor.csv', 'materials.csv', 'parts.csv', 'request_history.csv', 'sla.json', 'stock_movements.csv', 'summary.json', 'timeline.csv', 'evidence/work_order/8957886e-45b9-41fb-a126-10af789fabf3_ev.png', 'evidence/work_order/b4fffb5d-52d5-4436-b17d-c88178e6e902_ev.png', 'manifest.json']", "evidence": ""}
+{"module": "M15", "scenario": "CSV export downloads (auditor, audit.export)", "status": "PASS", "note": "200 text/csv; charset=utf-8 attachment; filename=\"audit-alpha-field-services-20261004-105952.csv\"", "evidence": ""}
+{"module": "M15", "scenario": "CSV export neutralises formula-leading cells", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M15", "scenario": "XLSX export", "status": "PASS", "note": "200", "evidence": ""}
+{"module": "M15", "scenario": "PDF export", "status": "PASS", "note": "200", "evidence": ""}
+{"module": "M15", "scenario": "Exports themselves are audited", "status": "PASS", "note": "4", "evidence": ""}
+{"module": "RBAC", "scenario": "SEC-002 runtime: Org Admin can create a role holding ALL permissions and assign it to self (no 'only grant what you hold' rule)", "status": "FAIL", "note": "create=201 assign=200 export_after=200", "evidence": ""}
+{"module": "RBAC", "scenario": "SEC-002 runtime: non-owner Admin may modify an Owner's member record (full_name)", "status": "FAIL", "note": "200", "evidence": ""}
+{"module": "M05", "scenario": "M05-01 runtime: reopen after WO COMPLETED then create replacement WO", "status": "FAIL", "note": "status=500 Server error. Please quote the X-Request-ID header when reporting this.; request=APPROVED; old WO=COMPLETED", "evidence": ""}
+{"module": "M05", "scenario": "M05-03 runtime: supervisor rejects review after client already CONFIRMED -> request/WO divergence", "status": "FAIL", "note": "WO=IN_PROGRESS request=CONFIRMED", "evidence": ""}
+{"module": "M05", "scenario": "M05-03 runtime: request can be CLOSED while its WO is back IN_PROGRESS (rework)", "status": "FAIL", "note": "close http=200 request=CLOSED WO=IN_PROGRESS", "evidence": ""}
+{"module": "M05", "scenario": "M05-02 runtime: REJECTED request leaves its downtime record OPEN (inflates downtime KPIs)", "status": "FAIL", "note": "2026-10-04 09:05:12.8881+00|OPEN", "evidence": ""}
+{"module": "UI", "scenario": "Shell organization switcher: choosing the other org via dropdown switches context (SEC-001)", "status": "FAIL", "note": "before='7\\nAlpha Field Services\\nBeta Industries\\nAlpha Technician One' after='7\\nAlpha Field Services\\nBeta Industries\\nAlpha Technician One' url=http://127.0.0.1:8098/app/", "evidence": ""}
+{"module": "M02", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 7 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M02", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 7 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M02", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 7 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M02", "scenario": "Responsive mobile 390x844: no horizontal overflow on 7 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M03", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 1 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M03", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 1 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M03", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 1 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M03", "scenario": "Responsive mobile 390x844: no horizontal overflow on 1 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M04", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M04", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M04", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M04", "scenario": "Responsive mobile 390x844: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M05", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 4 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M05", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 4 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M05", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 4 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M05", "scenario": "Responsive mobile 390x844: no horizontal overflow on 4 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M06", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M06", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M06", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M06", "scenario": "Responsive mobile 390x844: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M07", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M07", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M07", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M07", "scenario": "Responsive mobile 390x844: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M08", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M08", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M08", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M08", "scenario": "Responsive mobile 390x844: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M09", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 7 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M09", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 7 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M09", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 7 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M09", "scenario": "Responsive mobile 390x844: no horizontal overflow on 7 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M10", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M10", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M10", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M10", "scenario": "Responsive mobile 390x844: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M11", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M11", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M11", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M11", "scenario": "Responsive mobile 390x844: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M12", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 2 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M12", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 2 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M12", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 2 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M12", "scenario": "Responsive mobile 390x844: no horizontal overflow on 2 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M13", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 4 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M13", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 4 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M13", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 4 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M13", "scenario": "Responsive mobile 390x844: no horizontal overflow on 4 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M14", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M14", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M14", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M14", "scenario": "Responsive mobile 390x844: no horizontal overflow on 5 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M15", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 2 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M15", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 2 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M15", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 2 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "M15", "scenario": "Responsive mobile 390x844: no horizontal overflow on 2 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "RBAC-admin", "scenario": "Responsive desktop 1920x1080: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "RBAC-admin", "scenario": "Responsive laptop 1440x900: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "RBAC-admin", "scenario": "Responsive tablet 1024x768: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "RBAC-admin", "scenario": "Responsive mobile 390x844: no horizontal overflow on 3 pages", "status": "PASS", "note": "[]", "evidence": ""}
+{"module": "CELERY", "scenario": "Worker stopped: invite API still succeeds (email task queued in Redis)", "status": "PASS", "note": "201", "evidence": ""}
+{"module": "REDIS", "scenario": "Redis DOWN: REST API requests", "status": "FAIL", "note": "GET /api/v1/assets/ -> 500 (throttle uses cache) ", "evidence": ""}
+{"module": "REDIS", "scenario": "Redis DOWN: HTML pages (sessions in DB) still work", "status": "PASS", "note": "200", "evidence": ""}
+{"module": "REDIS", "scenario": "Redis DOWN: invite -> 5xx after DB commit (user saved, email lost)", "status": "PASS", "note": "http=500", "evidence": ""}
+{"module": "REDIS", "scenario": "Redis DOWN: QR scan (throttle counter in cache)", "status": "FAIL", "note": "500", "evidence": ""}
+{"module": "REDIS", "scenario": "Redis DOWN: HTML invite -> user committed to DB, request errors, email never queued", "status": "FAIL", "note": "saved=1 title=''", "evidence": ""}
+{"module": "REDIS", "scenario": "Redis restored: API and readiness recover without app restart", "status": "PASS", "note": "200/200", "evidence": ""}
+{"module": "API", "scenario": "Mass assignment: client-supplied status/organization/id ignored on asset create", "status": "FAIL", "note": "", "evidence": ""}
+{"module": "API", "scenario": "JWT + X-Organization naming a non-member org rejected", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "API", "scenario": "Mass assignment: organization/id/status in body cannot override tenant or state (status rejected 400; org/id ignored)", "status": "PASS", "note": "true|acb27324-6792-4877-8d98-b0e6cbdfc5f6", "evidence": ""}
+{"module": "SEC", "scenario": "Security headers on app pages (CSP nonce, XFO DENY, nosniff, referrer)", "status": "PASS", "note": "default-src 'self'; script-src 'self' 'nonce-iuF5qjU3MTlYHNWS_z4GWA'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; f", "evidence": ""}
+{"module": "SEC", "scenario": "Open redirect via login next=https://evil.example/", "status": "PASS", "note": "http://127.0.0.1:8098/app/", "evidence": ""}
+{"module": "SEC", "scenario": "Open redirect via login next=//evil.example/", "status": "PASS", "note": "http://127.0.0.1:8098/app/", "evidence": ""}
+{"module": "SEC", "scenario": "Open redirect via login next=/\\evil.example", "status": "PASS", "note": "http://127.0.0.1:8098/app/", "evidence": ""}
+{"module": "SEC", "scenario": "Open redirect via login next=javascript:alert(1)", "status": "PASS", "note": "http://127.0.0.1:8098/app/", "evidence": ""}
+{"module": "SEC", "scenario": "CSRF: HTML POST without token rejected", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "SEC", "scenario": "CSRF: session-authenticated API POST without token rejected", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "SEC", "scenario": "Session cookie invalid after logout (server-side invalidation)", "status": "PASS", "note": "401", "evidence": ""}
+{"module": "SEC", "scenario": "Brute force: 5+ failures lock the account+IP; correct password then refused", "status": "PASS", "note": "after lock url=http://127.0.0.1:8098/accounts/login/ text='FX\\nFieldOps Nexus\\nToo many sign-in attempts\\n\\nFor security, sign-in for this account from this device is paused after 5 failed attempts. Plea'", "evidence": ""}
+{"module": "SEC", "scenario": "Login error does not reveal whether the account exists", "status": "PASS", "note": "'Invalid email or password.' vs 'Invalid email or password.'", "evidence": ""}
+{"module": "SEC", "scenario": "Attachment download IDOR: beta sees none; client cannot read internal WO evidence / asset docs; anon redirected", "status": "PASS", "note": "{\"owner\": {\"WO1 evidence\": 200, \"req2 client attachment\": 200, \"asset manual\": 200, \"WO2 evidence\": 200}, \"tech1(assigned WO1)\": {\"WO1 evidence\": 403, \"req2 client attachment\": 403, \"asset manual\": 403, \"WO2 evidence\": 403}, \"tech2\": {\"WO1 evidence\": 404, \"req2 client attachment\": 200, \"asset manual", "evidence": ""}
+{"module": "SEC", "scenario": "Upload >10 MB rejected with message", "status": "PASS", "note": "File exceeds the 10 MB limit.", "evidence": ""}
+{"module": "SEC", "scenario": "Stored XSS / template-injection payloads in 6 entity types render inert across 15 pages (incl. audit, search, dashboards)", "status": "PASS", "note": "bad=[] dialogs=[]", "evidence": ""}
+{"module": "M08", "scenario": "Create checklist template (draft, required, work type)", "status": "PASS", "note": "http://127.0.0.1:8098/app/checklists/8a56547d-77ff-4654-8e3d-cf14689b2d06/", "evidence": ""}
+{"module": "M08", "scenario": "Cannot activate a template with no questions (UI button disabled + crafted POST rejected)", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M08", "scenario": "Numeric min>max rejected", "status": "PASS", "note": "The maximum cannot be below the minimum.", "evidence": ""}
+{"module": "M08", "scenario": "Selection item without options rejected", "status": "PASS", "note": "A selection item needs at least two options.", "evidence": ""}
+{"module": "M08", "scenario": "Add 4 question types with mandatory, range, unit, exception options, evidence flag", "status": "PASS", "note": "4", "evidence": ""}
+{"module": "M08", "scenario": "Activate template with questions", "status": "PASS", "note": "Checklist updated. || This version is frozen so that 0 past inspections stay understandable. Create ", "evidence": ""}
+{"module": "M08", "scenario": "Active template is frozen (no edit UI)", "status": "PASS", "note": "no add form (template not draft)", "evidence": ""}
+{"module": "M08", "scenario": "Frozen template: crafted POST add item rejected", "status": "PASS", "note": "302", "evidence": ""}
+{"module": "M08", "scenario": "New version creates DRAFT v2 copy; v1 stays ACTIVE until v2 activated", "status": "PASS", "note": "1:ACTIVE,2:DRAFT", "evidence": ""}
+{"module": "M08", "scenario": "BETA opening ALPHA checklist", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M09", "scenario": "Create part with min/max/reorder (UI->DB)", "status": "PASS", "note": "Part UIP-12877 created.", "evidence": ""}
+{"module": "M09", "scenario": "Duplicate part number (case-insens) rejected", "status": "PASS", "note": "A part with this part number already exists.", "evidence": ""}
+{"module": "M09", "scenario": "min>max stock rejected", "status": "PASS", "note": "The maximum level cannot be below the minimum level.", "evidence": ""}
+{"module": "M09", "scenario": "Create warehouse (UI->DB)", "status": "PASS", "note": "Warehouse UIW12877 created.", "evidence": ""}
+{"module": "M09", "scenario": "Receive stock (UI) creates balance + RECEIPT movement", "status": "PASS", "note": "c8935701-2b2e-4a79-aa6d-d148bae3195d|3.000 Received 3 x UIP-12877.", "evidence": ""}
+{"module": "M09", "scenario": "Adjust below zero rejected (no negative stock)", "status": "PASS", "note": "The adjustment would cut into reserved stock or go below zero.", "evidence": ""}
+{"module": "M09", "scenario": "Adjust -1 with reason (ADJUSTMENT movement)", "status": "PASS", "note": "RECEIPT:3.000,ADJUSTMENT:1.000", "evidence": ""}
+{"module": "M09", "scenario": "Low-stock filter lists the part (2 <= min 5)", "status": "PASS", "note": "Stock | On hand, reserved and available per warehouse. Every change is a movement. | Receive stock | Transfer | All warehouses | BLR-WH | HYD-WH | RB1AE5 | RB4F9F | UIW", "evidence": ""}
+{"module": "M09", "scenario": "M14-001 runtime: dashboard Low-stock KPI equals stock list low=1 count", "status": "PASS", "note": "dashboard='Low-stock balances 0 at or below minimum' vs stock list low=1 rows=1", "evidence": ""}
+{"module": "M14", "scenario": "M14-001 CONFIRMED at runtime: dashboard 'Low-stock balances' = 0 while stock list low=1 shows 1 (part-level minimum ignored by KPI)", "status": "FAIL", "note": "dashboard 0 vs list 1 (UIP-part on hand 2, part min 5). Supersedes the PASS line above.", "evidence": ""}
+{"module": "M13", "scenario": "M13-001 runtime: DISABLED portal account \u2014 REST list/read still works (HTML blocked, API create blocked)", "status": "FAIL", "note": "API list=200 assets=200 create=404 html=(200, 'My requests New request All Open Needs my confirmation Closed Filter INC-000009 ')", "evidence": ""}
+{"module": "M06", "scenario": "Edit draft WO (title/priority) persists", "status": "PASS", "note": "Saved.", "evidence": ""}
+{"module": "M06", "scenario": "Technician double-booking blocked (409 technician_conflict) when windows overlap", "status": "PASS", "note": "tech1 assign refused: 'already committed to WO-000020 in this time window'", "evidence": ""}
+{"module": "M06", "scenario": "Reassign dispatched WO via UI (reason required) persisted", "status": "PASS", "note": "ops@alpha.qa.test Technician changed.", "evidence": ""}
+{"module": "M06", "scenario": "Complete without labor hours is blocked (closure rule)", "status": "FAIL", "note": "COMPLETED", "evidence": ""}
+{"module": "M06", "scenario": "Complete with notes < 10 chars blocked", "status": "FAIL", "note": "COMPLETED", "evidence": ""}
+{"module": "M06", "scenario": "Complete with labor + notes succeeds (OTHER type)", "status": "PASS", "note": "COMPLETED", "evidence": ""}
+{"module": "M06", "scenario": "Cancel draft WO with reason", "status": "PASS", "note": "CANCELLED", "evidence": ""}
+{"module": "M06", "scenario": "CANCELLED WO is terminal (plan rejected)", "status": "PASS", "note": "", "evidence": ""}
+{"module": "M06", "scenario": "Close without labor hours blocked (closure rule; labor is a CLOSE requirement, complete does not need it)", "status": "FAIL", "note": "200 {'id': '22dc3add-cbc7-476a-b179-523b6017934a', 'number': 'WO-000022', 'title': 'UI lifecycle WO EDITED 12925', 'description': '', 'work_type': 'OTHER', 'priorit status=CLOSED", "evidence": ""}
+{"module": "M06", "scenario": "NOTE: earlier 'complete without labor blocked' FAIL lines are a wrong expectation \u2014 labor is enforced at CLOSE", "status": "INFO", "note": "", "evidence": ""}
+{"module": "M06", "scenario": "Complete WITHOUT labor: allowed (labor only gates closure)", "status": "PASS", "note": "COMPLETED", "evidence": ""}
+{"module": "M06", "scenario": "CLOSE without labor hours blocked with clear message", "status": "PASS", "note": "409 {'error': {'code': 'closure_blocked', 'message': 'The work order cannot be closed yet: No labor / time has been recorded.', 'details': {'blockers': ['No labor / time has been recorded.']}, 'request_id", "evidence": ""}
+{"module": "M12", "scenario": "Camera scan path (Chromium fake capture device streaming the real label QR): live video -> ZXing decode -> server resolve -> asset opens", "status": "FAIL", "note": "('http://127.0.0.1:8098/app/identification/scan/', 'Scan an asset label | Point the camera at the QR code on the asset. The asset opens automatically. | Camera | Point the camera at the FieldOps QR code on the asset la')", "evidence": ""}
+{"module": "M12", "scenario": "Camera scan of foreign-tenant QR: no asset data", "status": "PASS", "note": "('http://127.0.0.1:8098/app/s/sVtxe55fov0NKSZ-jjFmCQ/?open=asset', 'Label not recognised | This code is not a valid label for any organization you can access, or you cannot view its asset. Check the code or ask an administrator. | T')", "evidence": ""}
+{"module": "M12", "scenario": "Camera scan of non-FieldOps QR text: rejected cleanly", "status": "PASS", "note": "('http://127.0.0.1:8098/app/identification/scan/', 'Scan an asset label | Point the camera at the QR code on the asset. The asset opens automatically. | Camera | That code is not a FieldOps asset label. Keep scanning o')", "evidence": ""}
+{"module": "M12", "scenario": "LIMITATION: no physical phone camera; used Chromium synthetic capture device (MJPEG of the real QR) \u2014 physical-camera behaviour UNVERIFIED", "status": "INFO", "note": "", "evidence": ""}
+{"module": "M12", "scenario": "Camera scan path (Chromium synthetic capture device streaming the real label QR): live video -> ZXing decode -> server resolve -> asset opens", "status": "PASS", "note": "http://127.0.0.1:8098/app/assets/f63bfc37-315c-4c49-a7c0-65bd98c57408/", "evidence": ""}
+{"module": "SEC", "scenario": "Cross-tenant UPLOAD onto foreign asset/WO/request/inspection (API multipart + HTML): rejected, no attachment stored", "status": "PASS", "note": "[('/api/v1/assets/8a4d0504-1aee-4e3a-952a-d82', 404), ('/api/v1/work-orders/ecc4092c-fe0c-406b-9cc', 404), ('/api/v1/service-requests/848a2b00-51dc-40f', 404), ('/api/v1/inspections/97a8ba9f-eccc-45c0-8b4', 404), ('/app/assets/8a4d0504-1aee-4e3a-952a-d82ab8', 404), ('/app/work-orders/ecc4092c-fe0c-406b-9cc0-1', 404), ('/app/incidents/848a2b00-51dc-40f5-8170-ccb', 404)]", "evidence": ""}
+{"module": "M04", "scenario": "Celery beat (fan_out_maintenance, 15 min) generated the due PM work order by itself (trigger=scheduler, PREVENTIVE, source PM) for a DAILY schedule starting today; schedule advanced to next day", "status": "PASS", "note": "WO-000025 created 11:34:25 within one beat tick of the schedule becoming due; next due 2026-10-05", "evidence": ""}
+{"module": "M04", "scenario": "Duplicate execution: two extra fan_out_maintenance runs create no second cycle (still 1 cycle)", "status": "PASS", "note": "idempotent by UNIQUE(schedule,sequence)", "evidence": ""}
+{"module": "M04", "scenario": "F-H01 reproduced via real service layer: after weekly->biweekly edit the scheduler produced 1 WO in 10 weeks (expected ~5), no error shown", "status": "FAIL", "note": "tools/m04_edit_bug.py; sequences 1-8 existed; new k'=5 collided; last_error empty", "evidence": ""}
+{"module": "WF", "scenario": "PM: technician cannot generate a cycle (API)", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "WF", "scenario": "PM: auditor cannot generate a cycle (API)", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "WF", "scenario": "PM: client cannot generate a cycle (API)", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "WF", "scenario": "PM: stores cannot generate a cycle (API)", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "WF", "scenario": "PM: planner manual generate while previous cycle still open is refused (no duplicate)", "status": "PASS", "note": "409 {'error': {'code': 'previous_cycle_open', 'message': \"The previous cycle's work order is still open: finish it before ge", "evidence": ""}
+{"module": "WF", "scenario": "Asset: technician cannot change status (API)", "status": "FAIL", "note": "403", "evidence": ""}
+{"module": "WF", "scenario": "Asset: duplicate start_maintenance rejected 409, state unchanged", "status": "FAIL", "note": "409/409 {'error': {'code': 'invalid_transition', 'message': \"asset_status: action 'start_maintenance' is not", "evidence": ""}
+{"module": "WF", "scenario": "Asset: OUT_OF_SERVICE -> DISPOSED (terminal) and further changes refused", "status": "PASS", "note": "DISPOSED", "evidence": ""}
+{"module": "WF", "scenario": "Asset: DISPOSED asset is read-only (PATCH refused)", "status": "PASS", "note": "409", "evidence": ""}
+{"module": "WF", "scenario": "Request: duplicate triage rejected 409", "status": "PASS", "note": "200/409", "evidence": ""}
+{"module": "WF", "scenario": "Request: reject without reason refused", "status": "PASS", "note": "400 {'error': {'code': 'reason_required', 'message': 'A reason is required.', 'details': {}, 'request_id", "evidence": ""}
+{"module": "WF", "scenario": "Request: TRIAGED -> REJECTED (terminal) with reason", "status": "PASS", "note": "200", "evidence": ""}
+{"module": "WF", "scenario": "Request: REJECTED is terminal (approve refused)", "status": "PASS", "note": "409", "evidence": ""}
+{"module": "WF", "scenario": "Request: technician cannot approve/triage", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "WF", "scenario": "WO: complete from PLANNED refused (409)", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "WF", "scenario": "NOTE: the two preceding 'Asset: technician cannot change status' / 'duplicate start_maintenance' FAIL lines are harness state errors (LAP-001 was already UNDER_MAINTENANCE through an open WO); the technician got 403 and the duplicate start got 409 as required", "status": "INFO", "note": "", "evidence": ""}
+{"module": "WF", "scenario": "Asset: technician denied status change (403) and a repeat start_maintenance is refused 409 (state machine), disposal of an asset that still has an open (COMPLETED) work order is ALLOWED (see F-M06)", "status": "PASS", "note": "403 / 409 / dispose accepted", "evidence": ""}
+{"module": "J1", "scenario": "Journey 1: site + asset hierarchy -> status -> change history (UI history tab, /history/, /changes/, /location-history/ APIs return who/when/why)", "status": "PASS", "note": "", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Super Admin creates organization + owner invitation (UI->DB)", "status": "PASS", "note": "Organization created. An activation email was sent to owner@gamma-13919.test. http://127.0.0.1:8098/platform/organizations/173da195-1b18-4494-aaab-5c01eebd746a/", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Owner membership INVITED, role Owner, audit organization.created", "status": "PASS", "note": "INVITED organization.created", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Duplicate organization slug rejected", "status": "PASS", "note": "An organization with this name or slug already exists.", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Org Owner cannot open the platform console (403/404)", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Org Owner cannot call platform API", "status": "PASS", "note": "403", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Owner activates account from the emailed link, sets a strong password, membership becomes ACTIVE", "status": "PASS", "note": "http://127.0.0.1:8098/accounts/login/", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Activation link cannot be reused after the password is set", "status": "PASS", "note": "FX FieldOps Nexus Link expired or invalid  This activation link can no longer be used. Ask your organization administrat", "evidence": ""}
+{"module": "PLATFORM", "scenario": "New org owner signs in and lands in own empty org (no data from other tenants)", "status": "PASS", "note": "Dashboard \u00b7 Gamma Works 13919", "evidence": ""}
+{"module": "PLATFORM", "scenario": "New org sees zero sites/assets of other orgs", "status": "PASS", "note": "", "evidence": ""}
+{"module": "PLATFORM", "scenario": "New org seeded with system roles (owner, admin, ops, planner, tech, stores, ...)", "status": "PASS", "note": "11 roles", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Weak/common password rejected on change", "status": "PASS", "note": "This password is too short. It must contain at least 12 characters. || This password is too common.", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Super Admin suspends organization with reason (UI dialog)", "status": "PASS", "note": "organization.created,organization.suspended", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Suspended org: existing session blocked in UI and API", "status": "PASS", "note": "html=403 'FX FieldOps Nexus Organization suspended  Access to this organization has been suspended by the platform administrator. Contact support.  Sign out' api=403", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Suspended org: fresh login cannot reach app data", "status": "PASS", "note": "http://127.0.0.1:8098/app/ FX FieldOps Nexus Organization suspended  Access to this organization has been suspended by the platform administrator. Contact support.  Si", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Suspending Gamma does not affect Alpha users", "status": "PASS", "note": "200", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Super Admin reactivates organization", "status": "PASS", "note": "ACTIVE organization.created,organization.suspended,organization.activated", "evidence": ""}
+{"module": "PLATFORM", "scenario": "Reactivated org: owner can use the app", "status": "PASS", "note": "200", "evidence": ""}
+{"module": "PLATFORM", "scenario": "M15-002 runtime: platform org page 'Recent activity' lists tenant operational events", "status": "FAIL", "note": "Recent activity auth.login 04 Oct 2026 11:39 \u00b7 owner@alpha.qa.test \u00b7 owner@alpha.qa.test auth.login 04 Oct 2026 11:38 \u00b7 owner@alpha.qa.test \u00b7 owner@alpha.qa.test auth.login 04 Oct 2026 11:37 \u00b7 owner@alpha.qa.test \u00b7 owner", "evidence": ""}
+{"module": "M02", "scenario": "F-M07 RUNTIME: user with meter-record permission scoped to BLR-1 only (org-wide read) records a reading on a HYD-1 asset: HTML view denied, REST API ACCEPTED", "status": "FAIL", "note": "API=201 (row stored=1); HTML=403 (row stored=0)", "evidence": ""}
+{"module": "M01", "scenario": "Site-scoped role (planner limited to BLR-1): site list shows only BLR-1", "status": "PASS", "note": "Sites & locations | Physical sites, their buildings, zones and service areas. | All statuses | Active | Inactive | Filter | CODE\tNAME\tCITY\tLOCATIONS\tACTIVE ASSETS\tSTATUS | BLR-1\tBangalore Service Depot\tBangalore\t1\t", "evidence": ""}
+{"module": "M01", "scenario": "Site-scoped role: direct URL of an out-of-scope site -> 404", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M02", "scenario": "Site-scoped role: out-of-scope asset URL -> 404", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M02", "scenario": "Site-scoped role: asset API returns only in-scope assets", "status": "PASS", "note": "3 rows sites=['BLR-1']", "evidence": ""}
+{"module": "M06", "scenario": "Site-scoped role: creating a WO for an out-of-scope asset refused", "status": "PASS", "note": "404", "evidence": ""}
+{"module": "M06", "scenario": "Site-scoped role: work-order API shows no out-of-scope WOs", "status": "PASS", "note": "1 rows", "evidence": ""}
+{"module": "M14", "scenario": "Site-scoped role: dashboards not available or scoped", "status": "PASS", "note": "FX FieldOps Nexus Access denied  You do not have permission to do this. If you t", "evidence": ""}

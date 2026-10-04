@@ -1,0 +1,113 @@
+_______________ coverage: platform linux, python 3.11.15-final-0 _______________
+
+Name                                                             Stmts   Miss  Cover   Missing
+----------------------------------------------------------------------------------------------
+src/apps/accounts/management/commands/create_platform_admin.py      23      4    83%   25, 28-30
+src/apps/accounts/management/commands/diagnose_login.py             31      1    97%   42
+src/apps/accounts/models.py                                         50      6    88%   15, 30-33, 63
+src/apps/accounts/services.py                                       34      4    88%   23-26
+src/apps/accounts/views.py                                          54     16    70%   50-54, 62-66, 71-81
+src/apps/assets/api_views.py                                       421     17    96%   251, 270, 291, 421, 452, 493-494, 536, 548-549, 568-570, 575-577, 588
+src/apps/assets/attributes.py                                      104      6    94%   45, 52, 58, 79, 101, 136
+src/apps/assets/hierarchy.py                                       154     10    94%   42, 59, 99, 102, 136, 140, 212, 214, 216, 218
+src/apps/assets/management/commands/seed_phase1_demo.py             63      3    95%   30-31, 68
+src/apps/assets/models.py                                          136      4    97%   110, 128, 159, 173
+src/apps/assets/selectors.py                                       106      5    95%   84, 119, 141, 163-164
+src/apps/assets/services.py                                        280     17    94%   45-46, 59, 75-76, 86, 124, 153, 155, 159, 295, 313, 316, 340, 363, 376, 401
+src/apps/assets/views.py                                           335     22    93%   62, 119, 163, 204, 305-306, 320-321, 334, 338-339, 353, 373-374, 388, 432, 450-451, 480-481, 491-492
+src/apps/audit/api_views.py                                         61      1    98%   58
+src/apps/audit/evidence.py                                         128      9    93%   48, 51, 87, 181, 209-210, 214-216
+src/apps/audit/exports.py                                           98      2    98%   57, 116
+src/apps/audit/models.py                                            38      1    97%   58
+src/apps/audit/selectors.py                                        107      2    98%   138, 144
+src/apps/audit/services.py                                          52      3    94%   53-54, 88
+src/apps/audit/views.py                                             78      2    97%   85-86
+src/apps/checklists/api_views.py                                   303     19    94%   229, 248, 256-259, 270-271, 325-326, 357-366, 387-388
+src/apps/checklists/models.py                                       98      1    99%   72
+src/apps/checklists/selectors.py                                   121     12    90%   29, 32, 93-96, 104-105, 108, 117-118, 147
+src/apps/checklists/services.py                                    426     30    93%   63, 78, 80, 82, 150-167, 198, 298, 403, 405, 415-416, 449, 479, 531
+src/apps/checklists/views.py                                       192     23    88%   93-94, 103-104, 129-130, 133-134, 153-154, 198-204, 212-213, 220-221, 250, 269
+src/apps/contracts/api_views.py                                    274     30    89%   196, 199, 208-210, 214-216, 222-223, 229-230, 287, 304-305, 312-315, 321-323, 328-331, 337-341
+src/apps/contracts/models.py                                        83      1    99%   82
+src/apps/contracts/selectors.py                                     54      8    85%   18-19, 40, 44-45, 50, 52, 54
+src/apps/contracts/services.py                                     357     37    90%   43, 49, 63, 70-71, 113, 115, 174-194, 201, 260-261, 278, 280, 287, 347, 361, 385, 480-481, 524
+src/apps/contracts/views.py                                        254     49    81%   43-44, 79-82, 153, 159, 169-171, 190-203, 213, 221, 231-233, 241-242, 265, 288-290, 298, 303-304, 308-317, 329-330, 381-382
+src/apps/core/api.py                                                39      6    85%   38, 44, 55-59
+src/apps/core/health.py                                             27      4    85%   25-26, 30-31
+src/apps/core/models.py                                             30      3    90%   34, 36, 54
+src/apps/core/sequences.py                                          14      2    86%   16-17
+src/apps/core/tasks.py                                               5      1    80%   7
+src/apps/core/tenant.py                                             49      5    90%   27, 66-70
+src/apps/core/uploads.py                                            38      1    97%   54
+src/apps/core/workflow.py                                           37      1    97%   60
+src/apps/dashboards/api_views.py                                    57      1    98%   36
+src/apps/dashboards/metrics.py                                     187      3    98%   162-166
+src/apps/dashboards/models.py                                       19      1    95%   31
+src/apps/dashboards/services.py                                     41      5    88%   39-40, 52-54
+src/apps/dashboards/views.py                                        61      4    93%   74, 110-112
+src/apps/files/views.py                                             27      1    96%   19
+src/apps/identification/api_views.py                               114      2    98%   115, 156
+src/apps/identification/models.py                                   42      3    93%   55, 75, 79
+src/apps/identification/selectors.py                                22      2    91%   38-39
+src/apps/identification/services.py                                186      9    95%   56-57, 91-95, 148, 150, 152
+src/apps/identification/views.py                                   139     13    91%   79, 84-85, 91, 117, 139, 157, 167-169, 184, 193-194
+src/apps/incidents/api_views.py                                    178      2    99%   119, 220
+src/apps/incidents/apps.py                                          10      1    90%   14
+src/apps/incidents/models.py                                        73      2    97%   102, 106
+src/apps/incidents/selectors.py                                     40      4    90%   32-33, 47, 50
+src/apps/incidents/services.py                                     185     14    92%   77, 81, 83, 85, 87, 115, 123, 127, 132-133, 248, 268, 279, 296
+src/apps/incidents/views.py                                        159     37    77%   92-95, 119, 138-139, 164-165, 171-173, 181-182, 190-192, 198-208, 215-226
+src/apps/inventory/api_views.py                                    371     15    96%   256-258, 302-304, 342-343, 422-425, 458, 489-492
+src/apps/inventory/forms.py                                         83      1    99%   49
+src/apps/inventory/models.py                                       145      2    99%   193, 250
+src/apps/inventory/selectors.py                                    105      5    95%   76, 80, 82, 102, 112
+src/apps/inventory/services.py                                     498     32    94%   71-72, 74, 119, 139, 144, 147, 151, 176, 193, 196, 212, 217, 219, 223, 239, 246-247, 281-282, 290, 292, 294, 425, 495, 497, 503, 520, 541, 619, 645, 669
+src/apps/inventory/views.py                                        341     41    88%   118-120, 149-150, 221-223, 293, 313, 319-320, 349-350, 468-480, 510-511, 519-520, 523-524, 526-530, 533-534, 540-542
+src/apps/maintenance/api_views.py                                  208      4    98%   227-228, 244, 269
+src/apps/maintenance/services.py                                   380     29    92%   48-49, 70, 94, 156, 162, 168, 186, 267-268, 276, 319-320, 333, 337, 449, 460-464, 504-507, 539-542
+src/apps/maintenance/views.py                                      199     10    95%   33, 130-132, 160-161, 245-247, 263
+src/apps/notifications/api_views.py                                 31      4    87%   36-37, 41-42
+src/apps/notifications/views.py                                     35      2    94%   16, 18
+src/apps/platform_admin/api_views.py                                59     13    78%   35-38, 50, 65-70, 75-77
+src/apps/platform_admin/views.py                                   100     19    81%   50, 52, 71-72, 76, 83, 110-119, 122-123, 132-135
+src/apps/portal/api_views.py                                       168     18    89%   40, 116, 125, 200-209, 214, 231, 236-241
+src/apps/portal/selectors.py                                        69      3    96%   75, 77, 112
+src/apps/portal/services.py                                        118      4    97%   55, 69, 151, 164
+src/apps/portal/views.py                                           154     28    82%   75-76, 110-118, 141, 152-163, 198, 205-207, 217-218
+src/apps/rbac/api_views.py                                          67      1    99%   93
+src/apps/rbac/catalog.py                                            29      1    97%   22
+src/apps/rbac/models.py                                             36      1    97%   18
+src/apps/rbac/services.py                                          220     15    93%   35-36, 72-73, 139, 141, 165, 174, 183, 271, 282, 299, 301, 303, 345
+src/apps/rbac/views.py                                              65      2    97%   94-95
+src/apps/sites/api_views.py                                        296     24    92%   205-206, 234, 266, 299-304, 320-323, 344-347, 361-363, 384-387
+src/apps/sites/models.py                                            90      3    97%   42, 82, 119
+src/apps/sites/selectors.py                                        101      8    92%   49, 98-101, 103, 105, 107
+src/apps/sites/services.py                                         331     30    91%   65, 81, 146, 155-163, 174, 196, 207, 210, 229, 232, 259, 308, 312, 326, 347, 354, 384, 407, 413, 429, 431, 433
+src/apps/sites/views.py                                            290     31    89%   103-104, 108, 126, 149, 177, 193-194, 198, 225-226, 296, 302, 312-313, 317, 330-331, 354-355, 359-360, 385-386, 390, 403, 409, 421, 424-425, 429
+src/apps/sla/api_views.py                                          234     27    88%   128, 184, 191-193, 198-199, 205, 222, 243-252, 278-279, 310, 333-339
+src/apps/sla/models.py                                             140      2    99%   76, 111
+src/apps/sla/selectors.py                                           89      8    91%   66, 69, 71, 73, 76, 116, 137, 139
+src/apps/sla/services.py                                           457     60    87%   72-73, 96, 98, 101, 123, 126-132, 134, 149, 154-155, 176-177, 209, 211, 213, 221-222, 224, 277, 291, 352, 421-429, 434, 437, 463, 472-485, 495, 505, 509, 512, 531-539, 552
+src/apps/sla/views.py                                              170     19    89%   88-89, 176-185, 198-199, 216, 228, 245-246, 260
+src/apps/tenancy/api_views.py                                      115     13    89%   77, 79, 90, 115, 150-152, 157-159, 164-166
+src/apps/tenancy/models.py                                          52      1    98%   40
+src/apps/tenancy/selectors.py                                       24      1    96%   27
+src/apps/tenancy/services.py                                       194     19    90%   28-29, 51, 56, 76, 79, 95, 104-105, 124, 179, 189, 202, 212, 233, 246, 248, 265-266
+src/apps/tenancy/views.py                                          108      7    94%   55, 57, 82-83, 87, 127, 132
+src/apps/ui/context_processors.py                                   23      2    91%   21-22
+src/apps/ui/mixins.py                                               28      5    82%   23, 32-34, 41-42
+src/apps/ui/views.py                                                70      4    94%   17-19, 97
+src/apps/workorders/api_views.py                                   245      8    97%   74, 141, 144, 220-223, 288, 304
+src/apps/workorders/forms.py                                        54      1    98%   71
+src/apps/workorders/models.py                                       92      3    97%   97, 101, 120
+src/apps/workorders/selectors.py                                    57      1    98%   67
+src/apps/workorders/services.py                                    282     19    93%   59, 66-67, 93, 95, 97, 99, 102, 134, 142, 146, 222, 264, 281, 375, 406, 428, 443, 445
+src/apps/workorders/views.py                                       226     43    81%   88-99, 113-116, 140, 153, 173, 184, 222-223, 230-231, 237-238, 243-244, 256-266, 288-289, 299-300, 307-308, 318-319
+src/apps/workspace/models.py                                        17      1    94%   25
+src/apps/workspace/services.py                                      21      2    90%   25, 27
+src/apps/workspace/views.py                                        300     16    95%   142-143, 202-203, 215-216, 222-223, 253-254, 298, 317, 392-393, 405-406
+----------------------------------------------------------------------------------------------
+TOTAL                                                            15584   1080    93%
+
+146 files skipped due to complete coverage.
+746 passed in 531.45s (0:08:51)

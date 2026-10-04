@@ -1,0 +1,4062 @@
+{
+ "api/v1/asset-categories/": {
+  "owner": [
+   200,
+   10
+  ],
+  "admin": [
+   200,
+   10
+  ],
+  "ops": [
+   200,
+   10
+  ],
+  "supervisor": [
+   200,
+   10
+  ],
+  "assets": [
+   200,
+   10
+  ],
+  "planner": [
+   200,
+   10
+  ],
+  "tech": [
+   200,
+   10
+  ],
+  "stores": [
+   200,
+   10
+  ],
+  "service": [
+   200,
+   10
+  ],
+  "auditor": [
+   200,
+   10
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   1
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/asset-components/": {
+  "owner": [
+   200,
+   6
+  ],
+  "admin": [
+   200,
+   6
+  ],
+  "ops": [
+   200,
+   6
+  ],
+  "supervisor": [
+   200,
+   6
+  ],
+  "assets": [
+   200,
+   6
+  ],
+  "planner": [
+   200,
+   6
+  ],
+  "tech": [
+   200,
+   6
+  ],
+  "stores": [
+   200,
+   6
+  ],
+  "service": [
+   200,
+   6
+  ],
+  "auditor": [
+   200,
+   6
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/asset-identifiers/": {
+  "owner": [
+   200,
+   3
+  ],
+  "admin": [
+   200,
+   3
+  ],
+  "ops": [
+   200,
+   3
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   200,
+   3
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   3
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/assets/": {
+  "owner": [
+   200,
+   19
+  ],
+  "admin": [
+   200,
+   19
+  ],
+  "ops": [
+   200,
+   19
+  ],
+  "supervisor": [
+   200,
+   19
+  ],
+  "assets": [
+   200,
+   19
+  ],
+  "planner": [
+   200,
+   19
+  ],
+  "tech": [
+   200,
+   19
+  ],
+  "stores": [
+   200,
+   19
+  ],
+  "service": [
+   200,
+   19
+  ],
+  "auditor": [
+   200,
+   19
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   1
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/audit-logs/": {
+  "owner": [
+   200,
+   463
+  ],
+  "admin": [
+   200,
+   463
+  ],
+  "ops": [
+   200,
+   463
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   463
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   24
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/audit-logs/evidence/": {
+  "owner": [
+   400,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   400,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   400,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/audit-logs/export/": {
+  "owner": [
+   200,
+   "?"
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   "?"
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   "?"
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/auth/me/": {
+  "owner": [
+   200,
+   "obj"
+  ],
+  "admin": [
+   200,
+   "obj"
+  ],
+  "ops": [
+   200,
+   "obj"
+  ],
+  "supervisor": [
+   200,
+   "obj"
+  ],
+  "assets": [
+   200,
+   "obj"
+  ],
+  "planner": [
+   200,
+   "obj"
+  ],
+  "tech": [
+   200,
+   "obj"
+  ],
+  "stores": [
+   200,
+   "obj"
+  ],
+  "service": [
+   200,
+   "obj"
+  ],
+  "auditor": [
+   200,
+   "obj"
+  ],
+  "client": [
+   200,
+   "obj"
+  ],
+  "betaowner": [
+   200,
+   "obj"
+  ],
+  "platform": [
+   200,
+   "obj"
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/breaches/": {
+  "owner": [
+   200,
+   23
+  ],
+  "admin": [
+   200,
+   23
+  ],
+  "ops": [
+   200,
+   23
+  ],
+  "supervisor": [
+   200,
+   23
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   23
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   23
+  ],
+  "auditor": [
+   200,
+   23
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/calendar-holidays/": {
+  "owner": [
+   200,
+   2
+  ],
+  "admin": [
+   200,
+   2
+  ],
+  "ops": [
+   200,
+   2
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   200,
+   2
+  ],
+  "planner": [
+   200,
+   2
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   2
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/calendars/": {
+  "owner": [
+   200,
+   3
+  ],
+  "admin": [
+   200,
+   3
+  ],
+  "ops": [
+   200,
+   3
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   200,
+   3
+  ],
+  "planner": [
+   200,
+   3
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   3
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/checklist-templates/": {
+  "owner": [
+   200,
+   2
+  ],
+  "admin": [
+   200,
+   2
+  ],
+  "ops": [
+   200,
+   2
+  ],
+  "supervisor": [
+   200,
+   2
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   2
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   2
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/checklists/": {
+  "owner": [
+   200,
+   2
+  ],
+  "admin": [
+   200,
+   2
+  ],
+  "ops": [
+   200,
+   2
+  ],
+  "supervisor": [
+   200,
+   2
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   2
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   2
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/client/requests/": {
+  "owner": [
+   200,
+   0
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   200,
+   1
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/contract-providers/": {
+  "owner": [
+   200,
+   1
+  ],
+  "admin": [
+   200,
+   1
+  ],
+  "ops": [
+   200,
+   1
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   200,
+   1
+  ],
+  "planner": [
+   200,
+   1
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   1
+  ],
+  "auditor": [
+   200,
+   1
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/coverage-agreements/": {
+  "owner": [
+   200,
+   4
+  ],
+  "admin": [
+   200,
+   4
+  ],
+  "ops": [
+   200,
+   4
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   200,
+   4
+  ],
+  "planner": [
+   200,
+   4
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   4
+  ],
+  "auditor": [
+   200,
+   4
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/coverage-agreements/expiring/": {
+  "owner": [
+   200,
+   1
+  ],
+  "admin": [
+   200,
+   1
+  ],
+  "ops": [
+   200,
+   1
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   200,
+   1
+  ],
+  "planner": [
+   200,
+   1
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   1
+  ],
+  "auditor": [
+   200,
+   1
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/coverage-checks/": {
+  "owner": [
+   200,
+   0
+  ],
+  "admin": [
+   200,
+   0
+  ],
+  "ops": [
+   200,
+   0
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   200,
+   0
+  ],
+  "planner": [
+   200,
+   0
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   0
+  ],
+  "auditor": [
+   200,
+   0
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/coverage/": {
+  "owner": [
+   400,
+   null
+  ],
+  "admin": [
+   400,
+   null
+  ],
+  "ops": [
+   400,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   400,
+   null
+  ],
+  "planner": [
+   400,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   400,
+   null
+  ],
+  "auditor": [
+   400,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   400,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/dashboards/": {
+  "owner": [
+   200,
+   "obj"
+  ],
+  "admin": [
+   200,
+   "obj"
+  ],
+  "ops": [
+   200,
+   "obj"
+  ],
+  "supervisor": [
+   200,
+   "obj"
+  ],
+  "assets": [
+   200,
+   "obj"
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   "obj"
+  ],
+  "auditor": [
+   200,
+   "obj"
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   "obj"
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/escalations/": {
+  "owner": [
+   200,
+   2
+  ],
+  "admin": [
+   200,
+   2
+  ],
+  "ops": [
+   200,
+   2
+  ],
+  "supervisor": [
+   200,
+   2
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   2
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   2
+  ],
+  "auditor": [
+   200,
+   2
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/findings/": {
+  "owner": [
+   200,
+   1
+  ],
+  "admin": [
+   200,
+   1
+  ],
+  "ops": [
+   200,
+   1
+  ],
+  "supervisor": [
+   200,
+   1
+  ],
+  "assets": [
+   200,
+   0
+  ],
+  "planner": [
+   200,
+   1
+  ],
+  "tech": [
+   200,
+   1
+  ],
+  "stores": [
+   200,
+   0
+  ],
+  "service": [
+   200,
+   0
+  ],
+  "auditor": [
+   200,
+   1
+  ],
+  "client": [
+   200,
+   0
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/inspections/": {
+  "owner": [
+   200,
+   2
+  ],
+  "admin": [
+   200,
+   2
+  ],
+  "ops": [
+   200,
+   2
+  ],
+  "supervisor": [
+   200,
+   2
+  ],
+  "assets": [
+   200,
+   0
+  ],
+  "planner": [
+   200,
+   2
+  ],
+  "tech": [
+   200,
+   1
+  ],
+  "stores": [
+   200,
+   0
+  ],
+  "service": [
+   200,
+   0
+  ],
+  "auditor": [
+   200,
+   2
+  ],
+  "client": [
+   200,
+   0
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/inspections/requirements/": {
+  "owner": [
+   404,
+   null
+  ],
+  "admin": [
+   404,
+   null
+  ],
+  "ops": [
+   404,
+   null
+  ],
+  "supervisor": [
+   404,
+   null
+  ],
+  "assets": [
+   404,
+   null
+  ],
+  "planner": [
+   404,
+   null
+  ],
+  "tech": [
+   404,
+   null
+  ],
+  "stores": [
+   404,
+   null
+  ],
+  "service": [
+   404,
+   null
+  ],
+  "auditor": [
+   404,
+   null
+  ],
+  "client": [
+   404,
+   null
+  ],
+  "betaowner": [
+   404,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/issue/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/maintenance-cycles/": {
+  "owner": [
+   200,
+   10
+  ],
+  "admin": [
+   200,
+   10
+  ],
+  "ops": [
+   200,
+   10
+  ],
+  "supervisor": [
+   200,
+   10
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   10
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   10
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/maintenance-plans/": {
+  "owner": [
+   200,
+   4
+  ],
+  "admin": [
+   200,
+   4
+  ],
+  "ops": [
+   200,
+   4
+  ],
+  "supervisor": [
+   200,
+   4
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   4
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   4
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/maintenance-schedules/": {
+  "owner": [
+   200,
+   4
+  ],
+  "admin": [
+   200,
+   4
+  ],
+  "ops": [
+   200,
+   4
+  ],
+  "supervisor": [
+   200,
+   4
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   4
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   4
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/members/": {
+  "owner": [
+   200,
+   12
+  ],
+  "admin": [
+   200,
+   12
+  ],
+  "ops": [
+   200,
+   12
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   12
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   2
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/meters/": {
+  "owner": [
+   200,
+   2
+  ],
+  "admin": [
+   200,
+   2
+  ],
+  "ops": [
+   200,
+   2
+  ],
+  "supervisor": [
+   200,
+   2
+  ],
+  "assets": [
+   200,
+   2
+  ],
+  "planner": [
+   200,
+   2
+  ],
+  "tech": [
+   200,
+   2
+  ],
+  "stores": [
+   200,
+   2
+  ],
+  "service": [
+   200,
+   2
+  ],
+  "auditor": [
+   200,
+   2
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/notifications/": {
+  "owner": [
+   200,
+   12
+  ],
+  "admin": [
+   200,
+   0
+  ],
+  "ops": [
+   200,
+   13
+  ],
+  "supervisor": [
+   200,
+   0
+  ],
+  "assets": [
+   200,
+   1
+  ],
+  "planner": [
+   200,
+   10
+  ],
+  "tech": [
+   200,
+   2
+  ],
+  "stores": [
+   200,
+   0
+  ],
+  "service": [
+   200,
+   7
+  ],
+  "auditor": [
+   200,
+   0
+  ],
+  "client": [
+   200,
+   3
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/notifications/read-all/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/organization/": {
+  "owner": [
+   200,
+   "obj"
+  ],
+  "admin": [
+   200,
+   "obj"
+  ],
+  "ops": [
+   200,
+   "obj"
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   "obj"
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   "obj"
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/part-reservations/": {
+  "owner": [
+   200,
+   1
+  ],
+  "admin": [
+   200,
+   1
+  ],
+  "ops": [
+   200,
+   1
+  ],
+  "supervisor": [
+   200,
+   1
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   1
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   200,
+   1
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   1
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/parts/": {
+  "owner": [
+   200,
+   3
+  ],
+  "admin": [
+   200,
+   3
+  ],
+  "ops": [
+   200,
+   3
+  ],
+  "supervisor": [
+   200,
+   3
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   3
+  ],
+  "tech": [
+   200,
+   3
+  ],
+  "stores": [
+   200,
+   3
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   3
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   1
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/permissions/": {
+  "owner": [
+   200,
+   94
+  ],
+  "admin": [
+   200,
+   94
+  ],
+  "ops": [
+   200,
+   94
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   94
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   94
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/platform/organizations/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   200,
+   2
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/portal-accounts/": {
+  "owner": [
+   200,
+   1
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   1
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/portal/assets/": {
+  "owner": [
+   200,
+   0
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   200,
+   2
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/portal/requests/": {
+  "owner": [
+   200,
+   0
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   200,
+   1
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/report-snapshots/": {
+  "owner": [
+   200,
+   0
+  ],
+  "admin": [
+   200,
+   0
+  ],
+  "ops": [
+   200,
+   0
+  ],
+  "supervisor": [
+   200,
+   0
+  ],
+  "assets": [
+   200,
+   0
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   0
+  ],
+  "auditor": [
+   200,
+   0
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/reserve/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/return/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/roles/": {
+  "owner": [
+   200,
+   11
+  ],
+  "admin": [
+   200,
+   11
+  ],
+  "ops": [
+   200,
+   11
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   11
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   11
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/scan/report/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/scan/resolve/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/schedules/": {
+  "owner": [
+   200,
+   4
+  ],
+  "admin": [
+   200,
+   4
+  ],
+  "ops": [
+   200,
+   4
+  ],
+  "supervisor": [
+   200,
+   4
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   4
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   4
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/service-requests/": {
+  "owner": [
+   200,
+   3
+  ],
+  "admin": [
+   200,
+   3
+  ],
+  "ops": [
+   200,
+   3
+  ],
+  "supervisor": [
+   200,
+   3
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   3
+  ],
+  "tech": [
+   200,
+   3
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   3
+  ],
+  "auditor": [
+   200,
+   3
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/site-contacts/": {
+  "owner": [
+   200,
+   5
+  ],
+  "admin": [
+   200,
+   5
+  ],
+  "ops": [
+   200,
+   5
+  ],
+  "supervisor": [
+   200,
+   5
+  ],
+  "assets": [
+   200,
+   5
+  ],
+  "planner": [
+   200,
+   5
+  ],
+  "tech": [
+   200,
+   5
+  ],
+  "stores": [
+   200,
+   5
+  ],
+  "service": [
+   200,
+   5
+  ],
+  "auditor": [
+   200,
+   5
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/sites/": {
+  "owner": [
+   200,
+   6
+  ],
+  "admin": [
+   200,
+   6
+  ],
+  "ops": [
+   200,
+   6
+  ],
+  "supervisor": [
+   200,
+   6
+  ],
+  "assets": [
+   200,
+   6
+  ],
+  "planner": [
+   200,
+   6
+  ],
+  "tech": [
+   200,
+   6
+  ],
+  "stores": [
+   200,
+   6
+  ],
+  "service": [
+   200,
+   6
+  ],
+  "auditor": [
+   200,
+   6
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   1
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/sla-breaches/": {
+  "owner": [
+   200,
+   23
+  ],
+  "admin": [
+   200,
+   23
+  ],
+  "ops": [
+   200,
+   23
+  ],
+  "supervisor": [
+   200,
+   23
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   23
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   23
+  ],
+  "auditor": [
+   200,
+   23
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/sla-metrics/": {
+  "owner": [
+   200,
+   "obj"
+  ],
+  "admin": [
+   200,
+   "obj"
+  ],
+  "ops": [
+   200,
+   "obj"
+  ],
+  "supervisor": [
+   200,
+   "obj"
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   "obj"
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   "obj"
+  ],
+  "auditor": [
+   200,
+   "obj"
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   "obj"
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/sla-profiles/": {
+  "owner": [
+   200,
+   2
+  ],
+  "admin": [
+   200,
+   2
+  ],
+  "ops": [
+   200,
+   2
+  ],
+  "supervisor": [
+   200,
+   2
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   2
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   2
+  ],
+  "auditor": [
+   200,
+   2
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/sla-trackings/": {
+  "owner": [
+   200,
+   16
+  ],
+  "admin": [
+   200,
+   16
+  ],
+  "ops": [
+   200,
+   16
+  ],
+  "supervisor": [
+   200,
+   16
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   16
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   16
+  ],
+  "auditor": [
+   200,
+   16
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/slas/": {
+  "owner": [
+   200,
+   2
+  ],
+  "admin": [
+   200,
+   2
+  ],
+  "ops": [
+   200,
+   2
+  ],
+  "supervisor": [
+   200,
+   2
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   2
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   200,
+   2
+  ],
+  "auditor": [
+   200,
+   2
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock-balances/": {
+  "owner": [
+   200,
+   4
+  ],
+  "admin": [
+   200,
+   4
+  ],
+  "ops": [
+   200,
+   4
+  ],
+  "supervisor": [
+   200,
+   4
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   4
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   200,
+   4
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   4
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   1
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock-balances/adjust/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock-balances/levels/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock-balances/receive/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock-balances/transfer/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock-movements/": {
+  "owner": [
+   200,
+   7
+  ],
+  "admin": [
+   200,
+   7
+  ],
+  "ops": [
+   200,
+   7
+  ],
+  "supervisor": [
+   200,
+   7
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   7
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   200,
+   7
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   7
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   1
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock/": {
+  "owner": [
+   200,
+   4
+  ],
+  "admin": [
+   200,
+   4
+  ],
+  "ops": [
+   200,
+   4
+  ],
+  "supervisor": [
+   200,
+   4
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   4
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   200,
+   4
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   4
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   1
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock/adjust/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock/levels/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock/receive/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/stock/transfer/": {
+  "owner": [
+   403,
+   null
+  ],
+  "admin": [
+   403,
+   null
+  ],
+  "ops": [
+   403,
+   null
+  ],
+  "supervisor": [
+   403,
+   null
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   403,
+   null
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   403,
+   null
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   403,
+   null
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/warehouses/": {
+  "owner": [
+   200,
+   2
+  ],
+  "admin": [
+   200,
+   2
+  ],
+  "ops": [
+   200,
+   2
+  ],
+  "supervisor": [
+   200,
+   2
+  ],
+  "assets": [
+   403,
+   null
+  ],
+  "planner": [
+   200,
+   2
+  ],
+  "tech": [
+   403,
+   null
+  ],
+  "stores": [
+   200,
+   2
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   2
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   1
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/work-order-parts/": {
+  "owner": [
+   200,
+   2
+  ],
+  "admin": [
+   200,
+   2
+  ],
+  "ops": [
+   200,
+   2
+  ],
+  "supervisor": [
+   200,
+   2
+  ],
+  "assets": [
+   200,
+   2
+  ],
+  "planner": [
+   200,
+   2
+  ],
+  "tech": [
+   200,
+   2
+  ],
+  "stores": [
+   200,
+   2
+  ],
+  "service": [
+   200,
+   2
+  ],
+  "auditor": [
+   200,
+   2
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/work-orders/": {
+  "owner": [
+   200,
+   14
+  ],
+  "admin": [
+   200,
+   14
+  ],
+  "ops": [
+   200,
+   14
+  ],
+  "supervisor": [
+   200,
+   14
+  ],
+  "assets": [
+   200,
+   14
+  ],
+  "planner": [
+   200,
+   14
+  ],
+  "tech": [
+   200,
+   1
+  ],
+  "stores": [
+   200,
+   14
+  ],
+  "service": [
+   200,
+   14
+  ],
+  "auditor": [
+   200,
+   14
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   0
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ },
+ "api/v1/zones/": {
+  "owner": [
+   200,
+   8
+  ],
+  "admin": [
+   200,
+   8
+  ],
+  "ops": [
+   200,
+   8
+  ],
+  "supervisor": [
+   200,
+   8
+  ],
+  "assets": [
+   200,
+   8
+  ],
+  "planner": [
+   200,
+   8
+  ],
+  "tech": [
+   200,
+   8
+  ],
+  "stores": [
+   403,
+   null
+  ],
+  "service": [
+   403,
+   null
+  ],
+  "auditor": [
+   200,
+   8
+  ],
+  "client": [
+   403,
+   null
+  ],
+  "betaowner": [
+   200,
+   1
+  ],
+  "platform": [
+   403,
+   null
+  ],
+  "anon": [
+   401,
+   null
+  ]
+ }
+}
