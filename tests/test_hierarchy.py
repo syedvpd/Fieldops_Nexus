@@ -3,7 +3,7 @@ import pytest
 from django.db import IntegrityError, transaction
 
 from apps.assets import hierarchy, services
-from apps.assets.models import AssetComponent
+from apps.assets.models import Asset, AssetComponent
 from apps.audit.models import AuditLog
 from apps.core.exceptions import Conflict, ValidationFailed
 
@@ -98,8 +98,13 @@ def test_terminal_assets_cannot_join_or_leave(org_a, owner_a, trio):
     with pytest.raises(Conflict) as exc:
         hierarchy.add_component(a, c, actor=owner_a)
     assert exc.value.code == "asset_terminal"
-    for act in ("start_maintenance", "mark_out_of_service", "dispose"):
+    for act in ("start_maintenance", "mark_out_of_service"):
         services.change_status(b, action=act, reason="eol", actor=owner_a)
+    with pytest.raises(Conflict) as blocked:  # D-062: the linked child cannot be disposed while it is still attached
+        services.change_status(b, action="dispose", reason="eol", actor=owner_a)
+    assert blocked.value.code == "hierarchy_links_present"
+    # A link that was stranded BEFORE that rule (terminal asset still linked) can still not be edited or removed:
+    Asset.objects.for_organization(org_a).filter(pk=b.pk).update(status="DISPOSED")
     with pytest.raises(Conflict):
         hierarchy.remove_component(AssetComponent.objects.get(pk=link.pk), actor=owner_a)
 
@@ -206,3 +211,116 @@ def test_api_rbac_for_hierarchy(as_user, tech_a, org_a, trio):
     assert tech.post(f"/api/v1/assets/{a.pk}/validate-link/", {"child": str(b.pk)}, format="json").status_code == 403
     assert tech.get(f"/api/v1/assets/{a.pk}/tree/").status_code == 200
     assert AssetComponent.objects.count() == 0
+
+
+# --- BX-M03-01 / F-M06 regression: retire / dispose may never strand a hierarchy link (D-062) -------------------------------
+
+
+def to_out_of_service(asset, owner):
+    for act in ("start_maintenance", "mark_out_of_service"):
+        services.change_status(asset, action=act, reason="test cycle", actor=owner)
+
+
+def test_parent_without_children_can_be_retired(owner_a, trio):
+    a, _, _ = trio
+    to_out_of_service(a, owner_a)
+    services.change_status(a, action="retire", reason="end of life", actor=owner_a)
+    a.refresh_from_db()
+    assert a.status == "RETIRED"
+
+
+@pytest.mark.parametrize("action", ["retire", "dispose"])
+def test_parent_with_live_child_cannot_be_retired_or_disposed(org_a, owner_a, trio, action):
+    a, b, _ = trio
+    hierarchy.add_component(a, b, actor=owner_a)
+    to_out_of_service(a, owner_a)
+    with pytest.raises(Conflict) as exc:
+        services.change_status(a, action=action, reason="scrap", actor=owner_a)
+    assert exc.value.code == "hierarchy_links_present" and exc.value.details["children"] == ["E-1"]
+    assert "Detach" in exc.value.message
+    a.refresh_from_db()
+    assert a.status == "OUT_OF_SERVICE" and AssetComponent.objects.filter(parent=a, child=b).exists()
+    assert not AuditLog.objects.filter(organization=org_a, action="asset.status_changed",
+                                       after__status__in=["RETIRED", "DISPOSED"]).exists()
+
+
+def test_child_with_live_parent_cannot_be_retired_until_detached(owner_a, trio):
+    a, b, _ = trio
+    link = hierarchy.add_component(a, b, actor=owner_a)
+    to_out_of_service(b, owner_a)
+    with pytest.raises(Conflict) as exc:
+        services.change_status(b, action="retire", reason="worn out", actor=owner_a)
+    assert exc.value.code == "hierarchy_links_present" and exc.value.details["parent"] == "G-1"
+    hierarchy.remove_component(link, actor=owner_a)           # the valid hierarchy transition
+    services.change_status(b, action="retire", reason="worn out", actor=owner_a)
+    b.refresh_from_db()
+    assert b.status == "RETIRED"
+
+
+def test_retire_after_detaching_the_children_works_and_leaves_no_links(org_a, owner_a, trio):
+    a, b, c = trio
+    hierarchy.add_component(a, b, actor=owner_a)
+    hierarchy.add_component(a, c, actor=owner_a)
+    to_out_of_service(a, owner_a)
+    for link in list(AssetComponent.objects.filter(parent=a)):
+        hierarchy.remove_component(link, actor=owner_a)
+    services.change_status(a, action="retire", reason="end of life", actor=owner_a)
+    assert AssetComponent.objects.filter(organization=org_a).count() == 0
+    assert {"asset.component_removed", "asset.status_changed"} <= set(actions(org_a))
+
+
+def test_moving_the_children_elsewhere_also_unblocks_retirement(owner_a, trio):
+    a, b, c = trio
+    link = hierarchy.add_component(a, b, actor=owner_a)
+    to_out_of_service(a, owner_a)
+    hierarchy.move_component(link, c, actor=owner_a)
+    services.change_status(a, action="retire", reason="end of life", actor=owner_a)
+    assert parent_of(b) == "P-1"
+
+
+def parent_of(asset):
+    return AssetComponent.objects.get(child=asset).parent.asset_tag
+
+
+def test_api_retire_with_live_child_is_a_409_business_error(as_user, owner_a, org_a, trio):
+    a, b, _ = trio
+    c = as_user(owner_a, org_a)
+    assert c.post(f"/api/v1/assets/{a.pk}/components/", {"child": str(b.pk)}, format="json").status_code == 201
+    for act in ("start_maintenance", "mark_out_of_service"):
+        assert c.post(f"/api/v1/assets/{a.pk}/transition/", {"action": act, "reason": "step"}, format="json").status_code == 200
+    r = c.post(f"/api/v1/assets/{a.pk}/transition/", {"action": "retire", "reason": "scrap"}, format="json")
+    assert r.status_code == 409 and r.json()["error"]["code"] == "hierarchy_links_present"
+    assert "E-1" in r.json()["error"]["message"]
+    assert c.get(f"/api/v1/assets/{a.pk}/").json()["status"] == "OUT_OF_SERVICE"
+    link = AssetComponent.objects.get(child=b)
+    assert c.delete(f"/api/v1/asset-components/{link.pk}/").status_code == 204
+    assert c.post(f"/api/v1/assets/{a.pk}/transition/", {"action": "retire", "reason": "scrap"}, format="json").status_code == 200
+
+
+def test_ui_explains_the_restriction_and_hides_retire_dispose(client, owner_a, trio):
+    a, b, _ = trio
+    hierarchy.add_component(a, b, actor=owner_a)
+    to_out_of_service(a, owner_a)
+    client.force_login(owner_a)
+    html = client.get(f"/app/assets/{a.pk}/").content.decode()
+    assert 'id="hierarchy-block"' in html and "cannot be retired or disposed" in html and "E-1" in html
+    assert "/transition/retire/" not in html and "/transition/dispose/" not in html
+    assert "/transition/return_to_service/" in html                       # the other valid transition remains
+    # a forged POST is refused by the server as well and the status is unchanged
+    r = client.post(f"/app/assets/{a.pk}/transition/retire/", {"reason": "forged"})
+    assert r.status_code == 302
+    a.refresh_from_db()
+    assert a.status == "OUT_OF_SERVICE"
+    link = AssetComponent.objects.get(child=b)
+    client.post(f"/app/components/{link.pk}/remove/", {"next_asset": "parent"})
+    html = client.get(f"/app/assets/{a.pk}/").content.decode()
+    assert 'id="hierarchy-block"' not in html and "/transition/retire/" in html
+
+
+def test_retire_guard_is_tenant_scoped(org_a, org_b, site_b1, owner_a, make_asset, trio):
+    foreign = make_asset(org_b, site_b1, "B-ASSET")
+    a = trio[0]
+    to_out_of_service(a, owner_a)
+    services.change_status(a, action="retire", reason="end of life", actor=owner_a)   # org B's assets never block org A
+    a.refresh_from_db()
+    assert a.status == "RETIRED" and foreign.status == "ACTIVE"

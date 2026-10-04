@@ -2,7 +2,7 @@ from django import forms
 
 from apps.ui.forms import BootstrapFormMixin
 
-from .models import Zone
+from .models import MAX_ESCALATION_ORDER, Zone
 
 WEEKDAYS = [(1, "Monday"), (2, "Tuesday"), (3, "Wednesday"), (4, "Thursday"), (5, "Friday"), (6, "Saturday"),
             (7, "Sunday")]
@@ -67,6 +67,6 @@ class ContactForm(BootstrapFormMixin, forms.Form):
     role_title = forms.CharField(max_length=100, required=False, label="Role")
     phone = forms.CharField(max_length=32, required=False)
     email = forms.EmailField(required=False)
-    escalation_order = forms.IntegerField(min_value=1, required=False,
+    escalation_order = forms.IntegerField(min_value=1, max_value=MAX_ESCALATION_ORDER, required=False,
                                           help_text="1 = contacted first. Leave empty to append at the end.")
     notes = forms.CharField(max_length=300, required=False)

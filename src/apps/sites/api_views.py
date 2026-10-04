@@ -9,7 +9,7 @@ from apps.core.exceptions import NotFound
 from apps.tenancy.api import TenantAPIMixin
 
 from . import selectors, services
-from .models import CalendarHoliday, OperatingCalendar, Site, SiteContact, Zone
+from .models import MAX_ESCALATION_ORDER, CalendarHoliday, OperatingCalendar, Site, SiteContact, Zone
 
 # --- serializers ---------------------------------------------------------------------------------------
 
@@ -133,7 +133,7 @@ class ContactWriteSerializer(serializers.Serializer):
     role_title = serializers.CharField(max_length=100, required=False, allow_blank=True)
     phone = serializers.CharField(max_length=32, required=False, allow_blank=True)
     email = serializers.EmailField(required=False, allow_blank=True)
-    escalation_order = serializers.IntegerField(min_value=1, required=False)
+    escalation_order = serializers.IntegerField(min_value=1, max_value=MAX_ESCALATION_ORDER, required=False)
     notes = serializers.CharField(max_length=300, required=False, allow_blank=True)
 
 

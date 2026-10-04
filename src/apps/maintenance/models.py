@@ -71,6 +71,10 @@ class MaintenanceSchedule(TenantOwnedModel):
     # generation state
     is_active = models.BooleanField(default=True)
     next_sequence = models.PositiveIntegerField(default=0)
+    # Occurrence numbers (``next_sequence``, ``MaintenanceCycle.sequence``) are never reused. When the recurrence is
+    # edited the new cadence is re-indexed above everything already generated: the k-th occurrence of the CURRENT
+    # recurrence has the sequence ``sequence_offset + k`` (offset 0 until the first re-index).
+    sequence_offset = models.PositiveIntegerField(default=0)
     next_due_date = models.DateField(null=True, blank=True)
     next_due_value = models.DecimalField(max_digits=16, decimal_places=3, null=True, blank=True)
     last_reminded_sequence = models.IntegerField(null=True, blank=True)

@@ -213,7 +213,13 @@ class AssetDetailView(AssetBase):
                             "confirm": f"{t.label}: the asset will become {t.target.replace('_', ' ').title()}."
                             if t.target in TERMINAL_STATES else ""}
                            for t in ASSET_STATUS.available(asset.status)]
-        ctx = {"asset": asset, "tab": tab, "tabs": TABS, "can": can, "transitions": transitions,
+        terminal_block = ""
+        if transitions and any(t["action"] in ("retire", "dispose") for t in transitions):
+            blockers = hierarchy.terminal_blockers(asset)
+            if blockers["children"] or blockers["parent"]:  # explained in the page; the server enforces it as well
+                terminal_block = hierarchy.blockers_message(asset, blockers)
+                transitions = [t for t in transitions if t["action"] not in ("retire", "dispose")]
+        ctx = {"terminal_block": terminal_block, "asset": asset, "tab": tab, "tabs": TABS, "can": can, "transitions": transitions,
                "custom_attributes": attributes.display(asset.category.attribute_definitions, asset.attributes),
                "terminal": asset.status in TERMINAL_STATES, "parent_link": getattr(asset, "parent_link", None)}
         if tab == "overview" and rbac.has_permission(m, "contract.view", asset.site_id):

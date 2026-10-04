@@ -12,7 +12,7 @@ from django.db import IntegrityError, transaction
 from apps.audit import services as audit
 from apps.core.exceptions import Conflict, ValidationFailed
 
-from .models import CalendarHoliday, OperatingCalendar, Site, SiteContact, Zone
+from .models import MAX_ESCALATION_ORDER, CalendarHoliday, OperatingCalendar, Site, SiteContact, Zone
 from .workflow import ACTIVATION, INACTIVE
 
 SITE_FIELDS = ["code", "name", "description", "address", "city", "state_region", "postal_code", "country",
@@ -400,6 +400,15 @@ def remove_holiday(holiday: CalendarHoliday, *, actor, request=None):
 # --- contacts --------------------------------------------------------------------------------------
 
 
+def _check_escalation_order(order):
+    """The column is a smallint: refuse out-of-range input with a validation error instead of a database error."""
+    if not isinstance(order, int) or isinstance(order, bool) or order < 1:
+        raise ValidationFailed("Escalation order starts at 1.", code="invalid_escalation_order")
+    if order > MAX_ESCALATION_ORDER:
+        raise ValidationFailed(f"Escalation order cannot be higher than {MAX_ESCALATION_ORDER}.",
+                               code="invalid_escalation_order")
+
+
 @transaction.atomic
 def add_contact(site: Site, *, actor, request=None, **data) -> SiteContact:
     data = _clean(data, CONTACT_FIELDS)
@@ -409,8 +418,7 @@ def add_contact(site: Site, *, actor, request=None, **data) -> SiteContact:
         raise ValidationFailed("Provide a phone number or an email address.", code="contact_method_required")
     order = data.get("escalation_order") or (
         (site.contacts.order_by("-escalation_order").values_list("escalation_order", flat=True).first() or 0) + 1)
-    if order < 1:
-        raise ValidationFailed("Escalation order starts at 1.")
+    _check_escalation_order(order)
     data["escalation_order"] = order
     c = SiteContact(organization=site.organization, site=site, **data)
     _save(c, f"Escalation level {order} is already used at this site.", "duplicate_escalation_order")
@@ -429,8 +437,7 @@ def update_contact(contact: SiteContact, *, actor, request=None, **changes) -> S
         raise ValidationFailed("Contact name is required.")
     if not (contact.phone or contact.email):
         raise ValidationFailed("Provide a phone number or an email address.", code="contact_method_required")
-    if contact.escalation_order < 1:
-        raise ValidationFailed("Escalation order starts at 1.")
+    _check_escalation_order(contact.escalation_order)
     _save(contact, f"Escalation level {contact.escalation_order} is already used at this site.",
           "duplicate_escalation_order")
     after = audit.snapshot(contact, CONTACT_FIELDS)

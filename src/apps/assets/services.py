@@ -18,6 +18,7 @@ from apps.core.exceptions import Conflict, ValidationFailed
 from apps.files import services as files
 
 from . import attributes as attrs
+from . import hierarchy
 from .models import (
     Asset,
     AssetCategory,
@@ -210,6 +211,8 @@ def change_status(asset: Asset, *, action: str, reason: str, actor, request=None
     if len(reason) < 3:
         raise ValidationFailed("A reason is required for a status change.", code="reason_required")
     asset = Asset.objects.select_for_update().get(pk=asset.pk)
+    if ASSET_STATUS.get(asset.status, action).target in TERMINAL_STATES:
+        hierarchy.guard_terminal_transition(asset)  # no hierarchy link may be stranded by retire / dispose (D-062)
     previous, new = ASSET_STATUS.apply(asset, action)
     asset.save(update_fields=["status", "updated_at"])
     AssetStatusHistory(organization=asset.organization, asset=asset, from_status=previous, to_status=new,

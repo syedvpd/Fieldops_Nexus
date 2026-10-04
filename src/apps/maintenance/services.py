@@ -34,7 +34,7 @@ Trigger = MaintenanceSchedule.Trigger
 PLAN_FIELDS = ["name", "description", "priority", "estimated_hours", "checklist_key", "is_active"]
 SCHEDULE_FIELDS = ["trigger_type", "frequency", "interval_count", "start_date", "meter", "interval_value",
                    "start_value", "lead_days", "window_start_time", "window_hours", "reminder_days", "is_active",
-                   "next_sequence", "next_due_date", "next_due_value"]
+                   "next_sequence", "sequence_offset", "next_due_date", "next_due_value"]
 PRIORITIES = ("LOW", "MEDIUM", "HIGH", "URGENT")
 TERMINAL_ASSET = ("RETIRED", "DISPOSED")
 
@@ -207,28 +207,51 @@ def latest_reading(meter):
     return meter.readings.order_by("-read_at", "-created_at").first()
 
 
-def _resync(sch: MaintenanceSchedule, now: datetime) -> None:
-    """Points the schedule at its next occurrence that is not already in the past (no backlog is generated)."""
+def _resync(sch: MaintenanceSchedule, now: datetime) -> dict:
+    """Points the schedule at its next occurrence that is not already in the past (no backlog is generated) AND that
+    has not been generated yet: an occurrence that already has its cycle / work order is never offered again, and its
+    sequence number is never reused (a recurrence edit re-indexes the new cadence above every existing cycle, see
+    ``sequence_offset``). Returns what the resync resolved, for the audit trail."""
+    cycles = []
+    if not sch._state.adding:
+        cycles = list(MaintenanceCycle.objects.for_organization(sch.organization).filter(schedule=sch).values_list(
+            "sequence", "due_date", "due_value"))
+    max_seq = max((c[0] for c in cycles), default=-1)
+    covered = 0
     if sch.trigger_type == Trigger.TIME:
         k = rec.first_time_sequence_from(sch.start_date, sch.frequency, sch.interval_count,
                                          site_today(sch.plan.site, now))
-        sch.next_sequence = k
-        sch.next_due_date = rec.time_due_date(sch.start_date, sch.frequency, sch.interval_count, k)
-        sch.next_due_value = None
+        last_due = max((c[1] for c in cycles if c[1] is not None), default=None)
+        while last_due is not None and rec.time_due_date(sch.start_date, sch.frequency, sch.interval_count,
+                                                         k) <= last_due:
+            k += 1  # that date already has its work order
+            covered += 1
     else:
         reading = latest_reading(sch.meter)
         current = reading.value if reading else sch.start_value
         k = rec.first_meter_sequence_after(sch.start_value, sch.interval_value, current)
-        sch.next_sequence = k
-        sch.next_due_value = rec.meter_threshold(sch.start_value, sch.interval_value, k)
-        sch.next_due_date = None
+        last_due = max((c[2] for c in cycles if c[2] is not None), default=None)
+        while last_due is not None and rec.meter_threshold(sch.start_value, sch.interval_value, k) <= last_due:
+            k += 1
+            covered += 1
+    rebased = sch.sequence_offset + k <= max_seq
+    if rebased:
+        sch.sequence_offset = max_seq + 1 - k
+    sch.next_sequence = sch.sequence_offset + k
+    _set_next_display(sch)
+    return {"next_sequence": sch.next_sequence, "sequence_offset": sch.sequence_offset,
+            "already_generated_occurrences_skipped": covered, "reindexed": rebased,
+            "highest_existing_sequence": max_seq if max_seq >= 0 else None}
 
 
 def _set_next_display(sch: MaintenanceSchedule) -> None:
+    local = sch.next_sequence - sch.sequence_offset  # index within the current recurrence
     if sch.trigger_type == Trigger.TIME:
-        sch.next_due_date = rec.time_due_date(sch.start_date, sch.frequency, sch.interval_count, sch.next_sequence)
+        sch.next_due_date = rec.time_due_date(sch.start_date, sch.frequency, sch.interval_count, local)
+        sch.next_due_value = None
     else:
-        sch.next_due_value = rec.meter_threshold(sch.start_value, sch.interval_value, sch.next_sequence)
+        sch.next_due_value = rec.meter_threshold(sch.start_value, sch.interval_value, local)
+        sch.next_due_date = None
 
 
 def _validate_schedule(plan: MaintenancePlan, data: dict) -> dict:
@@ -311,17 +334,19 @@ def update_schedule(sch: MaintenanceSchedule, *, actor, request=None, **data) ->
         "frequency", "interval_count", "start_date", "meter", "interval_value", "start_value"))
     for f, v in fields.items():
         setattr(sch, f, v)
+    resolution = None
     try:
         with transaction.atomic():
             if recurrence_changed:
-                _resync(sch, timezone.now())
+                resolution = _resync(sch, timezone.now())
             sch.save()
     except IntegrityError as exc:
         raise Conflict("The plan already has an identical schedule.", code="duplicate_schedule") from exc
     after = audit.snapshot(sch, SCHEDULE_FIELDS)
-    if after != before:
+    if after != before or resolution:
         audit.record("maintenance.schedule_updated", actor=actor, organization=sch.organization, target=sch,
-                     before=before, after=after, request=request)
+                     before=before, after=after, metadata={"resync": resolution} if resolution else None,
+                     request=request)
     return sch
 
 
@@ -331,16 +356,18 @@ def set_schedule_active(sch: MaintenanceSchedule, active: bool, *, actor, reques
         pk=sch.pk)
     if sch.is_active == active:
         return sch
+    resolution = None
     if active:
         _check_asset(sch.organization, sch.plan.asset)
         if sch.trigger_type == Trigger.METER and not sch.meter.is_active:
             raise Conflict("The meter is inactive.", code="meter_inactive")
-        _resync(sch, timezone.now())
+        resolution = _resync(sch, timezone.now())
     sch.is_active = active
     sch.save()
     audit.record("maintenance.schedule_enabled" if active else "maintenance.schedule_disabled", actor=actor,
                  organization=sch.organization, target=sch, before={"is_active": not active},
-                 after={"is_active": active, "next_sequence": sch.next_sequence}, request=request)
+                 after={"is_active": active, "next_sequence": sch.next_sequence},
+                 metadata={"resync": resolution} if resolution else None, request=request)
     return sch
 
 
@@ -368,18 +395,20 @@ def evaluate(sch: MaintenanceSchedule, now: datetime | None = None) -> rec.Due |
     now = now or timezone.now()
     if sch.trigger_type == Trigger.TIME:
         horizon = site_today(sch.plan.site, now) + timedelta(days=sch.lead_days)
-        k = rec.latest_time_sequence(sch.start_date, sch.frequency, sch.interval_count, horizon)
-        if k < sch.next_sequence:
+        k = rec.latest_time_sequence(sch.start_date, sch.frequency, sch.interval_count, horizon)  # index in the recurrence
+        seq = sch.sequence_offset + k
+        if k < 0 or seq < sch.next_sequence:
             return None
-        return rec.Due(k, k - sch.next_sequence,
+        return rec.Due(seq, seq - sch.next_sequence,
                        due_date=rec.time_due_date(sch.start_date, sch.frequency, sch.interval_count, k))
     reading = latest_reading(sch.meter)
     if reading is None:
         return None
-    k = rec.latest_meter_sequence(sch.start_value, sch.interval_value, reading.value)
-    if k < sch.next_sequence:
+    k = rec.latest_meter_sequence(sch.start_value, sch.interval_value, reading.value)  # index in the recurrence
+    seq = sch.sequence_offset + k
+    if k < 1 or seq < sch.next_sequence:
         return None
-    return rec.Due(k, k - sch.next_sequence, due_value=rec.meter_threshold(sch.start_value, sch.interval_value, k))
+    return rec.Due(seq, seq - sch.next_sequence, due_value=rec.meter_threshold(sch.start_value, sch.interval_value, k))
 
 
 def required_checklist_key(wo) -> str:
@@ -457,10 +486,16 @@ def generate_cycle(schedule: MaintenanceSchedule, *, actor=None, now: datetime |
     try:
         with transaction.atomic():
             cycle.save()
-    except IntegrityError:  # the database says this occurrence already has its cycle: skip past it, create nothing
+    except IntegrityError:
+        # Defence in depth (a concurrent writer / inconsistent data): the database says this occurrence already has
+        # its cycle. Nothing is created, but the resolution is never silent: it is recorded on the schedule and audited.
         sch.next_sequence = max(sch.next_sequence, due.sequence + 1)
         _set_next_display(sch)
+        sch.last_error = f"Occurrence {due.sequence} already had a cycle; the schedule advanced to {sch.next_sequence}."
         sch.save()
+        audit.record("maintenance.cycle_collision", actor=actor, organization=sch.organization, target=sch,
+                     metadata={"sequence": due.sequence, "next_sequence": sch.next_sequence,
+                               "trigger": "manual" if manual else "scheduler"}, request=request)
         return None
     day = due.due_date or site_today(plan.site, now)
     start, end = window_for(sch, day)

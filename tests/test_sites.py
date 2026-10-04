@@ -370,3 +370,60 @@ def test_malformed_ids_do_not_crash(as_user, owner_a, org_a):
     c = as_user(owner_a, org_a)
     assert c.get("/api/v1/sites/not-a-uuid/").status_code == 404
     assert c.get("/api/v1/zones/?site=not-a-uuid").json()["count"] == 0
+
+
+# --- BX-M01-01 regression: escalation order is validated, never a database error ----------------------------------------
+
+
+def test_escalation_order_boundaries_in_the_service(org_a, site_a1, owner_a):
+    from apps.sites.models import MAX_ESCALATION_ORDER, SiteContact
+
+    assert MAX_ESCALATION_ORDER == 32767
+    low = services.add_contact(site_a1, actor=owner_a, name="Low", phone="1", escalation_order=1)
+    top = services.add_contact(site_a1, actor=owner_a, name="Top", phone="1", escalation_order=MAX_ESCALATION_ORDER)
+    assert (low.escalation_order, top.escalation_order) == (1, 32767)
+    for bad in (0, -3, MAX_ESCALATION_ORDER + 1, 99999999999):
+        with pytest.raises(ValidationFailed) as exc:
+            services.add_contact(site_a1, actor=owner_a, name=f"Bad{bad}", phone="1", escalation_order=bad)
+        assert exc.value.code == "invalid_escalation_order"
+    assert SiteContact.objects.filter(site=site_a1).count() == 2
+    with pytest.raises(ValidationFailed):          # appending after the maximum would overflow the column
+        services.add_contact(site_a1, actor=owner_a, name="Overflow", phone="1")
+    with pytest.raises(ValidationFailed):
+        services.update_contact(low, actor=owner_a, escalation_order=MAX_ESCALATION_ORDER + 1)
+    low.refresh_from_db()
+    assert low.escalation_order == 1
+
+
+def test_escalation_order_api_returns_4xx_never_500(as_user, owner_a, org_a, site_a1):
+    c = as_user(owner_a, org_a)
+    body = {"site": str(site_a1.pk), "name": "Boss", "phone": "1"}
+    ok = c.post("/api/v1/site-contacts/", {**body, "escalation_order": 32767}, format="json")
+    assert ok.status_code == 201 and ok.json()["escalation_order"] == 32767
+    for bad in (32768, 99999999999, 0, -1, "abc", 1.5):
+        r = c.post("/api/v1/site-contacts/", {**body, "name": f"n{bad}", "escalation_order": bad}, format="json")
+        assert r.status_code == 400, (bad, r.status_code, r.content)
+        assert "escalation_order" in r.json()["error"]["details"] or r.json()["error"]["code"]
+    kid = ok.json()["id"]
+    r = c.patch(f"/api/v1/site-contacts/{kid}/", {"escalation_order": 99999999999}, format="json")
+    assert r.status_code == 400
+    assert c.get(f"/api/v1/site-contacts/{kid}/").json()["escalation_order"] == 32767
+
+
+def test_escalation_order_ui_shows_a_validation_message(client, owner_a, site_a1):
+    from apps.sites.models import SiteContact
+
+    client.force_login(owner_a)
+    url = f"/app/sites/{site_a1.pk}/contacts/new/"
+    r = client.post(url, {"name": "Huge", "phone": "1", "escalation_order": "99999999999"})
+    assert r.status_code == 400 and b"less than or equal to 32767" in r.content
+    r = client.post(url, {"name": "Neg", "phone": "1", "escalation_order": "-3"})
+    assert r.status_code == 400 and b"greater than or equal to 1" in r.content
+    r = client.post(url, {"name": "Dec", "phone": "1", "escalation_order": "1.5"})
+    assert r.status_code == 400
+    assert not SiteContact.objects.filter(site=site_a1).exists()
+    assert client.post(url, {"name": "Max", "phone": "1", "escalation_order": "32767"}).status_code == 302
+    assert SiteContact.objects.get(site=site_a1).escalation_order == 32767
+    contact = SiteContact.objects.get(site=site_a1)
+    r = client.post(f"/app/contacts/{contact.pk}/edit/", {"name": "Max", "phone": "1", "escalation_order": "40000"})
+    assert r.status_code == 400 and b"less than or equal to 32767" in r.content

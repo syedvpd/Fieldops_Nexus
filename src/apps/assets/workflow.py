@@ -10,7 +10,8 @@ Allowed transitions (anything else is rejected with HTTP 409 ``invalid_transitio
     OUT_OF_SERVICE    --dispose-->              DISPOSED    (terminal)
 
 ``complete_maintenance`` (the maintenance outcome that keeps the asset) is the natural reading of the HPE
-chain; direct ACTIVE -> OUT_OF_SERVICE is intentionally NOT allowed (see docs/DECISIONS.md D-027).
+chain; retire / dispose are refused while the asset still has live components or a live parent (hierarchy
+integrity, D-062); direct ACTIVE -> OUT_OF_SERVICE is intentionally NOT allowed (see docs/DECISIONS.md D-027).
 """
 from apps.core.workflow import StateMachine, Transition
 

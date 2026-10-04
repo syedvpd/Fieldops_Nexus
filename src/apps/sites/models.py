@@ -119,6 +119,10 @@ class CalendarHoliday(TenantOwnedModel):
         return f"{self.name} ({self.date})"
 
 
+# Escalation levels are stored in a PostgreSQL smallint; anything above this is rejected with a validation error.
+MAX_ESCALATION_ORDER = 32767
+
+
 class SiteContact(TenantOwnedModel):
     """Contact hierarchy of a site: ``escalation_order`` 1 is contacted first."""
 

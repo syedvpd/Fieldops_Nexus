@@ -164,6 +164,36 @@ def remove_component(link: AssetComponent, *, actor, request=None):
                  metadata={"child": child.asset_tag}, request=request)
 
 
+def terminal_blockers(asset: Asset) -> dict:
+    """Hierarchy links that must be removed before ``asset`` may be retired or disposed (M03 integrity rule):
+    live (non-terminal) components below it and a still-live parent above it. Relationships of retired/disposed
+    assets can never be edited (``asset_terminal``), so a link left behind would be stranded for good."""
+    org = asset.organization
+    children = [c.asset_tag for c in Asset.objects.for_organization(org).filter(
+        parent_link__parent=asset).exclude(status__in=TERMINAL_STATES).order_by("asset_tag")]
+    link = AssetComponent.objects.for_organization(org).filter(child=asset).select_related("parent").first()
+    parent = link.parent.asset_tag if link is not None and link.parent.status not in TERMINAL_STATES else None
+    return {"children": children, "parent": parent}
+
+
+def blockers_message(asset: Asset, blockers: dict) -> str:
+    parts = []
+    if blockers["children"]:
+        shown = ", ".join(blockers["children"][:5]) + (" ..." if len(blockers["children"]) > 5 else "")
+        parts.append(f"it still has {len(blockers['children'])} component(s) attached ({shown})")
+    if blockers["parent"]:
+        parts.append(f"it is still a component of {blockers['parent']}")
+    return (f"{asset.asset_tag} cannot be retired or disposed while {' and '.join(parts)}. "
+            "Detach or move them on the Hierarchy tab first.")
+
+
+def guard_terminal_transition(asset: Asset, **_context) -> None:
+    """State-machine guard for retire / dispose: no hierarchy link may be stranded by the transition."""
+    blockers = terminal_blockers(asset)
+    if blockers["children"] or blockers["parent"]:
+        raise Conflict(blockers_message(asset, blockers), code="hierarchy_links_present", details=blockers)
+
+
 # --- read side ---------------------------------------------------------------------------------------
 
 
