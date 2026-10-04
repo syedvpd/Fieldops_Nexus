@@ -24,3 +24,30 @@ def monitor_sla(self) -> dict:
             total[key] += res[key]
     log.info("SLA monitor finished", extra={"sla_result": total})
     return total
+
+
+@shared_task(name="apps.sla.tasks.monitor_sla_for_org", bind=True, autoretry_for=(OperationalError,),
+             retry_backoff=True, max_retries=5)
+def monitor_sla_for_org(self, organization_id: str) -> dict:
+    """One organization's SLA run (the unit of work of the fan-out). Idempotent like ``monitor_sla``; a suspended or
+    unknown organization is a no-op."""
+    from apps.tenancy.models import Organization
+
+    from . import services
+
+    org = Organization.objects.filter(pk=organization_id, status=Organization.Status.ACTIVE).first()
+    if org is None:
+        return {"organization": organization_id, "skipped": True}
+    return {"organization": organization_id, **services.process_organization(org)}
+
+
+@shared_task(name="apps.sla.tasks.fan_out_sla_monitor")
+def fan_out_sla_monitor() -> dict:
+    """Beat entry point: one independent task per active organization (a slow or failing tenant cannot delay the
+    others, and workers process tenants in parallel)."""
+    from apps.tenancy.models import Organization
+
+    ids = [str(pk) for pk in Organization.objects.filter(status=Organization.Status.ACTIVE).values_list("pk", flat=True)]
+    for pk in ids:
+        monitor_sla_for_org.delay(pk)
+    return {"dispatched": len(ids)}

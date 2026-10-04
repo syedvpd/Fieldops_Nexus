@@ -15,6 +15,9 @@ class RoleTemplate:
     description: str
     patterns: tuple[str, ...] = field(default_factory=tuple)
     is_owner: bool = False
+    # codes removed from the wildcard matches (an exact, wildcard-free pattern is never removed): e.g. staff roles with
+    # ``*.view`` must not receive the client-portal permissions
+    excludes: tuple[str, ...] = field(default_factory=tuple)
 
 
 TEMPLATES: tuple[RoleTemplate, ...] = (
@@ -23,11 +26,14 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         "admin", "Organization Admin", "Administers users, roles, sites and configuration.",
         ("organization.*", "user.*", "role.*", "site.*", "zone.*", "calendar.*", "audit.view", "report.view",
          "*.view"),
+        excludes=("portal.request.*",),
     ),
     RoleTemplate(
         "operations_manager", "Operations Manager", "Oversees maintenance and field operations.",
         ("*.view", "incident.*", "work_order.*", "maintenance.*", "checklist.*", "inspection.*", "sla.view",
-         "inventory.request", "inventory.reserve", "inventory.reconcile", "sla.acknowledge", "report.*"),
+         "inventory.request", "inventory.reserve", "inventory.reconcile", "sla.acknowledge", "contract.check",
+         "report.*"),
+        excludes=("portal.request.*",),
     ),
     RoleTemplate(
         "asset_manager", "Asset Manager", "Owns the asset registry and hierarchy.",
@@ -40,7 +46,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
          "work_order.view", "work_order.create", "work_order.plan", "work_order.assign",
          "work_order.dispatch", "work_order.update", "work_order.cancel", "work_order.attach", "checklist.view",
          "checklist.manage", "inspection.view",
-         "inventory.view", "inventory.part.view", "inventory.request", "sla.view"),
+         "inventory.view", "inventory.part.view", "inventory.request", "sla.view", "contract.view", "contract.check"),
     ),
     RoleTemplate(
         "supervisor", "Maintenance Supervisor", "Reviews and closes completed work.",
@@ -73,6 +79,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
     RoleTemplate(
         "auditor", "Auditor / Report Consumer", "Read-only access to records, audit and reports.",
         ("*.view", "audit.view", "audit.export", "report.*"),
+        excludes=("portal.request.*",),
     ),
 )
 

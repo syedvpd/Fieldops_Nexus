@@ -1,0 +1,24 @@
+{% extends "dashboards/_layout.html" %}
+{% block dash %}
+{% with r=data.requests %}
+<div class="row g-3 mb-3">
+  {% include "dashboards/_kpi.html" with key="requests" label="Requests & incidents" value=r.created note="created in the period" %}
+  {% include "dashboards/_kpi.html" with key="incidents" label="Incidents" value=r.incidents %}
+  {% include "dashboards/_kpi.html" with key="from_clients" label="From the client portal" value=r.from_clients %}
+  {% include "dashboards/_kpi.html" with key="awaiting_triage" label="Awaiting triage" value=r.awaiting_triage note="now" %}
+  {% include "dashboards/_kpi.html" with key="awaiting_confirmation" label="Awaiting client confirmation" value=r.awaiting_confirmation note="now" %}
+</div>{% endwith %}
+<div class="row g-3 mb-3">
+  <div class="col-md-6">{% include "dashboards/_bars.html" with title="Requests by status (period)" bars=bars_req_status %}</div>
+  <div class="col-md-6">{% include "dashboards/_bars.html" with title="Requests by severity (period)" bars=bars_req_severity %}</div>
+</div>
+{% if data.sla %}{% with s=data.sla %}
+<h2 class="h5">SLA</h2>
+<div class="row g-3">
+  {% include "dashboards/_kpi.html" with key="sla_breaches" label="SLA breaches" value=s.breaches note="due in the period" %}
+  {% include "dashboards/_kpi.html" with key="sla_open" label="Open breaches" value=s.breaches_open %}
+  {% include "dashboards/_kpi.html" with key="sla_response" label="Response compliance" value=s.response.compliance_percent unit="%" note="met / decided" %}
+  {% include "dashboards/_kpi.html" with key="sla_resolution" label="Resolution compliance" value=s.resolution.compliance_percent unit="%" note="met / decided" %}
+</div>
+<div class="small text-body-secondary mt-2">{{ definitions.sla_breaches }}</div>{% endwith %}{% endif %}
+{% endblock %}

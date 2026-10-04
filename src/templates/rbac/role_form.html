@@ -19,4 +19,4 @@
 {% if not role or can_manage and not role.is_owner %}<button class="btn btn-primary">Save role</button>{% endif %}
 </form>
 {% endblock %}
-{% block scripts %}{% if role and not can_manage or role.is_owner %}<script>document.querySelectorAll("#role-form :is(input,textarea)").forEach(e=>{if(e.type!=="hidden")e.disabled=true})</script>{% endif %}{% endblock %}
+{% block scripts %}{% if role and not can_manage or role.is_owner %}<script nonce="{{ csp_nonce }}">document.querySelectorAll("#role-form :is(input,textarea)").forEach(e=>{if(e.type!=="hidden")e.disabled=true})</script>{% endif %}{% endblock %}

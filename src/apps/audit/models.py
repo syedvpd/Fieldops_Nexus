@@ -38,6 +38,8 @@ class AuditLog(BaseModel):
     metadata = models.JSONField(default=dict, blank=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     request_id = models.CharField(max_length=64, blank=True)
+    # M15: the site of the audited record when it has one (derived by ``audit.record``); NULL = organization-level
+    site_id = models.UUIDField(null=True, blank=True)
     occurred_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
     objects = AuditQuerySet.as_manager()
@@ -48,6 +50,8 @@ class AuditLog(BaseModel):
             models.Index(fields=["organization", "-occurred_at"]),
             models.Index(fields=["organization", "action"]),
             models.Index(fields=["target_type", "target_id"]),
+            models.Index(fields=["organization", "site_id", "-occurred_at"]),
+            models.Index(fields=["organization", "actor_email"]),
         ]
 
     def __str__(self):

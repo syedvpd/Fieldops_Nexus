@@ -1,0 +1,16 @@
+{% extends "portal/base.html" %}
+{% block title %}New request · FieldOps Nexus{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Report a problem</h1>
+{% if not enabled %}<div class="alert alert-warning" role="alert">Your portal access has not been enabled yet. Please contact your service provider.</div>
+{% else %}
+<div class="fx-card"><div class="fx-card-body">
+<form method="post" enctype="multipart/form-data" novalidate id="new-request-form">{% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert alert-danger py-2" role="alert">{{ form.non_field_errors.0 }}</div>{% endif %}
+  {% for field in form %}<div class="mb-3">{% include "components/_form_field.html" %}</div>{% endfor %}
+  <div class="mb-3"><label class="form-label" for="id_files">Photos or documents (optional, up to 5)</label>
+    <input class="form-control" id="id_files" type="file" name="files" multiple accept="image/*,.pdf,.txt,.doc,.docx,.xls,.xlsx"><div class="form-text">Pictures of the problem help us arrive prepared.</div></div>
+  <button class="btn btn-primary btn-lg">Submit request</button> <a class="btn btn-link" href="{% url 'portal:requests' %}">Cancel</a>
+</form></div></div>
+{% endif %}
+{% endblock %}

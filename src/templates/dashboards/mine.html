@@ -1,0 +1,21 @@
+{% extends "shell.html" %}
+{% load ui_tags %}
+{% block title %}My work summary · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div><h1>My work summary</h1><div class="text-body-secondary">Only your own assigned jobs and hours, {{ f.from_date|date:"d M Y" }} – {{ f.to_date|date:"d M Y" }}.</div></div>
+  <a class="btn btn-primary" href="{% url 'workspace:jobs' %}">Open my jobs</a></div>
+<form method="get" class="d-flex flex-wrap gap-2 align-items-end my-3" id="dash-filters">
+  <div><label class="form-label small mb-0" for="f-from">From</label><input class="form-control form-control-sm" id="f-from" type="date" name="from" value="{{ f.from_date|date:'Y-m-d' }}"></div>
+  <div><label class="form-label small mb-0" for="f-to">To</label><input class="form-control form-control-sm" id="f-to" type="date" name="to" value="{{ f.to_date|date:'Y-m-d' }}"></div>
+  <button class="btn btn-sm btn-primary">Apply</button></form>
+{% with k=data.kpis %}
+<div class="row g-3 mb-3">
+  {% include "dashboards/_kpi.html" with key="open" label="My open jobs" value=k.open note="now" %}
+  {% include "dashboards/_kpi.html" with key="overdue" label="Overdue" value=k.overdue %}
+  {% include "dashboards/_kpi.html" with key="completed" label="Completed" value=k.completed note="in the period" %}
+  {% include "dashboards/_kpi.html" with key="hours" label="Hours recorded" value=k.hours unit=" h" %}
+  {% include "dashboards/_kpi.html" with key="utilization" label="Utilization" value=k.utilization unit="%" note="vs 8 h/day" %}
+</div>{% endwith %}
+<div class="fx-card"><div class="fx-card-header">Coming up</div><div class="table-responsive"><table class="table fx-table mb-0" id="my-upcoming"><thead><tr><th>Job</th><th>Asset</th><th>Status</th><th>Planned start</th></tr></thead><tbody>
+{% for w in data.upcoming %}<tr><td>{{ w.number }}<div class="small text-body-secondary">{{ w.title }}</div></td><td>{{ w.asset__asset_tag }}</td><td>{% status_badge w.status %}</td><td>{{ w.planned_start|date:"d M Y H:i"|default:"—" }}</td></tr>{% empty %}<tr><td colspan="4" class="text-body-secondary">No upcoming jobs.</td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}

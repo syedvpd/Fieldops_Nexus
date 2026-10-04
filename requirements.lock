@@ -42,3 +42,9 @@ uritemplate==4.2.0
 vine==5.1.0
 wcwidth==0.9.1
 whitenoise==6.12.0
+charset-normalizer==3.5.2
+et-xmlfile==2.0.0
+openpyxl==3.1.5
+python-barcode==0.16.1
+reportlab==5.0.1
+segno==1.6.6

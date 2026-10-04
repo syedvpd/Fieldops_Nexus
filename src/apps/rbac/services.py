@@ -39,7 +39,10 @@ def sync_permissions() -> int:
 
 def _template_codes(template) -> set[str]:
     codes = catalog.all_codes()
-    return {c for c in codes if any(fnmatchcase(c, p) for p in template.patterns)}
+    matched = {c for c in codes if any(fnmatchcase(c, p) for p in template.patterns)}
+    literal = {p for p in template.patterns if not any(ch in p for ch in "*?[")}
+    return {c for c in matched
+            if c in literal or not any(fnmatchcase(c, x) for x in getattr(template, "excludes", ()))}
 
 
 @transaction.atomic

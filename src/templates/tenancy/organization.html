@@ -9,4 +9,4 @@
   {% if can_edit %}<button class="btn btn-primary">Save changes</button>{% else %}<div class="text-body-secondary small">You have read-only access.</div>{% endif %}
 </form></div></div>
 {% endblock %}
-{% block scripts %}{% if not can_edit %}<script>document.querySelectorAll("main form :is(input,textarea,select)").forEach(e=>{if(e.name!=="csrfmiddlewaretoken")e.disabled=true})</script>{% endif %}{% endblock %}
+{% block scripts %}{% if not can_edit %}<script nonce="{{ csp_nonce }}">document.querySelectorAll("main form :is(input,textarea,select)").forEach(e=>{if(e.name!=="csrfmiddlewaretoken")e.disabled=true})</script>{% endif %}{% endblock %}

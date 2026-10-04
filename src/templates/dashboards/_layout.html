@@ -1,0 +1,16 @@
+{% extends "shell.html" %}
+{% load ui_tags %}
+{% block title %}{{ label }} dashboard · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div><h1>{{ label }} dashboard</h1>
+  <div class="text-body-secondary">Live figures from your records, {{ f.from_date|date:"d M Y" }} – {{ f.to_date|date:"d M Y" }}{% if f.site %} · site {{ f.site.code }}{% endif %}. Snapshot cards describe the current state.</div></div></div>
+<div class="fx-tabs" role="tablist">{% for key, name in sections %}<a role="tab" class="{% if key == current %}active{% endif %}" href="?section={{ key }}&amp;site={{ f.site.pk|default:'' }}&amp;from={{ f.from_date|date:'Y-m-d' }}&amp;to={{ f.to_date|date:'Y-m-d' }}">{{ name }}</a>{% endfor %}
+  {% if has_my_work %}<a role="tab" href="{% url 'dashboards:mine' %}">My work</a>{% endif %}</div>
+<form method="get" class="d-flex flex-wrap gap-2 align-items-end my-3" id="dash-filters">
+  <input type="hidden" name="section" value="{{ current }}">
+  <div><label class="form-label small mb-0" for="f-site">Site</label><select class="form-select form-select-sm" id="f-site" name="site"><option value="">All my sites</option>{% for s in sites %}<option value="{{ s.pk }}" {% if f.site and f.site.pk == s.pk %}selected{% endif %}>{{ s.code }}</option>{% endfor %}</select></div>
+  <div><label class="form-label small mb-0" for="f-from">From</label><input class="form-control form-control-sm" id="f-from" type="date" name="from" value="{{ f.from_date|date:'Y-m-d' }}"></div>
+  <div><label class="form-label small mb-0" for="f-to">To</label><input class="form-control form-control-sm" id="f-to" type="date" name="to" value="{{ f.to_date|date:'Y-m-d' }}"></div>
+  <button class="btn btn-sm btn-primary">Apply</button><a class="btn btn-sm btn-outline-secondary" href="?section={{ current }}">Reset</a></form>
+{% block dash %}{% endblock %}
+{% endblock %}

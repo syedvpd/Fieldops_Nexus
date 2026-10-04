@@ -103,9 +103,14 @@ def test_health_endpoints(client):
 
 
 @pytest.mark.django_db
-def test_openapi_schema_generates(client):
+def test_openapi_schema_generates_for_signed_in_users_only(client, owner_a):
+    assert client.get("/api/v1/schema/").status_code in (401, 403)  # not anonymous (audit decision)
+    assert client.get("/api/v1/docs/").status_code in (401, 403)
+    client.force_login(owner_a)
     r = client.get("/api/v1/schema/")
     assert r.status_code == 200 and b"/api/v1/members/" in r.content
+    docs = client.get("/api/v1/docs/")
+    assert docs.status_code == 200 and "cdn.jsdelivr.net" in docs["Content-Security-Policy"]  # docs page only
 
 
 @pytest.mark.django_db
@@ -122,3 +127,55 @@ def test_celery_registered_tasks():
         assert name in app.tasks
     from django.conf import settings
     assert "clear-expired-sessions" in settings.CELERY_BEAT_SCHEDULE
+
+
+@pytest.mark.django_db
+def test_content_security_policy_header_and_nonce(client, owner_a):
+    r = client.get("/accounts/login/")
+    csp = r["Content-Security-Policy"]
+    assert "unsafe-eval" not in csp and "connect-src 'self'" in csp  # HTMX XHR stays same-origin
+    assert "script-src 'self' 'nonce-" in csp and "frame-ancestors 'none'" in csp and "'unsafe-inline'" not in csp.split("style-src")[0]
+    nonce = csp.split("'nonce-")[1].split("'")[0]
+    other = client.get("/accounts/login/")["Content-Security-Policy"]
+    assert f"'nonce-{nonce}'" not in other  # a fresh nonce per response
+    client.force_login(owner_a)
+    page = client.get("/app/organization/")
+    body = page.content.decode()
+    assert "onclick=" not in body and "<script>" not in body  # inline handlers/scripts are gone or carry the nonce
+    pnonce = page["Content-Security-Policy"].split("'nonce-")[1].split("'")[0]
+    assert all(f'nonce="{pnonce}"' in tag for tag in __import__("re").findall(r"<script(?![^>]*\bsrc=)[^>]*>", body))
+
+
+@pytest.mark.django_db
+def test_every_inline_script_page_is_csp_clean(client, owner_a, p3):
+    """Pages that carry an inline <script> render it with the request nonce; no page has an on*= attribute."""
+    import re
+    client.force_login(owner_a)
+    member = __import__("apps.tenancy.models", fromlist=["Membership"]).Membership.objects.get(user=p3["tech"].user,
+                                                                                           organization=p3["org"])
+    from apps.rbac.models import Role
+    owner_role = Role.objects.get(organization=p3["org"], system_key="owner")
+    urls = ["/app/", "/app/organization/", f"/app/users/{member.pk}/", "/app/roles/", f"/app/roles/{owner_role.pk}/",
+            "/app/assets/new/",
+            "/app/sites/", "/app/audit/"]
+    for url in urls:
+        r = client.get(url)
+        assert r.status_code == 200, url
+        body = r.content.decode()
+        nonce = r["Content-Security-Policy"].split("'nonce-")[1].split("'")[0]
+        for tag in re.findall(r"<script(?![^>]*\bsrc=)[^>]*>", body):
+            assert f'nonce="{nonce}"' in tag, (url, tag)
+        assert not re.search(r"\son(click|load|change|submit|error|mouseover)\s*=", body, re.I), url
+
+
+@pytest.mark.django_db
+def test_htmx_and_static_assets_still_load_under_the_policy(client, owner_a):
+    from django.contrib.staticfiles import finders
+    client.force_login(owner_a)
+    body = client.get("/app/").content.decode()
+    for asset in ("lib/htmx.min.js", "lib/bootstrap.bundle.min.js", "js/app.js"):
+        assert f"{asset}" in body and finders.find(asset), asset  # same-origin scripts (allowed by script-src 'self')
+    # an HTMX fragment request is answered normally and carries the same policy (no inline script in fragments)
+    r = client.get("/app/search/?q=ow", HTTP_HX_REQUEST="true")
+    assert r.status_code == 200 and "Content-Security-Policy" in r
+    assert "<script" not in r.content.decode()

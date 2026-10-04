@@ -1,0 +1,24 @@
+{% extends "dashboards/_layout.html" %}
+{% load ui_tags %}
+{% block dash %}
+{% with k=data.kpis %}
+<div class="row g-3 mb-3">
+  {% include "dashboards/_kpi.html" with key="open_work_orders" label="Open work orders" value=k.open_total note="now" %}
+  {% include "dashboards/_kpi.html" with key="overdue_work" label="Overdue work" value=k.overdue note="past planned end, not yet completed" %}
+  {% include "dashboards/_kpi.html" with key="created" label="Created" value=k.created note="in the period" %}
+  {% include "dashboards/_kpi.html" with key="completed" label="Completed" value=k.completed note="in the period" %}
+  {% include "dashboards/_kpi.html" with key="closed" label="Closed" value=k.closed note="in the period" %}
+</div>{% endwith %}
+<div class="row g-3 mb-3">
+  <div class="col-md-4">{% include "dashboards/_bars.html" with title="Open by status" bars=bars_status %}</div>
+  <div class="col-md-4">{% include "dashboards/_bars.html" with title="Open by priority" bars=bars_priority %}</div>
+  <div class="col-md-4">{% include "dashboards/_bars.html" with title="Created by type (period)" bars=bars_type %}</div>
+</div>
+<div class="row g-3">
+  <div class="col-lg-6"><div class="fx-card"><div class="fx-card-header">Technician workload &amp; utilization</div><div class="table-responsive"><table class="table fx-table mb-0" id="tech-table"><thead><tr><th>Technician</th><th>Open jobs</th><th>Hours</th><th>Utilization</th></tr></thead><tbody>
+    {% for t in data.technicians %}<tr><td>{{ t.name }}</td><td>{{ t.open_jobs }}</td><td>{{ t.hours }}</td><td>{% if t.utilization is None %}—{% else %}{{ t.utilization }}%{% endif %}</td></tr>{% empty %}<tr><td colspan="4" class="text-body-secondary">No assigned work or labor in this view.</td></tr>{% endfor %}</tbody></table></div>
+    <div class="small text-body-secondary p-2">{{ definitions.utilization }}</div></div></div>
+  <div class="col-lg-6"><div class="fx-card"><div class="fx-card-header">Most overdue</div><div class="table-responsive"><table class="table fx-table mb-0" id="overdue-table"><thead><tr><th>Work order</th><th>Asset</th><th>Priority</th><th>Planned end</th></tr></thead><tbody>
+    {% for w in data.overdue_list %}<tr><td><a href="{% url 'workorders:detail' w.pk %}">{{ w.number }}</a><div class="small text-body-secondary">{{ w.title }}</div></td><td>{{ w.asset__asset_tag }}</td><td>{% status_badge w.priority %}</td><td>{{ w.planned_end|date:"d M Y H:i" }}</td></tr>{% empty %}<tr><td colspan="4" class="text-body-secondary">Nothing is overdue.</td></tr>{% endfor %}</tbody></table></div></div></div>
+</div>
+{% endblock %}

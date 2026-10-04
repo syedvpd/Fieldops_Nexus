@@ -1,0 +1,29 @@
+{% extends "portal/base.html" %}
+{% block title %}{{ sr.number }} · FieldOps Nexus{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb"><ol class="breadcrumb mb-2 small"><li class="breadcrumb-item"><a href="{% url 'portal:requests' %}">My requests</a></li><li class="breadcrumb-item active">{{ sr.number }}</li></ol></nav>
+<div class="d-flex flex-wrap justify-content-between gap-2 mb-2"><h1 class="h3 m-0">{{ sr.title }}</h1><span class="badge text-bg-primary align-self-start fs-6" id="client-status">{{ sr.cs.label }}</span></div>
+<p class="text-body-secondary">{{ sr.number }} · {{ sr.asset.asset_tag }} · {{ sr.asset.name }} · submitted {{ sr.created_at|date:"d M Y H:i" }}</p>
+<div class="alert alert-info" role="status" id="status-text">{{ sr.cs.text }}{% if sr.status == "REJECTED" and sr.decision_reason %} <strong>Reason:</strong> {{ sr.decision_reason }}{% endif %}</div>
+<div class="d-flex gap-1 mb-3" role="list" aria-label="Progress">{% for s in steps %}<div role="listitem" class="flex-fill text-center small py-1 rounded {% if forloop.counter <= sr.cs.step %}bg-primary text-white{% else %}bg-body border{% endif %}">{{ s }}</div>{% endfor %}</div>
+{% if sr.status == "RESOLVED" and can_confirm %}
+<div class="fx-card border-success mb-3" id="confirm-card"><div class="fx-card-body"><h2 class="h5">Is the problem fixed?</h2>
+  <form method="post" action="{% url 'portal:request_action' sr.pk 'confirm' %}" class="mb-3">{% csrf_token %}<button class="btn btn-success btn-lg">Yes, it is fixed</button></form>
+  <details><summary class="text-danger">No, it is still not working</summary>
+    <form method="post" action="{% url 'portal:request_action' sr.pk 'reopen' %}" class="mt-2">{% csrf_token %}{% for field in reopen_form %}<div class="mb-2">{% include "components/_form_field.html" %}</div>{% endfor %}<button class="btn btn-outline-danger">Reopen request</button></form></details></div></div>
+{% endif %}
+<div class="row g-3">
+  <div class="col-md-6"><div class="fx-card h-100"><div class="fx-card-header">Details</div><div class="fx-card-body"><dl class="fx-kv">
+    <dt>Type</dt><dd>{{ sr.get_kind_display }}</dd><dt>Urgency</dt><dd>{{ sr.get_severity_display }}</dd><dt>Description</dt><dd>{{ sr.description|default:"—"|linebreaksbr }}</dd></dl></div></div></div>
+  <div class="col-md-6"><div class="fx-card h-100" id="visit-card"><div class="fx-card-header">Scheduled visit</div><div class="fx-card-body">
+    {% if visit %}<dl class="fx-kv"><dt>Status</dt><dd>{{ visit.stage }}</dd>
+      <dt>Planned</dt><dd>{% if visit.planned_start %}{{ visit.planned_start|date:"D d M Y, H:i" }}{% if visit.planned_end %} – {{ visit.planned_end|date:"H:i" }}{% endif %}{% else %}Not scheduled yet{% endif %}</dd>
+      <dt>Technician</dt><dd>{{ visit.technician|default:"To be confirmed" }}</dd></dl>
+    {% else %}<p class="text-body-secondary mb-0">No visit has been scheduled yet.</p>{% endif %}</div></div></div>
+  <div class="col-md-6"><div class="fx-card h-100"><div class="fx-card-header">Progress</div><div class="fx-card-body"><ul class="fx-timeline" id="client-timeline">
+    {% for t in timeline %}<li><div class="fw-semibold">{{ t.label }}</div><div class="small text-body-secondary">{{ t.at|date:"d M Y H:i" }}</div>{% if t.reason %}<div class="small">{{ t.reason }}</div>{% endif %}</li>{% endfor %}</ul></div></div></div>
+  <div class="col-md-6"><div class="fx-card h-100"><div class="fx-card-header">Your files</div>
+    <ul class="list-group list-group-flush" id="client-files">{% for f in files %}<li class="list-group-item"><a href="{% url 'files:download' f.pk %}">{{ f.original_name }}</a> <span class="small text-body-secondary">{{ f.created_at|date:"d M Y" }}</span></li>{% empty %}<li class="list-group-item text-body-secondary">No files attached.</li>{% endfor %}</ul>
+    {% if can_attach %}<div class="fx-card-body border-top"><form method="post" action="{% url 'portal:request_action' sr.pk 'attach' %}" enctype="multipart/form-data" class="d-flex flex-wrap gap-2">{% csrf_token %}<input class="form-control" style="max-width:320px" type="file" name="files" multiple aria-label="Add files" required><button class="btn btn-outline-primary">Add files</button></form></div>{% endif %}</div></div>
+</div>
+{% endblock %}

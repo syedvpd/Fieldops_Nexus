@@ -40,3 +40,28 @@ def generate_schedule(self, organization_id: str, schedule_id: str) -> str | Non
     with tenant_context(org):
         cycle = services.generate_cycle(MaintenanceSchedule.objects.get(pk=schedule_id))
     return str(cycle.pk) if cycle else None
+
+
+@shared_task(name="apps.maintenance.tasks.generate_due_maintenance_for_org", bind=True,
+             autoretry_for=(OperationalError,), retry_backoff=True, max_retries=5)
+def generate_due_maintenance_for_org(self, organization_id: str) -> dict:
+    """One organization's PM run (idempotent; the DB allows one work order per cycle). Suspended = no-op."""
+    from apps.tenancy.models import Organization
+
+    from . import services
+
+    org = Organization.objects.filter(pk=organization_id, status=Organization.Status.ACTIVE).first()
+    if org is None:
+        return {"organization": organization_id, "skipped": True}
+    return {"organization": organization_id, **services.run_for_organization(org)}
+
+
+@shared_task(name="apps.maintenance.tasks.fan_out_maintenance")
+def fan_out_maintenance() -> dict:
+    """Beat entry point: one independent task per active organization."""
+    from apps.tenancy.models import Organization
+
+    ids = [str(pk) for pk in Organization.objects.filter(status=Organization.Status.ACTIVE).values_list("pk", flat=True)]
+    for pk in ids:
+        generate_due_maintenance_for_org.delay(pk)
+    return {"dispatched": len(ids)}

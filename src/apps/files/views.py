@@ -24,7 +24,7 @@ def download(request, pk):
     checker = access.checker_for(f"{att.content_type.app_label}.{att.content_type.model}")
     if checker is not None:
         target = att.target
-        if target is None or not checker(request.membership, target):
+        if target is None or not access.allowed(checker, request.membership, target, att):
             raise Http404  # out of scope looks the same as absent
     elif att.read_permission and not rbac.has_permission(request.membership, att.read_permission):
         raise PermissionDenied

@@ -30,7 +30,7 @@ from .models import Asset, AssetComponent
 from .workflow import ASSET_STATUS, BUTTON_STYLES, TERMINAL_STATES
 
 TABS = [("overview", "Overview"), ("documents", "Documents"), ("meters", "Meters"), ("history", "History"),
-        ("hierarchy", "Hierarchy")]
+        ("hierarchy", "Hierarchy"), ("coverage", "Coverage"), ("labels", "Labels")]
 
 
 def _asset(request, pk, code=None) -> Asset:

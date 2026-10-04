@@ -54,6 +54,7 @@ _BADGES = {
     # M04 schedules / cycles
     "BREACHED": "danger", "MET": "success", "MET_LATE": "warning", "PENDING": "info", "PAUSED": "warning",
     "ACKNOWLEDGED": "info", "NOT_APPLICABLE": "secondary", "MAJOR": "warning", "MINOR": "info",
+    "UPCOMING": "info", "EXPIRED": "danger", "COVERING": "success", "EXCLUDED": "warning", "RENEWED": "success",
     "DUE": "warning", "SCHEDULED": "info", "DISABLED": "secondary", "GENERATED": "info", "VERIFIED": "success",
 }
 

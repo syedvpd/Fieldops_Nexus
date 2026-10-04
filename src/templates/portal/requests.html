@@ -1,0 +1,14 @@
+{% extends "portal/base.html" %}
+{% block title %}My requests · FieldOps Nexus{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"><h1 class="h3 m-0">My requests</h1>{% if can_create %}<a class="btn btn-primary" href="{% url 'portal:new' %}">New request</a>{% endif %}</div>
+<form method="get" class="d-flex flex-wrap gap-2 mb-3">
+  <input class="form-control" style="max-width:260px" type="search" name="q" value="{{ filters.q }}" placeholder="Number, title or equipment" aria-label="Search requests">
+  <select class="form-select" style="max-width:220px" name="stage" aria-label="Stage"><option value="">All</option><option value="open" {% if filters.stage == "open" %}selected{% endif %}>Open</option><option value="action" {% if filters.stage == "action" %}selected{% endif %}>Needs my confirmation</option><option value="closed" {% if filters.stage == "closed" %}selected{% endif %}>Closed</option></select>
+  <button class="btn btn-outline-secondary">Filter</button></form>
+<div class="fx-card"><div class="list-group list-group-flush" id="request-list">
+{% for sr in page %}<a class="list-group-item list-group-item-action" href="{% url 'portal:request' sr.pk %}"><div class="d-flex justify-content-between gap-2 flex-wrap"><strong>{{ sr.number }} · {{ sr.title }}</strong><span class="badge text-bg-light border">{{ sr.cs.label }}</span></div>
+  <div class="small text-body-secondary">{{ sr.asset.asset_tag }} · {{ sr.asset.name }} · {{ sr.created_at|date:"d M Y H:i" }}</div></a>
+{% empty %}<div class="list-group-item text-body-secondary">No requests match.</div>{% endfor %}</div></div>
+{% include "components/_pagination.html" %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "dashboards/_layout.html" %}
+{% block dash %}
+{% with k=data.kpis %}
+<div class="row g-3 mb-3">
+  {% include "dashboards/_kpi.html" with key="pm_compliance" label="PM compliance" value=k.compliance_percent unit="%" note="on time / (on time + late + missed)" %}
+  {% include "dashboards/_kpi.html" with key="due" label="PM due in period" value=k.due_in_window note="time-based cycles up to today" %}
+  {% include "dashboards/_kpi.html" with key="on_time" label="Completed on time" value=k.on_time %}
+  {% include "dashboards/_kpi.html" with key="late" label="Completed late" value=k.late %}
+  {% include "dashboards/_kpi.html" with key="missed" label="Missed (open)" value=k.missed_open note="due date passed, not completed" %}
+  {% include "dashboards/_kpi.html" with key="upcoming" label="Due in next 14 days" value=k.upcoming_14d note="active schedules" %}
+  {% include "dashboards/_kpi.html" with key="generated" label="Cycles generated" value=k.generated_in_window note="in the period" %}
+  {% include "dashboards/_kpi.html" with key="pm_wo" label="PM work orders" value=k.pm_work_orders note="created in the period" %}
+</div>{% endwith %}
+<div class="fx-card"><div class="fx-card-body small text-body-secondary">{{ definitions.pm_compliance }}</div></div>
+{% endblock %}

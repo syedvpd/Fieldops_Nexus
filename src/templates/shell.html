@@ -29,7 +29,7 @@
   <div class="fx-main">
     <header class="fx-topbar">
       <button class="btn btn-sm btn-outline-secondary d-lg-none" type="button" aria-label="Toggle navigation"
-              onclick="document.getElementById('fx-layout').classList.toggle('fx-nav-open')">{% icon 'menu' %}</button>
+              data-fx-toggle-nav>{% icon 'menu' %}</button>
       {% if shell_org %}
       <form class="fx-search" role="search" autocomplete="off">
         {% icon 'search' 16 %}

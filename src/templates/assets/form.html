@@ -11,7 +11,7 @@
   <button class="btn btn-primary">{{ submit|default:"Save" }}</button> <a class="btn btn-link" href="{{ cancel_url }}">Cancel</a>
 </form></div></div>
 {% endblock %}
-{% block scripts %}<script>
+{% block scripts %}<script nonce="{{ csp_nonce }}">
 /* Convenience only: narrow the location list to the chosen site (the server validates the pairing). */
 (function () {
   var site = document.querySelector("[data-site-select]"), zone = document.querySelector("[data-site-filter]");

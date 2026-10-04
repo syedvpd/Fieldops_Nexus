@@ -1,0 +1,5 @@
+<div class="fx-card h-100"><div class="fx-card-header">{{ title }}</div><div class="fx-card-body">
+{% for b in bars %}<div class="d-flex align-items-center gap-2 mb-2"><div class="small text-nowrap" style="width:42%">{{ b.label }}</div>
+  <div class="flex-grow-1 bg-body-secondary rounded" style="height:14px" role="img" aria-label="{{ b.label }}: {{ b.value }}"><div class="bg-primary rounded" style="height:14px;width:{{ b.pct }}%"></div></div>
+  <div class="small fw-semibold text-end" style="width:2.5em">{{ b.value }}</div></div>
+{% empty %}<p class="text-body-secondary mb-0">No data in this view.</p>{% endfor %}</div></div>
