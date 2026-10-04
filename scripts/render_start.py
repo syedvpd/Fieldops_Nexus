@@ -57,7 +57,7 @@ while True:
     time.sleep(1)
 
 deadline = time.time() + 25
-for name, p in procs.items():
+for p in procs.values():
     try:
         p.wait(timeout=max(1, deadline - time.time()))
     except subprocess.TimeoutExpired:
