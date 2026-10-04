@@ -204,7 +204,7 @@ class AssetDetailView(AssetBase):
             tab = "overview"
         can = {c.replace(".", "_"): rbac.has_permission(m, c, asset.site_id) for c in (
             "asset.update", "asset.change_status", "asset.history.view", "asset.document.manage",
-            "asset.meter.record", "asset.hierarchy.manage")}
+            "asset.meter.record", "asset.hierarchy.manage", "incident.create")}
         transitions = []
         if can["asset_change_status"]:
             transitions = [{"action": t.action, "label": t.label, "reason": True,

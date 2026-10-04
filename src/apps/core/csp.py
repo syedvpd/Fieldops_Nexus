@@ -31,6 +31,8 @@ class ContentSecurityPolicyMiddleware:
         if "Content-Security-Policy" not in response:
             policy = DOCS_POLICY if request.path.startswith("/api/v1/docs/") else POLICY.format(nonce=request.csp_nonce)
             response["Content-Security-Policy"] = policy
+        # the M12 scanner needs the camera on our own pages only (never in embedded third-party content)
+        response.setdefault("Permissions-Policy", "camera=(self), microphone=(), geolocation=()")
         return response
 
 

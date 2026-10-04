@@ -102,3 +102,19 @@ body { background: var(--fx-bg); color: var(--fx-text); font-size: .94rem; }
 .fx-kv dd { margin: 0; overflow-wrap: anywhere; }
 @media (max-width: 575px) { .fx-kv { grid-template-columns: 1fr; gap: 0; } .fx-kv dd { margin-bottom: .5rem; } }
 .fx-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 1.25rem; }
+
+/* M12 camera scanner */
+.fx-scan-viewport { position: relative; width: 100%; aspect-ratio: 4 / 3; max-height: 70vh; background: #0b1118; border-radius: var(--fx-radius); overflow: hidden; }
+.fx-scan-viewport video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fx-scan-mirror video { transform: scaleX(-1); }
+.fx-scan-frame { position: absolute; inset: 0; margin: auto; width: min(68%, 18rem); aspect-ratio: 1; pointer-events: none; box-shadow: 0 0 0 100vmax rgba(5, 10, 16, .45); border-radius: 12px; }
+.fx-scan-frame span { position: absolute; width: 2rem; height: 2rem; border: 4px solid #fff; }
+.fx-scan-frame span:nth-child(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; border-top-left-radius: 12px; }
+.fx-scan-frame span:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; border-top-right-radius: 12px; }
+.fx-scan-frame span:nth-child(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; border-bottom-left-radius: 12px; }
+.fx-scan-frame span:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; border-bottom-right-radius: 12px; }
+.fx-scan-found .fx-scan-frame span { border-color: #2ecc71; }
+.fx-scan-status { margin-top: .6rem; font-weight: 500; }
+.fx-scan-ok { color: #1a7f45; }
+.fx-scan-warn { color: #9a5b00; }
+@media (max-width: 575px) { .fx-scan-viewport { aspect-ratio: 3 / 4; max-height: 65vh; } }

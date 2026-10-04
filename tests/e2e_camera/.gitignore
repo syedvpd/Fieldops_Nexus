@@ -1,0 +1,4 @@
+node_modules/
+vid/
+e2e_seed.json
+package*.json

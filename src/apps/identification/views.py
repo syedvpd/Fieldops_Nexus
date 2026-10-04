@@ -169,6 +169,9 @@ class ResolveView(LoginRequiredMixin, View):
             return redirect("identification:resolve", token=token)
         m = res.membership
         asset = res.asset
+        if request.GET.get("open") == "asset" and res.outcome == "RESOLVED":
+            # camera scan: the label resolved, the caller may see the asset (checked by ``resolve``) -> open it
+            return redirect("assets:detail", pk=asset.pk)
         return render(request, "identification/resolved.html", {
             "res": res, "asset": asset, "revoked": res.outcome == "REVOKED",
             "form": ReportForm(),
