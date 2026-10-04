@@ -1,0 +1,108 @@
+{
+ "rows": [
+  {
+   "module": "M01",
+   "feature": "Mobile: sidebar collapsed by default at 390px",
+   "page": "/app/sites/",
+   "role": "owner",
+   "action": "load at 390x844",
+   "expected": "nav hidden until menu tapped",
+   "actual": "visible nav links=0",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  },
+  {
+   "module": "M01",
+   "feature": "Mobile: hamburger opens the navigation",
+   "page": "/app/sites/",
+   "role": "owner",
+   "action": "tap \u2630",
+   "expected": "nav visible",
+   "actual": "visible=1",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": "batch1/shots/M01_mobile_menu_open.png"
+  },
+  {
+   "module": "M01",
+   "feature": "Mobile: open menu causes no horizontal overflow",
+   "page": "/app/sites/",
+   "role": "owner",
+   "action": "menu open",
+   "expected": "no overflow",
+   "actual": "390",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  },
+  {
+   "module": "M01",
+   "feature": "Mobile: menu link navigates",
+   "page": "/app/sites/",
+   "role": "owner",
+   "action": "tap Sites & Locations",
+   "expected": "navigates",
+   "actual": "http://127.0.0.1:8098/app/sites/",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  },
+  {
+   "module": "M01",
+   "feature": "Mobile: Escape closes the open menu (a11y)",
+   "page": "/app/sites/",
+   "role": "owner",
+   "action": "open then Esc",
+   "expected": "closed",
+   "actual": "visible=1",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PARTIAL",
+   "evidence": ""
+  },
+  {
+   "module": "M01",
+   "feature": "Mobile: wide table scrolls inside its own container (page does not)",
+   "page": "/app/sites/",
+   "role": "owner",
+   "action": "inspect table wrapper",
+   "expected": "overflow-x auto",
+   "actual": "{'sw': 911, 'cw': 356, 'scrolls': True, 'ox': 'auto'}",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  }
+ ],
+ "issues": [],
+ "expected": [],
+ "benign": [],
+ "cov_post": {
+  "/accounts/login/": 1
+ },
+ "cov_get": {
+  "/accounts/login/": 1,
+  "/app/": 1,
+  "/app/sites/": 2
+ },
+ "clicks": {
+  "BUTTON|Sign in|/accounts/login/||/accounts/login/": 1,
+  "BUTTON|Toggle navigation|||/app/sites/": 2,
+  "A|Sites & Locations||/app/sites/|/app/sites/": 1
+ },
+ "htmx": {
+  "GET /app/notifications/bell/": 3
+ },
+ "htmx_fail": []
+}

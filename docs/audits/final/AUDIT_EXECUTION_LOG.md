@@ -62,3 +62,9 @@ Removed from the repository directory after use: `.coverage`, `.pytest_media/`, 
 - No access to Supabase, Render, Brevo or GitHub Actions runs: production database role state, SMTP delivery and CI history are UNVERIFIED.
 - No load/performance testing. Race conditions (zone moves, technician allocation, `_wind_down`) were identified statically, not reproduced.
 - Python 3.11.15 here vs 3.12 in the Dockerfile.
+
+---
+
+## H. Browser acceptance Batch 1 (M01-M04), 2026-10-04
+
+Read-only continuation of the browser acceptance with testing depth raised to every control of every page. Environment as in section 2 (DEBUG off, CSP on, `fieldops_browser_qa`, Redis, Celery worker + beat). Harness `docs/audits/browser/tools/playwright/bx.py`; scripts `m01a..e, m02a/b, m03, m04a..c, xcheck`; discovery crawl of 36 pages; control coverage computed against the crawl (`evidence/coverage.json`). Several scripts were re-run after fixing HARNESS mistakes of the auditor (maxlength truncation, type=number/date inputs, minlength reasons, wrong download URL prefix, SQL boolean formatting, test-data name collisions); only the final run of each script is published, and every run that was superseded this way was a harness error, not a product result. Overdue/missed-occurrence behaviour was simulated by rewinding schedule counters in the QA database (labelled SIMULATED). No production code was modified; no secrets were committed.

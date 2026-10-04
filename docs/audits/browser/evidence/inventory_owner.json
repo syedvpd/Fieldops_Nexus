@@ -1,0 +1,10109 @@
+{
+ "/app/sites/": {
+  "title": "Sites \u00b7 FieldOps Nexus",
+  "h1": "Sites & locations",
+  "links": [
+   {
+    "t": "New site",
+    "h": "/app/sites/new/"
+   },
+   {
+    "t": "BLR-1",
+    "h": "/app/sites/a348a3d9-d8a3-4545-960a-f2f09b8194cd/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Filter",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "get",
+    "hx": null,
+    "fields": [
+     {
+      "n": "q",
+      "type": "search",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "status",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "CODE",
+     "NAME",
+     "CITY",
+     "LOCATIONS",
+     "ACTIVE ASSETS",
+     "STATUS"
+    ],
+    "rows": 2
+   }
+  ],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/sites/new/": {
+  "title": "New site \u00b7 FieldOps Nexus",
+  "h1": "New site",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/sites/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Create site",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "code",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 30,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 150,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "description",
+      "type": "textarea",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "address",
+      "type": "textarea",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "city",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "state_region",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "postal_code",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 20,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "country",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 2,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "timezone",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 64,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "contact_name",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 150,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "contact_email",
+      "type": "email",
+      "req": false,
+      "opts": null,
+      "max": 320,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "contact_phone",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 32,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/": {
+  "title": "HYD-1 \u00b7 FieldOps Nexus",
+  "h1": "Hyderabad Operations Site Active",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Locations",
+    "h": "?tab=locations"
+   },
+   {
+    "t": "Calendars",
+    "h": "?tab=calendars"
+   },
+   {
+    "t": "Contacts",
+    "h": "?tab=contacts"
+   },
+   {
+    "t": "Assets",
+    "h": "?tab=assets"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Deactivate",
+    "form": null,
+    "confirm": "HYD-1 will stop accepting new locations, calendars and assets. History is kept.",
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Locations",
+    "h": "?tab=locations"
+   },
+   {
+    "t": "Calendars",
+    "h": "?tab=calendars"
+   },
+   {
+    "t": "Contacts",
+    "h": "?tab=contacts"
+   },
+   {
+    "t": "Assets",
+    "h": "?tab=assets"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations": {
+  "title": "HYD-1 \u00b7 FieldOps Nexus",
+  "h1": "Hyderabad Operations Site Active",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Locations",
+    "h": "?tab=locations"
+   },
+   {
+    "t": "Calendars",
+    "h": "?tab=calendars"
+   },
+   {
+    "t": "Contacts",
+    "h": "?tab=contacts"
+   },
+   {
+    "t": "Assets",
+    "h": "?tab=assets"
+   },
+   {
+    "t": "Add location",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/locations/new/"
+   },
+   {
+    "t": "Add child",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/locations/new/?parent=ba8a8a1a-3006-426d-b21a-9287093b4bbf"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/locations/ba8a8a1a-3006-426d-b21a-9287093b4bbf/edit/"
+   },
+   {
+    "t": "Add child",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/locations/new/?parent=81f005cf-74e4-4e5b-ad2d-938dda9c75cd"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/locations/81f005cf-74e4-4e5b-ad2d-938dda9c75cd/edit/"
+   },
+   {
+    "t": "Add child",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/locations/new/?parent=5b7dce1f-a667-4748-a578-33014fb5db0d"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/locations/5b7dce1f-a667-4748-a578-33014fb5db0d/edit/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Deactivate",
+    "form": null,
+    "confirm": "HYD-1 will stop accepting new locations, calendars and assets. History is kept.",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Deactivate",
+    "form": "/app/locations/ba8a8a1a-3006-426d-b21a-9287093b4bbf/status/",
+    "confirm": "Deactivate Building A?",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Deactivate",
+    "form": "/app/locations/81f005cf-74e4-4e5b-ad2d-938dda9c75cd/status/",
+    "confirm": "Deactivate Generator Room?",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Deactivate",
+    "form": "/app/locations/5b7dce1f-a667-4748-a578-33014fb5db0d/status/",
+    "confirm": "Deactivate Building B?",
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/locations/ba8a8a1a-3006-426d-b21a-9287093b4bbf/status/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/locations/81f005cf-74e4-4e5b-ad2d-938dda9c75cd/status/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/locations/5b7dce1f-a667-4748-a578-33014fb5db0d/status/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "LOCATION",
+     "TYPE",
+     "CODE",
+     "ACTIVE ASSETS",
+     "STATUS",
+     ""
+    ],
+    "rows": 3
+   }
+  ],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Locations",
+    "h": "?tab=locations"
+   },
+   {
+    "t": "Calendars",
+    "h": "?tab=calendars"
+   },
+   {
+    "t": "Contacts",
+    "h": "?tab=contacts"
+   },
+   {
+    "t": "Assets",
+    "h": "?tab=assets"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=calendars": {
+  "title": "HYD-1 \u00b7 FieldOps Nexus",
+  "h1": "Hyderabad Operations Site Active",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Locations",
+    "h": "?tab=locations"
+   },
+   {
+    "t": "Calendars",
+    "h": "?tab=calendars"
+   },
+   {
+    "t": "Contacts",
+    "h": "?tab=contacts"
+   },
+   {
+    "t": "Assets",
+    "h": "?tab=assets"
+   },
+   {
+    "t": "New calendar",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/calendars/new/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/calendars/ccbbfe66-d1db-4827-a89a-6a527116f956/edit/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Deactivate",
+    "form": null,
+    "confirm": "HYD-1 will stop accepting new locations, calendars and assets. History is kept.",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Delete",
+    "form": "/app/calendars/ccbbfe66-d1db-4827-a89a-6a527116f956/delete/",
+    "confirm": "Delete calendar Day shift and its holidays?",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "\u00d7",
+    "form": "/app/calendars/ccbbfe66-d1db-4827-a89a-6a527116f956/holidays/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Add holiday",
+    "form": "/app/calendars/ccbbfe66-d1db-4827-a89a-6a527116f956/holidays/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/calendars/ccbbfe66-d1db-4827-a89a-6a527116f956/delete/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/calendars/ccbbfe66-d1db-4827-a89a-6a527116f956/holidays/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/calendars/ccbbfe66-d1db-4827-a89a-6a527116f956/holidays/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "date",
+      "type": "date",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 120,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Locations",
+    "h": "?tab=locations"
+   },
+   {
+    "t": "Calendars",
+    "h": "?tab=calendars"
+   },
+   {
+    "t": "Contacts",
+    "h": "?tab=contacts"
+   },
+   {
+    "t": "Assets",
+    "h": "?tab=assets"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=contacts": {
+  "title": "HYD-1 \u00b7 FieldOps Nexus",
+  "h1": "Hyderabad Operations Site Active",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Locations",
+    "h": "?tab=locations"
+   },
+   {
+    "t": "Calendars",
+    "h": "?tab=calendars"
+   },
+   {
+    "t": "Contacts",
+    "h": "?tab=contacts"
+   },
+   {
+    "t": "Assets",
+    "h": "?tab=assets"
+   },
+   {
+    "t": "Add contact",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/contacts/new/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/contacts/44c088e3-fd9b-4891-bf8e-62a2559726f1/edit/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/contacts/e6d9a3b5-b092-4337-9a98-a24e95aebbc8/edit/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Deactivate",
+    "form": null,
+    "confirm": "HYD-1 will stop accepting new locations, calendars and assets. History is kept.",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Remove",
+    "form": "/app/contacts/44c088e3-fd9b-4891-bf8e-62a2559726f1/edit/",
+    "confirm": "Remove HYD-1 Site Manager from the contact hierarchy?",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Remove",
+    "form": "/app/contacts/e6d9a3b5-b092-4337-9a98-a24e95aebbc8/edit/",
+    "confirm": "Remove Regional Head from the contact hierarchy?",
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/contacts/44c088e3-fd9b-4891-bf8e-62a2559726f1/edit/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/contacts/e6d9a3b5-b092-4337-9a98-a24e95aebbc8/edit/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "LEVEL",
+     "NAME",
+     "ROLE",
+     "PHONE",
+     "EMAIL",
+     ""
+    ],
+    "rows": 2
+   }
+  ],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Locations",
+    "h": "?tab=locations"
+   },
+   {
+    "t": "Calendars",
+    "h": "?tab=calendars"
+   },
+   {
+    "t": "Contacts",
+    "h": "?tab=contacts"
+   },
+   {
+    "t": "Assets",
+    "h": "?tab=assets"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=assets": {
+  "title": "HYD-1 \u00b7 FieldOps Nexus",
+  "h1": "Hyderabad Operations Site Active",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Locations",
+    "h": "?tab=locations"
+   },
+   {
+    "t": "Calendars",
+    "h": "?tab=calendars"
+   },
+   {
+    "t": "Contacts",
+    "h": "?tab=contacts"
+   },
+   {
+    "t": "Assets",
+    "h": "?tab=assets"
+   },
+   {
+    "t": "Register asset",
+    "h": "/app/assets/new/?site=358049f8-4c8c-4caf-9c4e-1026e27717a4"
+   },
+   {
+    "t": "GEN-001",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   },
+   {
+    "t": "GEN-001-ENG",
+    "h": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/"
+   },
+   {
+    "t": "HVAC-001",
+    "h": "/app/assets/8c711d82-a1a6-4859-8bda-9b57215c5b41/"
+   },
+   {
+    "t": "LAP-001",
+    "h": "/app/assets/bcad9dab-ae46-497b-8aee-a5154d414282/"
+   },
+   {
+    "t": "PMP-001",
+    "h": "/app/assets/4bc949a0-c2b1-4c51-8181-5a1d2b86049d/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Deactivate",
+    "form": null,
+    "confirm": "HYD-1 will stop accepting new locations, calendars and assets. History is kept.",
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "TAG",
+     "NAME",
+     "CATEGORY",
+     "LOCATION",
+     "STATUS"
+    ],
+    "rows": 5
+   }
+  ],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Locations",
+    "h": "?tab=locations"
+   },
+   {
+    "t": "Calendars",
+    "h": "?tab=calendars"
+   },
+   {
+    "t": "Contacts",
+    "h": "?tab=contacts"
+   },
+   {
+    "t": "Assets",
+    "h": "?tab=assets"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/edit/": {
+  "title": "Edit HYD-1 \u00b7 FieldOps Nexus",
+  "h1": "Edit HYD-1",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "code",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 30,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 150,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "description",
+      "type": "textarea",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "address",
+      "type": "textarea",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "city",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "state_region",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "postal_code",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 20,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "country",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 2,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "timezone",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 64,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "contact_name",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 150,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "contact_email",
+      "type": "email",
+      "req": false,
+      "opts": null,
+      "max": 320,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "contact_phone",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 32,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/locations/new/": {
+  "title": "New location in HYD-1 \u00b7 FieldOps Nexus",
+  "h1": "New location in HYD-1",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Create location",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 120,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "zone_type",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "code",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 30,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "parent",
+      "type": "select-one",
+      "req": false,
+      "opts": 4,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "description",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/calendars/new/": {
+  "title": "New operating calendar for HYD-1 \u00b7 FieldOps Nexus",
+  "h1": "New operating calendar for HYD-1",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=calendars"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Create calendar",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "is_24x7",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "start_time",
+      "type": "time",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "end_time",
+      "type": "time",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "is_default",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "notes",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/contacts/new/": {
+  "title": "New contact for HYD-1 \u00b7 FieldOps Nexus",
+  "h1": "New contact for HYD-1",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=contacts"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Add contact",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 150,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "role_title",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "phone",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 32,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "email",
+      "type": "email",
+      "req": false,
+      "opts": null,
+      "max": 320,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "escalation_order",
+      "type": "number",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": "1",
+      "maxv": null
+     },
+     {
+      "n": "notes",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/locations/81f005cf-74e4-4e5b-ad2d-938dda9c75cd/edit/": {
+  "title": "Edit Generator Room \u00b7 FieldOps Nexus",
+  "h1": "Edit Generator Room",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 120,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "zone_type",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "code",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 30,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "parent",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "description",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/calendars/ccbbfe66-d1db-4827-a89a-6a527116f956/edit/": {
+  "title": "Edit calendar Day shift \u00b7 FieldOps Nexus",
+  "h1": "Edit calendar Day shift",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=calendars"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "is_24x7",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "working_days",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "start_time",
+      "type": "time",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "end_time",
+      "type": "time",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "is_default",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "notes",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/contacts/44c088e3-fd9b-4891-bf8e-62a2559726f1/edit/": {
+  "title": "Edit contact HYD-1 Site Manager \u00b7 FieldOps Nexus",
+  "h1": "Edit contact HYD-1 Site Manager",
+  "links": [
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=contacts"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Sites",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/?tab=locations"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 150,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "role_title",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "phone",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 32,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "email",
+      "type": "email",
+      "req": false,
+      "opts": null,
+      "max": 320,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "escalation_order",
+      "type": "number",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": "1",
+      "maxv": null
+     },
+     {
+      "n": "notes",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/": {
+  "title": "Assets \u00b7 FieldOps Nexus",
+  "h1": "Assets",
+  "links": [
+   {
+    "t": "Categories",
+    "h": "/app/assets/categories/"
+   },
+   {
+    "t": "Register asset",
+    "h": "/app/assets/new/"
+   },
+   {
+    "t": "GEN-001",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   },
+   {
+    "t": "GEN-001-ENG",
+    "h": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/"
+   },
+   {
+    "t": "GEN-001",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   },
+   {
+    "t": "HVAC-001",
+    "h": "/app/assets/8c711d82-a1a6-4859-8bda-9b57215c5b41/"
+   },
+   {
+    "t": "LAP-001",
+    "h": "/app/assets/bcad9dab-ae46-497b-8aee-a5154d414282/"
+   },
+   {
+    "t": "PMP-001",
+    "h": "/app/assets/4bc949a0-c2b1-4c51-8181-5a1d2b86049d/"
+   },
+   {
+    "t": "GEN-001-ENG",
+    "h": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/"
+   },
+   {
+    "t": "VEH-001",
+    "h": "/app/assets/bf92a895-bd09-4703-8338-f85cdb3485c4/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Filter",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "get",
+    "hx": null,
+    "fields": [
+     {
+      "n": "q",
+      "type": "search",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "site",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "category",
+      "type": "select-one",
+      "req": false,
+      "opts": 7,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "status",
+      "type": "select-one",
+      "req": false,
+      "opts": 6,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "TAG",
+     "NAME",
+     "CATEGORY",
+     "SITE / LOCATION",
+     "PARENT",
+     "STATUS"
+    ],
+    "rows": 6
+   }
+  ],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/new/": {
+  "title": "Register asset \u00b7 FieldOps Nexus",
+  "h1": "Register asset",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/assets/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Register asset",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "asset_tag",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 40,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 200,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "category",
+      "type": "select-one",
+      "req": true,
+      "opts": 7,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "site",
+      "type": "select-one",
+      "req": true,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "zone",
+      "type": "select-one",
+      "req": false,
+      "opts": 5,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "manufacturer",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "model",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "serial_number",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "purchase_date",
+      "type": "date",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "commission_date",
+      "type": "date",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "owner",
+      "type": "select-one",
+      "req": false,
+      "opts": 13,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "warranty_ref",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 200,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "description",
+      "type": "textarea",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/categories/": {
+  "title": "Asset categories \u00b7 FieldOps Nexus",
+  "h1": "Asset categories",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Create category",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "description",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "is_active",
+      "type": "checkbox",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "attribute_text",
+      "type": "textarea",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "NAME",
+     "DESCRIPTION",
+     "CUSTOM ATTRIBUTES",
+     "STATUS",
+     ""
+    ],
+    "rows": 6
+   }
+  ],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/": {
+  "title": "GEN-001 \u00b7 FieldOps Nexus",
+  "h1": "Diesel Generator 500 kVA Active",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   },
+   {
+    "t": "Report a problem",
+    "h": "/app/incidents/new/?asset=f62949cd-5c00-4536-88ec-676deab3d6f6"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   },
+   {
+    "t": "HYD-1 \u00b7 Hyderabad Operations Site",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   },
+   {
+    "t": "AMC-GEN-2026",
+    "h": "/app/contracts/agreements/aeb3e767-996f-4039-9efa-c9119a330174/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Start maintenance",
+    "form": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 500,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/?tab=documents": {
+  "title": "GEN-001 \u00b7 FieldOps Nexus",
+  "h1": "Diesel Generator 500 kVA Active",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   },
+   {
+    "t": "Report a problem",
+    "h": "/app/incidents/new/?asset=f62949cd-5c00-4536-88ec-676deab3d6f6"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   },
+   {
+    "t": "Download",
+    "h": "/app/files/419863b2-7151-4a73-adc7-99257455ed1f/download/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Start maintenance",
+    "form": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Remove",
+    "form": "/app/assets/documents/3ca10bb4-1c0c-4651-8149-2c83a1992e8f/remove/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Upload",
+    "form": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/documents/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 500,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/assets/documents/3ca10bb4-1c0c-4651-8149-2c83a1992e8f/remove/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/documents/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "file",
+      "type": "file",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "title",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 150,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "doc_type",
+      "type": "select-one",
+      "req": false,
+      "opts": 6,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "TITLE",
+     "TYPE",
+     "FILE",
+     "SIZE",
+     "UPLOADED",
+     ""
+    ],
+    "rows": 1
+   }
+  ],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/?tab=meters": {
+  "title": "GEN-001 \u00b7 FieldOps Nexus",
+  "h1": "Diesel Generator 500 kVA Active",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   },
+   {
+    "t": "Report a problem",
+    "h": "/app/incidents/new/?asset=f62949cd-5c00-4536-88ec-676deab3d6f6"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Start maintenance",
+    "form": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Deactivate",
+    "form": "/app/meters/a150d478-a9b2-4cd7-8bb5-1a1673a210c8/toggle/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Record",
+    "form": "/app/meters/a150d478-a9b2-4cd7-8bb5-1a1673a210c8/reading/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Add meter",
+    "form": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/meters/new/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 500,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/meters/a150d478-a9b2-4cd7-8bb5-1a1673a210c8/toggle/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "action",
+      "type": "hidden",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/meters/a150d478-a9b2-4cd7-8bb5-1a1673a210c8/reading/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "value",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": null
+     },
+     {
+      "n": "read_at",
+      "type": "datetime-local",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "notes",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/meters/new/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 80,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "unit",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 20,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/?tab=history": {
+  "title": "GEN-001 \u00b7 FieldOps Nexus",
+  "h1": "Diesel Generator 500 kVA Active",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   },
+   {
+    "t": "Report a problem",
+    "h": "/app/incidents/new/?asset=f62949cd-5c00-4536-88ec-676deab3d6f6"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Start maintenance",
+    "form": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 500,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "WHEN",
+     "FROM",
+     "TO"
+    ],
+    "rows": 1
+   }
+  ],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/?tab=hierarchy": {
+  "title": "GEN-001 \u00b7 FieldOps Nexus",
+  "h1": "Diesel Generator 500 kVA Active",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   },
+   {
+    "t": "Report a problem",
+    "h": "/app/incidents/new/?asset=f62949cd-5c00-4536-88ec-676deab3d6f6"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   },
+   {
+    "t": "GEN-001",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   },
+   {
+    "t": "GEN-001-ENG",
+    "h": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/"
+   },
+   {
+    "t": "PMP-001",
+    "h": "/app/assets/4bc949a0-c2b1-4c51-8181-5a1d2b86049d/"
+   },
+   {
+    "t": "Register a new child asset",
+    "h": "/app/assets/new/?parent=f62949cd-5c00-4536-88ec-676deab3d6f6"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Start maintenance",
+    "form": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Detach",
+    "form": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/remove/",
+    "confirm": "Detach GEN-001-ENG from its parent? The asset itself is kept.",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Detach",
+    "form": "/app/components/5f6b2303-a3d0-48a6-8b21-4843cebaf88b/remove/",
+    "confirm": "Detach PMP-001 from its parent? The asset itself is kept.",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Add to hierarchy",
+    "form": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/components/add/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 500,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/remove/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/components/5f6b2303-a3d0-48a6-8b21-4843cebaf88b/remove/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/components/add/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "child",
+      "type": "select-one",
+      "req": true,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "relationship_type",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "quantity",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": "1",
+      "maxv": null
+     },
+     {
+      "n": "part_number",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "notes",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [
+   {
+    "tag": "DIV",
+    "get": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/tree/",
+    "post": null,
+    "trig": "load"
+   }
+  ],
+  "tables": [],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/?tab=coverage": {
+  "title": "GEN-001 \u00b7 FieldOps Nexus",
+  "h1": "Diesel Generator 500 kVA Active",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   },
+   {
+    "t": "Report a problem",
+    "h": "/app/incidents/new/?asset=f62949cd-5c00-4536-88ec-676deab3d6f6"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   },
+   {
+    "t": "AMC-GEN-2026",
+    "h": "/app/contracts/agreements/aeb3e767-996f-4039-9efa-c9119a330174/"
+   },
+   {
+    "t": "Add warranty / contract",
+    "h": "/app/contracts/agreements/new/?assets=f62949cd-5c00-4536-88ec-676deab3d6f6"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Start maintenance",
+    "form": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Check",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 500,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": null,
+    "method": "get",
+    "hx": "/app/contracts/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/panel/",
+    "fields": [
+     {
+      "n": "work_type",
+      "type": "select-one",
+      "req": false,
+      "opts": 6,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "date",
+      "type": "date",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [
+   {
+    "tag": "DIV",
+    "get": "/app/contracts/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/panel/",
+    "post": null,
+    "trig": "load"
+   },
+   {
+    "tag": "FORM",
+    "get": "/app/contracts/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/panel/",
+    "post": null,
+    "trig": null
+   }
+  ],
+  "tables": [
+   {
+    "heads": [
+     "AGREEMENT",
+     "PROVIDER",
+     "VALID",
+     "RESULT"
+    ],
+    "rows": 1
+   }
+  ],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/?tab=labels": {
+  "title": "GEN-001 \u00b7 FieldOps Nexus",
+  "h1": "Diesel Generator 500 kVA Active",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   },
+   {
+    "t": "Report a problem",
+    "h": "/app/incidents/new/?asset=f62949cd-5c00-4536-88ec-676deab3d6f6"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   },
+   {
+    "t": "Printable label",
+    "h": "/app/identification/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/label/"
+   },
+   {
+    "t": "Scan a label",
+    "h": "/app/identification/scan/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Start maintenance",
+    "form": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Generate qr code",
+    "form": "/app/identification/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/panel/generate/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Generate barcode (code 128)",
+    "form": "/app/identification/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/panel/generate/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/transition/start_maintenance/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 500,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/identification/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/panel/generate/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/identification/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/panel/generate/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   }
+  ],
+  "hx": [
+   {
+    "tag": "DIV",
+    "get": "/app/identification/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/panel/",
+    "post": null,
+    "trig": "load"
+   }
+  ],
+  "tables": [
+   {
+    "heads": [],
+    "rows": 1
+   },
+   {
+    "heads": [],
+    "rows": 1
+   }
+  ],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/edit/": {
+  "title": "Edit GEN-001 \u00b7 FieldOps Nexus",
+  "h1": "Edit GEN-001",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "GEN-001",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "GEN-001",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "asset_tag",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 40,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 200,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "category",
+      "type": "select-one",
+      "req": true,
+      "opts": 7,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "site",
+      "type": "select-one",
+      "req": true,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "zone",
+      "type": "select-one",
+      "req": false,
+      "opts": 5,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "manufacturer",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "model",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "serial_number",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "purchase_date",
+      "type": "date",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "commission_date",
+      "type": "date",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "owner",
+      "type": "select-one",
+      "req": false,
+      "opts": 13,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "warranty_ref",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 200,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "description",
+      "type": "textarea",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "reason",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 500,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "attr_rated_power_kva",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "attr_fuel_type",
+      "type": "select-one",
+      "req": true,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "attr_installed_by",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 200,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/?tab=hierarchy": {
+  "title": "GEN-001-ENG \u00b7 FieldOps Nexus",
+  "h1": "Engine assembly Active",
+  "links": [
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "GEN-001",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   },
+   {
+    "t": "HYD-1",
+    "h": "/app/sites/358049f8-4c8c-4caf-9c4e-1026e27717a4/"
+   },
+   {
+    "t": "Report a problem",
+    "h": "/app/incidents/new/?asset=762f33aa-0cbf-407a-8284-f1b9f10c331a"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/edit/"
+   },
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   },
+   {
+    "t": "GEN-001",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   },
+   {
+    "t": "GEN-001-ENG",
+    "h": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/"
+   },
+   {
+    "t": "PMP-001",
+    "h": "/app/assets/4bc949a0-c2b1-4c51-8181-5a1d2b86049d/"
+   },
+   {
+    "t": "GEN-001 \u00b7 Diesel Generator 500 kVA",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   },
+   {
+    "t": "Register a new child asset",
+    "h": "/app/assets/new/?parent=762f33aa-0cbf-407a-8284-f1b9f10c331a"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "GEN-001",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Start maintenance",
+    "form": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/transition/start_maintenance/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Detach",
+    "form": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/remove/",
+    "confirm": "Detach GEN-001-ENG from its parent? The asset itself is kept.",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Detach",
+    "form": "/app/components/5f6b2303-a3d0-48a6-8b21-4843cebaf88b/remove/",
+    "confirm": "Detach PMP-001 from its parent? The asset itself is kept.",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "",
+    "form": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/edit/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Move",
+    "form": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/move/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Detach from parent",
+    "form": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/remove/",
+    "confirm": "Detach GEN-001-ENG from GEN-001? The asset itself is kept.",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Add to hierarchy",
+    "form": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/components/add/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/transition/start_maintenance/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "reason",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 500,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/remove/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/components/5f6b2303-a3d0-48a6-8b21-4843cebaf88b/remove/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/edit/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "relationship_type",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "quantity",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": "1",
+      "maxv": null
+     },
+     {
+      "n": "part_number",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "notes",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/move/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "parent",
+      "type": "select-one",
+      "req": true,
+      "opts": 4,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/remove/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/components/add/",
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "child",
+      "type": "select-one",
+      "req": true,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "relationship_type",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "quantity",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": "1",
+      "maxv": null
+     },
+     {
+      "n": "part_number",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 100,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "notes",
+      "type": "text",
+      "req": false,
+      "opts": null,
+      "max": 300,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [
+   {
+    "tag": "DIV",
+    "get": "/app/assets/762f33aa-0cbf-407a-8284-f1b9f10c331a/tree/",
+    "post": null,
+    "trig": "load"
+   }
+  ],
+  "tables": [],
+  "tabs": [
+   {
+    "t": "Overview",
+    "h": "?tab=overview"
+   },
+   {
+    "t": "Documents",
+    "h": "?tab=documents"
+   },
+   {
+    "t": "Meters",
+    "h": "?tab=meters"
+   },
+   {
+    "t": "History",
+    "h": "?tab=history"
+   },
+   {
+    "t": "Hierarchy",
+    "h": "?tab=hierarchy"
+   },
+   {
+    "t": "Coverage",
+    "h": "?tab=coverage"
+   },
+   {
+    "t": "Labels",
+    "h": "?tab=labels"
+   }
+  ],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/maintenance/plans/": {
+  "title": "Maintenance plans \u00b7 FieldOps Nexus",
+  "h1": "Maintenance plans",
+  "links": [
+   {
+    "t": "New plan",
+    "h": "/app/maintenance/plans/new/"
+   },
+   {
+    "t": "GEN-001 500-hour service",
+    "h": "/app/maintenance/plans/7c83783d-3236-4a27-9651-97fedcc9699a/"
+   },
+   {
+    "t": "GEN-001 monthly service",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Filter",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "get",
+    "hx": null,
+    "fields": [
+     {
+      "n": "q",
+      "type": "search",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "site",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "active",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "PLAN",
+     "ASSET",
+     "SITE",
+     "PRIORITY",
+     "CHECKLIST",
+     "STATUS"
+    ],
+    "rows": 2
+   }
+  ],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/maintenance/plans/new/": {
+  "title": "New maintenance plan \u00b7 FieldOps Nexus",
+  "h1": "New maintenance plan",
+  "links": [
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/maintenance/plans/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Create plan",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "asset",
+      "type": "select-one",
+      "req": true,
+      "opts": 7,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 150,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "description",
+      "type": "textarea",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "priority",
+      "type": "select-one",
+      "req": false,
+      "opts": 4,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "estimated_hours",
+      "type": "number",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": null
+     },
+     {
+      "n": "checklist_key",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/": {
+  "title": "GEN-001 monthly service \u00b7 FieldOps Nexus",
+  "h1": "GEN-001 monthly service Active",
+  "links": [
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 \u00b7 Diesel Generator 500 kVA",
+    "h": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/edit/"
+   },
+   {
+    "t": "Add schedule",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/schedules/new/"
+   },
+   {
+    "t": "every 1 month",
+    "h": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Disable plan",
+    "form": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/active/",
+    "confirm": "Disable this plan? It will stop generating work orders.",
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Generate now",
+    "form": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/generate/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Disable",
+    "form": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/disable/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/active/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/generate/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/disable/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "SCHEDULE",
+     "NEXT DUE",
+     "STATE",
+     ""
+    ],
+    "rows": 1
+   },
+   {
+    "heads": [
+     "GENERATED",
+     "PLAN",
+     "ASSET",
+     "CYCLE",
+     "DUE",
+     "WORK ORDER",
+     "PM STATE",
+     "SOURCE"
+    ],
+    "rows": 1
+   }
+  ],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": true
+ },
+ "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/edit/": {
+  "title": "Edit GEN-001 monthly service \u00b7 FieldOps Nexus",
+  "h1": "Edit GEN-001 monthly service",
+  "links": [
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 monthly service",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 monthly service",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "name",
+      "type": "text",
+      "req": true,
+      "opts": null,
+      "max": 150,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "description",
+      "type": "textarea",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "priority",
+      "type": "select-one",
+      "req": false,
+      "opts": 4,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "estimated_hours",
+      "type": "number",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": null
+     },
+     {
+      "n": "checklist_key",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/schedules/new/": {
+  "title": "New schedule for GEN-001 monthly service \u00b7 FieldOps Nexus",
+  "h1": "New schedule for GEN-001 monthly service",
+  "links": [
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 monthly service",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 monthly service",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Create schedule",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "trigger_type",
+      "type": "select-one",
+      "req": false,
+      "opts": 2,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "frequency",
+      "type": "select-one",
+      "req": false,
+      "opts": 6,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "interval_count",
+      "type": "number",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": "1",
+      "maxv": "1000"
+     },
+     {
+      "n": "start_date",
+      "type": "date",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "meter",
+      "type": "select-one",
+      "req": false,
+      "opts": 2,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "interval_value",
+      "type": "number",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": null
+     },
+     {
+      "n": "start_value",
+      "type": "number",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": null
+     },
+     {
+      "n": "lead_days",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": "60"
+     },
+     {
+      "n": "window_start_time",
+      "type": "time",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "window_hours",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": "1",
+      "maxv": "72"
+     },
+     {
+      "n": "reminder_days",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": "60"
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/": {
+  "title": "Schedule \u00b7 GEN-001 monthly service \u00b7 FieldOps Nexus",
+  "h1": "Every 1 month Scheduled",
+  "links": [
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 monthly service",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/edit/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 monthly service",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Generate now",
+    "form": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/generate/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Disable",
+    "form": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/disable/",
+    "confirm": "Disable this schedule?",
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/generate/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/disable/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "GENERATED",
+     "PLAN",
+     "ASSET",
+     "CYCLE",
+     "DUE",
+     "WORK ORDER",
+     "PM STATE",
+     "SOURCE"
+    ],
+    "rows": 1
+   }
+  ],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": true
+ },
+ "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/edit/": {
+  "title": "Edit schedule: every 1 month \u00b7 FieldOps Nexus",
+  "h1": "Edit schedule: every 1 month",
+  "links": [
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 monthly service",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   },
+   {
+    "t": "Cancel",
+    "h": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 monthly service",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Save",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "post",
+    "hx": null,
+    "fields": [
+     {
+      "n": "frequency",
+      "type": "select-one",
+      "req": false,
+      "opts": 6,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "interval_count",
+      "type": "number",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": "1",
+      "maxv": "1000"
+     },
+     {
+      "n": "start_date",
+      "type": "date",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "meter",
+      "type": "select-one",
+      "req": false,
+      "opts": 2,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "interval_value",
+      "type": "number",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": null
+     },
+     {
+      "n": "start_value",
+      "type": "number",
+      "req": false,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": null
+     },
+     {
+      "n": "lead_days",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": "60"
+     },
+     {
+      "n": "window_start_time",
+      "type": "time",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "window_hours",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": "1",
+      "maxv": "72"
+     },
+     {
+      "n": "reminder_days",
+      "type": "number",
+      "req": true,
+      "opts": null,
+      "max": null,
+      "min": "0",
+      "maxv": "60"
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/maintenance/schedules/ae0ad854-3d10-4cf6-8711-581aae8fe9d3/": {
+  "title": "Schedule \u00b7 GEN-001 500-hour service \u00b7 FieldOps Nexus",
+  "h1": "Every 500 h (Run hours) Scheduled",
+  "links": [
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 500-hour service",
+    "h": "/app/maintenance/plans/7c83783d-3236-4a27-9651-97fedcc9699a/"
+   },
+   {
+    "t": "Edit",
+    "h": "/app/maintenance/schedules/ae0ad854-3d10-4cf6-8711-581aae8fe9d3/edit/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "GEN-001 500-hour service",
+    "h": "/app/maintenance/plans/7c83783d-3236-4a27-9651-97fedcc9699a/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Generate now",
+    "form": "/app/maintenance/schedules/ae0ad854-3d10-4cf6-8711-581aae8fe9d3/generate/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Disable",
+    "form": "/app/maintenance/schedules/ae0ad854-3d10-4cf6-8711-581aae8fe9d3/disable/",
+    "confirm": "Disable this schedule?",
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": "/app/maintenance/schedules/ae0ad854-3d10-4cf6-8711-581aae8fe9d3/generate/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/maintenance/schedules/ae0ad854-3d10-4cf6-8711-581aae8fe9d3/disable/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "GENERATED",
+     "PLAN",
+     "ASSET",
+     "CYCLE",
+     "DUE",
+     "WORK ORDER",
+     "PM STATE",
+     "SOURCE"
+    ],
+    "rows": 1
+   }
+  ],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": true
+ },
+ "/app/maintenance/due/": {
+  "title": "Due & upcoming maintenance \u00b7 FieldOps Nexus",
+  "h1": "Due & upcoming",
+  "links": [
+   {
+    "t": "GEN-001 monthly service",
+    "h": "/app/maintenance/plans/ed661e71-e597-489d-8181-98b9ec51f4aa/"
+   },
+   {
+    "t": "every 1 month",
+    "h": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/"
+   },
+   {
+    "t": "GEN-001 500-hour service",
+    "h": "/app/maintenance/plans/7c83783d-3236-4a27-9651-97fedcc9699a/"
+   },
+   {
+    "t": "every 500 h (Run hours)",
+    "h": "/app/maintenance/schedules/ae0ad854-3d10-4cf6-8711-581aae8fe9d3/"
+   }
+  ],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Filter",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Generate now",
+    "form": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/generate/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   },
+   {
+    "t": "Generate now",
+    "form": "/app/maintenance/schedules/ae0ad854-3d10-4cf6-8711-581aae8fe9d3/generate/",
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "get",
+    "hx": null,
+    "fields": [
+     {
+      "n": "state",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     },
+     {
+      "n": "site",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   },
+   {
+    "action": "/app/maintenance/schedules/9dbb6650-dc70-48eb-8004-10c7c208b939/generate/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   },
+   {
+    "action": "/app/maintenance/schedules/ae0ad854-3d10-4cf6-8711-581aae8fe9d3/generate/",
+    "method": "post",
+    "hx": null,
+    "fields": []
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "PLAN",
+     "ASSET",
+     "SCHEDULE",
+     "NEXT DUE",
+     "STATE",
+     ""
+    ],
+    "rows": 2
+   }
+  ],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": false
+ },
+ "/app/maintenance/history/": {
+  "title": "PM history \u00b7 FieldOps Nexus",
+  "h1": "PM history",
+  "links": [],
+  "nav": [
+   {
+    "t": "Organization",
+    "h": "/app/organization/"
+   },
+   {
+    "t": "Users",
+    "h": "/app/users/"
+   },
+   {
+    "t": "Roles & Permissions",
+    "h": "/app/roles/"
+   },
+   {
+    "t": "Scan asset label",
+    "h": "/app/identification/scan/"
+   },
+   {
+    "t": "Sites & Locations",
+    "h": "/app/sites/"
+   },
+   {
+    "t": "Assets",
+    "h": "/app/assets/"
+   },
+   {
+    "t": "Audit Trail",
+    "h": "/app/audit/"
+   },
+   {
+    "t": "Compliance reports",
+    "h": "/app/audit/reports/"
+   },
+   {
+    "t": "Warranties & contracts",
+    "h": "/app/contracts/agreements/"
+   },
+   {
+    "t": "Expiring coverage",
+    "h": "/app/contracts/expiry/"
+   },
+   {
+    "t": "Providers",
+    "h": "/app/contracts/providers/"
+   },
+   {
+    "t": "Dashboards",
+    "h": "/app/dashboards/"
+   },
+   {
+    "t": "My work summary",
+    "h": "/app/dashboards/my-work/"
+   },
+   {
+    "t": "Parts",
+    "h": "/app/inventory/parts/"
+   },
+   {
+    "t": "Stock",
+    "h": "/app/inventory/stock/"
+   },
+   {
+    "t": "Warehouses",
+    "h": "/app/inventory/warehouses/"
+   },
+   {
+    "t": "Reservations",
+    "h": "/app/inventory/reservations/"
+   },
+   {
+    "t": "Movements",
+    "h": "/app/inventory/movements/"
+   },
+   {
+    "t": "Maintenance plans",
+    "h": "/app/maintenance/plans/"
+   },
+   {
+    "t": "Due & upcoming",
+    "h": "/app/maintenance/due/"
+   },
+   {
+    "t": "PM history",
+    "h": "/app/maintenance/history/"
+   },
+   {
+    "t": "My Jobs",
+    "h": "/app/workspace/"
+   },
+   {
+    "t": "Incidents & Requests",
+    "h": "/app/incidents/"
+   },
+   {
+    "t": "Work Orders",
+    "h": "/app/work-orders/"
+   },
+   {
+    "t": "Checklists",
+    "h": "/app/checklists/"
+   },
+   {
+    "t": "Inspections",
+    "h": "/app/inspections/"
+   },
+   {
+    "t": "Dashboard",
+    "h": "/app/"
+   },
+   {
+    "t": "Portal clients",
+    "h": "/app/portal/accounts/"
+   },
+   {
+    "t": "SLA tracking",
+    "h": "/app/sla/trackings/"
+   },
+   {
+    "t": "SLA breaches",
+    "h": "/app/sla/breaches/"
+   },
+   {
+    "t": "SLA profiles",
+    "h": "/app/sla/profiles/"
+   },
+   {
+    "t": "View all",
+    "h": "/app/notifications/"
+   },
+   {
+    "t": "My profile",
+    "h": "/accounts/profile/"
+   },
+   {
+    "t": "Change password",
+    "h": "/accounts/password-change/"
+   }
+  ],
+  "buttons": [
+   {
+    "t": "Filter",
+    "form": null,
+    "confirm": null,
+    "disabled": false,
+    "hx": null
+   }
+  ],
+  "forms": [
+   {
+    "action": null,
+    "method": "get",
+    "hx": null,
+    "fields": [
+     {
+      "n": "plan",
+      "type": "select-one",
+      "req": false,
+      "opts": 3,
+      "max": null,
+      "min": null,
+      "maxv": null
+     }
+    ]
+   }
+  ],
+  "hx": [],
+  "tables": [
+   {
+    "heads": [
+     "GENERATED",
+     "PLAN",
+     "ASSET",
+     "CYCLE",
+     "DUE",
+     "WORK ORDER",
+     "PM STATE",
+     "SOURCE"
+    ],
+    "rows": 1
+   }
+  ],
+  "tabs": [],
+  "modals": [
+   "fx-confirm"
+  ],
+  "empty": true
+ }
+}

@@ -1,0 +1,177 @@
+{
+ "M01": {
+  "mod": "M01",
+  "ok": 731,
+  "tot": 738,
+  "c": {
+   "PASS": 731,
+   "NOT APPLICABLE": 3,
+   "PARTIAL": 6,
+   "FAIL": 1
+  },
+  "status": "PARTIAL (defect reproduced)",
+  "sevc": {
+   "MEDIUM": 1,
+   "LOW": 4,
+   "COSMETIC": 1
+  },
+  "issues": 1,
+  "explained": 2,
+  "console": 2,
+  "expected": 574,
+  "rbac": [
+   386,
+   386
+  ],
+  "tenant": [
+   46,
+   46
+  ],
+  "persist": [
+   229,
+   231
+  ],
+  "htmx": [
+   5,
+   5
+  ],
+  "resp": [
+   68,
+   70
+  ],
+  "htmx_fail": 0,
+  "cov": null,
+  "na": 3
+ },
+ "M02": {
+  "mod": "M02",
+  "ok": 662,
+  "tot": 665,
+  "c": {
+   "PASS": 662,
+   "PARTIAL": 3,
+   "NOT APPLICABLE": 3
+  },
+  "status": "PASS with LOW observations",
+  "sevc": {
+   "LOW": 3,
+   "COSMETIC": 1
+  },
+  "issues": 0,
+  "explained": 6,
+  "console": 4,
+  "expected": 386,
+  "rbac": [
+   245,
+   245
+  ],
+  "tenant": [
+   57,
+   57
+  ],
+  "persist": [
+   276,
+   277
+  ],
+  "htmx": [
+   4,
+   4
+  ],
+  "resp": [
+   48,
+   48
+  ],
+  "htmx_fail": 0,
+  "cov": null,
+  "na": 3
+ },
+ "M03": {
+  "mod": "M03",
+  "ok": 229,
+  "tot": 234,
+  "c": {
+   "PASS": 229,
+   "PARTIAL": 3,
+   "FAIL": 2
+  },
+  "status": "PARTIAL (defect reproduced)",
+  "sevc": {
+   "MEDIUM": 1,
+   "LOW": 3,
+   "COSMETIC": 1
+  },
+  "issues": 0,
+  "explained": 4,
+  "console": 2,
+  "expected": 139,
+  "rbac": [
+   115,
+   115
+  ],
+  "tenant": [
+   22,
+   22
+  ],
+  "persist": [
+   93,
+   95
+  ],
+  "htmx": [
+   42,
+   44
+  ],
+  "resp": [
+   13,
+   13
+  ],
+  "htmx_fail": 1,
+  "cov": null,
+  "na": 0
+ },
+ "M04": {
+  "mod": "M04",
+  "ok": 557,
+  "tot": 562,
+  "c": {
+   "PASS": 557,
+   "PARTIAL": 3,
+   "NOT APPLICABLE": 1,
+   "UNVERIFIED": 1,
+   "FAIL": 1,
+   "SUPERSEDED": 1
+  },
+  "status": "FAIL (High defect)",
+  "sevc": {
+   "HIGH": 1,
+   "LOW": 3,
+   "COSMETIC": 1
+  },
+  "issues": 0,
+  "explained": 2,
+  "console": 1,
+  "expected": 446,
+  "rbac": [
+   240,
+   240
+  ],
+  "tenant": [
+   48,
+   48
+  ],
+  "persist": [
+   226,
+   228
+  ],
+  "htmx": [
+   3,
+   3
+  ],
+  "resp": [
+   39,
+   39
+  ],
+  "htmx_fail": 0,
+  "cov": null,
+  "na": 1
+ }
+}

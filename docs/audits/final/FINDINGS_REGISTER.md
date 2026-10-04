@@ -361,3 +361,21 @@ No CRITICAL finding was established. Cross-tenant isolation was attacked in both
 - `docs/MODULE_STATUS.md` still lists M01-M08 browser acceptance as outstanding; this audit performed it (see `M01_M15_BROWSER_ACCEPTANCE.md`).
 - D-050 says QR rate limiting is "NOT implemented"; it is implemented and verified (HTTP 429 after 15 failed scans per 10 min, and a throttled user is also refused valid tokens).
 - `docs/FINAL_BROWSER_ACCEPTANCE_REPORT.md` stated the camera path NOT VERIFIED; a synthetic-device run passed here (L32 caveat).
+
+---
+
+## Addendum: browser Batch 1 (M01-M04), 2026-10-04
+
+Deep Playwright acceptance of M01-M04 (see `docs/audits/browser/`). New or re-confirmed findings (IDs `BX-*`; details, evidence and source locations are in the module reports):
+
+| ID | Severity | Relation to this register | Summary |
+|---|---|---|---|
+| BX-M04-01 | HIGH | = F-H01, now reproduced through the UI | After editing a schedule's recurrence the schedule is re-pointed at an already generated occurrence (state DUE, 'Generate now' answers "Nothing was generated"); the next occurrence is silently lost. |
+| BX-M01-01 | MEDIUM | NEW | Contact escalation order > 32767 returns HTTP 500 in the UI form and in `POST /api/v1/site-contacts/` (`DataError: smallint out of range`; no `max_value`). |
+| BX-M03-01 | MEDIUM | = F-M06, now reproduced through the UI | Retire/dispose with live children accepted; UI still shows Detach for the stranded child but every attempt is refused. |
+| BX-M03-02 | LOW | NEW | HTMX tree (and coverage/labels) panels stay on "Loading..." forever when their request fails. |
+| BX-ALL-01 | LOW | NEW | No skip link; hidden off-canvas nav stays focusable; Esc does not close the mobile menu. |
+| BX-M01-02/03/04, BX-M02-01/02, BX-M03-03, BX-M04-02/03 | LOW | NEW | UX/scope gaps (deactivate dialog order, no site history tab, no sorting/zone-filter UI, last reading only, no single-step replace, hours=0 inconsistency, DUE vs overdue). |
+| BX-ALL-02 | COSMETIC | NEW | `/favicon.ico` returns 404 (console error once per fresh browser session). |
+
+Everything else exercised in M01-M04 (about 2,200 checks, 12 roles + a second tenant, 4 viewports) behaved as specified; tenant isolation and RBAC had 0 failures in both directions.

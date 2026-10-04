@@ -1,0 +1,16 @@
+import sys; sys.path.insert(0,'.')
+from bx import *
+r=Run("M04").start()
+pp=r.page("planner"); pp.goto(BASE+"/app/"); pp.wait_for_load_state("networkidle"); pp.wait_for_selector(".fx-bell button", timeout=8000)
+b=pp.locator(".fx-bell button[aria-label^='Notifications']")
+n_unread=sql("select count(*) from notifications_notification n join accounts_user u on u.id=n.recipient_id where u.email='planner@alpha.qa.test' and read_at is null")
+r.ok(b.count()==1,"Notification bell (HTMX-loaded) is present for the planner","/app/","planner","load dashboard","bell rendered",b.get_attribute("aria-label") if b.count() else "missing")
+r.ok(f"({n_unread} unread)" in b.get_attribute("aria-label"),"Bell unread count equals the database","/app/","planner","compare",f"{n_unread} unread",b.get_attribute("aria-label"),db=n_unread)
+b.click(); pp.wait_for_timeout(400)
+menu=pp.locator(".fx-bell-menu").inner_text()
+r.ok("Maintenance reminder" in menu or "generated" in menu,"Bell dropdown lists the M04 notifications (reminder / generated work order)","/app/","planner","open bell","M04 items",menu[:100].replace("\n"," "),ev=shot(pp,"M04_bell"))
+first=pp.locator(".fx-bell-menu form button.dropdown-item").first; t=first.inner_text().split("\n")[0]
+with pp.expect_navigation(): first.click()
+r.ok(sql(f"select count(*) from notifications_notification n join accounts_user u on u.id=n.recipient_id where u.email='planner@alpha.qa.test' and read_at is null")==str(int(n_unread)-1) or int(n_unread)==0,"Clicking a notification marks it read","/app/","planner","click first item","unread - 1",sql("select 1"),db=n_unread)
+for x in r.rows: print(x["status"],x["feature"],"|",x["actual"])
+r.stop()

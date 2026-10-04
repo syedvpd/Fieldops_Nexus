@@ -1,0 +1,25 @@
+{
+ "M01": [
+  "M01_run_sites.json",
+  "M01_run_zones_calendars_contacts.json",
+  "M01_run_rbac_tenant_audit_links_responsive.json",
+  "M01_run_mobile_menu.json",
+  "M01_run_sorting.json",
+  "M01_run_anonymous_session.json"
+ ],
+ "M02": [
+  "M02_run_registry_search_create_edit_categories.json",
+  "M02_run_documents_meters_status_rbac_tenant_responsive.json",
+  "M02_run_anonymous_session.json"
+ ],
+ "M03": [
+  "M03_run_hierarchy.json",
+  "M03_run_anonymous_session.json"
+ ],
+ "M04": [
+  "M04_run_plans.json",
+  "M04_run_schedules_generation_reminders_rbac_tenant_responsive.json",
+  "M04_run_notification_bell.json",
+  "M04_run_anonymous_session.json"
+ ]
+}

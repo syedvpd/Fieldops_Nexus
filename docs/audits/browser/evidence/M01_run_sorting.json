@@ -1,0 +1,65 @@
+{
+ "rows": [
+  {
+   "module": "M01",
+   "feature": "Site list column sorting",
+   "page": "/app/sites/",
+   "role": "owner",
+   "action": "look for sortable headers / ?ordering=",
+   "expected": "sort controls (task scope: sort)",
+   "actual": "No sort controls (header links=0); fixed order by code (first rows ['14682ZZZZZZZZZZZZZZZZZZZZZZZZZ', '14754ZZZZZZZZZZZZZZZZZZZZZZZZZ', '14834ZZZZZZZZZZZZZZZZZZZZZZZZZ'] match DB order: True)",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PARTIAL",
+   "evidence": ""
+  },
+  {
+   "module": "M01",
+   "feature": "Site list ?ordering= parameter",
+   "page": "/app/sites/?ordering=-code",
+   "role": "owner",
+   "action": "type ?ordering=-code",
+   "expected": "(not implemented -> ignored)",
+   "actual": "ignored; order unchanged: True",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PARTIAL",
+   "evidence": ""
+  },
+  {
+   "module": "M01",
+   "feature": "Site list shows no zone/asset-type columns beyond counts (Locations, Active assets)",
+   "page": "/app/sites/",
+   "role": "owner",
+   "action": "read headers",
+   "expected": "counts only",
+   "actual": "ok",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  }
+ ],
+ "issues": [],
+ "expected": [],
+ "benign": [],
+ "cov_post": {
+  "/accounts/login/": 1
+ },
+ "cov_get": {
+  "/accounts/login/": 1,
+  "/app/": 1,
+  "/app/sites/": 2,
+  "/app/sites/?ordering": 1
+ },
+ "clicks": {
+  "BUTTON|Sign in|/accounts/login/||/accounts/login/": 1
+ },
+ "htmx": {
+  "GET /app/notifications/bell/": 3
+ },
+ "htmx_fail": []
+}

@@ -6,10 +6,10 @@ Environment: Django (DEBUG off, CSP on) on :8098 against PostgreSQL 16 (`fieldop
 
 | Module | Browser verdict | Overall verdict (browser + code) | Pass lines | Fail lines (genuine) | Superseded harness lines |
 |---|---|---|---|---|---|
-| M01 | **PASS** | **PARTIAL** | 39 | 0 | 1 |
-| M02 | **PARTIAL** | **PARTIAL** | 46 | 1 | 0 |
-| M03 | **PARTIAL** | **PARTIAL** | 22 | 2 | 2 |
-| M04 | **PARTIAL** | **FAIL (BLOCKER F-H01)** | 16 | 1 | 0 |
+| M01 | **PARTIAL** (Batch 1 deep re-test) | **PARTIAL** | 731 | 1 (genuine) | 0 |
+| M02 | **PASS** (Low observations) (Batch 1 deep re-test) | **PARTIAL** | 662 | 0 (genuine) | 0 |
+| M03 | **PARTIAL** (Batch 1 deep re-test) | **PARTIAL** | 229 | 2 (genuine) | 0 |
+| M04 | **FAIL** (Batch 1 deep re-test) | **FAIL (BLOCKER F-H01)** | 557 | 1 (genuine) | 1 |
 | M05 | **PARTIAL** | **PARTIAL** | 13 | 4 | 1 |
 | M06 | **PASS** | **PASS** | 39 | 0 | 8 |
 | M07 | **PASS** | **PASS** | 15 | 0 | 0 |
@@ -22,7 +22,43 @@ Environment: Django (DEBUG off, CSP on) on :8098 against PostgreSQL 16 (`fieldop
 | M14 | **PARTIAL** | **PARTIAL** | 15 | 1 | 0 |
 | M15 | **PASS** | **PARTIAL** | 13 | 0 | 0 |
 
+<!-- BATCH1:START -->
+## Batch 1 deep acceptance (M01-M04): supersedes the earlier M01-M04 sections of this file
+
+Complete UI acceptance of every functionality exposed by M01-M04 (2199 scored browser checks). Detailed per-module reports: `docs/audits/browser/M01_BROWSER_DETAILED.md`, `M02_BROWSER_DETAILED.md`, `M03_BROWSER_DETAILED.md`, `M04_BROWSER_DETAILED.md` (15 sections each). Raw evidence and scripts: `docs/audits/browser/evidence/`, `docs/audits/browser/tools/`.
+
+| Module | Browser checks PASS | FAIL | PARTIAL | UNVERIFIED | N/A | RBAC | Tenant | Responsive | Unexplained console/network | Status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| M01 | 731/738 | 1 | 6 | 0 | 3 | 386/386 | 46/46 | 68/70 | 1 | **PARTIAL (defect reproduced)** |
+| M02 | 662/665 | 0 | 3 | 1 | 3 | 245/245 | 57/57 | 48/48 | 0 | **PASS with LOW observations** |
+| M03 | 229/234 | 2 | 3 | 0 | 0 | 115/115 | 22/22 | 13/13 | 0 | **PARTIAL (defect reproduced)** |
+| M04 | 557/562 | 1 | 3 | 1 | 1 | 240/240 | 48/48 | 39/39 | 0 | **FAIL (High defect)** |
+
+Findings by severity: Critical 0, High 1, Medium 2, Low 10, Cosmetic 1, Unverified 2.
+
+| ID | Severity | Module | Title |
+|---|---|---|---|
+| BX-M04-01 | HIGH | M04 | Editing a schedule's recurrence re-points it at an already-generated occurrence; the next due occurrence is silently lost (F-H01, reproduced in the b… |
+| BX-M01-01 | MEDIUM | M01 | Site-contact escalation order above 32767 returns HTTP 500 (UI form and API) |
+| BX-M03-01 | MEDIUM | M03 | Retiring/disposing a parent that still has live children is accepted; the live child can then never be detached, yet the UI still shows Detach (F-M06… |
+| BX-M03-02 | LOW | M03 | Hierarchy tree panel stays on 'Loading hierarchy…' forever when its HTMX request fails |
+| BX-ALL-01 | LOW | M01-M04 | Keyboard / mobile navigation accessibility: no 'skip to content' link; off-canvas sidebar links stay focusable while hidden; Esc does not close the o… |
+| BX-M01-02 | LOW | M01 | Deactivate site / location: the confirmation dialog opens before the mandatory reason is validated |
+| BX-M01-03 | LOW | M01 | Sites and locations have no history/audit view of their own (only the global Audit Trail) |
+| BX-M01-04 | LOW | M01 | Site list has no sorting controls (fixed order by code) |
+| BX-M02-01 | LOW | M02 | Asset list: no zone/location filter and no sorting controls in the UI (backend supports ?zone=, ?owner=, ?ordering=) |
+| BX-M02-02 | LOW | M02 | Meter tab shows only the last reading; the reading history is not visible in the browser |
+| BX-M03-03 | LOW | M03 | No single-step 'Replace component' action (replace = Detach + Add) |
+| BX-M04-02 | LOW | M04 | 'Estimated hours = 0' is accepted by the form (min=0) but refused by the server ('must be a positive number') |
+| BX-M04-03 | LOW | M04 | DUE state does not distinguish 'due today' from 'overdue by N days' |
+| BX-ALL-02 | COSMETIC | M01-M04 | Every fresh browser session logs 'GET /favicon.ico -> 404' in the console (no favicon served) |
+
+**Batch 1 status: CONDITIONAL.** No Critical defect; one High defect (BX-M04-01 = F-H01) blocks M04 acceptance, two Medium defects are open. M05 must not start before the owner decides on the fixes (no production code was changed in this audit).
+<!-- BATCH1:END -->
+
 ## M01: browser PASS; overall PARTIAL
+
+> Superseded by the Batch 1 deep acceptance above (`docs/audits/browser/M01_BROWSER_DETAILED.md`); kept for history.
 
 Create/edit/list/search/filter, unique code (case-insensitive), timezone/email validation, 4-level nested zones, cycle prevention (UI list + crafted POST), calendars/contacts, deactivate/reactivate with confirm + reason, rule 'site with active assets cannot be deactivated', tenant isolation both ways, 4 viewports. Static MEDIUM: concurrent zone move race (F-M19).
 
@@ -70,6 +106,8 @@ Create/edit/list/search/filter, unique code (case-insensitive), timezone/email v
 | PASS | Site-scoped role: direct URL of an out-of-scope site -> 404 | 404 |
 
 ## M02: browser PARTIAL; overall PARTIAL
+
+> Superseded by the Batch 1 deep acceptance above (`docs/audits/browser/M02_BROWSER_DETAILED.md`); kept for history.
 
 Category with custom attributes, register with owner/dates/warranty reference, uniqueness, validation, edit, full status machine via UI with reasons + history + audit, invalid transitions blocked, location history, document upload/download/validation, meters (monotonic, negative rejected), cross-tenant UI/POST denied. FAIL (RUNTIME, API): meter reading written to an out-of-scope site through REST while the HTML view denied it (F-M07). Caveats: no financial fields exist (UNVERIFIED requirement U10); site-move propagation is a static finding (F-M08).
 
@@ -125,6 +163,8 @@ Category with custom attributes, register with owner/dates/warranty reference, u
 
 ## M03: browser PARTIAL; overall PARTIAL
 
+> Superseded by the Batch 1 deep acceptance above (`docs/audits/browser/M03_BROWSER_DETAILED.md`); kept for history.
+
 Attach child, 3-level tree, re-parent, edit relationship, detach, UI hides illegal choices, backend rejects cycle/self/already-parented/cross-site/cross-tenant. FAIL: retiring a parent with children leaves an undetachable tree (F-M06, RUNTIME). No atomic replace operation (L06).
 
 | Status | Scenario | Evidence / note |
@@ -157,6 +197,8 @@ Attach child, 3-level tree, re-parent, edit relationship, detach, UI hides illeg
 | PASS | Responsive mobile 390x844: no horizontal overflow on 1 pages | [] |
 
 ## M04: browser PARTIAL; overall FAIL (BLOCKER F-H01)
+
+> Superseded by the Batch 1 deep acceptance above (`docs/audits/browser/M04_BROWSER_DETAILED.md`); kept for history.
 
 Plan + weekly schedule via UI, DUE listing, generate-now creates a PREVENTIVE WO with checklist gate, duplicate prevention (UI + crafted POST), next cycle advances, cycle shown VERIFIED after WO close, audited. **BLOCKER F-H01**: editing the recurrence silently stops generation (reproduced). Celery-beat generation timing: see section 'Beat'.
 

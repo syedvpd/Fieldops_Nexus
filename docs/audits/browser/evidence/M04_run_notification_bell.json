@@ -1,0 +1,82 @@
+{
+ "rows": [
+  {
+   "module": "M04",
+   "feature": "Notification bell (HTMX-loaded) is present for the planner",
+   "page": "/app/",
+   "role": "planner",
+   "action": "load dashboard",
+   "expected": "bell rendered",
+   "actual": "Notifications (47 unread)",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  },
+  {
+   "module": "M04",
+   "feature": "Bell unread count equals the database",
+   "page": "/app/",
+   "role": "planner",
+   "action": "compare",
+   "expected": "47 unread",
+   "actual": "Notifications (47 unread)",
+   "db": "47",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  },
+  {
+   "module": "M04",
+   "feature": "Bell dropdown lists the M04 notifications (reminder / generated work order)",
+   "page": "/app/",
+   "role": "planner",
+   "action": "open bell",
+   "expected": "M04 items",
+   "actual": "Notifications Mark all read WO-000043 generated: RBGEN planner 20307 1\u00a0minute ago WO-000042 generate",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": "batch1/shots/M04_bell.png"
+  },
+  {
+   "module": "M04",
+   "feature": "Clicking a notification marks it read",
+   "page": "/app/",
+   "role": "planner",
+   "action": "click first item",
+   "expected": "unread - 1",
+   "actual": "1",
+   "db": "47",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  }
+ ],
+ "issues": [],
+ "expected": [],
+ "benign": [],
+ "cov_post": {
+  "/accounts/login/": 1,
+  "/app/notifications/{id}/read/": 1
+ },
+ "cov_get": {
+  "/accounts/login/": 1,
+  "/app/": 2,
+  "/app/work-orders/{id}/": 1
+ },
+ "clicks": {
+  "BUTTON|Sign in|/accounts/login/||/accounts/login/": 1,
+  "BUTTON|Notifications (47 unread)|||/app/": 1,
+  "BUTTON|WO-000043 generated: RBGEN planner 20307|/app/notifications/f27faa72-f7f2-4ee8-81f7-bde46801fd32/read/||/app/": 1
+ },
+ "htmx": {
+  "GET /app/notifications/bell/": 3,
+  "GET /app/contracts/work-orders/{id}/panel/": 1
+ },
+ "htmx_fail": []
+}

@@ -1,0 +1,142 @@
+{
+ "M01": {
+  "pages": {
+   "total": 11,
+   "exercised": 11,
+   "untested": []
+  },
+  "posts": {
+   "total": 12,
+   "exercised": 12,
+   "untested": []
+  },
+  "buttons": {
+   "total": 12,
+   "exercised": 12,
+   "untested": []
+  },
+  "gets": {
+   "total": 1,
+   "exercised": 1,
+   "untested": []
+  },
+  "links": {
+   "total": 18,
+   "exercised": 13,
+   "untested": [
+    "/app/contracts/agreements/new/?assets",
+    "/app/contracts/agreements/{id}/",
+    "/app/identification/assets/{id}/label/",
+    "/app/identification/scan/",
+    "/app/incidents/new/?asset"
+   ]
+  },
+  "htmx": {
+   "total": 2,
+   "exercised": 2,
+   "untested": []
+  }
+ },
+ "M02": {
+  "pages": {
+   "total": 6,
+   "exercised": 6,
+   "untested": []
+  },
+  "posts": {
+   "total": 10,
+   "exercised": 9,
+   "untested": [
+    "/app/identification/assets/{id}/panel/generate/"
+   ]
+  },
+  "buttons": {
+   "total": 13,
+   "exercised": 10,
+   "untested": [
+    "Check -> (js/none)",
+    "Generate barcode (code 128) -> /app/identification/assets/{id}/panel/generate/",
+    "Generate qr code -> /app/identification/assets/{id}/panel/generate/"
+   ]
+  },
+  "gets": {
+   "total": 2,
+   "exercised": 2,
+   "untested": []
+  },
+  "links": {
+   "total": 7,
+   "exercised": 7,
+   "untested": []
+  },
+  "htmx": {
+   "total": 0,
+   "exercised": 0,
+   "untested": []
+  }
+ },
+ "M03": {
+  "pages": {
+   "total": 1,
+   "exercised": 1,
+   "untested": []
+  },
+  "posts": {
+   "total": 5,
+   "exercised": 5,
+   "untested": []
+  },
+  "buttons": {
+   "total": 6,
+   "exercised": 6,
+   "untested": []
+  },
+  "gets": {
+   "total": 0,
+   "exercised": 0,
+   "untested": []
+  },
+  "links": {
+   "total": 0,
+   "exercised": 0,
+   "untested": []
+  },
+  "htmx": {
+   "total": 1,
+   "exercised": 1,
+   "untested": []
+  }
+ },
+ "M04": {
+  "pages": {
+   "total": 9,
+   "exercised": 9,
+   "untested": []
+  },
+  "posts": {
+   "total": 7,
+   "exercised": 7,
+   "untested": []
+  },
+  "buttons": {
+   "total": 7,
+   "exercised": 7,
+   "untested": []
+  },
+  "gets": {
+   "total": 3,
+   "exercised": 3,
+   "untested": []
+  },
+  "links": {
+   "total": 7,
+   "exercised": 7,
+   "untested": []
+  },
+  "htmx": {
+   "total": 0,
+   "exercised": 0,
+   "untested": []
+  }
+ }
+}

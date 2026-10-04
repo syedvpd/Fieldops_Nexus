@@ -1,0 +1,119 @@
+{
+ "rows": [
+  {
+   "module": "M03",
+   "feature": "Anonymous GET /app/assets/{id}/?tab redirects to login with ?next=",
+   "page": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/?tab=hierarchy",
+   "role": "anonymous",
+   "action": "open URL while logged out",
+   "expected": "redirect to /accounts/login/?next=",
+   "actual": "sets/f62949cd-5c00-4536-88ec-676deab3d6f6/%3Ftab%3Dhierarchy",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  },
+  {
+   "module": "M03",
+   "feature": "Anonymous GET /app/assets/{id}/tree/ redirects to login with ?next=",
+   "page": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/tree/",
+   "role": "anonymous",
+   "action": "open URL while logged out",
+   "expected": "redirect to /accounts/login/?next=",
+   "actual": "?next=/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/tree/",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  },
+  {
+   "module": "M03",
+   "feature": "Anonymous GET /app/assets/new/?parent redirects to login with ?next=",
+   "page": "/app/assets/new/?parent=f62949cd-5c00-4536-88ec-676deab3d6f6",
+   "role": "anonymous",
+   "action": "open URL while logged out",
+   "expected": "redirect to /accounts/login/?next=",
+   "actual": "/assets/new/%3Fparent%3Df62949cd-5c00-4536-88ec-676deab3d6f6",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  },
+  {
+   "module": "M03",
+   "feature": "Anonymous POST /app/assets/{id}/components/add/ is refused (login redirect / 403) and changes nothing",
+   "page": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/components/add/",
+   "role": "anonymous",
+   "action": "forged POST without a session",
+   "expected": "refused, DB unchanged",
+   "actual": "http=200 -> 0-4536-88ec-676deab3d6f6/components/add/",
+   "db": "83 -> 83",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  },
+  {
+   "module": "M03",
+   "feature": "Anonymous POST /app/components/{id}/remove/ is refused (login redirect / 403) and changes nothing",
+   "page": "/app/components/ec01089a-67e4-48d3-9b0e-74d7d077ffe8/remove/",
+   "role": "anonymous",
+   "action": "forged POST without a session",
+   "expected": "refused, DB unchanged",
+   "actual": "http=200 -> 089a-67e4-48d3-9b0e-74d7d077ffe8/remove/",
+   "db": "83 -> 83",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  },
+  {
+   "module": "M03",
+   "feature": "Session expiry on /app/assets/{id}/?tab: reload returns to the login page",
+   "page": "/app/assets/f62949cd-5c00-4536-88ec-676deab3d6f6/?tab=hierarchy",
+   "role": "owner",
+   "action": "delete the session cookie then reload",
+   "expected": "login page",
+   "actual": "9cd-5c00-4536-88ec-676deab3d6f6/%3Ftab%3Dhierarchy",
+   "db": "",
+   "api": "",
+   "audit": "",
+   "status": "PASS",
+   "evidence": ""
+  }
+ ],
+ "issues": [],
+ "expected": [],
+ "benign": [
+  {
+   "module": "M03",
+   "feature": "",
+   "role": "owner",
+   "kind": "requestfailed",
+   "text": "GET http://127.0.0.1:8098/app/notifications/bell/ net::ERR_ABORTED",
+   "url": "http://127.0.0.1:8098/app/notifications/bell/"
+  }
+ ],
+ "cov_post": {
+  "/app/assets/{id}/components/add/": 1,
+  "/app/components/{id}/remove/": 1,
+  "/accounts/login/": 1
+ },
+ "cov_get": {
+  "/accounts/login/": 2,
+  "/app/assets/{id}/?tab": 3,
+  "/accounts/login/?next": 4,
+  "/app/assets/{id}/tree/": 1,
+  "/app/assets/new/?parent": 1,
+  "/app/": 1
+ },
+ "clicks": {},
+ "htmx": {
+  "GET /app/notifications/bell/": 1,
+  "GET /app/assets/{id}/tree/": 1
+ },
+ "htmx_fail": []
+}
