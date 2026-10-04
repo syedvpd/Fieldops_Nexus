@@ -78,3 +78,6 @@ TENANT ISOLATION: PASS (automated: `test_hardening_tenant`, `test_tenant_isolati
 SECURITY HARDENING: PASS (code + tests); DB role split NOT APPLIED to production.
 TECHNICAL HARDENING: INCOMPLETE (single clean full run pending).
 READY FOR FINAL BROWSER ACCEPTANCE: NO (until the clean full run passes and the Team Lead decides on merge/migration).
+
+## 9. Gap closure addendum (2026-10-04)
+Branch `claude/complete-m01-m15`. Findings of the static M01-M15 completeness audit were fixed or recorded as decisions (D-058..D-061); see `MODULE_STATUS.md` and `TRACEABILITY.md`. New migrations (additive): `assets.0002`, `contracts.0002`, `sla.0002`. Checks: ruff clean, `manage.py check` clean, `makemigrations --check` no changes, OpenAPI 0 warnings. Full suite run 1 on local PostgreSQL 16: 735 passed, 1 failed (bug in the new asset-form category handling, fixed, affected files 100 passed). A second full rerun was deliberately skipped: the only failure of run 1 was fixed and its tests re-run (100 passed). Per-file results, not a single uninterrupted green run.

@@ -132,7 +132,8 @@ class ProfileCreateView(SlaBase):
                 profile = services.create_profile(request.organization, actor=request.user, request=request,
                                                   name=d["name"], applies_to=d["applies_to"],
                                                   description=d["description"], site=d.get("site"),
-                                                  work_type=d.get("work_type", ""), pause_states=d["pause_states"])
+                                                  work_type=d.get("work_type", ""), pause_states=d["pause_states"],
+                                                  coverage_only=d.get("coverage_only", False))
                 messages.success(request, f"Profile {profile.name} created. Add its targets and rules.")
                 return redirect("sla:profile", pk=profile.pk)
             except DomainError as exc:

@@ -23,6 +23,10 @@ class ProfileForm(BootstrapFormMixin, forms.Form):
     applies_to = forms.ChoiceField(choices=SLAProfile.AppliesTo.choices, label="Applies to")
     site = _SiteChoice(queryset=None, required=False, label="Site (blank = whole organization)")
     work_type = forms.CharField(max_length=20, required=False, label="Work type (work-order profiles, optional)")
+    coverage_only = forms.BooleanField(
+        required=False, label="Coverage-only profile",
+        help_text="Apply only to assets covered by a warranty / AMC / contract that names this profile; it is "
+                  "never picked by site or organization.")
     pause_states = forms.MultipleChoiceField(
         required=False, choices=_pause_choices(), widget=forms.CheckboxSelectMultiple,
         label="Pause the timers while the item is in",
@@ -32,7 +36,7 @@ class ProfileForm(BootstrapFormMixin, forms.Form):
         super().__init__(*args, **kwargs)
         self.fields["pause_states"].choices = _pause_choices()
         if editing:
-            for f in ("applies_to", "site", "work_type"):
+            for f in ("applies_to", "site", "work_type", "coverage_only"):
                 del self.fields[f]
         else:
             self.fields["site"].queryset = sites

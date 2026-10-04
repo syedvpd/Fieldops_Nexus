@@ -1,6 +1,6 @@
 from django.urls import reverse
 from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, MultiPartParser
@@ -23,7 +23,7 @@ from .workflow import ASSET_STATUS
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = AssetCategory
-        fields = ["id", "name", "description", "is_active"]
+        fields = ["id", "name", "description", "is_active", "attribute_definitions"]
         read_only_fields = fields
 
 
@@ -31,6 +31,9 @@ class CategoryWriteSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100)
     description = serializers.CharField(max_length=300, required=False, allow_blank=True)
     is_active = serializers.BooleanField(required=False)
+    attribute_definitions = serializers.ListField(
+        child=serializers.DictField(), required=False,
+        help_text="[{label, type: text|number|date|choice, required, choices}] - see assets.attributes")
 
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -45,7 +48,7 @@ class AssetSerializer(serializers.ModelSerializer):
         model = Asset
         fields = ["id", "asset_tag", "name", "description", "category", "category_name", "manufacturer", "model",
                   "serial_number", "purchase_date", "commission_date", "site", "site_code", "zone", "zone_name",
-                  "owner", "owner_name", "warranty_ref", "status", "parent", "available_actions", "created_at",
+                  "owner", "owner_name", "warranty_ref", "attributes", "status", "parent", "available_actions", "created_at",
                   "updated_at"]
         read_only_fields = fields
 
@@ -77,6 +80,8 @@ class AssetWriteSerializer(serializers.Serializer):
     zone = serializers.UUIDField(required=False, allow_null=True)
     owner = serializers.UUIDField(required=False, allow_null=True, help_text="Membership id of the owner")
     warranty_ref = serializers.CharField(max_length=200, required=False, allow_blank=True)
+    attributes = serializers.DictField(child=serializers.CharField(allow_blank=True), required=False,
+                                       help_text="Values of the category's custom attributes (key -> text)")
     reason = serializers.CharField(max_length=500, required=False, allow_blank=True,
                                    help_text="Reason for a location move (PATCH)")
 
@@ -129,11 +134,15 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = AssetDocument
         fields = ["id", "asset", "title", "doc_type", "original_name", "size", "mime_type", "uploaded_by",
-                  "download_url", "created_at"]
+                  "download_url", "is_active", "created_at"]
         read_only_fields = fields
 
     def get_download_url(self, obj) -> str | None:
         return reverse("files:download", args=[obj.attachment_id]) if obj.attachment_id else None
+
+
+class DocumentRemoveSerializer(serializers.Serializer):
+    reason = serializers.CharField(max_length=300)
 
 
 class DocumentUploadSerializer(serializers.Serializer):
@@ -285,7 +294,8 @@ class AssetCategoryViewSet(TenantAPIMixin, viewsets.ViewSet):
     def create(self, request):
         d = _validated(CategoryWriteSerializer, request)
         cat = services.create_category(request.organization, name=d["name"], description=d.get("description", ""),
-                                       actor=request.user, request=request)
+                                       attribute_definitions=d.get("attribute_definitions"), actor=request.user,
+                                       request=request)
         return Response(CategorySerializer(cat).data, status=status.HTTP_201_CREATED)
 
     @extend_schema(request=CategoryWriteSerializer, responses=CategorySerializer)
@@ -293,7 +303,8 @@ class AssetCategoryViewSet(TenantAPIMixin, viewsets.ViewSet):
         cat = self._cat(request, pk)
         d = _validated(CategoryWriteSerializer, request, partial=True)
         cat = services.update_category(cat, actor=request.user, request=request, name=d.get("name"),
-                                       description=d.get("description"), is_active=d.get("is_active"))
+                                       description=d.get("description"), is_active=d.get("is_active"),
+                                       attribute_definitions=d.get("attribute_definitions", services.UNSET))
         return Response(CategorySerializer(cat).data)
 
 
@@ -303,7 +314,7 @@ class AssetViewSet(TenantAPIMixin, viewsets.ViewSet):
         "list": "asset.view", "retrieve": "asset.view", "create": "asset.create", "partial_update": "asset.update",
         "transition": "asset.change_status", "history": "asset.history.view",
         "location_history": "asset.history.view", "changes": "asset.history.view", "documents:get": "asset.view",
-        "documents:post": "asset.document.manage", "tree": "asset.view", "validate": "asset.view",
+        "documents:post": "asset.document.manage", "remove_document": "asset.document.manage", "tree": "asset.view", "validate": "asset.view",
         "components:get": "asset.view", "components:post": "asset.hierarchy.manage",
         "validate_link": "asset.hierarchy.manage",
     }
@@ -398,6 +409,20 @@ class AssetViewSet(TenantAPIMixin, viewsets.ViewSet):
         doc = services.add_document(asset, d["file"], title=d.get("title", ""), doc_type=d.get("doc_type", "OTHER"),
                                     actor=request.user, request=request)
         return Response(DocumentSerializer(doc).data, status=status.HTTP_201_CREATED)
+
+    @extend_schema(request=DocumentRemoveSerializer, responses=DocumentSerializer,
+                   parameters=[OpenApiParameter("doc_id", OpenApiTypes.UUID, OpenApiParameter.PATH)])
+    @action(detail=True, methods=["post"], url_path=r"documents/(?P<doc_id>[^/.]+)/remove")
+    def remove_document(self, request, pk=None, doc_id=None):
+        asset = self._asset(request, pk)
+        doc = selectors.documents_for(request.organization, asset, include_removed=True).filter(
+            pk=selectors._uuid_or_none(doc_id)).first()
+        if doc is None:
+            raise NotFound("Document not found.")
+        d = _validated(DocumentRemoveSerializer, request)
+        services.remove_document(doc, reason=d["reason"], actor=request.user, request=request)
+        doc.refresh_from_db()
+        return Response(DocumentSerializer(doc).data)
 
     @extend_schema(responses=TreeNodeSerializer)
     @action(detail=True, methods=["get"])

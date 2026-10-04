@@ -1,3 +1,5 @@
+import uuid
+
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers, viewsets
@@ -37,7 +39,8 @@ class AuditLogViewSet(TenantAPIMixin, viewsets.ReadOnlyModelViewSet):
     through ``audit.record`` and are immutable at the database level."""
 
     serializer_class = AuditLogSerializer
-    permission_map = {"list": "audit.view", "retrieve": "audit.view", "export": "audit.export"}
+    permission_map = {"list": "audit.view", "retrieve": "audit.view", "export": "audit.export",
+                      "evidence": "audit.export"}
     filterset_fields: list = []
 
     def get_queryset(self):
@@ -65,6 +68,29 @@ class AuditLogViewSet(TenantAPIMixin, viewsets.ReadOnlyModelViewSet):
                                   "filters": params})
         resp = HttpResponse(result.body, content_type=result.content_type)
         resp["Content-Disposition"] = f'attachment; filename="{result.filename}"'
+        resp["Cache-Control"] = "private, no-store"
+        return resp
+
+    @extend_schema(parameters=[query_param("work_order", "work order id", OpenApiTypes.UUID)],
+                   responses=OpenApiTypes.BINARY)
+    @action(detail=False, methods=["get"])
+    def evidence(self, request):
+        """Per-work-order evidence package (ZIP); same scope rules as the UI download."""
+        from django.http import HttpResponse
+
+        from . import evidence as evidence_package
+
+        pk = (request.query_params.get("work_order") or "").strip()
+        if not pk:
+            raise ValidationFailed("work_order is required.", code="work_order_required")
+        try:
+            uuid.UUID(pk)
+        except ValueError as exc:
+            raise ValidationFailed("work_order must be a valid id.", code="invalid_work_order") from exc
+        pkg = evidence_package.build(request.membership, request.organization, pk, actor=request.user,
+                                     request=request)
+        resp = HttpResponse(pkg.body, content_type="application/zip")
+        resp["Content-Disposition"] = f'attachment; filename="{pkg.filename}"'
         resp["Cache-Control"] = "private, no-store"
         return resp
 

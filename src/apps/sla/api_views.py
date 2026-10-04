@@ -49,7 +49,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = SLAProfile
         fields = ["id", "name", "description", "applies_to", "site", "site_code", "work_type", "pause_states",
-                  "is_active", "targets", "rules", "created_at", "updated_at"]
+                  "is_active", "coverage_only", "targets", "rules", "created_at", "updated_at"]
         read_only_fields = fields
 
 
@@ -59,6 +59,7 @@ class ProfileWriteSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=300, required=False, allow_blank=True)
     site = serializers.UUIDField(required=False, allow_null=True)
     work_type = serializers.CharField(max_length=20, required=False, allow_blank=True)
+    coverage_only = serializers.BooleanField(required=False)
     pause_states = serializers.ListField(child=serializers.CharField(), required=False)
 
 

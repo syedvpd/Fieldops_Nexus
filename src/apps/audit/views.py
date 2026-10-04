@@ -4,12 +4,12 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.views import View
 
-from apps.core.exceptions import DomainError
+from apps.core.exceptions import DomainError, NotFound, PermissionDenied
 from apps.rbac import services as rbac
 from apps.sites.models import Site
 from apps.ui.mixins import TenantPermissionMixin
 
-from . import exports, selectors, services
+from . import evidence, exports, selectors, services
 
 FILTER_KEYS = ("action", "q", "actor", "entity_type", "entity_id", "request_id", "site", "category", "asset",
                "work_order", "from", "to")
@@ -69,6 +69,26 @@ class ReportsView(TenantPermissionMixin, View):
     def get(self, request):
         return render(request, "audit/reports.html", {
             "categories": [(k, v[0], v[1]) for k, v in selectors.CATEGORIES.items()]})
+
+
+class EvidencePackageView(TenantPermissionMixin, View):
+    """ZIP evidence package for one work order (summary, timeline, approvals, checklists, parts, SLA, coverage,
+    audit trail, the evidence files and a checksum manifest). Scope rules live in ``audit.evidence.build``."""
+
+    required_permission = "audit.export"
+
+    def get(self, request, pk):
+        try:
+            pkg = evidence.build(request.membership, request.organization, pk, actor=request.user, request=request)
+        except NotFound as exc:
+            raise Http404 from exc
+        except PermissionDenied:
+            return HttpResponse("You may not export evidence for this site.", status=403)
+        resp = HttpResponse(pkg.body, content_type="application/zip")
+        resp["Content-Disposition"] = f'attachment; filename="{pkg.filename}"'
+        resp["Cache-Control"] = "private, no-store"
+        resp["X-Content-Type-Options"] = "nosniff"
+        return resp
 
 
 class ExportView(TenantPermissionMixin, View):

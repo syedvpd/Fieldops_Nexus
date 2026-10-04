@@ -11,6 +11,6 @@ class AssetsConfig(AppConfig):
 
         def can_read_document(membership, document) -> bool:
             # downloads follow the asset's site scope, not just an organization-wide permission
-            return rbac.has_permission(membership, "asset.view", document.asset.site_id)
+            return document.is_active and rbac.has_permission(membership, "asset.view", document.asset.site_id)
 
         access.register("assets.assetdocument", can_read_document)

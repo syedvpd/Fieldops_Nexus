@@ -27,7 +27,7 @@ from .models import CoverageAgreement, CoverageCheck, CoverageExclusion, Covered
 
 Kind = CoverageAgreement.Kind
 AGREEMENT_FIELDS = ["reference", "title", "kind", "provider", "site", "start_date", "end_date", "terms",
-                    "exclusion_notes", "sla_terms", "renewal_alert_days", "is_active"]
+                    "exclusion_notes", "sla_terms", "sla_profile", "renewal_alert_days", "is_active"]
 WORK_TYPES = ("CORRECTIVE", "PREVENTIVE", "INSPECTION", "INSTALLATION", "OTHER")
 KIND_ORDER = {Kind.WARRANTY: 0, Kind.AMC: 1, Kind.SERVICE_CONTRACT: 2}
 
@@ -95,6 +95,17 @@ def _check_provider(org, provider, *, must_be_active=True):
         raise ValidationFailed("Provider not found.", code="provider_unknown")
     if must_be_active and not provider.is_active:
         raise ValidationFailed("This provider is inactive.", code="provider_inactive")
+
+
+def _check_sla_profile(org, profile, *, current=None):
+    """The coverage SLA must be one of this organization's ACTIVE profiles (an already-linked inactive one may stay)."""
+    if profile is None:
+        return
+    if profile.organization_id != org.pk:
+        raise ValidationFailed("SLA profile belongs to a different organization.", code="cross_tenant_sla_profile")
+    if profile.pk != current and not type(profile).objects.for_organization(org).filter(
+            pk=profile.pk, is_active=True).exists():  # read fresh: the caller's object may be stale
+        raise ValidationFailed("The SLA profile is inactive.", code="sla_profile_inactive")
 
 
 def _check_site(org, site):
@@ -223,14 +234,15 @@ def _snap(a):
 
 @transaction.atomic
 def create_agreement(org, *, kind, reference, title, provider, site, start_date, end_date, assets, terms="",
-                     exclusion_notes="", sla_terms="", renewal_alert_days=30, excluded_work_types=(),
-                     renewed_from=None, actor, request=None) -> CoverageAgreement:
+                     exclusion_notes="", sla_terms="", sla_profile=None, renewal_alert_days=30,
+                     excluded_work_types=(), renewed_from=None, actor, request=None) -> CoverageAgreement:
     kind = _kind(kind)
     reference = _text(reference, "Reference", maximum=80)
     title = _text(title, "Title", minimum=3, maximum=200)
     start, end = _dates(start_date, end_date)
     _check_provider(org, provider)
     _check_site(org, site)
+    _check_sla_profile(org, sla_profile)
     assets = list({a.pk: a for a in assets}.values())
     _check_assets(org, site, assets)
     if CoverageAgreement.objects.for_organization(org).filter(reference__iexact=reference).exists():
@@ -240,7 +252,7 @@ def create_agreement(org, *, kind, reference, title, provider, site, start_date,
     a = CoverageAgreement(
         organization=org, reference=reference, title=title, kind=kind, provider=provider, site=site,
         start_date=start, end_date=end, terms=(terms or "").strip(), exclusion_notes=(exclusion_notes or "").strip(),
-        sla_terms=_text(sla_terms, "SLA terms", maximum=300, required=False),
+        sla_terms=_text(sla_terms, "SLA terms", maximum=300, required=False), sla_profile=sla_profile,
         renewal_alert_days=_alert_days(renewal_alert_days), renewed_from=renewed_from, created_by=actor)
     try:
         with transaction.atomic():
@@ -260,7 +272,7 @@ def update_agreement(agreement, *, actor, request=None, **changes) -> CoverageAg
     agreement = CoverageAgreement.objects.select_for_update(of=("self",)).select_related("provider", "site").get(
         pk=agreement.pk)
     allowed = {"title", "provider", "start_date", "end_date", "terms", "exclusion_notes", "sla_terms",
-               "renewal_alert_days", "excluded_work_types", "reference", "kind"}
+               "sla_profile", "renewal_alert_days", "excluded_work_types", "reference", "kind"}
     unknown = set(changes) - allowed
     if unknown:
         raise ValidationFailed(f"Fields cannot be edited: {', '.join(sorted(unknown))}.", code="field_not_editable")
@@ -284,6 +296,9 @@ def update_agreement(agreement, *, actor, request=None, **changes) -> CoverageAg
             setattr(agreement, f, (changes[f] or "").strip())
     if "sla_terms" in changes:
         agreement.sla_terms = _text(changes["sla_terms"], "SLA terms", maximum=300, required=False)
+    if "sla_profile" in changes:
+        _check_sla_profile(org, changes["sla_profile"], current=agreement.sla_profile_id)
+        agreement.sla_profile = changes["sla_profile"]
     if "renewal_alert_days" in changes:
         agreement.renewal_alert_days = _alert_days(changes["renewal_alert_days"])
     if "start_date" in changes or "end_date" in changes:
@@ -376,7 +391,7 @@ def renew_agreement(agreement, *, new_end_date, reference, actor, request=None) 
         agreement.organization, kind=agreement.kind, reference=reference, title=agreement.title,
         provider=agreement.provider, site=agreement.site, start_date=new_start, end_date=new_end_date,
         assets=assets, terms=agreement.terms, exclusion_notes=agreement.exclusion_notes,
-        sla_terms=agreement.sla_terms, renewal_alert_days=agreement.renewal_alert_days,
+        sla_terms=agreement.sla_terms, sla_profile=agreement.sla_profile, renewal_alert_days=agreement.renewal_alert_days,
         excluded_work_types=[e.work_type for e in agreement.exclusions.all()], renewed_from=agreement,
         actor=actor, request=request)
     audit.record("contract.agreement_renewed", actor=actor, organization=agreement.organization, target=agreement,

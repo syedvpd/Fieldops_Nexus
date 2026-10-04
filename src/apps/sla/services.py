@@ -45,7 +45,8 @@ REQUEST_PRIORITIES = ("LOW", "MEDIUM", "HIGH", "CRITICAL")
 WORK_ORDER_PRIORITIES = ("LOW", "MEDIUM", "HIGH", "URGENT")
 SEVERITY = {"LOW": "MINOR", "MEDIUM": "MINOR", "HIGH": "MAJOR", "CRITICAL": "CRITICAL", "URGENT": "CRITICAL"}
 MAX_RULES_PER_PROFILE = 6
-PROFILE_FIELDS = ["name", "description", "applies_to", "site", "work_type", "pause_states", "is_active"]
+PROFILE_FIELDS = ["name", "description", "applies_to", "site", "work_type", "pause_states", "is_active",
+                  "coverage_only"]
 
 
 def priorities_for(applies_to: str) -> tuple:
@@ -85,7 +86,7 @@ def _pause_states(applies_to, values) -> list:
 
 @transaction.atomic
 def create_profile(org, *, name, applies_to, actor, description="", site=None, work_type="", pause_states=(),
-                   request=None) -> SLAProfile:
+                   coverage_only=False, request=None) -> SLAProfile:
     from apps.workorders.models import WorkOrder
 
     name = (name or "").strip()
@@ -101,7 +102,7 @@ def create_profile(org, *, name, applies_to, actor, description="", site=None, w
     if SLAProfile.objects.for_organization(org).filter(name__iexact=name).exists():
         raise Conflict("A profile with this name already exists.", code="profile_name_taken")
     profile = SLAProfile(organization=org, name=name[:120], description=(description or "").strip()[:300],
-                         applies_to=applies_to, site=site, work_type=work_type,
+                         applies_to=applies_to, site=site, work_type=work_type, coverage_only=bool(coverage_only),
                          pause_states=_pause_states(applies_to, pause_states))
     try:
         with transaction.atomic():
@@ -255,7 +256,8 @@ def _profile_for(org, applies_to, site, work_type="") -> SLAProfile | None:
     """The ACTIVE profile that applies: a site profile beats the organization-wide one, an exact work-type profile
     beats a catch-all one."""
     candidates = [p for p in SLAProfile.objects.for_organization(org).filter(
-        applies_to=applies_to, is_active=True) if p.site_id in (None, site.pk) and p.work_type in ("", work_type)]
+        applies_to=applies_to, is_active=True, coverage_only=False) if p.site_id in (None, site.pk)
+        and p.work_type in ("", work_type)]
     if not candidates:
         return None
     return max(candidates, key=lambda p: (p.site_id is not None, p.work_type != ""))
@@ -268,12 +270,42 @@ def _event(tracking, event_type, *, at, kind="", detail="", rule=None, dedupe=""
     return ev
 
 
-def _start(subject_kwargs, *, org, site, applies_to, priority, work_type, started_at) -> SLATracking | None:
-    profile = _profile_for(org, applies_to, site, work_type)
-    if profile is None:
+def _coverage_profile(org, asset, applies_to, work_type, on) -> SLAProfile | None:
+    """M10 -> M11: an agreement in force on ``on`` that covers ``asset`` (and does not exclude the work type) and names
+    an internal SLA profile of the right kind brings that profile in; it beats the site / organization one."""
+    if asset is None:
         return None
-    target = SLATarget.objects.for_organization(org).filter(profile=profile, priority=priority).first()
-    if target is None:
+    from apps.contracts.models import CoveredAsset
+
+    links = (CoveredAsset.objects.for_organization(org).filter(
+        asset=asset, agreement__is_active=True, agreement__start_date__lte=on, agreement__end_date__gte=on,
+        agreement__sla_profile__isnull=False, agreement__sla_profile__is_active=True,
+        agreement__sla_profile__applies_to=applies_to)
+        .select_related("agreement__sla_profile").prefetch_related("agreement__exclusions")
+        .order_by("agreement__end_date", "agreement__reference"))
+    for link in links:
+        profile = link.agreement.sla_profile
+        if work_type and work_type in {e.work_type for e in link.agreement.exclusions.all()}:
+            continue
+        if profile.work_type and profile.work_type != work_type:  # a work-type scoped profile keeps its scope
+            continue
+        return profile
+    return None
+
+
+def _start(subject_kwargs, *, org, site, applies_to, priority, work_type, started_at,
+           asset=None) -> SLATracking | None:
+    profile, target = None, None
+    candidates = [_coverage_profile(org, asset, applies_to, work_type, started_at.date()),
+                  _profile_for(org, applies_to, site, work_type)]
+    for candidate in candidates:  # the coverage profile first; fall back when it has no target for this priority
+        if candidate is None:
+            continue
+        target = SLATarget.objects.for_organization(org).filter(profile=candidate, priority=priority).first()
+        if target is not None:
+            profile = candidate
+            break
+    if profile is None:
         return None
     tracking = SLATracking(
         organization=org, site=site, profile=profile, priority=priority, response_minutes=target.response_minutes,
@@ -292,7 +324,7 @@ def _start(subject_kwargs, *, org, site, applies_to, priority, work_type, starte
 def on_request_created(sr) -> SLATracking | None:
     """M05 hook: the SLA starts from the request's persisted ``created_at``."""
     return _start({"request": sr}, org=sr.organization, site=sr.site, applies_to=REQUEST, priority=sr.severity,
-                  work_type="", started_at=sr.created_at)
+                  work_type="", started_at=sr.created_at, asset=sr.asset)
 
 
 def on_work_order_created(wo) -> SLATracking | None:
@@ -300,7 +332,7 @@ def on_work_order_created(wo) -> SLATracking | None:
     if wo.source_request_id:
         return None
     return _start({"work_order": wo}, org=wo.organization, site=wo.site, applies_to=WORK_ORDER,
-                  priority=wo.priority, work_type=wo.work_type, started_at=wo.created_at)
+                  priority=wo.priority, work_type=wo.work_type, started_at=wo.created_at, asset=wo.asset)
 
 
 # --- tracking: lifecycle hooks ----------------------------------------------------------------------------------------

@@ -27,6 +27,33 @@ def bars(mapping, order=None, label_map=None):
              "pct": round(100 * mapping.get(k, 0) / top)} for k in keys if mapping.get(k, 0) or order]
 
 
+# KPI key -> (list page, permission that page needs). A KPI only links when the caller can open the target.
+DRILL = {
+    "open_work_orders": ("/app/work-orders/?open=1", "work_order.view"),
+    "overdue_work": ("/app/work-orders/?overdue=1", "work_order.view"),
+    "pm_wo": ("/app/work-orders/?work_type=PREVENTIVE", "work_order.view"),
+    "requests": ("/app/incidents/", "incident.view"),
+    "awaiting_triage": ("/app/incidents/?status=NEW", "incident.view"),
+    "awaiting_confirmation": ("/app/incidents/?status=RESOLVED", "incident.view"),
+    "sla_breaches": ("/app/sla/breaches/", "sla.view"),
+    "sla_open": ("/app/sla/breaches/", "sla.view"),
+    "due": ("/app/maintenance/due/", "maintenance.view"),
+    "upcoming": ("/app/maintenance/due/", "maintenance.view"),
+    "missed": ("/app/maintenance/due/", "maintenance.view"),
+    "pm_compliance": ("/app/maintenance/history/", "maintenance.view"),
+    "assets": ("/app/assets/", "asset.view"),
+    "expiring": ("/app/contracts/expiry/", "contract.view"),
+    "low_stock": ("/app/inventory/stock/", "inventory.view"),
+    "movements": ("/app/inventory/movements/", "inventory.view"),
+    "open": ("/app/workspace/", "work_order.view_assigned"),
+    "overdue": ("/app/workspace/", "work_order.view_assigned"),
+}
+
+
+def drill_links(membership) -> dict:
+    return {key: url for key, (url, code) in DRILL.items() if rbac.has_permission_anywhere(membership, code)}
+
+
 class DashBase(TenantPermissionMixin, View):
     required_permission = "report.view"
 
@@ -54,7 +81,8 @@ class IndexView(DashBase):
         ctx = {"sections": [(k, metrics.SECTIONS[k][0]) for k in sections], "current": current, "label": label,
                "f": f, "data": data, "error": err, "definitions": metrics.KPI_DEFINITIONS,
                "sites": site_selectors.sites_for(m, org, "report.view").order_by("code"),
-               "has_my_work": rbac.has_permission_anywhere(m, "work_order.view_assigned")}
+               "has_my_work": rbac.has_permission_anywhere(m, "work_order.view_assigned"),
+               "drill": drill_links(m)}
         if current == "operations":
             ctx["bars_status"] = bars(data["open_by_status"], ["DRAFT", "PLANNED", "ASSIGNED", "DISPATCHED",
                                                                "IN_PROGRESS", "ON_HOLD", "COMPLETED",
@@ -83,4 +111,5 @@ class MineView(TenantPermissionMixin, View):
             messages.error(request, exc.message)
             return redirect("dashboards:mine")
         return render(request, "dashboards/mine.html", {"f": f, "data": metrics.my_work(m, org, f),
-                                                        "definitions": metrics.KPI_DEFINITIONS})
+                                                        "definitions": metrics.KPI_DEFINITIONS,
+                                                        "drill": drill_links(m)})

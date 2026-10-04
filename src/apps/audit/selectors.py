@@ -47,7 +47,7 @@ CATEGORIES = {
                  Q(action__startswith="contract.") | Q(action__startswith="qr.")),
     "client": ("Client portal", "Requests, confirmations and access changes in the client portal.",
                Q(action__startswith="portal.")),
-    "exports": ("Exports", "Evidence exports taken from the audit trail.", Q(action="audit.exported")),
+    "exports": ("Exports", "Evidence exports (audit rows and per-work-order evidence packages).", Q(action__in=("audit.exported", "audit.evidence_exported"))),
 }
 
 

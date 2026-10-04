@@ -17,6 +17,7 @@ from apps.audit import services as audit
 from apps.core.exceptions import Conflict, ValidationFailed
 from apps.files import services as files
 
+from . import attributes as attrs
 from .models import (
     Asset,
     AssetCategory,
@@ -26,10 +27,11 @@ from .models import (
     AssetMeterReading,
     AssetStatusHistory,
 )
-from .workflow import ACTIVE, ASSET_STATUS, TERMINAL_STATES
+from .workflow import ACTIVE, ASSET_STATUS, TERMINAL_STATES, UNDER_MAINTENANCE
 
 ASSET_FIELDS = ["asset_tag", "name", "description", "category_id", "manufacturer", "model", "serial_number",
-                "purchase_date", "commission_date", "site_id", "zone_id", "owner_id", "warranty_ref"]
+                "purchase_date", "commission_date", "site_id", "zone_id", "owner_id", "warranty_ref", "attributes"]
+CATEGORY_FIELDS = ["name", "description", "is_active", "attribute_definitions"]
 _EDITABLE = {"asset_tag", "name", "description", "manufacturer", "model", "serial_number", "purchase_date",
              "commission_date", "warranty_ref"}
 _TAG_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._/-]{0,39}")
@@ -114,7 +116,9 @@ def _location_row(asset, actor, *, from_site, from_zone, reason=""):
 @transaction.atomic
 def create_asset(org, *, site, category, zone=None, owner=None, actor, request=None, **data) -> Asset:
     _check_refs(org, site=site, zone=zone, category=category, owner=owner)
+    values = data.pop("attributes", None)
     data = _clean_text(data)
+    data["attributes"] = attrs.clean_values(category.attribute_definitions, values)
     data["asset_tag"] = _tag(data.get("asset_tag", ""))
     if not data.get("name"):
         raise ValidationFailed("Asset name is required.")
@@ -134,7 +138,7 @@ def create_asset(org, *, site, category, zone=None, owner=None, actor, request=N
 
 @transaction.atomic
 def update_asset(asset: Asset, *, actor, request=None, category=UNSET, owner=UNSET, site=UNSET, zone=UNSET,
-                 reason: str = "", **changes) -> Asset:
+                 attributes=UNSET, reason: str = "", **changes) -> Asset:
     """Edits descriptive fields. ``site``/``zone`` (when given and different) perform a tracked move; ``status``
     can never be edited here (use ``change_status``)."""
     org = asset.organization
@@ -155,6 +159,10 @@ def update_asset(asset: Asset, *, actor, request=None, category=UNSET, owner=UNS
             raise ValidationFailed("Category is required.")
         if category.pk != asset.category_id:
             asset.category = category
+            if attributes is UNSET:
+                attributes = {}  # values of the old category's attributes do not carry over
+    if attributes is not UNSET:
+        asset.attributes = attrs.clean_values(asset.category.attribute_definitions, attributes)
     if owner is not UNSET:
         _check_refs(org, owner=owner)
         asset.owner = owner
@@ -212,26 +220,93 @@ def change_status(asset: Asset, *, action: str, reason: str, actor, request=None
     return asset
 
 
+# --- work-order driven status (M06 -> M02, D-058) ---------------------------------------------------------------------
+
+# Work types that take the asset out of normal service while they run. An INSPECTION does not.
+MAINTENANCE_WORK_TYPES = ("CORRECTIVE", "PREVENTIVE", "INSTALLATION", "OTHER")
+
+
+def _set_by_work_order(asset: Asset) -> bool:
+    """True when the asset's current UNDER_MAINTENANCE was set by a work order (never undo a manual decision)."""
+    last = asset.status_history.order_by("-created_at", "-id").first()
+    return bool(last and last.to_status == UNDER_MAINTENANCE and last.source == "work_order")
+
+
+@transaction.atomic
+def on_work_order_started(wo, *, actor, request=None):
+    """HPE 8.4 controlled transition: work starts -> ACTIVE asset becomes UNDER_MAINTENANCE through the asset state
+    machine (history + audit). Idempotent; any other asset state (already under maintenance, out of service,
+    retired, disposed) is left alone."""
+    if wo.work_type not in MAINTENANCE_WORK_TYPES:
+        return None
+    asset = Asset.objects.select_for_update().get(pk=wo.asset_id)
+    if asset.status != ACTIVE:
+        return None
+    return change_status(asset, action="start_maintenance", reason=f"{wo.number} work started", actor=actor,
+                         request=request, source="work_order")
+
+
+@transaction.atomic
+def on_work_order_closed(wo, *, actor, request=None):
+    """Closure -> UNDER_MAINTENANCE asset returns to ACTIVE, but only when this work order's lifecycle put it there
+    and no other work order on the asset is still being executed. OUT_OF_SERVICE (a real fault state) and terminal
+    states are never touched."""
+    from apps.workorders.models import WorkOrder
+    from apps.workorders.workflow import EXECUTION_STATES
+
+    asset = Asset.objects.select_for_update().get(pk=wo.asset_id)
+    if asset.status != UNDER_MAINTENANCE or not _set_by_work_order(asset):
+        return None
+    busy = WorkOrder.objects.for_organization(wo.organization).filter(
+        asset=asset, status__in=EXECUTION_STATES).exclude(pk=wo.pk).exists()
+    if busy:
+        return None
+    return change_status(asset, action="complete_maintenance", reason=f"{wo.number} closed", actor=actor,
+                         request=request, source="work_order")
+
+
+@transaction.atomic
+def remove_document(document: AssetDocument, *, reason: str, actor, request=None) -> AssetDocument:
+    """Soft-removes a document (hidden, download blocked; file and audit trail kept). Needs a reason."""
+    reason = (reason or "").strip()
+    if len(reason) < 3:
+        raise ValidationFailed("A reason is required to remove a document.", code="reason_required")
+    document = AssetDocument.objects.select_for_update().select_related("asset").get(pk=document.pk)
+    if not document.is_active:
+        raise Conflict("The document has already been removed.", code="document_removed")
+    assert_editable(document.asset)
+    document.is_active, document.removed_at, document.removed_by = False, timezone.now(), actor
+    document.removed_reason = reason[:300]
+    document.save(update_fields=["is_active", "removed_at", "removed_by", "removed_reason", "updated_at"])
+    audit.record("asset.document_removed", actor=actor, organization=document.organization, target=document.asset,
+                 before={"title": document.title, "active": True}, after={"active": False, "reason": reason[:300]},
+                 metadata={"document": str(document.pk)}, request=request)
+    return document
+
+
 # --- categories --------------------------------------------------------------------------------------
 
 
 @transaction.atomic
-def create_category(org, *, name: str, description: str = "", actor, request=None) -> AssetCategory:
+def create_category(org, *, name: str, description: str = "", attribute_definitions=None, actor,
+                    request=None) -> AssetCategory:
     name = (name or "").strip()
     if not name:
         raise ValidationFailed("Category name is required.")
     if AssetCategory.objects.for_organization(org).filter(name__iexact=name).exists():
         raise Conflict("A category with this name already exists.", code="duplicate_category")
-    cat = AssetCategory(organization=org, name=name, description=(description or "").strip())
+    cat = AssetCategory(organization=org, name=name, description=(description or "").strip(),
+                        attribute_definitions=attrs.normalize_definitions(attribute_definitions))
     _save(cat, "A category with this name already exists.", "duplicate_category")
     audit.record("asset.category_created", actor=actor, organization=org, target=cat,
-                 after=audit.snapshot(cat, ["name", "description", "is_active"]), request=request)
+                 after=audit.snapshot(cat, CATEGORY_FIELDS), request=request)
     return cat
 
 
 @transaction.atomic
-def update_category(cat: AssetCategory, *, actor, request=None, name=None, description=None, is_active=None):
-    before = audit.snapshot(cat, ["name", "description", "is_active"])
+def update_category(cat: AssetCategory, *, actor, request=None, name=None, description=None, is_active=None,
+                    attribute_definitions=UNSET):
+    before = audit.snapshot(cat, CATEGORY_FIELDS)
     if name is not None:
         name = name.strip()
         if not name:
@@ -244,8 +319,10 @@ def update_category(cat: AssetCategory, *, actor, request=None, name=None, descr
         cat.description = description.strip()
     if is_active is not None:
         cat.is_active = is_active
+    if attribute_definitions is not UNSET:
+        cat.attribute_definitions = attrs.normalize_definitions(attribute_definitions)
     _save(cat, "A category with this name already exists.", "duplicate_category")
-    after = audit.snapshot(cat, ["name", "description", "is_active"])
+    after = audit.snapshot(cat, CATEGORY_FIELDS)
     if before != after:
         audit.record("asset.category_updated", actor=actor, organization=cat.organization, target=cat,
                      before=before, after=after, request=request)

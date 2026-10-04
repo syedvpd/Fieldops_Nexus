@@ -16,6 +16,7 @@ from apps.core.exceptions import DomainError
 from apps.rbac import services as rbac
 from apps.sites import selectors as site_selectors
 from apps.sites.views import form_page, need, or404
+from apps.sla.models import SLAProfile
 from apps.ui.mixins import TenantPermissionMixin
 from apps.workorders import selectors as wo_selectors
 
@@ -80,7 +81,8 @@ class AgreementCreateView(CBase):
                     request.GET["assets"]) else None
                 initial["site"] = a.site_id if a else None
         return AgreementForm(data, providers=selectors.providers_for(org).filter(is_active=True), sites=sites,
-                             assets=assets, initial=initial)
+                             assets=assets, sla_profiles=SLAProfile.objects.for_organization(org).filter(
+                                 is_active=True).order_by("name"), initial=initial)
 
     def get(self, request):
         return form_page(request, title="New warranty / AMC / contract", form=self._form(request),
@@ -138,11 +140,14 @@ class AgreementEditView(AgreementBase):
         initial = None if data is not None else {
             "reference": ag.reference, "title": ag.title, "provider": ag.provider_id, "start_date": ag.start_date,
             "end_date": ag.end_date, "terms": ag.terms, "exclusion_notes": ag.exclusion_notes,
-            "sla_terms": ag.sla_terms, "renewal_alert_days": ag.renewal_alert_days,
+            "sla_terms": ag.sla_terms, "sla_profile": ag.sla_profile_id, "renewal_alert_days": ag.renewal_alert_days,
             "excluded_work_types": [e.work_type for e in ag.exclusions.all()]}
         providers = selectors.providers_for(org).filter(is_active=True) | selectors.providers_for(org).filter(
             pk=ag.provider_id)
-        return AgreementForm(data, providers=providers, sites=None, assets=None, editing=True, initial=initial)
+        profiles = SLAProfile.objects.for_organization(org).filter(is_active=True) | SLAProfile.objects.for_organization(
+            org).filter(pk=ag.sla_profile_id)
+        return AgreementForm(data, providers=providers, sites=None, assets=None, sla_profiles=profiles.order_by("name"),
+                             editing=True, initial=initial)
 
     def _page(self, request, ag, form, status=200):
         return form_page(request, title=f"Edit {ag.reference}", form=form, submit="Save", status=status,

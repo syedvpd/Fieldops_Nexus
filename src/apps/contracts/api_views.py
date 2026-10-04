@@ -56,8 +56,8 @@ class AgreementSerializer(serializers.ModelSerializer):
     class Meta:
         model = CoverageAgreement
         fields = ["id", "reference", "title", "kind", "provider", "provider_name", "site", "site_code",
-                  "start_date", "end_date", "terms", "exclusion_notes", "sla_terms", "renewal_alert_days",
-                  "is_active", "deactivation_reason", "state", "assets", "excluded_work_types", "renewed_from",
+                  "start_date", "end_date", "terms", "exclusion_notes", "sla_terms", "sla_profile",
+                  "renewal_alert_days", "is_active", "deactivation_reason", "state", "assets", "excluded_work_types", "renewed_from",
                   "renewed_from_reference", "created_at", "updated_at"]
         read_only_fields = fields
 
@@ -84,6 +84,7 @@ class AgreementWriteSerializer(serializers.Serializer):
     terms = serializers.CharField(required=False, allow_blank=True)
     exclusion_notes = serializers.CharField(required=False, allow_blank=True)
     sla_terms = serializers.CharField(max_length=300, required=False, allow_blank=True)
+    sla_profile = serializers.UUIDField(required=False, allow_null=True)
     renewal_alert_days = serializers.IntegerField(required=False, min_value=0, max_value=365)
     excluded_work_types = serializers.ListField(child=serializers.ChoiceField(choices=WORK_TYPE_CHOICES),
                                                 required=False)
@@ -98,6 +99,7 @@ class AgreementPatchSerializer(serializers.Serializer):
     terms = serializers.CharField(required=False, allow_blank=True)
     exclusion_notes = serializers.CharField(required=False, allow_blank=True)
     sla_terms = serializers.CharField(max_length=300, required=False, allow_blank=True)
+    sla_profile = serializers.UUIDField(required=False, allow_null=True)
     renewal_alert_days = serializers.IntegerField(required=False, min_value=0, max_value=365)
     excluded_work_types = serializers.ListField(child=serializers.ChoiceField(choices=WORK_TYPE_CHOICES),
                                                 required=False)
@@ -155,6 +157,19 @@ class CoverageResultSerializer(serializers.Serializer):
     eligible = serializers.BooleanField()
     reason = serializers.CharField()
     entries = EntrySerializer(many=True)
+
+
+def _sla_profile(org, pk):
+    """Resolves an SLA profile id inside the caller's organization (another tenant's id answers 404)."""
+    if pk is None:
+        return None
+    from apps.core.exceptions import NotFound
+    from apps.sla.models import SLAProfile
+
+    profile = SLAProfile.objects.for_organization(org).filter(pk=pk).first()
+    if profile is None:
+        raise NotFound("SLA profile not found.")
+    return profile
 
 
 def _validated(serializer_cls, request, partial=False):
@@ -258,6 +273,7 @@ class AgreementViewSet(TenantAPIMixin, viewsets.ViewSet):
         org = request.organization
         site = site_selectors.get_site_for(request.membership, org, d.pop("site"), "contract.create")
         provider = selectors.get_provider(org, d.pop("provider"))
+        d["sla_profile"] = _sla_profile(org, d.pop("sla_profile", None))
         assets = [self._asset(request, a, "contract.create") for a in d.pop("assets")]
         ag = services.create_agreement(org, site=site, provider=provider, assets=assets, actor=request.user,
                                        request=request, **d)
@@ -269,6 +285,8 @@ class AgreementViewSet(TenantAPIMixin, viewsets.ViewSet):
         d = _validated(AgreementPatchSerializer, request, partial=True)
         if "provider" in d:
             d["provider"] = selectors.get_provider(request.organization, d["provider"])
+        if "sla_profile" in d:
+            d["sla_profile"] = _sla_profile(request.organization, d["sla_profile"])
         services.update_agreement(ag, actor=request.user, request=request, **d)
         return Response(AgreementSerializer(self._ag(request, pk)).data)
 

@@ -25,7 +25,7 @@
   <dt>Coverage terms</dt><dd>{{ ag.terms|default:"—"|linebreaksbr }}</dd>
   <dt>Not covered (work types)</dt><dd id="exclusions">{% for e in exclusions %}<span class="badge text-bg-light border">{{ e }}</span> {% empty %}None{% endfor %}</dd>
   <dt>Other exclusions</dt><dd>{{ ag.exclusion_notes|default:"—"|linebreaksbr }}</dd>
-  <dt>Provider response terms</dt><dd>{{ ag.sla_terms|default:"—" }}</dd><dt>Renewal alert</dt><dd>{{ ag.renewal_alert_days }} days before the end</dd></dl></div></div></div>
+  <dt>Provider response terms</dt><dd>{{ ag.sla_terms|default:"—" }}</dd><dt>Internal SLA profile</dt><dd id="coverage-sla">{% if ag.sla_profile %}<a href="{% url 'sla:profile' ag.sla_profile_id %}">{{ ag.sla_profile.name }}</a>{% else %}— (site / organization SLA applies){% endif %}</dd><dt>Renewal alert</dt><dd>{{ ag.renewal_alert_days }} days before the end</dd></dl></div></div></div>
   <div class="col-lg-6"><div class="fx-card"><div class="fx-card-header">Covered assets ({{ links|length }})</div>
   <div class="table-responsive"><table class="table fx-table" id="covered-assets"><tbody>
   {% for l in links %}<tr><td><a href="{% url 'assets:detail' l.asset_id %}">{{ l.asset.asset_tag }}</a> · {{ l.asset.name }}</td>

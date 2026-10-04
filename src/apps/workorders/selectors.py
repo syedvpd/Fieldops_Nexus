@@ -5,6 +5,7 @@ from __future__ import annotations
 import uuid
 
 from django.db.models import Q, Sum
+from django.utils import timezone
 
 from apps.rbac import services as rbac
 from apps.sites.selectors import scoped_get
@@ -57,6 +58,11 @@ def filter_work_orders(qs, params, membership=None):
         value = (params.get(param) or "").strip()
         if value:
             qs = qs.filter(**{field: value}) if value in choices else qs.none()
+    if (params.get("open") or "") in ("1", "true"):  # dashboard drill-down: everything not closed / cancelled
+        qs = qs.exclude(status__in=("CLOSED", "CANCELLED"))
+    if (params.get("overdue") or "") in ("1", "true"):  # past the planned end and not yet completed
+        qs = qs.filter(status__in=("DRAFT", "PLANNED", "ASSIGNED", "DISPATCHED", "IN_PROGRESS", "ON_HOLD"),
+                       planned_end__lt=timezone.now())
     if membership is not None and (params.get("mine") or "") in ("1", "true"):
         qs = qs.filter(assigned_to=membership)
     q = (params.get("q") or "").strip()

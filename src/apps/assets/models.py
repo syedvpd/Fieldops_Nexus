@@ -11,11 +11,20 @@ class AssetCategory(TenantOwnedModel):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=300, blank=True)
     is_active = models.BooleanField(default=True)
+    attribute_definitions = models.JSONField(
+        default=list, blank=True,
+        help_text="Custom attributes assets of this category carry (see assets.attributes).")
 
     class Meta:
         ordering = ["name"]
         verbose_name_plural = "asset categories"
         constraints = [models.UniqueConstraint(Lower("name"), "organization", name="uniq_asset_category_per_org")]
+
+    @property
+    def attribute_text(self) -> str:
+        from .attributes import to_text
+
+        return to_text(self.attribute_definitions)
 
     def __str__(self):
         return self.name
@@ -41,6 +50,8 @@ class Asset(TenantOwnedModel):
         "tenancy.Membership", null=True, blank=True, on_delete=models.PROTECT, related_name="owned_assets")
     warranty_ref = models.CharField(
         max_length=200, blank=True, help_text="Free-text reference; coverage logic belongs to M10 (later).")
+    attributes = models.JSONField(default=dict, blank=True,
+                                  help_text="Values of the category's custom attributes (key -> text).")
     status = models.CharField(max_length=20, choices=Status.choices, default=ACTIVE, db_index=True)
 
     class Meta:
@@ -132,6 +143,13 @@ class AssetDocument(TenantOwnedModel):
     attachment = models.OneToOneField(
         "files.Attachment", null=True, blank=True, on_delete=models.PROTECT, related_name="+")
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="+")
+    # Removal is a soft state change (the stored file and the audit trail stay): a removed document is hidden and
+    # can no longer be downloaded.
+    is_active = models.BooleanField(default=True)
+    removed_at = models.DateTimeField(null=True, blank=True)
+    removed_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
+                                   related_name="+")
+    removed_reason = models.CharField(max_length=300, blank=True)
 
     class Meta:
         ordering = ["-created_at"]

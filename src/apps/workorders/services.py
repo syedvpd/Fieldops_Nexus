@@ -334,6 +334,7 @@ def transition(wo: WorkOrder, *, action: str, actor, membership, reason: str = "
     elif action == "dispatch":
         _notify(wo, wo.assigned_to, f"{wo.number} dispatched - ready to start")
     elif action == "start":
+        _hook_asset(wo, "on_work_order_started", actor=actor, request=request)
         _hook_request(wo, "on_work_order_started", actor=actor, request=request)
     elif action == "complete":
         _hook_request(wo, "on_work_order_completed", actor=actor, request=request)
@@ -345,7 +346,15 @@ def transition(wo: WorkOrder, *, action: str, actor, membership, reason: str = "
         _hook_inventory(wo, "on_work_order_cancelled", actor=actor, request=request)
     elif action == "close":
         _hook_inventory(wo, "on_work_order_closed", actor=actor, request=request)
+        _hook_asset(wo, "on_work_order_closed", actor=actor, request=request)
     return wo
+
+
+def _hook_asset(wo: WorkOrder, name: str, *, actor, request):
+    """M02 contract (D-058): the work-order lifecycle drives the asset status through the asset state machine."""
+    from apps.assets import services as assets
+
+    getattr(assets, name)(wo, actor=actor, request=request)
 
 
 def _hook_inventory(wo: WorkOrder, name: str, *, actor, request):

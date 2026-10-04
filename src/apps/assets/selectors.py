@@ -5,6 +5,7 @@ import uuid
 
 from django.db.models import OuterRef, Q, Subquery
 
+from apps.core.exceptions import NotFound
 from apps.rbac import services as rbac
 from apps.sites.selectors import scoped_get
 
@@ -70,9 +71,18 @@ def location_history_for(org, asset: Asset):
         "from_site", "from_zone", "to_site", "to_zone", "moved_by")
 
 
-def documents_for(org, asset: Asset):
-    return AssetDocument.objects.for_organization(org).filter(asset=asset).select_related(
-        "attachment", "uploaded_by")
+def documents_for(org, asset: Asset, *, include_removed: bool = False):
+    qs = AssetDocument.objects.for_organization(org).filter(asset=asset).select_related("attachment", "uploaded_by")
+    return qs if include_removed else qs.filter(is_active=True)
+
+
+def get_document(membership, org, pk, code: str = "asset.document.manage") -> AssetDocument:
+    """A document of an asset the caller may act on (404 for other tenants / sites)."""
+    doc = AssetDocument.objects.for_organization(org).filter(pk=_uuid_or_none(pk)).select_related(
+        "asset", "attachment").first()
+    if doc is None or not assets_for(membership, org, code).filter(pk=doc.asset_id).exists():
+        raise NotFound("Document not found.")
+    return doc
 
 
 def meters_for(membership, org, code: str = "asset.view"):

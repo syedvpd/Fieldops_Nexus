@@ -15,11 +15,12 @@ from apps.sites import selectors as site_selectors
 from apps.sites.views import need, or404
 from apps.ui.mixins import TenantPermissionMixin
 
-from . import hierarchy, selectors, services
+from . import attributes, hierarchy, selectors, services
 from .forms import (
     AssetForm,
     CategoryForm,
     ComponentAddForm,
+    ComponentEditForm,
     ComponentMoveForm,
     DocumentForm,
     MeterForm,
@@ -46,6 +47,29 @@ def _back(asset, tab):
 
 class AssetBase(TenantPermissionMixin, View):
     pass
+
+
+FORM_KEYS = ("asset_tag", "name", "category", "site", "zone", "manufacturer", "model", "serial_number",
+             "purchase_date", "commission_date", "owner", "warranty_ref", "description")
+
+
+def _prefill(request) -> dict:
+    """Form values carried in the query string when the category changes (the page reloads so the new category's
+    custom attributes appear without losing what was typed)."""
+    initial = {k: request.GET[k] for k in request.GET if k in FORM_KEYS}
+    attrs = {k[5:]: v for k, v in request.GET.items() if k.startswith("attr_")}
+    if attrs:
+        initial["attributes"] = attrs
+    return initial
+
+
+def _category_for(request, source):
+    """The (active) category named in ``source`` ('category' key) inside the caller's organization, or None."""
+    raw = str(source.get("category") or "").strip() if hasattr(source, "get") else ""
+    pk = selectors._uuid_or_none(raw)
+    if pk is None:
+        return None
+    return selectors.categories_for(request.organization).filter(pk=pk).first()
 
 
 # --- list / create / edit --------------------------------------------------------------------------------------
@@ -93,12 +117,15 @@ class AssetCreateView(AssetBase):
             initial = {"site": parent.site_id, "zone": parent.zone_id, "category": parent.category_id}
         elif request.GET.get("site"):
             initial["site"] = request.GET["site"]
-        form = AssetForm(initial=initial, sites=self._sites(request), org=request.organization)
+        initial.update(_prefill(request))
+        form = AssetForm(initial=initial, sites=self._sites(request), org=request.organization,
+                         category=_category_for(request, initial))
         return self._page(request, form, parent, NewChildForm() if parent else None)
 
     def post(self, request):
         parent = self._parent(request)
-        form = AssetForm(request.POST, sites=self._sites(request), org=request.organization)
+        form = AssetForm(request.POST, sites=self._sites(request), org=request.organization,
+                         category=_category_for(request, request.POST))
         rel_form = NewChildForm(request.POST) if parent else None
         if form.is_valid() and (rel_form is None or rel_form.is_valid()):
             d = dict(form.cleaned_data)
@@ -123,13 +150,19 @@ class AssetEditView(AssetBase):
 
     def _form(self, request, asset, data=None):
         sites = site_selectors.sites_for(request.membership, request.organization, "asset.update")
-        initial = None if data else {
+        reload = data is None and "category" in request.GET
+        category = _category_for(request, data if data is not None else (request.GET if reload else {})) \
+            or asset.category
+        initial = None if data else {"attributes": asset.attributes if category.pk == asset.category_id else {},
             "asset_tag": asset.asset_tag, "name": asset.name, "category": asset.category_id, "site": asset.site_id,
             "zone": asset.zone_id, "manufacturer": asset.manufacturer, "model": asset.model,
             "serial_number": asset.serial_number, "purchase_date": asset.purchase_date,
             "commission_date": asset.commission_date, "owner": asset.owner_id, "warranty_ref": asset.warranty_ref,
             "description": asset.description}
-        return AssetForm(data, initial=initial, sites=sites, org=request.organization, creating=False)
+        if reload:
+            initial.update(_prefill(request))
+        return AssetForm(data, initial=initial, sites=sites, org=request.organization, creating=False,
+                         category=category)
 
     def _page(self, request, asset, form, status=200):
         return render(request, "assets/form.html", {
@@ -181,7 +214,13 @@ class AssetDetailView(AssetBase):
                             if t.target in TERMINAL_STATES else ""}
                            for t in ASSET_STATUS.available(asset.status)]
         ctx = {"asset": asset, "tab": tab, "tabs": TABS, "can": can, "transitions": transitions,
+               "custom_attributes": attributes.display(asset.category.attribute_definitions, asset.attributes),
                "terminal": asset.status in TERMINAL_STATES, "parent_link": getattr(asset, "parent_link", None)}
+        if tab == "overview" and rbac.has_permission(m, "contract.view", asset.site_id):
+            from apps.contracts import services as contract_services
+
+            # M10: the live coverage (agreements in force) next to the free-text warranty reference
+            ctx["coverage_now"] = [e for e in contract_services.evaluate(org, asset).entries if e.status == "COVERING"]
         if tab == "documents":
             ctx["documents"] = selectors.documents_for(org, asset)
             ctx["doc_form"] = DocumentForm()
@@ -208,6 +247,10 @@ class AssetDetailView(AssetBase):
             ctx["add_form"] = ComponentAddForm(candidates=base.filter(parent_link__isnull=True).exclude(
                 pk__in=exclude_ids), initial={"relationship_type": "COMPONENT", "quantity": 1})
             if getattr(asset, "parent_link", None) is not None:
+                link = asset.parent_link
+                ctx["edit_link_form"] = ComponentEditForm(initial={
+                    "relationship_type": link.relationship_type, "quantity": link.quantity,
+                    "part_number": link.part_number, "notes": link.notes})
                 below = {n["asset"].pk for n in hierarchy.flatten(hierarchy.build_tree(asset))}
                 ctx["move_form"] = ComponentMoveForm(candidates=base.exclude(pk__in=below))
         return ctx
@@ -262,6 +305,21 @@ class DocumentUploadView(AssetBase):
         except DomainError as exc:
             messages.error(request, exc.message)
         return _back(asset, "documents")
+
+
+class DocumentRemoveView(AssetBase):
+    required_permission = "asset.document.manage"
+    http_method_names = ["post"]
+
+    def post(self, request, pk):
+        doc = or404(selectors.get_document, request.membership, request.organization, pk)
+        need(request, "asset.document.manage", doc.asset.site_id)
+        try:
+            services.remove_document(doc, reason=request.POST.get("reason", ""), actor=request.user, request=request)
+            messages.success(request, "Document removed.")
+        except DomainError as exc:
+            messages.error(request, exc.message)
+        return _back(doc.asset, "documents")
 
 
 class MeterCreateView(AssetBase):
@@ -343,6 +401,23 @@ def _link(request, pk) -> AssetComponent:
     return link
 
 
+class ComponentEditView(AssetBase):
+    required_permission = "asset.hierarchy.manage"
+    http_method_names = ["post"]
+
+    def post(self, request, pk):
+        link = _link(request, pk)
+        form = ComponentEditForm(request.POST)
+        try:
+            if not form.is_valid():
+                raise DomainError("Check the relationship type and quantity.")
+            hierarchy.update_component(link, actor=request.user, request=request, **form.cleaned_data)
+            messages.success(request, "Relationship updated.")
+        except DomainError as exc:
+            messages.error(request, exc.message)
+        return _back(link.child, "hierarchy")
+
+
 class ComponentMoveView(AssetBase):
     required_permission = "asset.hierarchy.manage"
     http_method_names = ["post"]
@@ -394,7 +469,7 @@ class CategoryView(AssetBase):
         org = request.organization
         form = CategoryForm(request.POST)
         if not form.is_valid():
-            messages.error(request, "Enter a category name.")
+            messages.error(request, next(iter(form.errors.values()))[0] if form.errors else "Enter a category name.")
             return redirect("assets:categories")
         d = form.cleaned_data
         try:
@@ -405,10 +480,12 @@ class CategoryView(AssetBase):
                 except NotFound as exc:
                     raise Http404 from exc
                 services.update_category(cat, actor=request.user, request=request, name=d["name"],
-                                         description=d["description"], is_active=d["is_active"])
+                                         description=d["description"], is_active=d["is_active"],
+                                         attribute_definitions=d["attribute_text"])
                 messages.success(request, "Category saved.")
             else:
-                services.create_category(org, name=d["name"], description=d["description"], actor=request.user,
+                services.create_category(org, name=d["name"], description=d["description"],
+                                         attribute_definitions=d["attribute_text"], actor=request.user,
                                          request=request)
                 messages.success(request, "Category created.")
         except DomainError as exc:

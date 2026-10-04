@@ -1,7 +1,7 @@
 """Final reconciliation: per-organization Celery fan-out (D-056) and report snapshots (D-054, HPE ReportSnapshot).
 Tenant-aware, idempotent, suspended organizations skipped, snapshot figures equal the live dashboard queries."""
 import json
-from datetime import date
+from datetime import UTC, date, datetime
 
 import pytest
 from django.core.serializers.json import DjangoJSONEncoder
@@ -35,7 +35,7 @@ def two_orgs(p3, org_b, owner_a, owner_b):
 
 
 def test_snapshot_equals_live_metrics_is_idempotent_and_immutable(two_orgs, org_a, owner_a):
-    day = date(2026, 10, 3)
+    day = datetime.now(UTC).date()  # the seeded work orders are created now: keep the window current
     first = services.snapshot_organization(org_a, day)
     assert first == {"created": len(metrics.SECTIONS), "existing": 0, "skipped": None}
     second = services.snapshot_organization(org_a, day)

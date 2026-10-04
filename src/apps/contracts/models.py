@@ -48,6 +48,10 @@ class CoverageAgreement(TenantOwnedModel):
     exclusion_notes = models.TextField(blank=True, help_text="Free-text exclusions (structured ones are rows).")
     sla_terms = models.CharField(max_length=300, blank=True,
                                  help_text="Provider response terms (information only; M11 owns SLA behaviour).")
+    sla_profile = models.ForeignKey(
+        "sla.SLAProfile", null=True, blank=True, on_delete=models.PROTECT, related_name="+",
+        help_text="Internal SLA profile (M11) applied to work covered by this agreement; it overrides the "
+                  "site / organization profile for the covered assets while the agreement is in force.")
     renewal_alert_days = models.PositiveSmallIntegerField(default=30)
     renewal_alerted_at = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)

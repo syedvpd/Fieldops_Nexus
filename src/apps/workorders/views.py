@@ -154,7 +154,8 @@ class WorkOrderDetailView(WorkOrderBase):
         can = {k: rbac.has_permission(m, code, wo.site_id) for k, code in (
             ("update", "work_order.update"), ("assign", "work_order.assign"), ("record", "work_order.record"),
             ("attach", "work_order.attach"), ("dispatch", "work_order.dispatch"),
-            ("view_request", "incident.view"), ("view_pm", "maintenance.view"))}
+            ("view_request", "incident.view"), ("view_pm", "maintenance.view"),
+            ("export_evidence", "audit.export"))}
         actions = build_actions(request, wo)
         ctx = {"wo": wo, "tab": tab, "tabs": TABS, "can": can, "actions": actions,
                "editable": wo.status in ("DRAFT", "PLANNED"), "terminal": wo.status in TERMINAL_STATES}

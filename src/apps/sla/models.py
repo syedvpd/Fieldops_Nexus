@@ -30,6 +30,9 @@ class SLAProfile(TenantOwnedModel):
     # tokens such as WORK_ORDER:ON_HOLD or REQUEST:RESOLVED; empty = the timers never pause (D-044)
     pause_states = models.JSONField(default=list, blank=True)
     is_active = models.BooleanField(default=True)
+    coverage_only = models.BooleanField(
+        default=False,
+        help_text="Used only through a warranty / AMC / contract that names it (M10); never resolved by scope.")
 
     class Meta:
         ordering = ["name"]
@@ -38,10 +41,12 @@ class SLAProfile(TenantOwnedModel):
             # at most one ACTIVE profile per scope, so the profile of a request / work order is unambiguous
             models.UniqueConstraint(
                 fields=["organization", "applies_to", "work_type"],
-                condition=models.Q(is_active=True, site__isnull=True), name="uniq_active_sla_profile_org_scope"),
+                condition=models.Q(is_active=True, site__isnull=True, coverage_only=False),
+                name="uniq_active_sla_profile_org_scope"),
             models.UniqueConstraint(
                 fields=["organization", "applies_to", "work_type", "site"],
-                condition=models.Q(is_active=True, site__isnull=False), name="uniq_active_sla_profile_site_scope"),
+                condition=models.Q(is_active=True, site__isnull=False, coverage_only=False),
+                name="uniq_active_sla_profile_site_scope"),
         ]
 
     def __str__(self):

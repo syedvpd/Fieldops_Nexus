@@ -42,3 +42,17 @@ document.addEventListener("click", function (e) {
   if (nav) { var l = document.getElementById("fx-layout"); if (l) l.classList.toggle("fx-nav-open"); return; }
   if (e.target.closest("[data-fx-print]")) window.print();
 });
+
+/* Asset form: choosing another category reloads the page with the typed values so the category's custom attributes
+   appear (the server builds and validates those fields). */
+document.addEventListener("change", function (e) {
+  var sel = e.target.closest("select[data-category-reload]");
+  if (!sel || !sel.form) return;
+  var params = new URLSearchParams();
+  new FormData(sel.form).forEach(function (value, key) {
+    if (typeof value === "string" && key !== "csrfmiddlewaretoken" && key.indexOf("attr_") !== 0 && value !== "") {
+      params.set(key, value);
+    }
+  });
+  window.location.search = params.toString();
+});

@@ -4,6 +4,7 @@ from apps.sites.models import Site, Zone
 from apps.tenancy.models import Membership
 from apps.ui.forms import BootstrapFormMixin
 
+from . import attributes as attrs
 from .models import AssetCategory, AssetComponent, AssetDocument
 
 
@@ -38,8 +39,13 @@ class AssetForm(BootstrapFormMixin, forms.Form):
     reason = forms.CharField(max_length=500, required=False, label="Reason for location change",
                              help_text="Recorded in the location history when the site or location changes.")
 
-    def __init__(self, *args, sites, org, creating=True, **kwargs):
+    def __init__(self, *args, sites, org, creating=True, category=None, **kwargs):
         super().__init__(*args, **kwargs)
+        self.attribute_defs = list(category.attribute_definitions) if category else []
+        values = (kwargs.get("initial") or {}).get("attributes") or {}
+        for d in self.attribute_defs:  # the category's custom attributes become real, validated form fields
+            self.fields[f"attr_{d['key']}"] = self._attribute_field(d, values.get(d["key"], ""))
+        self.fields["category"].widget.attrs["data-category-reload"] = "1"
         site_qs = sites.filter(status="ACTIVE").order_by("code")
         self.fields["site"].queryset = site_qs
         self.fields["zone"].queryset = Zone.objects.for_organization(org).filter(
@@ -52,8 +58,24 @@ class AssetForm(BootstrapFormMixin, forms.Form):
         self.fields["zone"].widget.attrs["data-site-filter"] = "1"
         self.fields["site"].widget.attrs["data-site-select"] = "1"
 
+    @staticmethod
+    def _attribute_field(d, initial):
+        common = {"required": bool(d.get("required")), "label": d["label"], "initial": initial}
+        if d["type"] == "number":
+            return forms.DecimalField(decimal_places=6, max_digits=20, **common)
+        if d["type"] == "date":
+            return forms.DateField(widget=forms.DateInput(attrs={"type": "date"}), **common)
+        if d["type"] == "choice":
+            return forms.ChoiceField(choices=[("", "(choose)")] + [(c, c) for c in d["choices"]], **common)
+        return forms.CharField(max_length=attrs.MAX_TEXT, **common)
+
     def clean(self):
         data = super().clean()
+        values = {}
+        for d in self.attribute_defs:
+            v = data.pop(f"attr_{d['key']}", None)
+            values[d["key"]] = "" if v is None else (v.isoformat() if hasattr(v, "isoformat") else str(v))
+        data["attributes"] = values
         site, zone = data.get("site"), data.get("zone")
         if site and zone and zone.site_id != site.pk:
             self.add_error("zone", "This location does not belong to the selected site.")
@@ -78,6 +100,10 @@ class ComponentAddForm(BootstrapFormMixin, RelationshipFields):
         super().__init__(*args, **kwargs)
         self.fields["child"].queryset = candidates
         self.order_fields(["child", "relationship_type", "quantity", "part_number", "notes"])
+
+
+class ComponentEditForm(BootstrapFormMixin, RelationshipFields):
+    """Edits the relationship (type, quantity, part number, notes) of an existing parent-child link."""
 
 
 class ComponentMoveForm(BootstrapFormMixin, forms.Form):
@@ -111,3 +137,15 @@ class CategoryForm(BootstrapFormMixin, forms.Form):
     name = forms.CharField(max_length=100)
     description = forms.CharField(max_length=300, required=False)
     is_active = forms.BooleanField(required=False, initial=True, label="Active")
+    attribute_text = forms.CharField(
+        required=False, widget=forms.Textarea(attrs={"rows": 3}), label="Custom attributes",
+        help_text="One per line: Label | type | required | choices. Types: text, number, date, choice. "
+                  "Example: Voltage | number | required")
+
+    def clean_attribute_text(self):
+        from apps.core.exceptions import DomainError
+
+        try:
+            return attrs.parse_text(self.cleaned_data.get("attribute_text", ""))
+        except DomainError as exc:
+            raise forms.ValidationError(exc.message) from exc

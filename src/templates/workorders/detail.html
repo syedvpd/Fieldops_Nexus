@@ -7,7 +7,8 @@
     <li class="breadcrumb-item active">{{ wo.number }}</li></ol></nav>
   <h1>{{ wo.title }} {% status_badge wo.status %}</h1>
   <div class="text-body-secondary">{{ wo.number }} · {{ wo.get_work_type_display }} · {% status_badge wo.priority %} · <a href="{% url 'assets:detail' wo.asset_id %}">{{ wo.asset.asset_tag }}</a> · <a href="{% url 'sites:detail' wo.site_id %}">{{ wo.site.code }}</a></div></div>
-  <div class="d-flex gap-2">{% if can.update and editable %}<a class="btn btn-outline-primary" href="{% url 'workorders:edit' wo.pk %}">Edit</a>{% endif %}</div></div>
+  <div class="d-flex gap-2">{% if can.update and editable %}<a class="btn btn-outline-primary" href="{% url 'workorders:edit' wo.pk %}">Edit</a>{% endif %}
+  {% if can.export_evidence %}<a class="btn btn-outline-secondary" id="evidence-package" href="{% url 'audit:evidence_package' wo.pk %}">Evidence package (ZIP)</a>{% endif %}</div></div>
 
 {% if actions %}
 <div class="fx-card mb-3"><div class="fx-card-header">Next steps</div><div class="fx-card-body d-flex flex-wrap gap-3 align-items-start" id="wo-actions">

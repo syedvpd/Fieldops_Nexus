@@ -100,6 +100,7 @@ class JobView(WorkspaceBase):
             "part_lines": part_lines, "can_consume": can_consume, "can_request_part": can_request_part,
             "request_part_form": RequestPartForm(parts=inv_selectors.parts_for(org).filter(is_active=True).order_by(
                 "part_number")) if can_request_part else None,
+            "route": selectors.route_context(wo),
             "wo": wo, "actions": actions, "can": can, "executor": executor, "recordable": recordable,
             "requirements": requirements, "optional_templates": optional, "can_start": can_start,
             "blockers": blockers, "evidence_missing": evidence_missing,

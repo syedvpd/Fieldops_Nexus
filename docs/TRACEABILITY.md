@@ -184,3 +184,15 @@ Full matrices: `docs/FINAL_HPE_TRACEABILITY_REPORT.md`, `FINAL_DAY_90_ACCEPTANCE
 |---|---|---|
 | MTTR, MTBF, technician utilization (8 h/day), PM compliance, parts consumption, overdue | `dashboards.metrics.KPI_DEFINITIONS` | OUR IMPLEMENTATION ASSUMPTION; TEAM LEAD CONFIRMATION REQUIRED (no recorded approval) |
 | Open work orders, SLA breaches, downtime hours, open incidents, low stock | plain counts / sums over persisted rows, reconciled against SQL in `tests/test_m14_dashboards.py` | no business definition needed beyond the status sets in `KPI_DEFINITIONS` |
+
+## Gap closure 2026-10-04 (static completeness audit -> fixes)
+| Requirement (source) | Implementation | Tests |
+|---|---|---|
+| HPE 7.2 Technician workspace "route/site details" | `workspace.selectors.route_context`, "Site & route" card (D-061) | `tests/test_m07_route.py` |
+| HPE 8.4 asset status / downtime via controlled workflow transitions; master workflow WO start / close | `assets.services.on_work_order_started/_closed` (D-058) | `tests/test_asset_workflow_coupling.py` |
+| HPE 7.2 Warranty/AMC "SLA" term -> M11 | `CoverageAgreement.sla_profile`, `SLAProfile.coverage_only`, `sla.services._coverage_profile` (D-060) | `tests/test_m10_m11_coverage_sla.py` |
+| HPE 7.2 Audit "evidence exports", Day-90 demo 7 | `audit/evidence.py`, `/app/audit/evidence/work-order/<id>/`, `/api/v1/audit-logs/evidence/` (D-061) | `tests/test_m15_evidence.py` |
+| Master design: category custom attributes | `assets/attributes.py`, `assets.0002` (D-059) | `tests/test_gap_attributes.py` |
+| Asset documents lifecycle | `assets.services.remove_document` | `tests/test_gap_assets.py` |
+| M03 relationship management | `ComponentEditView` | `tests/test_gap_assets.py` |
+| M14 drill-down | `dashboards.views.DRILL`, work-order `open` / `overdue` filters | `tests/test_gap_dashboards.py` |
