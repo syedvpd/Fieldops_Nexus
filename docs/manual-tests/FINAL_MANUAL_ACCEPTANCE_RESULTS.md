@@ -105,3 +105,20 @@ Fix applied and verified live (commit 96b7b14): SLA breaches and escalations (CR
 Exports on the live URL: audit trail CSV (77 KB), XLSX (valid zip) and PDF (ReportLab) all returned HTTP 200 with the correct content types.
 Open items: phone-width pass not done on the live site (the automation browser could not emulate a narrow viewport; use Chrome DevTools device mode); remaining role invitations (supervisor, stores, service manager) and per-role walks that need a human sign-in; rotate the DB password, Django secret key and Brevo key that were shared in chat; set the Render health check path to `/health/live/` (the connector shows it empty).
 Reminder: this addendum does not make M01-M15 "complete"; the full regression and the audit findings #1-#18 reconciliation remain separate gates.
+
+## Addendum 2: per-role walk on the local server against the Supabase QA data (2026-10-04)
+
+Method: local dev server (localhost:8000, styled, also used at phone width ~400-600 px) on the same Supabase QA database; role users seeded by `scripts/seed_role_users.py` (service layer; passwords in the git-ignored `.env.qa-users`). Alpha: admin, ops, supervisor, asset manager, stores, service manager (plus existing owner, planner, technician, auditor, client). Beta: admin, ops, supervisor, technician, planner, stores, service manager, client, auditor.
+
+| Area | Result | Evidence |
+|---|---|---|
+| Work Order state machine incl. rework loop | PASS | WO-000002: Close refused with a clear reason when no labor recorded (server-side) -> Return for rework (reason required) -> In Progress -> technician records 2 h, completes -> supervisor review -> Close -> Closed, read-only. Technician got "returned for rework" in-app notification. |
+| RBAC: supervisor | PASS | 200 on operations/inventory/SLA tracking pages; 403 on users, roles, organization, audit, SLA profiles. |
+| RBAC: stores manager | PASS | 200 on parts/stock/warehouses/movements/reservations/work orders/assets; 403 on incidents, maintenance plans, users, roles, audit, SLA profiles. |
+| M12 asset QR: register, label, scan | PASS | ENG-001: Generate QR -> "Label generated"; printable label shows tag, name, site, QR; QR decoded in-page with the bundled ZXing decoder -> scan URL with a 22-char opaque token -> resolves to the asset; `?open=asset` (camera path) redirects to the asset page. |
+| M12 replace/revoke | PASS | Replace requires a reason; old label listed under "Replaced / revoked"; scanning the old token shows "This label was revoked or replaced". Minor: that page still offers an "Open asset" button. |
+| M12 cross-tenant | PASS | Beta technician scanning an Alpha token: "Label not recognised" (404); Alpha asset and work order URLs 404; Alpha label panel 403. |
+| M12 camera (physical device) | NOT TESTED | No camera in the automation browser; decoder path and server resolution verified, real-camera capture needs a phone. |
+
+Defect/observations: scan page returned 500 on the local server only because the static manifest was stale (new `zxing.min.js`); fixed by collectstatic + restart (the Docker image runs collectstatic at build). M12 camera-scanner work committed as `cb508c2` (tests: 30 + 66 asset tests pass).
+Not yet walked in this run: M02-M04 admin screens per role, M07-M11 as ops/service manager, M13-M15 per role on Beta, Day-90 journeys end to end, exports per role. M01-M15 is NOT claimed complete.
