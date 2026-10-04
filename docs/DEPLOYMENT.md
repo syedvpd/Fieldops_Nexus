@@ -50,3 +50,10 @@ Needs: a Git remote (CI + deploy), a host for web/worker/beat (Render web + back
 
 ## Backup / restore
 Supabase automated backups (plan dependent) + periodic `pg_dump -n fieldops`; restore into an empty database, then `migrate --check`.
+
+## Render Free runtime (live)
+- One free web service `fieldops-nexus-web` (https://fieldops-nexus-web.onrender.com) runs `python scripts/render_start.py`: Gunicorn (1 worker, threads) + Celery worker with embedded beat under a fail-fast supervisor (any child exit stops the container so Render restarts it). Uses the single Celery app `config` and the Render Key Value `fieldops-nexus-redis` (internal URL).
+- Database: Supabase pooler (session mode) `aws-0-ap-southeast-1.pooler.supabase.com:5432`, user `fieldops_app.<ref>`. Migrations run at start (`RUN_MIGRATIONS_ON_START=true`).
+- Email: Brevo SMTP relay on **port 2525**. Render Free blocks outbound SMTP on 25/465/587 (tasks time out with `TimeoutError(110)`); `EMAIL_TIMEOUT=20` stops a blocked port from hanging the worker.
+- Free tier sleeps after ~15 min without traffic (Celery/beat sleep with it): `.github/workflows/keepalive.yml` pings `/health/live/` every 5 minutes. SLA/PM catch up from stored due times after any sleep.
+- Secrets live only in Render env vars (never in Git). Rotate `DJANGO_SECRET_KEY`, the Supabase `fieldops_app` password and the Brevo SMTP key if they were ever shared.
