@@ -219,6 +219,7 @@ EMAIL_PORT = int(env("EMAIL_PORT", "587"))
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
+EMAIL_TIMEOUT = int(env("EMAIL_TIMEOUT", "20"))  # never let a blocked SMTP port hang a worker
 
 # --- I18N -------------------------------------------------------------------------------------
 LANGUAGE_CODE = "en-us"
