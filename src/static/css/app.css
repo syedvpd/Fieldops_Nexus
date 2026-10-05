@@ -384,3 +384,11 @@ button.fx-job.is-active { border-left-color: var(--fx-gold); }
 :is(main, .fx-auth-card) form :is(input, textarea, select):not([class]):not([type=checkbox]):not([type=radio]):not([type=file]):not([type=hidden]):not([type=submit]) { display: block; width: 100%; padding: .5rem .75rem; font-size: .875rem; line-height: 1.5; color: var(--fx-text); background: #fff; border: 1px solid var(--fx-border); border-radius: 4px; }
 :is(main, .fx-auth-card) form :is(input, textarea, select):not([class]):focus { border-color: var(--fx-gold); box-shadow: 0 0 0 .2rem rgba(201,162,39,.25); outline: 0; }
 :is(main, .fx-auth-card) form :is(input, textarea, select):not([class]):disabled { background: #F1F5F9; color: var(--fx-muted); }
+/* Batch 7: site locations tree and calendars */
+#zone-tree td:first-child { min-width: 9rem; } #zone-tree td:nth-child(3) { white-space: nowrap; }
+#zone-tree td:last-child { min-width: 13rem; } #zone-tree td:last-child form.d-inline-flex { display: flex !important; margin-top: .4rem; }
+#zone-tree td:last-child form.d-inline-flex .form-control { flex: 1; width: auto !important; min-width: 6rem; }
+.form-check-input { border-color: #94A3B8; } .form-check-input:checked { background-color: var(--fx-navy-900); border-color: var(--fx-navy-900); }
+div:has(> input.form-check-input[type=checkbox]:only-of-type):not(.form-check) { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .6rem; }
+div:has(> input.form-check-input[type=checkbox]:only-of-type):not(.form-check) > input { order: -1; margin: 0; width: 1.1rem; height: 1.1rem; }
+div:has(> input.form-check-input[type=checkbox]:only-of-type):not(.form-check) > label { margin: 0; } div:has(> input.form-check-input[type=checkbox]:only-of-type):not(.form-check) > .form-text, div:has(> input.form-check-input[type=checkbox]:only-of-type):not(.form-check) > .invalid-feedback { flex-basis: 100%; }

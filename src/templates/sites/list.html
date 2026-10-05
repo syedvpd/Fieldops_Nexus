@@ -14,7 +14,7 @@
   <div class="table-responsive"><table class="table fx-table">
     <thead><tr><th>Code</th><th>Name</th><th>City</th><th>Locations</th><th>Active assets</th><th>Status</th></tr></thead>
     <tbody>{% for s in page %}
-      <tr><td><a href="{% url 'sites:detail' s.pk %}">{{ s.code }}</a></td><td>{{ s.name }}</td><td>{{ s.city|default:"—" }}</td>
+      <tr><td class="text-nowrap"><a href="{% url 'sites:detail' s.pk %}">{{ s.code }}</a></td><td><div class="fw-medium">{{ s.name }}</div></td><td>{{ s.city|default:"—" }}</td>
         <td>{{ s.zone_count }}</td><td>{{ s.asset_count }}</td><td>{% status_badge s.status %}</td></tr>
     {% empty %}<tr><td colspan="6">{% include "components/_empty_state.html" with title="No sites match" text="Adjust the filters or create a site." %}</td></tr>{% endfor %}
     </tbody></table></div>
