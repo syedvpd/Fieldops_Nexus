@@ -32,6 +32,6 @@ def shell(request):
         "shell_org": getattr(request, "organization", None),
         "shell_membership": membership,
         "shell_nav_sections": sections,
-        "shell_memberships": list(selectors.active_memberships(user)),
+        "shell_memberships": getattr(request, "active_memberships", None) or list(selectors.active_memberships(user)),
         "shell_tenant_error": getattr(request, "tenant_error", None),
     }

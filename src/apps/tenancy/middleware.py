@@ -36,9 +36,12 @@ class TenantContextMiddleware:
 
     @staticmethod
     def _resolve_session_tenant(request, user):
+        # one query for the user's memberships, shared with the page shell (context processor) for this request
+        request.active_memberships = list(selectors.active_memberships(user))
         try:
             membership = selectors.resolve_membership(
-                user, session_org_id=request.session.get(selectors.SESSION_KEY)
+                user, session_org_id=request.session.get(selectors.SESSION_KEY),
+                candidates=request.active_memberships,
             )
         except PermissionDenied as exc:
             request.tenant_error = exc.code
@@ -46,5 +49,8 @@ class TenantContextMiddleware:
         if membership is not None:
             request.membership = membership
             request.organization = membership.organization
-            request.session[selectors.SESSION_KEY] = str(membership.organization_id)
+            org_id = str(membership.organization_id)
+            # assigning an unchanged value still marks the session modified (a database write on EVERY page view)
+            if request.session.get(selectors.SESSION_KEY) != org_id:
+                request.session[selectors.SESSION_KEY] = org_id
             tenant.set_current(membership.organization)
