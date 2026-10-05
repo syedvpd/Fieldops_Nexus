@@ -1,7 +1,7 @@
 {% extends "shell.html" %}
 {% block title %}Organization · FieldOps Nexus{% endblock %}
 {% block content %}
-<div class="fx-page-header"><div><h1>Organization profile</h1><div class="text-body-secondary">Identifier: <code>{{ shell_org.slug }}</code> · {% load ui_tags %}{% status_badge shell_org.status %}</div></div></div>
+<div class="fx-page-header"><div><h1>Organization profile</h1><div class="text-body-secondary">Identifier: <span class="fx-code">{{ shell_org.slug }}</span> · {% load ui_tags %}{% status_badge shell_org.status %}</div></div></div>
 <div class="fx-card" style="max-width:720px"><div class="fx-card-body">
 <form method="post" novalidate>{% csrf_token %}
   {{ form.non_field_errors }}
