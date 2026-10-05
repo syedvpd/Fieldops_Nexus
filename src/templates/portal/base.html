@@ -1,23 +1,24 @@
 {% extends "base.html" %}
 {% load ui_tags %}
-{% block body_class %}fx-portal bg-body-tertiary{% endblock %}
+{% block body_class %}fx-portal{% endblock %}
 {% block body %}
-<header class="border-bottom bg-body">
-  <nav class="container py-2 d-flex flex-wrap align-items-center gap-2" aria-label="Portal">
-    <a class="fw-semibold text-decoration-none me-2" href="{% url 'portal:dashboard' %}"><span class="fx-brand-mark">FX</span> {{ shell_org.name|default:"Client portal" }}</a>
-    <a class="btn btn-sm {% if nav == 'home' %}btn-primary{% else %}btn-outline-secondary{% endif %}" href="{% url 'portal:dashboard' %}">Home</a>
-    <a class="btn btn-sm {% if nav == 'requests' %}btn-primary{% else %}btn-outline-secondary{% endif %}" href="{% url 'portal:requests' %}">My requests</a>
-    {% if can_create %}<a class="btn btn-sm {% if nav == 'new' %}btn-primary{% else %}btn-outline-primary{% endif %}" href="{% url 'portal:new' %}">New request</a>{% endif %}
-    <div class="ms-auto d-flex align-items-center gap-2">
+<header class="fx-portal-bar">
+  <nav class="container d-flex flex-wrap align-items-center gap-2 py-2" aria-label="Portal" style="max-width:960px">
+    <a class="fx-portal-brand" href="{% url 'portal:dashboard' %}"><span class="fx-logo-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+      <span class="fx-logo-text"><span class="fx-logo-name">{{ shell_org.name|default:"Client portal" }}</span><span class="fx-logo-sub">Client portal</span></span></a>
+    <a class="fx-portal-link {% if nav == 'home' %}active{% endif %}" href="{% url 'portal:dashboard' %}">Home</a>
+    <a class="fx-portal-link {% if nav == 'requests' %}active{% endif %}" href="{% url 'portal:requests' %}">My requests</a>
+    {% if can_create %}<a class="fx-portal-link {% if nav == 'new' %}active{% endif %}" href="{% url 'portal:new' %}">New request</a>{% endif %}
+    <div class="ms-auto d-flex align-items-center gap-3">
       {% if shell_org %}<div hx-get="{% url 'notifications:bell' %}" hx-trigger="load, every 60s" hx-swap="innerHTML" class="fx-bell-slot"></div>{% endif %}
-      <div class="dropdown"><button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ request.user.display_name }}</button>
-        <ul class="dropdown-menu dropdown-menu-end"><li><span class="dropdown-item-text small text-body-secondary">{{ request.user.email }}</span></li>
+      <div class="dropdown"><button class="fx-profile-btn fx-portal-user" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account menu"><span class="fx-avatar fx-avatar-gold" data-fx-initials="{{ request.user.display_name }}">{{ request.user.display_name|slice:":1"|upper }}</span><span class="d-none d-sm-inline">{{ request.user.display_name }}</span></button>
+        <ul class="dropdown-menu dropdown-menu-end fx-user-menu"><li class="fx-user-head"><div class="fx-user-name">{{ request.user.display_name }}</div><div class="fx-user-mail">{{ request.user.email }}</div></li>
           <li><a class="dropdown-item" href="{% url 'accounts:password_change' %}">Change password</a></li><li><hr class="dropdown-divider"></li>
-          <li><form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button class="dropdown-item">Sign out</button></form></li></ul></div>
+          <li><form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button class="dropdown-item text-danger">Sign out</button></form></li></ul></div>
     </div>
   </nav>
 </header>
-<main class="container py-3 py-md-4" id="main" style="max-width:960px">
+<main class="container py-3 py-md-4 fx-portal-main" id="main" style="max-width:960px">
   {% include "components/_messages.html" %}
   {% block content %}{% endblock %}
 </main>

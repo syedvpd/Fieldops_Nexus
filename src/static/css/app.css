@@ -332,3 +332,36 @@ body { font-size: .875rem; }
 #inspection-form .list-group-item > select.form-select, #inspection-form .list-group-item > textarea.form-control { width: calc(100% - 2.25rem); }
 @media (max-width: 575.98px) { #inspection-form .list-group-item > select.form-select, #inspection-form .list-group-item > textarea.form-control { width: 100%; } }
 @media (max-width: 575.98px) { #job-actions .btn, #inspection-form .btn, #checklist-list .btn { min-height: 44px; } }
+
+/* Batch 5: client portal bar, scan frame, audit chips (reference client layout / QR page / AuditPage) */
+body.fx-portal { background: var(--fx-bg); }
+.fx-portal-bar { background: var(--fx-navy-900); border-bottom: 1px solid rgba(255,255,255,.06); }
+.fx-portal-brand { display: inline-flex; align-items: center; gap: .6rem; margin-right: 1rem; text-decoration: none; }
+.fx-portal-link { padding: .45rem .8rem; border-radius: 4px; color: rgba(255,255,255,.65); font-size: .875rem; text-decoration: none; border-bottom: 2px solid transparent; }
+.fx-portal-link:hover { color: #fff; background: rgba(255,255,255,.05); } .fx-portal-link.active { color: #fff; font-weight: 500; border-bottom-color: var(--fx-gold); border-radius: 4px 4px 0 0; }
+.fx-portal-bar .fx-bell > .btn { color: rgba(255,255,255,.7); } .fx-portal-bar .fx-bell > .btn:hover { color: #fff; }
+.fx-portal-user { color: rgba(255,255,255,.85); font-size: .8125rem; padding-left: 0; } .fx-portal-user:hover { color: #fff; }
+.fx-portal-bar :focus-visible { outline-color: #fff; }
+.fx-portal-title { font-size: 1.25rem; font-weight: 700; color: var(--fx-text); margin-bottom: .25rem; }
+.fx-steps { display: flex; gap: .25rem; overflow-x: auto; scrollbar-width: none; } .fx-steps::-webkit-scrollbar { display: none; }
+.fx-steps .fx-step { flex: 1 0 auto; justify-content: center; text-align: center; border: 1px solid transparent; }
+.fx-portal-filter .form-control, .fx-portal-filter .form-select { font-size: .875rem; }
+.fx-portal .fx-card > .list-group, .fx-portal .fx-card > .fx-job:first-child { border-radius: 8px; }
+.fx-scan-viewport { background: var(--fx-navy-950); }
+.fx-scan-frame { box-shadow: 0 0 0 100vmax rgba(7, 20, 38, .55); }
+.fx-scan-frame span { border-color: var(--fx-gold); }
+.fx-code { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .75rem; font-weight: 500; padding: .125rem .5rem; border-radius: 4px; background: #F1F5F9; color: #334155; word-break: break-all; }
+.fx-pre { background: #F8FAFC; border: 1px solid var(--fx-border); border-radius: 6px; padding: .75rem 1rem; font-size: .75rem; max-height: 22rem; overflow: auto; white-space: pre-wrap; word-break: break-word; }
+#report-cards .fx-card-body h2 { font-size: .875rem; font-weight: 600; color: var(--fx-text); } #report-cards .fx-card { border-top: 3px solid var(--fx-gold); }
+
+.fx-table .fx-code { white-space: nowrap; word-break: normal; }
+.fx-tabs { flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; }
+.fx-tabs a { flex: none; }
+
+/* When two nav entries share a URL prefix (Audit trail / Compliance reports) only the most specific one is shown in the breadcrumb. */
+.fx-crumb-set { display: contents; } .fx-crumb-set:has(~ .fx-crumb-set) { display: none; }
+#new-request-form label:has(input[type=radio]) { display: block; margin-bottom: .4rem; }
+@media (max-width: 575.98px) {
+  .fx-portal-bar nav { row-gap: 0 !important; } .fx-portal-brand { order: 1; margin-right: auto; } .fx-portal-bar nav > .ms-auto { order: 2; margin-left: 0 !important; }
+  .fx-portal-link { order: 4; padding: .5rem .7rem; } .fx-portal-bar nav::after { content: ""; order: 3; flex-basis: 100%; height: 0; }
+}

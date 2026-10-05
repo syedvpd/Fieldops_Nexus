@@ -2,17 +2,17 @@
 {% load ui_tags %}
 {% block title %}Client portal · FieldOps Nexus{% endblock %}
 {% block content %}
-<h1 class="h3 mb-1">Welcome, {{ request.user.display_name }}</h1>
-<p class="text-body-secondary">Report a problem, follow its progress and confirm when it is fixed.</p>
+<h1 class="fx-portal-title">Welcome, {{ request.user.display_name }}</h1>
+<p class="text-body-secondary mb-3">Report a problem, follow its progress and confirm when it is fixed.</p>
 {% if not enabled %}<div class="alert alert-warning" role="alert">Your portal access has not been enabled yet. Please contact your service provider.</div>{% endif %}
 <div class="row g-3 mb-3">
-  <div class="col-6 col-md-3"><div class="fx-card"><div class="fx-card-body"><div class="small text-body-secondary">Open requests</div><div class="fs-3 fw-semibold" id="count-open">{{ counts.open }}</div></div></div></div>
-  <div class="col-6 col-md-3"><div class="fx-card"><div class="fx-card-body"><div class="small text-body-secondary">Need your confirmation</div><div class="fs-3 fw-semibold" id="count-action">{{ counts.action }}</div></div></div></div>
-  <div class="col-6 col-md-3"><div class="fx-card"><div class="fx-card-body"><div class="small text-body-secondary">Closed</div><div class="fs-3 fw-semibold" id="count-closed">{{ counts.closed }}</div></div></div></div>
-  <div class="col-6 col-md-3"><div class="fx-card"><div class="fx-card-body"><div class="small text-body-secondary">Your equipment</div><div class="fs-3 fw-semibold" id="count-assets">{{ assets }}</div></div></div></div>
+  <div class="col-6 col-md-3"><div class="fx-card fx-kpi-card h-100"><div class="fx-card-body"><div class="fx-kpi-label">Open requests</div><div class="kpi-value" id="count-open">{{ counts.open }}</div></div></div></div>
+  <div class="col-6 col-md-3"><div class="fx-card fx-kpi-card h-100"><div class="fx-card-body"><div class="fx-kpi-label">Need your confirmation</div><div class="kpi-value" id="count-action">{{ counts.action }}</div></div></div></div>
+  <div class="col-6 col-md-3"><div class="fx-card fx-kpi-card h-100"><div class="fx-card-body"><div class="fx-kpi-label">Closed</div><div class="kpi-value" id="count-closed">{{ counts.closed }}</div></div></div></div>
+  <div class="col-6 col-md-3"><div class="fx-card fx-kpi-card h-100"><div class="fx-card-body"><div class="fx-kpi-label">Your equipment</div><div class="kpi-value" id="count-assets">{{ assets }}</div></div></div></div>
 </div>
-{% if can_create and enabled %}<a class="btn btn-primary btn-lg w-100 w-md-auto mb-3" href="{% url 'portal:new' %}">Report a problem</a>{% endif %}
+{% if can_create and enabled %}<a class="btn btn-primary btn-lg mb-3" href="{% url 'portal:new' %}">Report a problem</a>{% endif %}
 <div class="fx-card"><div class="fx-card-header">Recent requests</div><div class="list-group list-group-flush" id="recent-requests">
-{% for sr in recent %}<a class="list-group-item list-group-item-action" href="{% url 'portal:request' sr.pk %}"><div class="d-flex justify-content-between gap-2"><strong>{{ sr.number }} · {{ sr.title }}</strong><span class="badge text-bg-light border">{{ sr.cs.label }}</span></div><div class="small text-body-secondary">{{ sr.asset.asset_tag }} · {{ sr.created_at|date:"d M Y H:i" }}</div></a>
+{% for sr in recent %}<a class="fx-job" href="{% url 'portal:request' sr.pk %}"><div class="d-flex justify-content-between gap-2"><strong>{{ sr.number }} · {{ sr.title }}</strong><span class="badge fx-badge fx-badge-info">{{ sr.cs.label }}</span></div><div class="small text-body-secondary">{{ sr.asset.asset_tag }} · {{ sr.created_at|date:"d M Y H:i" }}</div></a>
 {% empty %}<div class="list-group-item text-body-secondary">You have not submitted any requests yet.</div>{% endfor %}</div></div>
 {% endblock %}

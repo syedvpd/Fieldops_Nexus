@@ -2,16 +2,19 @@
 {% load ui_tags %}
 {% block title %}Audit entry · FieldOps Nexus{% endblock %}
 {% block content %}
-<div class="fx-page-header"><div><nav aria-label="breadcrumb"><ol class="breadcrumb mb-1 small"><li class="breadcrumb-item"><a href="{% url 'audit:list' %}">Audit trail</a></li><li class="breadcrumb-item active">Entry</li></ol></nav><h1><code>{{ entry.action }}</code></h1></div></div>
-<div class="fx-card"><div class="fx-card-body">
-  <dl class="row mb-0">
-    <dt class="col-sm-3">When</dt><dd class="col-sm-9">{{ entry.occurred_at|date:"c" }}</dd>
-    <dt class="col-sm-3">Actor</dt><dd class="col-sm-9">{{ entry.actor_email|default:"system" }}</dd>
-    <dt class="col-sm-3">Target</dt><dd class="col-sm-9">{{ entry.target_repr }} <span class="text-body-secondary small">{{ entry.target_type }} {{ entry.target_id }}</span></dd>
-    <dt class="col-sm-3">Site</dt><dd class="col-sm-9">{% if site %}{{ site.code }} · {{ site.name }}{% else %}—{% endif %}</dd>
-    <dt class="col-sm-3">IP / Request</dt><dd class="col-sm-9">{{ entry.ip_address|default:"-" }} · {{ entry.request_id|default:"-" }}</dd>
-    <dt class="col-sm-3">Before</dt><dd class="col-sm-9"><pre class="mb-0">{{ entry.before|pretty_json }}</pre></dd>
-    <dt class="col-sm-3">After</dt><dd class="col-sm-9"><pre class="mb-0">{{ entry.after|pretty_json }}</pre></dd>
-    <dt class="col-sm-3">Metadata</dt><dd class="col-sm-9"><pre class="mb-0">{{ entry.metadata|pretty_json }}</pre></dd>
-  </dl></div></div>
+<div class="fx-page-header"><div><nav aria-label="breadcrumb"><ol class="breadcrumb mb-1 small"><li class="breadcrumb-item"><a href="{% url 'audit:list' %}">Audit trail</a></li><li class="breadcrumb-item active">Entry</li></ol></nav><h1>Audit entry</h1><div class="text-body-secondary">{{ entry.target_repr }} · {{ entry.occurred_at|date:"d M Y, H:i" }}</div></div>
+  <a class="btn btn-outline-secondary" href="{% url 'audit:list' %}">Back to audit trail</a></div>
+<div class="row g-3">
+  <div class="col-lg-6"><div class="fx-card h-100"><div class="fx-card-header">What happened</div><div class="fx-card-body"><dl class="fx-kv">
+    <dt>Action</dt><dd><span class="fx-code">{{ entry.action }}</span></dd>
+    <dt>When</dt><dd title="{{ entry.occurred_at|date:'c' }}">{{ entry.occurred_at|date:"d M Y, H:i:s" }}</dd>
+    <dt>Who</dt><dd>{{ entry.actor_email|default:"system" }}</dd>
+    <dt>Record</dt><dd>{{ entry.target_repr }} <span class="text-body-secondary small">{{ entry.target_type }}</span></dd>
+    <dt>Site</dt><dd>{% if site %}{{ site.code }} · {{ site.name }}{% else %}—{% endif %}</dd></dl></div></div></div>
+  <div class="col-lg-6"><div class="fx-card h-100"><div class="fx-card-header">Origin</div><div class="fx-card-body"><dl class="fx-kv">
+    <dt>IP address</dt><dd>{{ entry.ip_address|default:"—" }}</dd><dt>Request id</dt><dd class="text-break">{{ entry.request_id|default:"—" }}</dd><dt>Record id</dt><dd class="text-break">{{ entry.target_id|default:"—" }}</dd></dl></div></div></div>
+  <div class="col-lg-6"><div class="fx-card h-100"><div class="fx-card-header">Before</div><div class="fx-card-body">{% if entry.before %}<pre class="fx-pre mb-0">{{ entry.before|pretty_json }}</pre>{% else %}<span class="text-body-secondary">Nothing recorded before this action.</span>{% endif %}</div></div></div>
+  <div class="col-lg-6"><div class="fx-card h-100"><div class="fx-card-header">After</div><div class="fx-card-body">{% if entry.after %}<pre class="fx-pre mb-0">{{ entry.after|pretty_json }}</pre>{% else %}<span class="text-body-secondary">Nothing recorded after this action.</span>{% endif %}</div></div></div>
+  {% if entry.metadata %}<div class="col-12"><div class="fx-card"><div class="fx-card-header">Details</div><div class="fx-card-body"><pre class="fx-pre mb-0">{{ entry.metadata|pretty_json }}</pre></div></div></div>{% endif %}
+</div>
 {% endblock %}

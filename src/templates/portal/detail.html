@@ -2,10 +2,10 @@
 {% block title %}{{ sr.number }} · FieldOps Nexus{% endblock %}
 {% block content %}
 <nav aria-label="breadcrumb"><ol class="breadcrumb mb-2 small"><li class="breadcrumb-item"><a href="{% url 'portal:requests' %}">My requests</a></li><li class="breadcrumb-item active">{{ sr.number }}</li></ol></nav>
-<div class="d-flex flex-wrap justify-content-between gap-2 mb-2"><h1 class="h3 m-0">{{ sr.title }}</h1><span class="badge text-bg-primary align-self-start fs-6" id="client-status">{{ sr.cs.label }}</span></div>
+<div class="d-flex flex-wrap justify-content-between gap-2 mb-2"><h1 class="fx-portal-title m-0">{{ sr.title }}</h1><span class="badge fx-badge fx-badge-info align-self-start" id="client-status">{{ sr.cs.label }}</span></div>
 <p class="text-body-secondary">{{ sr.number }} · {{ sr.asset.asset_tag }} · {{ sr.asset.name }} · submitted {{ sr.created_at|date:"d M Y H:i" }}</p>
 <div class="alert alert-info" role="status" id="status-text">{{ sr.cs.text }}{% if sr.status == "REJECTED" and sr.decision_reason %} <strong>Reason:</strong> {{ sr.decision_reason }}{% endif %}</div>
-<div class="d-flex gap-1 mb-3" role="list" aria-label="Progress">{% for s in steps %}<div role="listitem" class="flex-fill text-center small py-1 rounded {% if forloop.counter <= sr.cs.step %}bg-primary text-white{% else %}bg-body border{% endif %}">{{ s }}</div>{% endfor %}</div>
+<div class="fx-steps mb-3" role="list" aria-label="Progress">{% for s in steps %}<div role="listitem" class="fx-step {% if forloop.counter < sr.cs.step %}is-done{% elif forloop.counter == sr.cs.step %}is-current{% endif %}">{{ s }}</div>{% endfor %}</div>
 {% if sr.status == "RESOLVED" and can_confirm %}
 <div class="fx-card border-success mb-3" id="confirm-card"><div class="fx-card-body"><h2 class="h5">Is the problem fixed?</h2>
   <form method="post" action="{% url 'portal:request_action' sr.pk 'confirm' %}" class="mb-3">{% csrf_token %}<button class="btn btn-success btn-lg">Yes, it is fixed</button></form>

@@ -56,7 +56,7 @@
     <header class="fx-topbar">
       <button class="fx-icon-btn d-lg-none" type="button" aria-label="Toggle navigation" data-fx-toggle-nav>{% icon 'menu' 20 %}</button>
       <nav class="fx-crumbs" id="fx-crumbs" aria-label="Breadcrumb">
-        {% for section, items in shell_nav_sections.items %}{% for item in items %}{% if item.active %}{% if items|length > 1 %}<span class="fx-crumb-parent">{{ section }}</span><span class="fx-crumb-sep">/</span>{% endif %}<span class="fx-crumb-current" aria-current="page">{{ item.label }}</span>{% endif %}{% endfor %}{% endfor %}
+        {% for section, items in shell_nav_sections.items %}{% for item in items %}{% if item.active %}<span class="fx-crumb-set">{% if items|length > 1 %}<span class="fx-crumb-parent">{{ section }}</span><span class="fx-crumb-sep">/</span>{% endif %}<span class="fx-crumb-current" aria-current="page">{{ item.label }}</span></span>{% endif %}{% endfor %}{% endfor %}
         {% block breadcrumbs %}{% endblock %}
       </nav>
       <div class="fx-top-actions">

@@ -109,3 +109,11 @@ document.addEventListener("change", function (e) {
     slot.appendChild(crumbs);
   }
 })();
+
+/* Sidebar: when several entries match the current URL prefix, highlight only the most specific one. */
+(function () {
+  var active = [].slice.call(document.querySelectorAll(".fx-nav-link.active[href], .fx-nav-child.active[href]"));
+  if (active.length < 2) return;
+  var best = active.reduce(function (a, b) { return (b.getAttribute("href").length > a.getAttribute("href").length) ? b : a; });
+  active.forEach(function (el) { if (el !== best) el.classList.remove("active"); });
+})();
