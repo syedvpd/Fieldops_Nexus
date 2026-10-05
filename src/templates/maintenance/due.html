@@ -3,6 +3,7 @@
 {% block title %}Due &amp; upcoming maintenance · FieldOps Nexus{% endblock %}
 {% block content %}
 <div class="fx-page-header"><div><h1>Due &amp; upcoming</h1><div class="text-body-secondary">Enabled schedules, soonest first. DUE = an occurrence is due now (the scheduler generates it; you can also generate it here).</div></div></div>
+{% include "components/_section_tabs.html" with section="Maintenance" %}
 <div class="fx-card">
   <form method="get" class="d-flex flex-wrap gap-2 p-3 border-bottom">
     <select class="form-select form-select-sm" style="max-width:160px" name="state" aria-label="State"><option value="">All states</option>

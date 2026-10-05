@@ -1,0 +1,2 @@
+{% comment %}Reference PageHeader tabs. Items come from the already permission-filtered sidebar section `section`, so a tab is never shown for a page the user cannot open.{% endcomment %}
+{% for sec, items in shell_nav_sections.items %}{% if sec == section and items|length > 1 %}<div class="fx-tabs" role="tablist" aria-label="{{ sec }}">{% for item in items %}<a role="tab" class="{% if item.active %}active{% endif %}" href="{{ item.url }}">{{ item.label }}</a>{% endfor %}</div>{% endif %}{% endfor %}

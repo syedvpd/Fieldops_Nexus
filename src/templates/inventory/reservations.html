@@ -3,6 +3,7 @@
 {% block title %}Reservations · FieldOps Nexus{% endblock %}
 {% block content %}
 <div class="fx-page-header"><div><h1>Reservations</h1><div class="text-body-secondary">Stock held for work orders. Reserved stock cannot be issued elsewhere, transferred or adjusted away.</div></div></div>
+{% include "components/_section_tabs.html" with section="Inventory" %}
 <div class="fx-card">
   <form method="get" class="d-flex flex-wrap gap-2 p-3 border-bottom">
     <select class="form-select form-select-sm" style="max-width:180px" name="status" aria-label="Status"><option value="">All</option>

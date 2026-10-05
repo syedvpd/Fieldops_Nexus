@@ -295,3 +295,9 @@ body { font-size: .875rem; }
 .fx-card > form.border-bottom .form-select-sm { flex: 1 1 7.5rem; max-width: 12rem !important; min-width: 7rem; }
 .fx-tabs, .fx-stepper-bar { scrollbar-width: none; } .fx-tabs::-webkit-scrollbar, .fx-stepper-bar::-webkit-scrollbar { display: none; }
 .fx-page-header a { white-space: nowrap; }
+
+/* Batch 3: first-column record links share the reference identifier treatment */
+.fx-table tbody td:first-child > a:not(.btn) { font-weight: 600; color: var(--fx-navy-900); }
+.fx-table tbody td:first-child > a:not(.btn):hover { color: var(--fx-gold-700); }
+.fx-page-header > :first-child { flex: 1 1 18rem; min-width: 0; max-width: 52rem; } .fx-page-header > :last-child:not(:first-child) { flex: none; }
+.table-responsive { scrollbar-width: thin; scrollbar-color: #CBD5E1 transparent; }

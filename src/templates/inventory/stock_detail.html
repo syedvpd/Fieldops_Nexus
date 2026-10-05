@@ -8,9 +8,9 @@
   <div class="text-body-secondary"><a href="{% url 'inventory:part' bal.part_id %}">{{ bal.part.part_number }}</a> in <a href="{% url 'inventory:warehouse' bal.warehouse_id %}">{{ bal.warehouse.code }}</a> ({{ bal.warehouse.site.code }})</div></div>
   <div class="d-flex gap-2">{% if can_receive %}<a class="btn btn-primary" href="{% url 'inventory:receive' %}?warehouse={{ bal.warehouse_id }}&amp;part={{ bal.part_id }}">Receive</a>{% endif %}{% if can_transfer %}<a class="btn btn-outline-primary" href="{% url 'inventory:transfer' %}">Transfer</a>{% endif %}</div></div>
 <div class="row g-3 mb-3">
-  <div class="col-sm-4"><div class="fx-card"><div class="fx-card-body"><div class="small text-body-secondary">On hand</div><div class="fs-3" id="on-hand">{{ bal.on_hand|floatformat:"-3" }}</div></div></div></div>
-  <div class="col-sm-4"><div class="fx-card"><div class="fx-card-body"><div class="small text-body-secondary">Reserved</div><div class="fs-3" id="reserved">{{ bal.reserved|floatformat:"-3" }}</div></div></div></div>
-  <div class="col-sm-4"><div class="fx-card"><div class="fx-card-body"><div class="small text-body-secondary">Available</div><div class="fs-3" id="available">{{ bal.available|floatformat:"-3" }}</div>{% if bal.is_low %}<span class="badge fx-badge fx-badge-warning">Low stock</span>{% endif %}</div></div></div></div>
+  <div class="col-sm-4"><div class="fx-card fx-kpi-card h-100"><div class="fx-card-body"><div class="fx-kpi-label">On hand</div><div class="kpi-value" id="on-hand">{{ bal.on_hand|floatformat:"-3" }}</div></div></div></div>
+  <div class="col-sm-4"><div class="fx-card fx-kpi-card h-100"><div class="fx-card-body"><div class="fx-kpi-label">Reserved</div><div class="kpi-value" id="reserved">{{ bal.reserved|floatformat:"-3" }}</div></div></div></div>
+  <div class="col-sm-4"><div class="fx-card fx-kpi-card h-100"><div class="fx-card-body"><div class="fx-kpi-label">Available</div><div class="kpi-value" id="available">{{ bal.available|floatformat:"-3" }}</div>{% if bal.is_low %}<span class="badge fx-badge fx-badge-warning">Low stock</span>{% endif %}</div></div></div></div>
 {% if can_adjust %}<div class="row g-3 mb-3">
   <div class="col-lg-6"><div class="fx-card"><div class="fx-card-header">Adjust stock (count correction)</div><div class="fx-card-body">
     <form method="post" action="{% url 'inventory:stock_adjust' bal.pk %}" class="row g-2 align-items-end">{% csrf_token %}

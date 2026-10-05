@@ -3,6 +3,7 @@
 {% block title %}PM history · FieldOps Nexus{% endblock %}
 {% block content %}
 <div class="fx-page-header"><div><h1>PM history</h1><div class="text-body-secondary">Every generated cycle with its work order. PM state follows the work order: generated, assigned, completed, verified (closed).</div></div></div>
+{% include "components/_section_tabs.html" with section="Maintenance" %}
 <div class="fx-card">
   <form method="get" class="d-flex flex-wrap gap-2 p-3 border-bottom">
     <select class="form-select form-select-sm" style="max-width:260px" name="plan" aria-label="Plan"><option value="">All plans</option>

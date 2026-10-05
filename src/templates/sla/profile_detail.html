@@ -5,7 +5,7 @@
 <div class="fx-page-header"><div>
   <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1 small"><li class="breadcrumb-item"><a href="{% url 'sla:profiles' %}">SLA profiles</a></li><li class="breadcrumb-item active">{{ p.name }}</li></ol></nav>
   <h1>{{ p.name }} {% if p.is_active %}{% status_badge "ACTIVE" %}{% else %}{% status_badge "INACTIVE" %}{% endif %}</h1>
-  <div class="text-body-secondary">{{ p.get_applies_to_display }} · {% if p.site %}site {{ p.site.code }}{% else %}whole organization{% endif %}{% if p.work_type %} · {{ p.work_type|title }}{% endif %}{% if p.description %} · {{ p.description }}{% endif %}</div></div>
+  <div class="text-body-secondary">{{ p.get_applies_to_display|cut:" (M05)"|cut:" (M06)" }} · {% if p.site %}site {{ p.site.code }}{% else %}whole organization{% endif %}{% if p.work_type %} · {{ p.work_type|title }}{% endif %}{% if p.description %} · {{ p.description }}{% endif %}</div></div>
   <div class="d-flex gap-2"><a class="btn btn-outline-primary" href="{% url 'sla:profile_edit' p.pk %}">Edit</a>
     <form method="post" action="{% url 'sla:profile_active' p.pk %}" class="m-0">{% csrf_token %}{% if p.is_active %}<input type="hidden" name="active" value="0"><button class="btn btn-outline-secondary" data-confirm="Deactivate this profile? New items will not be tracked by it.">Deactivate</button>{% else %}<input type="hidden" name="active" value="1"><button class="btn btn-outline-success">Activate</button>{% endif %}</form></div></div>
 <div class="fx-card mb-3"><div class="fx-card-header">Pauses</div><div class="fx-card-body">{% if p.pause_states %}Timers pause while the item is in: {{ p.pause_states|join:", " }}.{% else %}Timers never pause (they keep running in every state).{% endif %}</div></div>
