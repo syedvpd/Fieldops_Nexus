@@ -7,7 +7,7 @@
   <div class="fx-card mb-3"><ul class="list-group list-group-flush">
   {% for r in rows %}{% with it=r.item %}
     <li class="list-group-item" id="item-{{ it.pk }}">
-      <label class="form-label fw-semibold mb-1" for="item_{{ it.pk }}">{{ it.position }}. {{ it.prompt }}{% if it.required %} <span class="text-danger" title="Required">*</span>{% endif %}</label>
+      <label class="form-label fw-semibold mb-1 fx-q" for="item_{{ it.pk }}"><span class="fx-num">{{ it.position }}</span>{{ it.prompt }}{% if it.required %} <span class="text-danger" title="Required">*</span>{% endif %}</label>
       {% if it.guidance %}<div class="small text-body-secondary mb-2">{{ it.guidance }}</div>{% endif %}
       {% if editable %}
         {% if it.item_type == "BOOLEAN" %}
@@ -26,7 +26,7 @@
         <div>{% if r.response %}{% if r.response.value_bool is not None %}{% if r.response.value_bool %}Pass{% else %}Fail{% endif %}{% elif r.response.value_number is not None %}{{ r.response.value_number|floatformat:"-4" }} {{ it.unit }}{% else %}{{ r.response.value_text }}{% endif %}{% else %}<span class="text-body-secondary">Not answered</span>{% endif %}</div>
       {% endif %}
       {% if r.error %}<div class="text-danger small mt-1" role="alert">{{ r.error }}</div>{% endif %}
-      {% if r.response.is_exception %}<div class="small mt-1"><span class="badge fx-badge fx-badge-danger">Exception</span> record a finding below.</div>{% endif %}
+      {% if r.response.is_exception %}<div class="small mt-1"><span class="badge fx-badge fx-badge-danger">Exception</span>{% if editable %} record a finding below.{% endif %}</div>{% endif %}
       {% if it.evidence_required %}<div class="small text-body-secondary mt-1">Evidence required{% if r.evidence %}: {% for a in r.evidence %}<a href="{% url 'files:download' a.pk %}">{{ a.original_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% else %}: none attached yet{% endif %}</div>{% endif %}
     </li>{% endwith %}{% endfor %}
   </ul></div>

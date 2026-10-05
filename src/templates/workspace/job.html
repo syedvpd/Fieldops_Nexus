@@ -2,10 +2,10 @@
 {% load ui_tags %}
 {% block title %}{{ wo.number }} · My Jobs · FieldOps Nexus{% endblock %}
 {% block content %}
-<div class="fx-page-header"><div>
+<div class="fx-page-header fx-banner"><div>
   <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1 small"><li class="breadcrumb-item"><a href="{% url 'workspace:jobs' %}">My Jobs</a></li><li class="breadcrumb-item active">{{ wo.number }}</li></ol></nav>
-  <h1>{{ wo.title }} {% status_badge wo.status %}</h1>
-  <div class="text-body-secondary">{{ wo.number }} · {{ wo.get_work_type_display }} · {% status_badge wo.priority %} · {{ wo.asset.asset_tag }} {{ wo.asset.name }} · {{ wo.site.code }}</div></div>
+  <div class="fx-job-no mb-1">{{ wo.number }}</div><h1>{{ wo.title }} {% status_badge wo.status %}</h1>
+  <div class="text-body-secondary">{{ wo.get_work_type_display }} · {% status_badge wo.priority %} · {{ wo.asset.asset_tag }} {{ wo.asset.name }} · {{ wo.site.code }}</div></div>
   <a class="btn btn-outline-secondary" href="{% url 'workorders:detail' wo.pk %}">Full work order</a></div>
 
 {% if wo.hold_reason and wo.status == "ON_HOLD" %}<div class="alert alert-warning">On hold: {{ wo.hold_reason }}</div>{% endif %}

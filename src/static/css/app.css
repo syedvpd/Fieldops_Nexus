@@ -301,3 +301,34 @@ body { font-size: .875rem; }
 .fx-table tbody td:first-child > a:not(.btn):hover { color: var(--fx-gold-700); }
 .fx-page-header > :first-child { flex: 1 1 18rem; min-width: 0; max-width: 52rem; } .fx-page-header > :last-child:not(:first-child) { flex: none; }
 .table-responsive { scrollbar-width: thin; scrollbar-color: #CBD5E1 transparent; }
+
+/* Batch 4: contracts, technician workspace, inspections (reference TechnicianPage / WorkOrderDetailPage checklist) */
+.fx-card .list-group { --bs-list-group-border-color: #F1F5F9; --bs-list-group-bg: transparent; border-radius: 0; }
+.fx-card .list-group-item { padding: .85rem 1.25rem; font-size: .875rem; }
+.fx-card .list-group-item.px-0 { padding-left: 0; padding-right: 0; }
+.fx-job { display: block; padding: 1rem 1.25rem; border-left: 4px solid transparent; border-bottom: 1px solid #F1F5F9; color: var(--fx-text); text-decoration: none; transition: background .12s; }
+.fx-job:last-child { border-bottom: 0; } .fx-job:hover { background: #F8FAFC; color: var(--fx-text); }
+.fx-job.is-active { border-left-color: var(--fx-gold); }
+.fx-job-no { font-size: .6875rem; font-weight: 700; color: var(--fx-navy-900); letter-spacing: .02em; }
+.fx-job-title { font-size: .875rem; font-weight: 600; line-height: 1.35; }
+.fx-job-meta { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin-top: .5rem; font-size: .75rem; color: var(--fx-muted); align-items: center; }
+.fx-chip-gold { background: var(--fx-gold-100); color: var(--fx-gold-700); font-size: .6875rem; font-weight: 700; }
+.fx-page-header.fx-banner { background: var(--fx-navy-900); border-bottom: 0; color: #fff; }
+.fx-banner h1 { color: #fff; font-size: 1rem; line-height: 1.3; }
+.fx-banner .fx-job-no { color: var(--fx-gold); font-size: .75rem; }
+.fx-banner .text-body-secondary, .fx-banner .breadcrumb-item.active, .fx-banner .breadcrumb-item + .breadcrumb-item::before { color: rgba(255,255,255,.65) !important; }
+.fx-banner a:not(.btn) { color: rgba(255,255,255,.8); } .fx-banner .btn-outline-secondary { --bs-btn-color: #fff; --bs-btn-border-color: rgba(255,255,255,.35); --bs-btn-hover-bg: rgba(255,255,255,.1); --bs-btn-hover-color: #fff; --bs-btn-hover-border-color: #fff; }
+.fx-banner .breadcrumb { display: none !important; }
+.fx-q { display: flex; align-items: flex-start; gap: .75rem; }
+.fx-num { flex: none; width: 24px; height: 24px; border-radius: 50%; background: #F1F5F9; color: var(--fx-muted); font-size: .75rem; font-weight: 600; display: inline-grid; place-items: center; }
+#inspection-form .btn-group { gap: .5rem; } #inspection-form .btn-group > .btn { border-radius: 4px !important; margin: 0 !important; border-color: transparent; background: #F1F5F9; color: #475569; font-size: .75rem; font-weight: 500; padding: .4rem .9rem; }
+#inspection-form .btn-check:checked + .btn-outline-success { background: #DCFCE7; color: #15803D; border-color: #86EFAC; font-weight: 600; }
+#inspection-form .btn-check:checked + .btn-outline-danger { background: #FEE2E2; color: #B91C1C; border-color: #FCA5A5; font-weight: 600; }
+#inspection-form .btn-group > .btn:hover { background: #E2E8F0; }
+#inspection-form .list-group-item { padding: 1rem 1.25rem; } #inspection-form .list-group-item > :not(label) { margin-left: 2.25rem; }
+#inspection-form .btn-lg { font-size: .875rem; padding: .6rem 1.25rem; }
+@media (max-width: 575.98px) { .fx-job { padding: .9rem 1rem; } #inspection-form .list-group-item > :not(label) { margin-left: 0; } #inspection-form .btn-group > .btn { padding: .6rem 1.25rem; } }
+.fx-card > form.border-bottom .form-control-sm { flex: 2 1 12rem; } .fx-card > form.border-bottom .form-select-sm { flex: 1 1 6.5rem; min-width: 6rem; }
+#inspection-form .list-group-item > select.form-select, #inspection-form .list-group-item > textarea.form-control { width: calc(100% - 2.25rem); }
+@media (max-width: 575.98px) { #inspection-form .list-group-item > select.form-select, #inspection-form .list-group-item > textarea.form-control { width: 100%; } }
+@media (max-width: 575.98px) { #job-actions .btn, #inspection-form .btn, #checklist-list .btn { min-height: 44px; } }

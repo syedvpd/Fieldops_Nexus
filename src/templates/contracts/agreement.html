@@ -23,7 +23,7 @@
   <dt>Valid</dt><dd>{{ ag.start_date|date:"d M Y" }} → {{ ag.end_date|date:"d M Y" }}</dd>
   <dt>Provider</dt><dd>{{ ag.provider.name }}{% if ag.provider.email %} · {{ ag.provider.email }}{% endif %}{% if ag.provider.phone %} · {{ ag.provider.phone }}{% endif %}</dd>
   <dt>Coverage terms</dt><dd>{{ ag.terms|default:"—"|linebreaksbr }}</dd>
-  <dt>Not covered (work types)</dt><dd id="exclusions">{% for e in exclusions %}<span class="badge text-bg-light border">{{ e }}</span> {% empty %}None{% endfor %}</dd>
+  <dt>Not covered (work types)</dt><dd id="exclusions">{% for e in exclusions %}<span class="fx-chip">{{ e }}</span> {% empty %}None{% endfor %}</dd>
   <dt>Other exclusions</dt><dd>{{ ag.exclusion_notes|default:"—"|linebreaksbr }}</dd>
   <dt>Provider response terms</dt><dd>{{ ag.sla_terms|default:"—" }}</dd><dt>Internal SLA profile</dt><dd id="coverage-sla">{% if ag.sla_profile %}<a href="{% url 'sla:profile' ag.sla_profile_id %}">{{ ag.sla_profile.name }}</a>{% else %}— (site / organization SLA applies){% endif %}</dd><dt>Renewal alert</dt><dd>{{ ag.renewal_alert_days }} days before the end</dd></dl></div></div></div>
   <div class="col-lg-6"><div class="fx-card"><div class="fx-card-header">Covered assets ({{ links|length }})</div>
