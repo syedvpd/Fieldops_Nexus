@@ -19,8 +19,8 @@
   <div class="table-responsive"><table class="table fx-table">
     <thead><tr><th>Tag</th><th>Name</th><th>Category</th><th>Site / location</th><th>Parent</th><th>Status</th></tr></thead>
     <tbody>{% for a in page %}
-      <tr><td><a href="{% url 'assets:detail' a.pk %}">{{ a.asset_tag }}</a></td><td>{{ a.name }}</td><td>{{ a.category.name }}</td>
-        <td>{{ a.site.code }}{% if a.zone %} · {{ a.zone.name }}{% endif %}</td>
+      <tr><td><a class="fx-id" href="{% url 'assets:detail' a.pk %}">{{ a.asset_tag }}</a></td><td><div class="fw-medium">{{ a.name }}</div>{% if a.model or a.serial_number %}<div class="fx-sub">{{ a.model|default:"" }}{% if a.model and a.serial_number %} · {% endif %}{{ a.serial_number|default:"" }}</div>{% endif %}</td><td>{{ a.category.name }}</td>
+        <td><div>{{ a.site.code }}</div>{% if a.zone %}<div class="fx-sub">{{ a.zone.name }}</div>{% endif %}</td>
         <td>{% if a.parent_link %}<a href="{% url 'assets:detail' a.parent_link.parent_id %}">{{ a.parent_link.parent.asset_tag }}</a>{% else %}—{% endif %}</td>
         <td>{% status_badge a.status %}</td></tr>
     {% empty %}<tr><td colspan="6">{% include "components/_empty_state.html" with title="No assets match" text="Adjust the filters or register an asset." %}</td></tr>{% endfor %}

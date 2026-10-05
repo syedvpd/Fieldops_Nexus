@@ -10,6 +10,8 @@
   <div class="d-flex gap-2">{% if can.update and editable %}<a class="btn btn-outline-primary" href="{% url 'workorders:edit' wo.pk %}">Edit</a>{% endif %}
   {% if can.export_evidence %}<a class="btn btn-outline-secondary" id="evidence-package" href="{% url 'audit:evidence_package' wo.pk %}">Evidence package (ZIP)</a>{% endif %}</div></div>
 
+<div class="fx-tabs" role="tablist">{% for key, label in tabs %}<a role="tab" class="{% if tab == key %}active{% endif %}" href="?tab={{ key }}">{{ label }}</a>{% endfor %}</div>
+{% include "components/_wo_stepper.html" %}
 {% if actions %}
 <div class="fx-card mb-3"><div class="fx-card-header">Next steps</div><div class="fx-card-body d-flex flex-wrap gap-3 align-items-start" id="wo-actions">
   {% for a in actions %}
@@ -44,7 +46,6 @@
   <div class="col-md-5"><label class="form-label small" for="id_reason">Reason</label>{{ reassign_form.reason }}</div>
   <div class="col-md-3"><button class="btn btn-outline-primary w-100">Re-assign</button></div></form></div></div>{% endif %}
 
-<div class="fx-tabs" role="tablist">{% for key, label in tabs %}<a role="tab" class="{% if tab == key %}active{% endif %}" href="?tab={{ key }}">{{ label }}</a>{% endfor %}</div>
 
 {% if tab == "overview" %}
 {% include "sla/_panel.html" %}

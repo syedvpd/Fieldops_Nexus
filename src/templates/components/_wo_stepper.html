@@ -1,0 +1,12 @@
+{# Presentation of the real M06 state machine (workorders/workflow.py): Draft > Planned > Assigned > Dispatched > In progress > Completed > Supervisor review > Closed. Expects `wo`. #}
+{% if wo.status != "CANCELLED" %}{% with s=wo.status %}
+<div class="fx-stepper-bar"><ol class="fx-stepper" aria-label="Work order progress">
+{% include "components/_wo_step.html" with label="Draft" cur=s|stringformat:"s" me="DRAFT" past="PLANNED ASSIGNED DISPATCHED IN_PROGRESS ON_HOLD COMPLETED SUPERVISOR_REVIEW CLOSED" %}
+{% include "components/_wo_step.html" with label="Planned" cur=s me="PLANNED" past="ASSIGNED DISPATCHED IN_PROGRESS ON_HOLD COMPLETED SUPERVISOR_REVIEW CLOSED" %}
+{% include "components/_wo_step.html" with label="Assigned" cur=s me="ASSIGNED" past="DISPATCHED IN_PROGRESS ON_HOLD COMPLETED SUPERVISOR_REVIEW CLOSED" %}
+{% include "components/_wo_step.html" with label="Dispatched" cur=s me="DISPATCHED" past="IN_PROGRESS ON_HOLD COMPLETED SUPERVISOR_REVIEW CLOSED" %}
+{% include "components/_wo_step.html" with label="In progress" cur=s me="IN_PROGRESS" hold="ON_HOLD" past="COMPLETED SUPERVISOR_REVIEW CLOSED" %}
+{% include "components/_wo_step.html" with label="Completed" cur=s me="COMPLETED" past="SUPERVISOR_REVIEW CLOSED" %}
+{% include "components/_wo_step.html" with label="Supervisor review" cur=s me="SUPERVISOR_REVIEW" past="CLOSED" %}
+{% include "components/_wo_step.html" with label="Closed" cur=s me="CLOSED" past="" last=True %}
+</ol></div>{% endwith %}{% endif %}

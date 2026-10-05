@@ -9,9 +9,16 @@
   <h1>{{ asset.name }} {% status_badge asset.status %}</h1>
   <div class="text-body-secondary">{{ asset.asset_tag }} · {{ asset.category.name }} · <a href="{% url 'sites:detail' asset.site_id %}">{{ asset.site.code }}</a>{% if asset.zone %} · {{ asset.zone.name }}{% endif %}</div></div>
   <div class="d-flex gap-2 flex-wrap">{% if can.incident_create and not terminal %}<a class="btn btn-outline-danger" id="report-problem" href="{% url 'incidents:create' %}?asset={{ asset.pk }}">Report a problem</a>{% endif %}{% if can.asset_update and not terminal %}<a class="btn btn-outline-primary" href="{% url 'assets:edit' asset.pk %}">Edit</a>{% endif %}</div></div>
+<div class="fx-tabs" role="tablist">{% for key, label in tabs %}<a role="tab" class="{% if tab == key %}active{% endif %}" href="?tab={{ key }}">{{ label }}</a>{% endfor %}</div>
+<div class="fx-strip" id="asset-strip">
+  <span>{% status_badge asset.status %}</span>
+  <span>Site: <a href="{% url 'sites:detail' asset.site_id %}">{{ asset.site.code }}</a>{% if asset.zone %} · <b>{{ asset.zone.name }}</b>{% endif %}</span>
+  <span>Category: <b>{{ asset.category.name }}</b></span>
+  <span>Owner: <b>{{ asset.owner.user.display_name|default:"—" }}</b></span>
+  <span>Registered: <b>{{ asset.created_at|date:"d M Y" }}</b></span>
+</div>
 {% if terminal_block %}<div class="alert alert-warning" id="hierarchy-block" role="note"><strong>Retire / Dispose unavailable.</strong> {{ terminal_block }} <a href="?tab=hierarchy">Open the Hierarchy tab</a></div>{% endif %}
 {% if transitions %}<div class="mb-3">{% include "components/_workflow_bar.html" %}</div>{% elif terminal %}<div class="alert alert-secondary">This asset is {{ asset.status|lower }}: its lifecycle is complete and it is read-only.</div>{% endif %}
-<div class="fx-tabs" role="tablist">{% for key, label in tabs %}<a role="tab" class="{% if tab == key %}active{% endif %}" href="?tab={{ key }}">{{ label }}</a>{% endfor %}</div>
 
 {% if tab == "overview" %}
 <div class="row g-3"><div class="col-lg-7"><div class="fx-card"><div class="fx-card-header">Identity</div><div class="fx-card-body"><dl class="fx-kv">

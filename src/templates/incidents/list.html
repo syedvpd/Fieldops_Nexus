@@ -18,13 +18,13 @@
     <button class="btn btn-sm btn-outline-secondary">Filter</button>
   </form>
   <div class="table-responsive"><table class="table fx-table">
-    <thead><tr><th>Number</th><th>Title</th><th>Asset</th><th>Site</th><th>Severity</th><th>Status</th><th>Reported</th></tr></thead>
+    <thead><tr><th>Number</th><th>Title</th><th>Asset</th><th>Severity</th><th>Status</th><th>Reported</th></tr></thead>
     <tbody>{% for r in page %}
-      <tr><td><a href="{% url 'incidents:detail' r.pk %}">{{ r.number }}</a></td><td>{{ r.title }}</td>
-        <td><a href="{% url 'assets:detail' r.asset_id %}">{{ r.asset.asset_tag }}</a></td><td>{{ r.site.code }}</td>
+      <tr><td><a class="fx-id" href="{% url 'incidents:detail' r.pk %}">{{ r.number }}</a></td><td><div class="fw-medium">{{ r.title }}</div><div class="fx-sub">{{ r.get_kind_display }}</div></td>
+        <td><a class="fw-medium" href="{% url 'assets:detail' r.asset_id %}">{{ r.asset.asset_tag }}</a><div class="fx-sub">{{ r.site.code }}</div></td>
         <td>{% status_badge r.severity %}</td><td>{% status_badge r.status %}</td>
         <td class="small">{{ r.created_at|date:"d M Y H:i" }}<br>{{ r.reported_by.user.display_name }}</td></tr>
-    {% empty %}<tr><td colspan="7">{% include "components/_empty_state.html" with title="No requests match" text="Adjust the filters or report an incident." %}</td></tr>{% endfor %}
+    {% empty %}<tr><td colspan="6">{% include "components/_empty_state.html" with title="No requests match" text="Adjust the filters or report an incident." %}</td></tr>{% endfor %}
     </tbody></table></div>
   {% include "components/_pagination.html" %}
 </div>

@@ -19,10 +19,10 @@
     <button class="btn btn-sm btn-outline-secondary">Filter</button>
   </form>
   <div class="table-responsive"><table class="table fx-table">
-    <thead><tr><th>Number</th><th>Title</th><th>Asset</th><th>Site</th><th>Priority</th><th>Status</th><th>Technician</th><th>Planned</th></tr></thead>
+    <thead><tr><th>Number</th><th>Title</th><th>Type</th><th>Asset</th><th>Priority</th><th>Status</th><th>Technician</th><th>Planned</th></tr></thead>
     <tbody>{% for w in page %}
-      <tr><td><a href="{% url 'workorders:detail' w.pk %}">{{ w.number }}</a></td><td>{{ w.title }}{% if w.source_request %}<div class="small text-body-secondary">from {{ w.source_request.number }}</div>{% endif %}</td>
-        <td>{{ w.asset.asset_tag }}</td><td>{{ w.site.code }}</td><td>{% status_badge w.priority %}</td><td>{% status_badge w.status %}</td>
+      <tr><td><a class="fx-id" href="{% url 'workorders:detail' w.pk %}">{{ w.number }}</a></td><td><div class="fw-medium">{{ w.title }}</div>{% if w.source_request %}<div class="fx-sub">from {{ w.source_request.number }}</div>{% endif %}</td>
+        <td><span class="fx-chip" data-t="{{ w.work_type }}">{{ w.get_work_type_display }}</span></td><td><div class="fw-medium">{{ w.asset.asset_tag }}</div><div class="fx-sub">{{ w.site.code }}</div></td><td>{% status_badge w.priority %}</td><td>{% status_badge w.status %}</td>
         <td>{{ w.assigned_to.user.display_name|default:"—" }}</td><td class="small">{{ w.planned_start|date:"d M H:i"|default:"—" }}</td></tr>
     {% empty %}<tr><td colspan="8">{% include "components/_empty_state.html" with title="No work orders match" text="Adjust the filters or create a work order." %}</td></tr>{% endfor %}
     </tbody></table></div>
