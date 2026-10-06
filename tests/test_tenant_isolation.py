@@ -151,7 +151,7 @@ def test_unscoped_is_only_used_in_trusted_modules():
     allowed = {
         "apps/core/tenant.py", "apps/tenancy/selectors.py", "apps/tenancy/services.py",
         "apps/rbac/services.py", "apps/accounts/services.py", "apps/notifications/services.py",
-        "apps/platform_admin/views.py",
+        "apps/platform_admin/views.py", "apps/platform_admin/selectors.py",
     }
     root = pathlib.Path(__file__).resolve().parent.parent / "src"
     offenders = []

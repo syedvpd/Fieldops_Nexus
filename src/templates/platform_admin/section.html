@@ -1,0 +1,16 @@
+{% extends "shell.html" %}
+{% block title %}{{ title }} · Platform{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div><h1>{{ title }}</h1><div class="text-body-secondary">{{ subtitle }}</div></div>
+  <div class="d-flex gap-2">{% for label, url in actions %}<a class="btn btn-sm btn-outline-secondary" href="{{ url }}">{{ label }}</a>{% endfor %}</div></div>
+{% if filters %}<form method="get" class="fx-card d-flex flex-wrap gap-2 p-3 mb-3" aria-label="Filters">
+  {% if "org" in filters %}<select class="form-select form-select-sm" style="max-width:220px" name="org" aria-label="Organization"><option value="">All organizations</option>{% for o in orgs %}<option value="{{ o.id }}" {% if o.id|stringformat:"s" == f_org %}selected{% endif %}>{{ o.name }}</option>{% endfor %}</select>{% endif %}
+  {% if "site" in filters %}<select class="form-select form-select-sm" style="max-width:220px" name="site" aria-label="Site"><option value="">All sites</option>{% for s in sites %}<option value="{{ s.id }}" {% if s.id|stringformat:"s" == f_site %}selected{% endif %}>{{ s.name }}</option>{% endfor %}</select>{% endif %}
+  {% if "status" in filters %}<select class="form-select form-select-sm" style="max-width:200px" name="status" aria-label="Status"><option value="">All statuses</option>{% for v, l in status_choices %}<option value="{{ v }}" {% if v == f_status %}selected{% endif %}>{{ l }}</option>{% endfor %}</select>{% endif %}
+  {% if "q" in filters %}<input class="form-control form-control-sm" style="max-width:240px" type="search" name="q" value="{{ f_q }}" placeholder="Search" aria-label="Search">{% endif %}
+  <button class="btn btn-sm btn-outline-secondary">Apply</button><a class="btn btn-sm btn-link" href="?">Reset</a></form>{% endif %}
+{% if kpis %}<div class="row g-2 mb-3">{% for k in kpis %}<div class="col-6 col-md-4 col-xl-3 col-xxl-2"><div class="fx-card p-3 h-100" data-kpi="{{ k.label }}">
+  <div class="small text-body-secondary">{% if k.href %}<a href="{{ k.href }}" class="text-reset">{{ k.label }}</a>{% else %}{{ k.label }}{% endif %}</div>
+  <div class="fs-4 fw-semibold {% if k.tone == 'danger' and k.value %}text-danger{% elif k.tone == 'warn' and k.value %}text-warning{% endif %}">{{ k.value }}</div></div></div>{% endfor %}</div>{% endif %}
+{% for t in tables %}{% include "platform_admin/_table.html" %}{% endfor %}
+{% endblock %}

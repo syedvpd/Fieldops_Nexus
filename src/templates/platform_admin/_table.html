@@ -1,0 +1,14 @@
+{% load ui_tags %}
+<div class="fx-card mb-3">
+  {% if t.title %}<div class="px-3 pt-3 pb-1 fw-semibold">{{ t.title }}</div>{% endif %}
+  {% if t.health %}
+    <div class="row g-2 p-3">{% for h in t.health %}<div class="col-6 col-md-4 col-xl-2"><div class="border rounded p-2 h-100" data-health="{{ h.name }}"><div class="small text-body-secondary">{{ h.name }}</div>
+      <div class="fw-semibold">{% if h.state == 'ok' %}<span class="badge fx-badge fx-badge-success">Healthy</span>{% elif h.state == 'warn' %}<span class="badge fx-badge fx-badge-warning">Warning</span>{% else %}<span class="badge fx-badge fx-badge-danger">Error</span>{% endif %}</div>
+      <div class="small text-body-secondary">{{ h.detail }}</div></div></div>{% endfor %}</div>
+  {% else %}
+  <div class="table-responsive"><table class="table fx-table mb-0"><thead><tr>{% for c in t.cols %}<th>{{ c }}</th>{% endfor %}</tr></thead>
+    <tbody>{% for r in t.rows %}<tr>{% for c in r %}<td>{% if c.k == 'b' %}{% status_badge c.v %}{% elif c.k == 'l' %}<a href="{{ c.u }}">{{ c.v }}</a>{% elif c.k == 'bar' %}<div class="d-flex align-items-center gap-2"><div style="width:90px;height:8px;background:var(--bs-secondary-bg);border-radius:4px"><div style="width:{{ c.pct }}%;height:8px;background:var(--bs-primary);border-radius:4px"></div></div><span>{{ c.v }}</span></div>{% else %}{{ c.v }}{% endif %}</td>{% endfor %}</tr>
+    {% empty %}<tr><td colspan="{{ t.cols|length }}" class="text-body-secondary p-3">{{ t.empty }}</td></tr>{% endfor %}</tbody></table></div>
+  {% if t.page %}{% with page=t.page %}{% include "components/_pagination.html" %}{% endwith %}{% endif %}
+  {% endif %}
+</div>

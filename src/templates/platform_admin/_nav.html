@@ -1,0 +1,19 @@
+{% load ui_tags %}{% with p=request.path %}
+<a class="fx-nav-link {% if p == '/platform/' %}active{% endif %}" href="{% url 'platform_admin:overview' %}">{% icon 'grid' 16 %}<span class="fx-label">Overview</span></a>
+<a class="fx-nav-link {% if '/platform/organizations' in p %}active{% endif %}" href="{% url 'platform_admin:organizations' %}">{% icon 'globe' 16 %}<span class="fx-label">Organizations</span></a>
+<a class="fx-nav-link {% if '/platform/sites' in p %}active{% endif %}" href="{% url 'platform_admin:sites' %}">{% icon 'pin' 16 %}<span class="fx-label">Sites &amp; Locations</span></a>
+<a class="fx-nav-link {% if '/platform/users' in p %}active{% endif %}" href="{% url 'platform_admin:users' %}">{% icon 'people' 16 %}<span class="fx-label">Users</span></a>
+<a class="fx-nav-link {% if '/platform/roles' in p %}active{% endif %}" href="{% url 'platform_admin:roles' %}">{% icon 'shield' 16 %}<span class="fx-label">Roles &amp; Permissions</span></a>
+<a class="fx-nav-link {% if '/platform/assets' in p %}active{% endif %}" href="{% url 'platform_admin:assets' %}">{% icon 'building' 16 %}<span class="fx-label">Assets</span></a>
+<a class="fx-nav-link {% if '/platform/service-operations' in p %}active{% endif %}" href="{% url 'platform_admin:service_ops' %}">{% icon 'bell' 16 %}<span class="fx-label">Service Operations</span></a>
+<a class="fx-nav-link {% if '/platform/work-orders' in p %}active{% endif %}" href="{% url 'platform_admin:work_orders' %}">{% icon 'clipboard' 16 %}<span class="fx-label">Work Orders</span></a>
+<a class="fx-nav-link {% if '/platform/maintenance' in p %}active{% endif %}" href="{% url 'platform_admin:maintenance' %}">{% icon 'wrench' 16 %}<span class="fx-label">Maintenance</span></a>
+<a class="fx-nav-link {% if '/platform/inventory' in p %}active{% endif %}" href="{% url 'platform_admin:inventory' %}">{% icon 'box' 16 %}<span class="fx-label">Inventory</span></a>
+<a class="fx-nav-link {% if '/platform/sla' in p %}active{% endif %}" href="{% url 'platform_admin:sla' %}">{% icon 'clock' 16 %}<span class="fx-label">SLA &amp; Policies</span></a>
+<a class="fx-nav-link {% if '/platform/dashboards' in p %}active{% endif %}" href="{% url 'platform_admin:dashboards' %}">{% icon 'list-check' 16 %}<span class="fx-label">Operational Dashboards</span></a>
+<a class="fx-nav-link {% if '/platform/audit' in p %}active{% endif %}" href="{% url 'platform_admin:audit' %}">{% icon 'search' 16 %}<span class="fx-label">Audit &amp; Compliance</span></a>
+<a class="fx-nav-link {% if '/platform/settings' in p %}active{% endif %}" href="{% url 'platform_admin:settings' %}">{% icon 'menu' 16 %}<span class="fx-label">System Settings</span></a>
+<hr class="my-2 opacity-25">
+<a class="fx-nav-link {% if '/platform/profile' in p %}active{% endif %}" href="{% url 'platform_admin:profile' %}">{% icon 'people' 16 %}<span class="fx-label">Profile</span></a>
+<a class="fx-nav-link {% if '/platform/security' in p %}active{% endif %}" href="{% url 'platform_admin:security' %}">{% icon 'shield' 16 %}<span class="fx-label">Security</span></a>
+{% endwith %}

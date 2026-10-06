@@ -16,8 +16,7 @@
     {% if shell_org %}<div class="fx-org-chip fx-label" title="{{ shell_org.name }}">{{ shell_org.name }}</div>{% endif %}
     <nav class="fx-nav" id="fx-nav">
       {% if request.user.is_platform_admin and is_platform == "/platform/" %}
-        <a class="fx-nav-link {% if '/platform/organizations' in request.path %}active{% endif %}" href="{% url 'platform_admin:organizations' %}">{% icon 'globe' 16 %}<span class="fx-label">Organizations</span></a>
-        <a class="fx-nav-link {% if request.path == '/platform/audit/' %}active{% endif %}" href="{% url 'platform_admin:audit' %}">{% icon 'clock' 16 %}<span class="fx-label">Platform Audit</span></a>
+        {% include "platform_admin/_nav.html" %}
       {% else %}
         {% for section, items in shell_nav_sections.items %}
           {% if items|length == 1 %}
@@ -36,7 +35,7 @@
           {% endif %}
         {% endfor %}
         {% if request.user.is_platform_admin %}
-          <a class="fx-nav-link" href="{% url 'platform_admin:organizations' %}" title="Platform console">{% icon 'globe' 16 %}<span class="fx-label">Platform console</span></a>
+          <a class="fx-nav-link" href="{% url 'platform_admin:overview' %}" title="Platform console">{% icon 'globe' 16 %}<span class="fx-label">Platform console</span></a>
         {% endif %}
       {% endif %}
     </nav>

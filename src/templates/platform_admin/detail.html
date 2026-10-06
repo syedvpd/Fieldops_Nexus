@@ -1,0 +1,9 @@
+{% extends "shell.html" %}
+{% block title %}{{ title }} · Platform{% endblock %}
+{% block content %}
+<div class="fx-page-header"><div><h1>{{ title }}</h1><div class="text-body-secondary">{{ subtitle }} · read-only platform view</div></div><a class="btn btn-sm btn-outline-secondary" href="{{ back }}">Back</a></div>
+<div class="fx-card p-3 mb-3"><div class="row g-3">{% for k, v in facts %}<div class="col-6 col-md-4 col-xl-3"><div class="small text-body-secondary">{{ k }}</div><div>{{ v }}</div></div>{% endfor %}</div></div>
+{% for t in tables %}{% include "platform_admin/_table.html" %}{% endfor %}
+{% if audit_for %}<div class="fx-card mb-3"><div class="px-3 pt-3 pb-1 fw-semibold">Audit history</div><div class="table-responsive"><table class="table fx-table mb-0"><thead><tr><th>When</th><th>Action</th><th>Actor</th></tr></thead><tbody>
+{% for e in audit %}<tr><td class="text-nowrap">{{ e.occurred_at|date:"d M Y H:i:s" }}</td><td><code>{{ e.action }}</code></td><td>{{ e.actor_email|default:"system" }}</td></tr>{% empty %}<tr><td colspan="3" class="text-body-secondary p-3">No audit entries for this record.</td></tr>{% endfor %}</tbody></table></div></div>{% endif %}
+{% endblock %}

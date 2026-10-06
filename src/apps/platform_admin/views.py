@@ -1,20 +1,20 @@
 """Platform console (Super Admin). Platform admins hold NO tenant permissions: they manage organizations
 and see platform-level audit, never an organization's operational data."""
-import uuid
 
 from django import forms
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
-from apps.audit import selectors as audit_selectors
 from apps.audit.models import AuditLog
 from apps.core.exceptions import DomainError
 from apps.tenancy import services
 from apps.tenancy.models import Membership, Organization
+
+from . import selectors
 
 
 class PlatformAdminMixin:
@@ -125,13 +125,40 @@ class OrganizationDetailView(PlatformAdminMixin, View):
 
 
 class PlatformAuditView(PlatformAdminMixin, View):
+    """Audit & Compliance: platform-wide, filterable, exportable (every export is itself audited)."""
+
     def get(self, request):
-        qs = audit_selectors.filter_logs(AuditLog.objects.select_related("actor", "organization"), request.GET)
-        org = request.GET.get("organization", "")
-        if org:
-            try:
-                qs = qs.filter(organization_id=uuid.UUID(org))
-            except ValueError:
-                qs = qs.none()
+        qs = selectors.audit_queryset(request)
+        if request.GET.get("export") == "csv":
+            from apps.audit import services as audit
+            audit.record("audit.exported", actor=request.user, metadata={"filters": request.GET.dict()}, request=request)
+            resp = HttpResponse(content_type="text/csv")
+            resp["Content-Disposition"] = 'attachment; filename="platform-audit.csv"'
+            selectors.audit_csv(qs, resp)
+            return resp
         page = Paginator(qs, 25).get_page(request.GET.get("page"))
-        return render(request, "platform_admin/audit.html", {"page": page, "filters": request.GET})
+        return render(request, "platform_admin/audit.html", {"page": page, "filters": request.GET, "orgs": selectors._orgs(),
+                                                              "modules": ["auth", "user", "role", "asset", "workorder", "request", "inventory", "sla", "maintenance", "organization"]})
+
+
+class SectionView(PlatformAdminMixin, View):
+    section = ""
+
+    def get(self, request):
+        ctx = selectors.SECTIONS[self.section](request)
+        ctx["section"] = self.section
+        return render(request, "platform_admin/section.html", ctx)
+
+
+class DetailView(PlatformAdminMixin, View):
+    kind = ""
+    section = ""
+
+    def get(self, request, pk):
+        ctx = selectors.DETAILS[self.kind](pk)
+        if ctx is None:
+            raise Http404
+        ctx["section"] = self.section
+        if ctx.get("audit_for"):
+            ctx["audit"] = AuditLog.objects.filter(target_id=str(ctx["audit_for"])).select_related("organization")[:25]
+        return render(request, "platform_admin/detail.html", ctx)
