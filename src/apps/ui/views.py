@@ -12,11 +12,11 @@ from apps.tenancy import selectors
 from apps.tenancy.models import Membership
 
 
-@login_required
+@require_GET
 def root(request):
-    if request.user.is_platform_admin and request.membership is None:
-        return redirect("platform_admin:organizations")
-    return redirect("ui:home")
+    """Public marketing homepage. Never requires authentication; login lives at /login/."""
+    from django.conf import settings
+    return render(request, "public/home.html", {"sales_email": settings.SALES_CONTACT_EMAIL})
 
 
 @login_required

@@ -16,3 +16,4 @@ htmlcov/
 *.log
 .claude/settings.local.json
 .pytest_media/
+.qa-console-pw

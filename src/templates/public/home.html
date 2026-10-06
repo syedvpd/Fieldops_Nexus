@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FieldOps Nexus · Enterprise Operations. Connected. Simplified.</title>
+<meta name="description" content="FieldOps Nexus is a unified ERP platform connecting organizations, assets, people, service operations and workflows in one system.">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+</head>
+<body>
+<header class="nav" id="top">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><span class="mark">FX</span><span>FieldOps <b>Nexus</b></span></a>
+    <nav class="links" id="links" aria-label="Primary">
+      <a href="#platform">Platform</a><a href="#solutions">Solutions</a><a href="#how">How It Works</a><a href="#why">Why FieldOps</a><a href="#contact">Contact</a>
+      <a class="btn btn-gold sm only-m" href="/login/">Sign In</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost sm" href="#contact">Request a Demo</a>
+      <a class="btn btn-gold sm" href="{% if request.user.is_authenticated %}/app/{% else %}/login/{% endif %}">{% if request.user.is_authenticated %}Open Workspace{% else %}Sign In{% endif %}</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <span class="eyebrow">FieldOps Nexus</span>
+      <h1>Enterprise Operations.<br><em>Connected. Simplified.</em></h1>
+      <p>A unified ERP platform designed to connect organizations, assets, people, service operations, and business workflows in one centralized system.</p>
+      <div class="cta-row"><a class="btn btn-gold" href="#platform">Explore Platform</a><a class="btn btn-outline" href="#contact">Request a Demo</a></div>
+      <ul class="proof"><li>Multi-tenant by design</li><li>Role-based access</li><li>Full audit trail</li></ul>
+    </div>
+    <div class="hero-vis" aria-label="Product preview (sample content)">
+      <div class="dash">
+        <div class="dash-bar"><i></i><i></i><i></i><span>Workspace / Dashboard</span><em>Sample data</em></div>
+        <div class="dash-body">
+          <div class="kpis">
+            <div class="kpi"><small>Active Assets</small><b>2,514</b><s class="up">+3.2%</s></div>
+            <div class="kpi"><small>Open Work Orders</small><b>148</b><s class="dn">12 overdue</s></div>
+            <div class="kpi"><small>SLA Performance</small><b>96.4%</b><s class="up">on target</s></div>
+          </div>
+          <div class="row2">
+            <div class="panel"><h4>Work Order Activity</h4>
+              <div class="bars"><i style="height:38%"></i><i style="height:55%"></i><i style="height:46%"></i><i style="height:72%"></i><i style="height:60%"></i><i style="height:84%"></i><i style="height:68%"></i></div></div>
+            <div class="panel"><h4>Asset Status</h4>
+              <div class="stat"><span>Active</span><div><i style="width:82%"></i></div></div>
+              <div class="stat"><span>Maintenance</span><div><i class="g" style="width:12%"></i></div></div>
+              <div class="stat"><span>Out of service</span><div><i class="r" style="width:5%"></i></div></div></div>
+          </div>
+          <div class="panel"><h4>Recent Activity</h4>
+            <p class="act"><b>WO-1042</b> assigned to technician <span>2 min ago</span></p>
+            <p class="act"><b>SR-0388</b> triaged and approved <span>14 min ago</span></p>
+            <p class="act"><b>PM-0217</b> generated for Pump P-12 <span>1 h ago</span></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="preview">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow dk">Product preview</span><h2>Operations at a glance</h2><p>One workspace showing what is running, what is late and what needs a decision. Illustrative sample content.</p></div>
+    <div class="grid4">
+      <div class="card stat-card"><small>Active Assets</small><b>2,514</b><p>Across all sites and locations</p></div>
+      <div class="card stat-card"><small>Open Work Orders</small><b>148</b><p>Planned, assigned and in progress</p></div>
+      <div class="card stat-card"><small>SLA Performance</small><b>96.4%</b><p>Response and resolution targets</p></div>
+      <div class="card stat-card"><small>Work Order Summary</small><b>7 states</b><p>Draft through supervisor review</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec navy" id="advantage">
+  <div class="wrap two">
+    <div><span class="eyebrow">Connected advantage</span><h2>One Platform.<br>Every Operation.</h2>
+      <p class="lead">FieldOps connects organizations, sites, assets, people, service operations, maintenance, inventory, requests, work orders and reports so every team works from the same record.</p></div>
+    <div class="grid2">
+      <div class="tile"><b>Centralized Operations</b><p>One system of record for the whole enterprise.</p></div>
+      <div class="tile"><b>Real-Time Visibility</b><p>Live status of assets, work and service levels.</p></div>
+      <div class="tile"><b>Workflow Automation</b><p>State-driven workflows with enforced hand-offs.</p></div>
+      <div class="tile"><b>Complete Traceability</b><p>Every change recorded with who, what and when.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow dk">Ecosystem</span><h2>Connected across your operation</h2><p>Each part of the business links to the next, with no re-keying and no lost context.</p></div>
+    <div class="eco">
+      <div>Organizations</div><div>Sites</div><div>Assets</div><div>Work Orders</div><div>Service Requests</div><div>Maintenance</div><div>Inventory</div><div>Reports</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="platform">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow dk">Platform</span><h2>Everything Your Enterprise Needs</h2><p>The centralized operational platform for assets, service, maintenance and the people behind them.</p></div>
+    <div class="grid4">
+      <article class="card mod"><span class="n">01</span><h3>Organization Management</h3><p>Tenants, sites, locations, users, roles and permissions with strict isolation.</p></article>
+      <article class="card mod"><span class="n">02</span><h3>Asset Management</h3><p>Hierarchy, lifecycle, meters, components, warranty and QR identification.</p></article>
+      <article class="card mod"><span class="n">03</span><h3>Service Management</h3><p>Requests and incidents from intake through triage, approval and closure.</p></article>
+      <article class="card mod"><span class="n">04</span><h3>Work Order Management</h3><p>Plan, assign, dispatch, execute and review with checklists and SLAs.</p></article>
+      <article class="card mod"><span class="n">05</span><h3>Inventory Management</h3><p>Warehouses, stock, reservations, issues, returns and reconciliation.</p></article>
+      <article class="card mod"><span class="n">06</span><h3>Workforce &amp; Technician Operations</h3><p>Technician job queues, field execution and supervisor approval.</p></article>
+      <article class="card mod"><span class="n">07</span><h3>Maintenance Management</h3><p>Time and meter-based preventive plans that generate work automatically.</p></article>
+      <article class="card mod"><span class="n">08</span><h3>Analytics &amp; Reporting</h3><p>Operational dashboards, SLA tracking and exportable audit evidence.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow dk">How it works</span><h2>From Request to Resolution</h2><p>A clear, connected path from the first service request to the final sign-off. Every handoff accounted for.</p></div>
+    <ol class="steps">
+      <li><b>01</b><h4>Request Raised</h4><p>A service request or incident is logged against an asset.</p></li>
+      <li><b>02</b><h4>Triage</h4><p>Severity, impact and SLA are assessed and approved.</p></li>
+      <li><b>03</b><h4>Work Order</h4><p>Approved work becomes a planned work order.</p></li>
+      <li><b>04</b><h4>Technician Assignment</h4><p>The right technician is assigned and dispatched.</p></li>
+      <li><b>05</b><h4>Execution</h4><p>Checklist, parts and labour are captured in the field.</p></li>
+      <li><b>06</b><h4>Supervisor Approval</h4><p>Completed work is reviewed before sign-off.</p></li>
+      <li><b>07</b><h4>Closure</h4><p>The record closes with a complete audit trail.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec navy" id="visibility">
+  <div class="wrap">
+    <div class="head light"><span class="eyebrow">Product experience</span><h2>Complete Operational Visibility</h2><p>Monitor assets, work orders, service requests, workforce activity, SLA performance and operational metrics from a single workspace.</p></div>
+    <div class="grid3">
+      <div class="shot"><h4>Assets</h4><div class="stat"><span>Active</span><div><i style="width:82%"></i></div></div><div class="stat"><span>Under maintenance</span><div><i class="g" style="width:12%"></i></div></div><div class="stat"><span>Out of service</span><div><i class="r" style="width:6%"></i></div></div></div>
+      <div class="shot"><h4>Work Orders</h4><div class="bars"><i style="height:45%"></i><i style="height:62%"></i><i style="height:52%"></i><i style="height:80%"></i><i style="height:70%"></i><i style="height:90%"></i></div></div>
+      <div class="shot"><h4>SLA Performance</h4><div class="big">96.4%</div><p>Targets met this month</p></div>
+      <div class="shot"><h4>Service Requests</h4><p class="act"><b>SR-0388</b> Triaged <span>High</span></p><p class="act"><b>SR-0391</b> New <span>Medium</span></p><p class="act"><b>SR-0392</b> Approved <span>Low</span></p></div>
+      <div class="shot"><h4>Workforce Activity</h4><p class="act"><b>Technicians on shift</b> <span>18</span></p><p class="act"><b>Jobs in progress</b> <span>24</span></p><p class="act"><b>Awaiting review</b> <span>6</span></p></div>
+      <div class="shot"><h4>Operational Metrics</h4><p class="act"><b>PM compliance</b> <span>94%</span></p><p class="act"><b>Mean time to repair</b> <span>3.1 h</span></p><p class="act"><b>Low-stock parts</b> <span>9</span></p></div>
+    </div>
+    <p class="note">Preview screens use sample content for illustration.</p>
+  </div>
+</section>
+
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow dk">Why FieldOps Nexus</span><h2>Built for accountable operations</h2></div>
+    <div class="grid4">
+      <div class="card why"><small>01 / 04</small><h3>Connected Data</h3><p>Assets, work, parts and people share one record, so nothing is re-entered.</p></div>
+      <div class="card why"><small>02 / 04</small><h3>Smarter Workflows</h3><p>Defined states and approvals keep every job on a controlled path.</p></div>
+      <div class="card why"><small>03 / 04</small><h3>Operational Visibility</h3><p>Live dashboards expose backlog, delays and SLA risk early.</p></div>
+      <div class="card why"><small>04 / 04</small><h3>Audit &amp; Traceability</h3><p>Every action is recorded and exportable for compliance reviews.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="solutions">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow dk">Industries &amp; solutions</span><h2>Designed for Complex Operations</h2></div>
+    <div class="ind">
+      <div><h3>Manufacturing</h3><p>Keep lines running with planned maintenance and fast breakdown response.</p></div>
+      <div><h3>Facilities Management</h3><p>Coordinate sites, requests and service teams across every building.</p></div>
+      <div><h3>Service &amp; Maintenance</h3><p>Dispatch field teams with the context, parts and SLAs they need.</p></div>
+      <div><h3>Infrastructure</h3><p>Track distributed assets and inspections over long lifecycles.</p></div>
+      <div><h3>Enterprise Operations</h3><p>Give every organization its own secure, governed workspace.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <h2>Bring Your Operations Together</h2>
+    <p>Connect assets, people, service activities, maintenance and operational workflows in one platform.</p>
+    <div class="cta-row c"><a class="btn btn-gold" href="{% if sales_email %}mailto:{{ sales_email }}?subject=FieldOps%20Nexus%20demo%20request{% else %}#contact-note{% endif %}">Request a Demo</a><a class="btn btn-outline" href="{% if sales_email %}mailto:{{ sales_email }}{% else %}#contact-note{% endif %}">Contact Us</a></div>
+    {% if not sales_email %}<p class="cfg-note" id="contact-note">Demo requests are not enabled yet. Sales contact details will be published here once they are configured.</p>{% endif %}
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap fgrid">
+    <div class="fbrand"><a class="brand" href="/"><span class="mark">FX</span><span>FieldOps <b>Nexus</b></span></a>
+      <p>The connected enterprise platform for assets, service, maintenance, and the people behind it all.</p></div>
+    <div><h5>Platform</h5><a href="#platform">Features</a><a href="#platform">Asset Management</a><a href="#platform">Service Management</a><a href="#platform">Work Orders</a><a href="#visibility">Analytics</a></div>
+    <div><h5>Solutions</h5><a href="#solutions">Enterprise Operations</a><a href="#solutions">Manufacturing</a><a href="#solutions">Facilities Management</a><a href="#solutions">Maintenance</a></div>
+    <div><h5>Company</h5><a href="#top">About</a><a href="#why">Resources</a><a href="#contact">Contact Sales</a><a href="#contact">Careers</a></div>
+    <div><h5>Contact</h5>{% if sales_email %}<a href="mailto:{{ sales_email }}">{{ sales_email }}</a>{% else %}<a href="#contact-note">Contact details coming soon</a>{% endif %}<a href="/login/">Sign In</a></div>
+  </div>
+  <div class="wrap copy">© 2026 FieldOps Nexus. All rights reserved.</div>
+</footer>
+<script src="{% static 'js/landing.js' %}" defer></script>
+</body>
+</html>

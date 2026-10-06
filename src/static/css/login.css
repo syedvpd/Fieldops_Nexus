@@ -1,0 +1,22 @@
+body.fx-login-page{margin:0;background:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.lg{display:grid;grid-template-columns:1.05fr 1fr;min-height:100vh}
+.lg-side{background:radial-gradient(900px 500px at 10% 0,#1e4a72 0,transparent 60%),linear-gradient(180deg,#0B1F3A,#071426);color:#fff;padding:40px 56px;display:flex;flex-direction:column;justify-content:space-between}
+.lg-brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-size:1.1rem}.lg-brand b{color:#D9B33F}
+.lg-mark{display:grid;place-items:center;width:34px;height:34px;border:1.5px solid #C9A227;color:#D9B33F;border-radius:6px;font-size:.8rem;font-weight:700}
+.lg-copy{max-width:520px;margin:48px 0}.lg-eyebrow{color:#D9B33F;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+.lg-copy h2{font-family:Georgia,serif;font-weight:600;font-size:clamp(1.9rem,3vw,2.7rem);line-height:1.15;margin:16px 0}
+.lg-copy p{color:#b4c2d6;line-height:1.6}
+.lg-roles{list-style:none;padding:0;margin:28px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.lg-roles li{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);padding:6px 12px;border-radius:99px;font-size:.8rem;color:#e2e8f0}
+.lg-foot{color:#7f93ad;font-size:.8rem;margin:0}
+.lg-main{display:grid;place-items:center;padding:32px 20px;background:#F8FAFC}
+.lg-card{width:min(420px,100%);background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:36px;box-shadow:0 18px 50px rgba(11,31,58,.08)}
+.lg-back{font-size:.84rem;color:#64748B;text-decoration:none}.lg-back:hover{color:#a8841e}
+.lg-card h1{font-family:Georgia,serif;font-size:1.9rem;color:#0B1F3A;margin:18px 0 4px}.lg-sub{color:#64748B;margin:0 0 24px}
+.lg-card .form-label{font-size:.85rem;color:#172033}
+.lg-card input[type=text],.lg-card input[type=email],.lg-card input[type=password]{width:100%;padding:11px 13px;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem;background:#fff}
+.lg-card input:focus{outline:none;border-color:#C9A227;box-shadow:0 0 0 3px rgba(201,162,39,.25)}
+.lg-btn{width:100%;padding:12px;border:0;border-radius:6px;background:#C9A227;color:#071426;font-weight:600;font-size:1rem;cursor:pointer;transition:background .2s}.lg-btn:hover{background:#D9B33F}
+.lg-links{margin-top:16px;font-size:.88rem}.lg-links a{color:#0B1F3A}.lg-links a:hover{color:#a8841e}
+.lg-note{margin:22px 0 0;padding-top:16px;border-top:1px solid #E2E8F0;font-size:.8rem;color:#64748B}
+@media(max-width:900px){.lg{grid-template-columns:1fr}.lg-side{padding:28px 24px}.lg-copy{margin:24px 0}.lg-roles{display:none}.lg-foot{display:none}.lg-copy p{display:none}}

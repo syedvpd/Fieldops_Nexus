@@ -256,6 +256,8 @@ if env("AWS_STORAGE_BUCKET_NAME", ""):
             "file_overwrite": False,
         },
     }
+# Public homepage "Request a Demo / Contact" target. Empty = no mailto is rendered (set a VERIFIED company address).
+SALES_CONTACT_EMAIL = env("SALES_CONTACT_EMAIL", "")
 UPLOAD_MAX_BYTES = int(env("UPLOAD_MAX_BYTES", str(10 * 1024 * 1024)))
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 FILE_UPLOAD_PERMISSIONS = 0o640

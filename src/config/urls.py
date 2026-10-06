@@ -3,6 +3,7 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.routers import SimpleRouter
 
+from apps.accounts import views as accounts_views
 from apps.assets.api_views import (
     AssetCategoryViewSet,
     AssetViewSet,
@@ -150,6 +151,7 @@ urlpatterns = [
     path("app/", include("apps.dashboards.urls")),
     path("app/", include("apps.checklists.urls")),
     path("app/", include("apps.workspace.urls")),
+    path("login/", accounts_views.LoginView.as_view(), name="login_short"),
     path("", include("apps.ui.urls")),
 ]
 
