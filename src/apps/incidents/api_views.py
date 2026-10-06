@@ -143,6 +143,13 @@ def _validated(serializer_cls, request, partial=False):
     return ser.validated_data
 
 
+class CreatedWorkOrderSerializer(serializers.Serializer):
+    id = serializers.UUIDField(help_text="New work order id")
+    number = serializers.CharField()
+    status = serializers.CharField()
+    request = ServiceRequestSerializer()
+
+
 @extend_schema(parameters=[ID_PARAM])
 class ServiceRequestViewSet(TenantAPIMixin, viewsets.ViewSet):
     permission_map = {
@@ -201,7 +208,7 @@ class ServiceRequestViewSet(TenantAPIMixin, viewsets.ViewSet):
         services.transition(sr, action=d["action"], reason=d.get("reason", ""), actor=request.user, request=request)
         return Response(ServiceRequestSerializer(self._obj(request, pk)).data)
 
-    @extend_schema(request=CreateWorkOrderSerializer, responses={201: OpenApiTypes.OBJECT})
+    @extend_schema(request=CreateWorkOrderSerializer, responses={201: CreatedWorkOrderSerializer})
     @action(detail=True, methods=["post"], url_path="create-work-order")
     def create_work_order(self, request, pk=None):
         """Approved request -> a real M06 work order (DRAFT); the request moves to WORK ORDER CREATED."""

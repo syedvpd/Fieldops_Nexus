@@ -10,6 +10,7 @@ from rest_framework.response import Response
 
 from apps.assets import selectors as asset_selectors
 from apps.assets.models import AssetMeter
+from apps.core import openapi_schemas as oas
 from apps.core.apiutils import ID_PARAM, paginate, query_param, require_permission
 from apps.core.exceptions import NotFound
 from apps.sites.selectors import scoped_get
@@ -259,7 +260,7 @@ class MaintenanceScheduleViewSet(TenantAPIMixin, viewsets.ViewSet):
                                            request=request)
         return Response(ScheduleSerializer(sch).data)
 
-    @extend_schema(request=None, responses={201: CycleSerializer, 200: OpenApiTypes.OBJECT})
+    @extend_schema(request=None, responses={201: CycleSerializer, 200: oas.GeneratedNothing})
     @action(detail=True, methods=["post"])
     def generate(self, request, pk=None):
         """Generates the next occurrence now (even ahead of its date). Exactly once per occurrence."""

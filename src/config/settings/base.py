@@ -271,7 +271,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "apps.core.api.StandardPagination",
     "PAGE_SIZE": 25,
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_SCHEMA_CLASS": "apps.core.openapi.FieldOpsAutoSchema",
     "EXCEPTION_HANDLER": "apps.core.api.exception_handler",
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
@@ -288,12 +288,27 @@ SIMPLE_JWT = {
 }
 SPECTACULAR_SETTINGS = {
     "TITLE": "FieldOps Nexus API",
-    "DESCRIPTION": "Multi-tenant Enterprise Asset, Maintenance & Field Service ERP. "
-    "All tenant data is scoped to the caller's active organization.",
+    "DESCRIPTION": (
+        "Multi-tenant Enterprise Asset, Maintenance & Field Service ERP.\n\n"
+        "**Quick start:** (1) `POST /api/v1/auth/token/` with `{\"email\", \"password\"}`; (2) copy `access`; "
+        "(3) click **Authorize**, paste it into `jwtAuth` (just the token; Swagger adds `Bearer`); "
+        "(4) `GET /api/v1/auth/me/` to confirm identity and organizations. Access tokens last 15 minutes; renew with "
+        "`POST /api/v1/auth/token/refresh/`. Full walkthrough: `docs/API_TESTING.md`.\n\n"
+        "**Authentication:** `jwtAuth` (Bearer JWT) is the mechanism for API consumers. `cookieAuth` is the Django "
+        "browser session used by the web UI; it is accepted by the same endpoints but external testers should ignore it.\n\n"
+        "**Tenancy:** all tenant-owned data is scoped to the caller's active organization. A user with one active "
+        "membership needs nothing extra; a user with several selects one with the `X-Organization` header (org slug). "
+        "The header only selects among the caller's own memberships. An object from another organization returns "
+        "404 (never 200), so test Alpha JWT -> Beta object = 404/403.\n\n"
+        "**Lists** are paginated: `{count, next, previous, results}`; use `page` and `page_size` (max 200).\n\n"
+        "**Errors** share one envelope: `{\"error\": {code, message, details, request_id}}`."
+    ),
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],  # docs/schema list endpoint names only, never tenant data (public docs for testers)
     "COMPONENT_SPLIT_REQUEST": True,
+    "POSTPROCESSING_HOOKS": ["drf_spectacular.hooks.postprocess_schema_enums", "apps.core.openapi.postprocess"],
+    "SWAGGER_UI_SETTINGS": {"persistAuthorization": True},
     "ENUM_NAME_OVERRIDES": {
         "AssetStatusEnum": "apps.assets.models.Asset.Status",
         "CoverageKindEnum": "apps.contracts.models.CoverageAgreement.Kind",

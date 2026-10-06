@@ -6,6 +6,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 
 from apps.assets import selectors as asset_selectors
+from apps.core import openapi_schemas as oas
 from apps.core.apiutils import ID_PARAM, paginate, query_param, require_permission
 from apps.sites.selectors import scoped_get
 from apps.tenancy.api import MEMBER_ONLY, TenantAPIMixin
@@ -390,7 +391,7 @@ class InspectionViewSet(TenantAPIMixin, viewsets.ViewSet):
         return Response(EvidenceSerializer(att).data, status=status.HTTP_201_CREATED)
 
     @extend_schema(parameters=[query_param("work_order", "work order id", OpenApiTypes.UUID)],
-                   responses={200: OpenApiTypes.OBJECT})
+                   responses={200: oas.ChecklistRequirements})
     @action(detail=False, methods=["get"])
     def requirements(self, request):
         """Checklists a work order needs and their state (the same data M06 uses to block completion)."""

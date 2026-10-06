@@ -1,13 +1,13 @@
 """M13 REST API. Client endpoints (``/api/v1/portal/*``) expose a deliberately small, client-safe projection of the
 caller's OWN requests; staff endpoint ``/api/v1/portal-accounts/`` manages portal clients. Privileged ERP endpoints
 (work orders, stock, SLA, audit ...) stay closed to clients because their roles hold no such permissions."""
-from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.response import Response
 
+from apps.core import openapi_schemas as oas
 from apps.core.apiutils import ID_PARAM, paginate, query_param
 from apps.core.exceptions import NotFound, ValidationFailed
 from apps.incidents.models import ServiceRequest
@@ -87,7 +87,7 @@ class PortalRequestViewSet(TenantAPIMixin, viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         return Response(ClientRequestSerializer(self._mine(request, pk)).data)
 
-    @extend_schema(responses=OpenApiTypes.OBJECT)
+    @extend_schema(responses=oas.PortalStatus)
     @action(detail=True, methods=["get"])
     def status(self, request, pk=None):
         """HPE portal group ``/client/requests/{id}/status/``: client-safe status + visit, nothing internal."""
@@ -124,7 +124,7 @@ class PortalRequestViewSet(TenantAPIMixin, viewsets.ViewSet):
                              request=request)
         return Response(ClientRequestSerializer(sr).data)
 
-    @extend_schema(request={"multipart/form-data": AttachSerializer}, responses={201: OpenApiTypes.OBJECT})
+    @extend_schema(request={"multipart/form-data": AttachSerializer}, responses={201: oas.PortalAttachmentResult})
     @action(detail=True, methods=["post"])
     def attachments(self, request, pk=None):
         sr = self._mine(request, pk)  # ownership first: a foreign id is a 404 whatever the payload

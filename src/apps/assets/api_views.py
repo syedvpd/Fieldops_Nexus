@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 
+from apps.core import openapi_schemas as oas
 from apps.core.apiutils import ID_PARAM, paginate, query_param, require_permission
 from apps.core.exceptions import DomainError, NotFound, ValidationFailed
 from apps.sites import selectors as site_selectors
@@ -387,7 +388,7 @@ class AssetViewSet(TenantAPIMixin, viewsets.ViewSet):
         return paginate(request, selectors.location_history_for(request.organization, asset),
                         LocationHistorySerializer)
 
-    @extend_schema(responses={200: OpenApiTypes.OBJECT})
+    @extend_schema(responses={200: oas.AssetChangeLog})
     @action(detail=True, methods=["get"])
     def changes(self, request, pk=None):
         """Field-level change log (who, when, before -> after) from the audit trail."""
@@ -432,13 +433,13 @@ class AssetViewSet(TenantAPIMixin, viewsets.ViewSet):
         path = [{"id": str(a.pk), "asset_tag": a.asset_tag} for a in reversed(hierarchy.ancestors(asset))]
         return Response({"path": path, "tree": tree_node(hierarchy.build_tree(asset))})
 
-    @extend_schema(responses={200: OpenApiTypes.OBJECT})
+    @extend_schema(responses={200: oas.TreeValidation})
     @action(detail=True, methods=["get"])
     def validate(self, request, pk=None):
         """Integrity report (organization, site, cycle, depth) for the subtree below this asset."""
         return Response(hierarchy.validate_tree(self._asset(request, pk)))
 
-    @extend_schema(request=ValidateLinkSerializer, responses={200: OpenApiTypes.OBJECT})
+    @extend_schema(request=ValidateLinkSerializer, responses={200: oas.LinkValidation})
     @action(detail=True, methods=["post"], url_path="validate-link")
     def validate_link(self, request, pk=None):
         """Dry run: could <child> be added below this asset? Never changes data."""

@@ -21,7 +21,7 @@ MEMBER_ONLY = "__member__"  # pseudo-permission: any ACTIVE member, for strictly
 
 
 class TenantAPIMixin:
-    """Resolves + verifies the active membership right after authentication and binds the tenant context."""
+    # Resolves + verifies the active membership right after authentication and binds the tenant context.
 
     permission_map: dict[str, str] = {}
     required_permission: str | None = None

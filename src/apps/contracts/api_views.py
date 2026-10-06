@@ -6,7 +6,7 @@ data: any holder of the permission (at any site) may use them."""
 import datetime
 
 from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, extend_schema_serializer
 from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -148,6 +148,7 @@ class EntrySerializer(serializers.Serializer):
     reason = serializers.CharField()
 
 
+@extend_schema_serializer(many=False)
 class CoverageResultSerializer(serializers.Serializer):
     asset = serializers.UUIDField(source="asset.pk")
     asset_tag = serializers.CharField(source="asset.asset_tag")

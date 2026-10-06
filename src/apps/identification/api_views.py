@@ -9,6 +9,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.assets import selectors as asset_selectors
+from apps.core import openapi_schemas as oas
 from apps.core.apiutils import ID_PARAM, paginate, query_param, require_permission
 from apps.core.exceptions import NotFound, RateLimited
 from apps.incidents.models import ServiceRequest
@@ -143,7 +144,7 @@ class ScanViewSet(TenantAPIMixin, viewsets.ViewSet):
         body = ScanAssetSerializer(res).data
         return Response(body, status=status.HTTP_200_OK if res.outcome == "RESOLVED" else status.HTTP_410_GONE)
 
-    @extend_schema(request=ReportSerializer, responses={201: OpenApiTypes.OBJECT})
+    @extend_schema(request=ReportSerializer, responses={201: oas.ScanReportResult})
     @action(detail=False, methods=["post"])
     def report(self, request):
         """Scan-to-service-event: opens an M05 incident / service request for the scanned asset."""

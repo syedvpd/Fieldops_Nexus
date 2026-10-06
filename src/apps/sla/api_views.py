@@ -12,6 +12,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.core import openapi_schemas as oas
 from apps.core.apiutils import ID_PARAM, paginate, query_param, require_permission
 from apps.core.exceptions import NotFound, ValidationFailed
 from apps.rbac.models import Role
@@ -278,7 +279,7 @@ class SLATrackingViewSet(TenantAPIMixin, viewsets.ViewSet):
         tracking = selectors.get_tracking(request.membership, request.organization, pk)
         return paginate(request, selectors.events_for(request.organization, tracking), SLAEventSerializer)
 
-    @extend_schema(request=None, responses={200: OpenApiTypes.OBJECT})
+    @extend_schema(request=None, responses={200: oas.SLAProcessResult})
     @action(detail=False, methods=["post"])
     def process(self, request):
         """Runs the SLA monitor for the caller's organization now (the same code the Celery task runs)."""
@@ -324,7 +325,7 @@ class SLAMetricsView(TenantAPIMixin, APIView):
 
     @extend_schema(parameters=[query_param("since", "ISO date-time", OpenApiTypes.DATETIME),
                                query_param("until", "ISO date-time", OpenApiTypes.DATETIME)],
-                   responses={200: OpenApiTypes.OBJECT})
+                   responses={200: oas.SLAMetrics})
     def get(self, request):
         def parse(name):
             raw = (request.query_params.get(name) or "").strip()

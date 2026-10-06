@@ -6,6 +6,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 
 from apps.assets import selectors as asset_selectors
+from apps.core import openapi_schemas as oas
 from apps.core.apiutils import ID_PARAM, paginate, query_param, require_permission
 from apps.core.exceptions import NotFound
 from apps.sites.selectors import scoped_get
@@ -84,6 +85,27 @@ class WorkOrderTransitionSerializer(serializers.Serializer):
     priority = serializers.ChoiceField(choices=WorkOrder.Priority.choices, required=False)
     technician = serializers.UUIDField(required=False, help_text="Membership id (assign)")
     resolution_notes = serializers.CharField(required=False, allow_blank=True, help_text="Required to complete")
+
+
+class WorkOrderAssignSerializer(serializers.Serializer):
+    technician = serializers.UUIDField(help_text="Membership id of the technician (must be active and allowed to "
+                                                  "start work at the order's site)")
+    reason = serializers.CharField(max_length=500, required=False, allow_blank=True)
+
+
+class WorkOrderStartSerializer(serializers.Serializer):
+    reason = serializers.CharField(max_length=500, required=False, allow_blank=True)
+
+
+class WorkOrderHoldSerializer(serializers.Serializer):
+    reason = serializers.CharField(max_length=500, min_length=3, help_text="Why the work is paused (required)")
+
+
+class WorkOrderCompleteSerializer(serializers.Serializer):
+    resolution_notes = serializers.CharField(required=False, allow_blank=True,
+                                             help_text="At least 10 characters; required unless already saved on the "
+                                                       "order. Open checklists/inspections also block completion.")
+    reason = serializers.CharField(max_length=500, required=False, allow_blank=True)
 
 
 class ReassignSerializer(serializers.Serializer):
@@ -241,22 +263,22 @@ class WorkOrderViewSet(TenantAPIMixin, viewsets.ViewSet):
         ser.is_valid(raise_exception=True)
         return self._transition(request, pk, dict(ser.validated_data))
 
-    @extend_schema(request=OpenApiTypes.OBJECT, responses=WorkOrderSerializer)
+    @extend_schema(request=WorkOrderAssignSerializer, responses=WorkOrderSerializer)
     @action(detail=True, methods=["post"])
     def assign(self, request, pk=None):
         return self._shortcut(request, pk, "assign")
 
-    @extend_schema(request=OpenApiTypes.OBJECT, responses=WorkOrderSerializer)
+    @extend_schema(request=WorkOrderStartSerializer, responses=WorkOrderSerializer)
     @action(detail=True, methods=["post"])
     def start(self, request, pk=None):
         return self._shortcut(request, pk, "start")
 
-    @extend_schema(request=OpenApiTypes.OBJECT, responses=WorkOrderSerializer)
+    @extend_schema(request=WorkOrderHoldSerializer, responses=WorkOrderSerializer)
     @action(detail=True, methods=["post"])
     def hold(self, request, pk=None):
         return self._shortcut(request, pk, "hold")
 
-    @extend_schema(request=OpenApiTypes.OBJECT, responses=WorkOrderSerializer)
+    @extend_schema(request=WorkOrderCompleteSerializer, responses=WorkOrderSerializer)
     @action(detail=True, methods=["post"])
     def complete(self, request, pk=None):
         return self._shortcut(request, pk, "complete")
@@ -287,7 +309,7 @@ class WorkOrderViewSet(TenantAPIMixin, viewsets.ViewSet):
         wo = self._obj(request, pk)
         return paginate(request, selectors.events_for(request.organization, wo), EventSerializer)
 
-    @extend_schema(responses={200: OpenApiTypes.OBJECT})
+    @extend_schema(responses={200: oas.WorkOrderClosure})
     @action(detail=True, methods=["get"])
     def closure(self, request, pk=None):
         """Why the order cannot be closed yet (empty list = closable)."""

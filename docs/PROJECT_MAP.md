@@ -72,3 +72,8 @@ Permanent knowledge: `docs/PROJECT_SOURCE_OF_TRUTH.md`, `docs/FIELDOPS_NEXUS_MAS
 - Browser acceptance Batch 1 (2026-10-04, read-only): `docs/audits/browser/` (`M01..M04_BROWSER_DETAILED.md` = 15-section module reports, `README.md`, `evidence/` raw run JSON + discovery inventory + coverage + screenshots, `tools/playwright/` harness and scripts, `tools/gen_batch1_reports.py` report generator); summary and verdict in `docs/audits/final/M01_M15_BROWSER_ACCEPTANCE.md` (section `BATCH1`).
 - UI/UX reference (2026-10-05): `docs/UI_UX_REFERENCE_MAP.md` = screen-by-screen mapping of `docs/ui ux refernce/` (React/Tailwind demo) onto our Django templates: shared components, per-screen change / must-not-change / backend gap / HPE / decision, proposed order. Plan only, nothing implemented.
 | public homepage | `/` marketing page (no auth); login at `/login/` (alias of `/accounts/login/`) | `src/templates/public/home.html`, `src/static/css/landing.css`, `src/static/js/landing.js`, `apps/ui/views.py:root`, `tests/test_public_home.py` |
+- `src/apps/core/openapi.py`: OpenAPI contract layer (paginated-list envelope, X-Organization header, uniform error responses, permission notes, phantom path-param cleanup)
+- `src/apps/core/openapi_schemas.py`: response serializers documenting hand-built JSON responses
+- `tests/test_openapi_contract.py`: OpenAPI contract guard tests
+- `docs/API_TESTING.md`: API tester quick start + role matrix
+- `docs/API_OPENAPI_SCHEMA_AUDIT.md`: OpenAPI schema/endpoint contract audit
