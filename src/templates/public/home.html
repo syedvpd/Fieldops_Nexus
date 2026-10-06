@@ -13,11 +13,10 @@
   <div class="wrap nav-in">
     <a class="brand" href="/"><span class="mark">FX</span><span>FieldOps <b>Nexus</b></span></a>
     <nav class="links" id="links" aria-label="Primary">
-      <a href="#platform">Platform</a><a href="#solutions">Solutions</a><a href="#how">How It Works</a><a href="#why">Why FieldOps</a><a href="#contact">Contact</a>
+      <a href="#platform">Platform</a><a href="#solutions">Solutions</a><a href="#how">How It Works</a><a href="#why">Why FieldOps</a>
       <a class="btn btn-gold sm only-m" href="/login/">Sign In</a>
     </nav>
     <div class="nav-cta">
-      <a class="btn btn-ghost sm" href="#contact">Request a Demo</a>
       <a class="btn btn-gold sm" href="{% if request.user.is_authenticated %}/app/{% else %}/login/{% endif %}">{% if request.user.is_authenticated %}Open Workspace{% else %}Sign In{% endif %}</a>
     </div>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
@@ -30,7 +29,7 @@
       <span class="eyebrow">FieldOps Nexus</span>
       <h1>Enterprise Operations.<br><em>Connected. Simplified.</em></h1>
       <p>A unified ERP platform designed to connect organizations, assets, people, service operations, and business workflows in one centralized system.</p>
-      <div class="cta-row"><a class="btn btn-gold" href="#platform">Explore Platform</a><a class="btn btn-outline" href="#contact">Request a Demo</a></div>
+      <div class="cta-row"><a class="btn btn-gold" href="#platform">Explore Platform</a><a class="btn btn-outline" href="/login/">Sign In</a></div>
       <ul class="proof"><li>Multi-tenant by design</li><li>Role-based access</li><li>Full audit trail</li></ul>
     </div>
     <div class="hero-vis" aria-label="Product preview (sample content)">
@@ -165,12 +164,11 @@
   </div>
 </section>
 
-<section class="cta" id="contact">
+<section class="cta" id="start">
   <div class="wrap">
     <h2>Bring Your Operations Together</h2>
     <p>Connect assets, people, service activities, maintenance and operational workflows in one platform.</p>
-    <div class="cta-row c"><a class="btn btn-gold" href="{% if sales_email %}mailto:{{ sales_email }}?subject=FieldOps%20Nexus%20demo%20request{% else %}#contact-note{% endif %}">Request a Demo</a><a class="btn btn-outline" href="{% if sales_email %}mailto:{{ sales_email }}{% else %}#contact-note{% endif %}">Contact Us</a></div>
-    {% if not sales_email %}<p class="cfg-note" id="contact-note">Demo requests are not enabled yet. Sales contact details will be published here once they are configured.</p>{% endif %}
+    <div class="cta-row c"><a class="btn btn-gold" href="/login/">Sign In</a><a class="btn btn-outline" href="#platform">Explore Platform</a></div>
   </div>
 </section>
 
@@ -180,8 +178,8 @@
       <p>The connected enterprise platform for assets, service, maintenance, and the people behind it all.</p></div>
     <div><h5>Platform</h5><a href="#platform">Features</a><a href="#platform">Asset Management</a><a href="#platform">Service Management</a><a href="#platform">Work Orders</a><a href="#visibility">Analytics</a></div>
     <div><h5>Solutions</h5><a href="#solutions">Enterprise Operations</a><a href="#solutions">Manufacturing</a><a href="#solutions">Facilities Management</a><a href="#solutions">Maintenance</a></div>
-    <div><h5>Company</h5><a href="#top">About</a><a href="#why">Resources</a><a href="#contact">Contact Sales</a><a href="#contact">Careers</a></div>
-    <div><h5>Contact</h5>{% if sales_email %}<a href="mailto:{{ sales_email }}">{{ sales_email }}</a>{% else %}<a href="#contact-note">Contact details coming soon</a>{% endif %}<a href="/login/">Sign In</a></div>
+    <div><h5>Company</h5><a href="#top">About</a><a href="#why">Resources</a></div>
+    <div><h5>Access</h5><a href="/login/">Sign In</a></div>
   </div>
   <div class="wrap copy">© 2026 FieldOps Nexus. All rights reserved.</div>
 </footer>

@@ -15,8 +15,7 @@ from apps.tenancy.models import Membership
 @require_GET
 def root(request):
     """Public marketing homepage. Never requires authentication; login lives at /login/."""
-    from django.conf import settings
-    return render(request, "public/home.html", {"sales_email": settings.SALES_CONTACT_EMAIL})
+    return render(request, "public/home.html")
 
 
 @login_required
